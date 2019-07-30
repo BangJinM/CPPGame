@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="CPPGame\Common\BaseApplication.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Common\GamePlatform-win32.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Common\GamePlatform-opengl.h">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Common\GamePlatform-opengl.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\External\glad\src\glad.c">
+      <Filter>Engine\External\glad\src</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Common\ResourceManager.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Common\Texture2D.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.h" />
+    <ClInclude Include="CPPGame\Interface\IApplication .h">
+      <Filter>Engine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Interface\IRuntimeModule.h">
+      <Filter>Engine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\GfxConfiguration.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\GamePlatform-win32.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\BaseApplication.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\Input.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\ResourceManager.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\Texture2D.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\Shader.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Common\Shader.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{9b9d53a3-8129-4f0b-836a-b024c9588586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Interface">
+      <UniqueIdentifier>{f1d3a59a-df6f-4667-bb34-0ab6e6ee6a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Common">
+      <UniqueIdentifier>{3f4fa5e7-6d0d-4dbd-8a8a-35424f9e8eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\External">
+      <UniqueIdentifier>{af04acb5-c168-4d1d-9419-c937c05dc768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\External\glad">
+      <UniqueIdentifier>{f0319094-afc8-4433-a232-72b8e65051f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\External\glad\src">
+      <UniqueIdentifier>{0bd764c0-7c69-4787-9828-3661200064e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ec728a94-f0e9-463a-8c4d-dcf02032678e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
