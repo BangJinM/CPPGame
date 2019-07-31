@@ -176,6 +176,7 @@
     <ClInclude Include="CPPGame\Common\Texture2D.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
+    <ClInclude Include="CPPGame\Renderer\BaseRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
   </ItemGroup>
   <ItemGroup>

@@ -62,6 +62,9 @@
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\BaseRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
