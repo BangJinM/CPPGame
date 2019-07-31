@@ -26,6 +26,9 @@
     <ClCompile Include="CPPGame\Common\Shader.cpp">
       <Filter>Engine\Common</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp">
+      <Filter>Engine\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -56,6 +59,9 @@
     <ClInclude Include="CPPGame\Common\Shader.h">
       <Filter>Engine\Common</Filter>
     </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h">
+      <Filter>Engine\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -79,5 +85,19 @@
     <Filter Include="Game">
       <UniqueIdentifier>{ec728a94-f0e9-463a-8c4d-dcf02032678e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Renderer">
+      <UniqueIdentifier>{57cf2674-803b-4a38-bc99-615cdc332827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\shaders">
+      <UniqueIdentifier>{99e74fc6-0d08-4faa-aec9-1efd1a05f4b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CPPGame\Renderer\shaders\Default.vs">
+      <Filter>Engine\Renderer\shaders</Filter>
+    </None>
+    <None Include="CPPGame\Renderer\shaders\Default.flag">
+      <Filter>Engine\Renderer\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

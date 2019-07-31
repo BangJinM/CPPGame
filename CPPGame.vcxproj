@@ -162,6 +162,7 @@
     <ClCompile Include="CPPGame\Common\Shader.cpp" />
     <ClCompile Include="CPPGame\Common\Texture2D.cpp" />
     <ClCompile Include="CPPGame\External\glad\src\glad.c" />
+    <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,11 @@
     <ClInclude Include="CPPGame\Common\Texture2D.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
+    <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CPPGame\Renderer\shaders\Default.flag" />
+    <None Include="CPPGame\Renderer\shaders\Default.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
