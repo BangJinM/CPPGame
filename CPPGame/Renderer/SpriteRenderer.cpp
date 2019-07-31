@@ -26,7 +26,6 @@ void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec
 	model = glm::scale(model, glm::vec3(size, 1.0f)); // Last scale
 
 	this->shader.SetMatrix4("model", model);
-
 	this->shader.SetVector3f("spriteColor", color);
 
 	glActiveTexture(GL_TEXTURE0);

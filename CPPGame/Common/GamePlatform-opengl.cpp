@@ -42,9 +42,9 @@ int OpenGLApplication::Initialize()
 	glfwSetKeyCallback(window, keyInput);
 
 
-	ResourceManager::LoadShader("CPPGame/Renderer/shaders/Default.vs", "CPPGame/Renderer/shaders/Default.frag", nullptr, "sprite");
+	ResourceManager::LoadShader("CPPGame/Renderer/shaders/Default.vs", "CPPGame/Renderer/shaders/Default.flag", nullptr, "sprite");
 	// Configure shaders
-//	(T left, T right, T bottom, T top, T zNear, T zFar)
+	//	(T left, T right, T bottom, T top, T zNear, T zFar)
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->m_Config.screenWidth), static_cast<GLfloat>(this->m_Config.screenHeight), 0.0f, -1.0f, 1.0f);
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection);
@@ -53,12 +53,10 @@ int OpenGLApplication::Initialize()
 	// Set render-specific controls
 	Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 
-
 	return result;
 }
 
-//typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int,int);
-//typedef void (* GLFWmousebuttonfun)(GLFWwindow*,int,int,int);
+
 void OpenGLApplication::Finalize()
 {
 
@@ -83,8 +81,9 @@ void OpenGLApplication::keyInput(GLFWwindow* window, int key, int scancode, int 
 void OpenGLApplication::Tick()
 {
 	this->m_bQuit = glfwWindowShouldClose(window);
+	Renderer->DrawSprite(*ResourceManager::GetTexture("face"),
+		glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
 	glfwSwapBuffers(window);
 	glfwPollEvents();
-	Renderer->DrawSprite(*ResourceManager::GetTexture("face"),
-		glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
