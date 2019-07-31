@@ -1,15 +1,5 @@
-/*******************************************************************
-** This code is part of Breakout.
-**
-** Breakout is free software: you can redistribute it and/or modify
-** it under the terms of the CC BY 4.0 license as published by
-** Creative Commons, either version 4 of the License, or (at your
-** option) any later version.
-******************************************************************/
-#include "shader.h"
-
+#include "Shader.h"
 #include <iostream>
-#include <glad/glad.h>;
 
 Shader &Shader::Use()
 {
@@ -17,7 +7,7 @@ Shader &Shader::Use()
 	return *this;
 }
 
-void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource)
+void Shader::Compile(const GLchar *vertexSource, const GLchar *fragmentSource, const GLchar *geometrySource)
 {
 	GLuint sVertex, sFragment, gShader;
 	// Vertex Shader

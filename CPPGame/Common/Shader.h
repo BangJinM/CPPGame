@@ -1,16 +1,8 @@
-/*******************************************************************
-** This code is part of Breakout.
-**
-** Breakout is free software: you can redistribute it and/or modify
-** it under the terms of the CC BY 4.0 license as published by
-** Creative Commons, either version 4 of the License, or (at your
-** option) any later version.
-******************************************************************/
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef ENGINE_COMMON_SHADER_H
+#define ENGINE_COMMON_SHADER_H
 
 #include <string>
-
+#include <iostream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/glm.hpp>
@@ -43,5 +35,7 @@ private:
 	// Checks if compilation or linking failed and if so, print the error logs
 	void    checkCompileErrors(GLuint object, std::string type);
 };
+
+
 
 #endif

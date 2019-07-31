@@ -91,13 +91,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;$(SolutionDir)CPPGame\External\soil\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\SimpleOpenGLImageLibrary\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;libSOIL.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\soil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -159,6 +159,7 @@
     <ClCompile Include="CPPGame\Common\GamePlatform-opengl.h" />
     <ClCompile Include="CPPGame\Common\GamePlatform-win32.cpp" />
     <ClCompile Include="CPPGame\Common\ResourceManager.cpp" />
+    <ClCompile Include="CPPGame\Common\Shader.cpp" />
     <ClCompile Include="CPPGame\Common\Texture2D.cpp" />
     <ClCompile Include="CPPGame\External\glad\src\glad.c" />
     <ClCompile Include="main.cpp" />
@@ -170,7 +171,6 @@
     <ClInclude Include="CPPGame\Common\GamePlatform-win32.h" />
     <ClInclude Include="CPPGame\Common\Input.h" />
     <ClInclude Include="CPPGame\Common\ResourceManager.h" />
-    <ClInclude Include="CPPGame\Common\Shader.cpp" />
     <ClInclude Include="CPPGame\Common\Shader.h" />
     <ClInclude Include="CPPGame\Common\Texture2D.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
