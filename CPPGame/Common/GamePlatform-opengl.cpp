@@ -4,7 +4,12 @@
 #include "Renderer/ResourceManager.h"
 #include "Renderer/SpriteRenderer.h"
 #include "glm/glm.hpp"
-SpriteRenderer * Renderer;
+
+#include "Renderer/ClassIDs.h"
+#include "Renderer/GameObject.h"
+#include "Renderer/Transform.h"
+
+GameObject* gameObject;
 int OpenGLApplication::Initialize()
 {
 	int result = 0;
@@ -43,16 +48,19 @@ int OpenGLApplication::Initialize()
 
 
 	ResourceManager::LoadShader("CPPGame/Renderer/shaders/Default.vs", "CPPGame/Renderer/shaders/Default.flag", nullptr, "sprite");
-	// Configure shaders
-	//	(T left, T right, T bottom, T top, T zNear, T zFar)
+	//// Configure shaders
+	////	(T left, T right, T bottom, T top, T zNear, T zFar)
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->m_Config.screenWidth), static_cast<GLfloat>(this->m_Config.screenHeight), 0.0f, -1.0f, 1.0f);
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection);
-	// Load textures
+	//// Load textures
 	ResourceManager::LoadTexture("G:/CPPGame/Game/Textures/awesomeface.png", GL_TRUE, "face");
-	// Set render-specific controls
-	Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-
+	//// Set render-specific controls
+	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	gameObject = new GameObject();
+	Transform trans = Transform();
+	gameObject->addComponent(trans.getClassID(), &trans);
+	gameObject->addComponent(renderer->getClassID(), renderer);
 	return result;
 }
 
@@ -81,9 +89,7 @@ void OpenGLApplication::keyInput(GLFWwindow* window, int key, int scancode, int 
 void OpenGLApplication::Tick()
 {
 	this->m_bQuit = glfwWindowShouldClose(window);
-	Renderer->DrawSprite(*ResourceManager::GetTexture("face"),
-		glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
+	gameObject->Renderer();
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }

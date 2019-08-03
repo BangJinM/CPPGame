@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "ResourceManager.h"
 GameObjectManager* GameObjectManager::s_Instance = NULL;
 
 GameObjectManager& GetGameObjectManager()
@@ -7,14 +7,15 @@ GameObjectManager& GetGameObjectManager()
 	return *GameObjectManager::s_Instance;
 }
 
-Component* GameObject::addComponent(int classID, Component* component) {
+void GameObject::addComponent(int classID, Component* component) {
 	m_compenents.push_back(std::pair<int, Component* >(classID,component));
 }
+
 template<class T> inline
-Component* GameObject::getComponent(int classID) {
+T* GameObject::getComponent(int classID) {
 	Component* com;
 	com = queryComponentImplementation(classID);
-	return	*static_cast<T*> (com);
+	return	static_cast<T*> (com);
 }
 
 Component* GameObject::queryComponentImplementation(int classID) {
@@ -24,4 +25,12 @@ Component* GameObject::queryComponentImplementation(int classID) {
 			return (*i).second;
 	}
 	return NULL;
+}
+
+void GameObject::Renderer() {
+	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_SpriteRenderer);
+	if(renderer){
+		renderer->DrawSprite(*ResourceManager::GetTexture("face"),
+			glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+	}
 }

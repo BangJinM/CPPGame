@@ -166,6 +166,7 @@
     <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\Texture2D.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Transform.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,17 +175,19 @@
     <ClInclude Include="CPPGame\Common\GfxConfiguration.h" />
     <ClInclude Include="CPPGame\Common\GamePlatform-win32.h" />
     <ClInclude Include="CPPGame\Common\Input.h" />
-    <ClInclude Include="CPPGame\Common\LinkList.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\ClassIDs.h" />
     <ClInclude Include="CPPGame\Renderer\Component.h" />
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />
     <ClInclude Include="CPPGame\Renderer\GameScene.h" />
+    <ClInclude Include="CPPGame\Renderer\Node.h" />
     <ClInclude Include="CPPGame\Renderer\ResourceManager.h" />
     <ClInclude Include="CPPGame\Renderer\Shader.h" />
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
+    <ClInclude Include="CPPGame\Renderer\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CPPGame\Renderer\shaders\Default.flag" />

@@ -38,7 +38,7 @@
     <ClCompile Include="CPPGame\Renderer\Component.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\LinkedList.cpp">
+    <ClCompile Include="CPPGame\Renderer\Transform.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,7 +86,13 @@
     <ClInclude Include="CPPGame\Renderer\Component.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\LinkedList.h">
+    <ClInclude Include="CPPGame\Renderer\Node.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\ClassIDs.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Transform.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

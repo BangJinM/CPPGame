@@ -10,7 +10,7 @@
 #include "BaseRenderer.h"
 
 
-class SpriteRenderer:public BaseRenderer
+class SpriteRenderer:public Component
 {
 public:
 	// Constructor (inits shaders/shapes)

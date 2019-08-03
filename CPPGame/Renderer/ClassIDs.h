@@ -7,8 +7,9 @@
 // Runtime classIDs are kept intentionally small.
 enum ClassIDType
 {
+	DefineClassID  (Undefined			,-1)
 	DefineClassID  (SpriteRenderer		, 1)
-	DefineClassID  (Transform			, 1)
+	DefineClassID  (Transform			, 2)
 };
 
 //make sure people dont accidentally define classids in other files:

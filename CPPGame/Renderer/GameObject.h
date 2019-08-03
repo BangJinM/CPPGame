@@ -45,14 +45,16 @@ class GameObject
 {
 public:
 	template<class T> inline
-	Component* getComponent(int classID);
-	Component* addComponent(int id, Component* component);
+	T* getComponent(int classID);
+	void addComponent(int id, Component* component);
+
+	void Renderer();
 
 private:
 	Component* queryComponentImplementation(int classID);
 
 private:
-	typedef std::pair<int, Component* > ComponentPair;
+	typedef std::pair<int, Component*> ComponentPair;
 	std::list<ComponentPair> m_compenents;
 };
 

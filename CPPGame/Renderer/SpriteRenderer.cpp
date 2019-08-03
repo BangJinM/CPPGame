@@ -1,7 +1,7 @@
 #include "SpriteRenderer.h"
 
 
-SpriteRenderer::SpriteRenderer(Shader *shader)
+SpriteRenderer::SpriteRenderer(Shader *shader):Component(ClassID(SpriteRenderer))
 {
 	this->shader = *shader;
 	this->initRenderData();

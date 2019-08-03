@@ -8,10 +8,12 @@
 #include "Texture2D.h"
 #include "Shader.h"
 #include "Component.h"
+#include "ClassIDs.h"
 
 class BaseRenderer:public Component
 {
-
+public:
+	BaseRenderer(ClassIDType type):Component(type){}
 };
 
 #endif
