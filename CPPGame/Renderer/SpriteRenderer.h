@@ -5,11 +5,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Common/Texture2D.h"
-#include "Common/Shader.h"
+#include "Texture2D.h"
+#include "Shader.h"
+#include "BaseRenderer.h"
 
 
-class SpriteRenderer
+class SpriteRenderer:public BaseRenderer
 {
 public:
 	// Constructor (inits shaders/shapes)

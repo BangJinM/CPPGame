@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,11 +158,14 @@
     <ClCompile Include="CPPGame\Common\GamePlatform-opengl.cpp" />
     <ClCompile Include="CPPGame\Common\GamePlatform-opengl.h" />
     <ClCompile Include="CPPGame\Common\GamePlatform-win32.cpp" />
-    <ClCompile Include="CPPGame\Common\ResourceManager.cpp" />
-    <ClCompile Include="CPPGame\Common\Shader.cpp" />
-    <ClCompile Include="CPPGame\Common\Texture2D.cpp" />
     <ClCompile Include="CPPGame\External\glad\src\glad.c" />
+    <ClCompile Include="CPPGame\Renderer\Component.cpp" />
+    <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
+    <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
+    <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Texture2D.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,13 +174,17 @@
     <ClInclude Include="CPPGame\Common\GfxConfiguration.h" />
     <ClInclude Include="CPPGame\Common\GamePlatform-win32.h" />
     <ClInclude Include="CPPGame\Common\Input.h" />
-    <ClInclude Include="CPPGame\Common\ResourceManager.h" />
-    <ClInclude Include="CPPGame\Common\Shader.h" />
-    <ClInclude Include="CPPGame\Common\Texture2D.h" />
+    <ClInclude Include="CPPGame\Common\LinkList.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\Component.h" />
+    <ClInclude Include="CPPGame\Renderer\GameObject.h" />
+    <ClInclude Include="CPPGame\Renderer\GameScene.h" />
+    <ClInclude Include="CPPGame\Renderer\ResourceManager.h" />
+    <ClInclude Include="CPPGame\Renderer\Shader.h" />
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CPPGame\Renderer\shaders\Default.flag" />

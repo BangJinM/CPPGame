@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include "GamePlatform-opengl.h"
-#include "ResourceManager.h"
+#include "Renderer/ResourceManager.h"
 #include "Renderer/SpriteRenderer.h"
 #include "glm/glm.hpp"
 SpriteRenderer * Renderer;

@@ -17,16 +17,28 @@
     <ClCompile Include="CPPGame\External\glad\src\glad.c">
       <Filter>src\External\glad\src</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Common\ResourceManager.cpp">
-      <Filter>src\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="CPPGame\Common\Texture2D.cpp">
-      <Filter>src\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="CPPGame\Common\Shader.cpp">
-      <Filter>src\Common</Filter>
-    </ClCompile>
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\GameObject.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Shader.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Texture2D.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\GameScene.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Component.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\LinkedList.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,19 +62,31 @@
     <ClInclude Include="CPPGame\Common\Input.h">
       <Filter>src\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CPPGame\Common\ResourceManager.h">
-      <Filter>src\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CPPGame\Common\Texture2D.h">
-      <Filter>src\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CPPGame\Common\Shader.h">
-      <Filter>src\Common</Filter>
-    </ClInclude>
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\GameObject.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Shader.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Texture2D.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\ResourceManager.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\GameScene.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Component.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\LinkedList.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
