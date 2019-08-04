@@ -28,9 +28,9 @@ Component* GameObject::queryComponentImplementation(int classID) {
 }
 
 void GameObject::Renderer() {
-	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_SpriteRenderer);
+	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_BaseRenderer);
 	if(renderer){
-		renderer->DrawSprite(*ResourceManager::GetTexture("face"),
-			glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		renderer->DrawSprite(*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
+			glm::vec3(200, 200,0), glm::vec3(300, 400,0), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 	}
 }

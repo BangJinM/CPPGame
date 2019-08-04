@@ -13,7 +13,7 @@
 class BaseRenderer:public Component
 {
 public:
-	BaseRenderer(ClassIDType type):Component(type){}
+	BaseRenderer():Component(ClassIDType::CLASS_BaseRenderer){}
 };
 
 #endif

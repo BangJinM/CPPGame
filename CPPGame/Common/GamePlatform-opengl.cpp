@@ -54,7 +54,7 @@ int OpenGLApplication::Initialize()
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection);
 	//// Load textures
-	ResourceManager::LoadTexture("G:/CPPGame/Game/Textures/awesomeface.png", GL_TRUE, "face");
+	ResourceManager::LoadTexture("G:/CPPGame/Game/Textures/awesomeface.png", GL_TRUE);
 	//// Set render-specific controls
 	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	gameObject = new GameObject();

@@ -1,7 +1,7 @@
 #include "SpriteRenderer.h"
 
 
-SpriteRenderer::SpriteRenderer(Shader *shader):Component(ClassID(SpriteRenderer))
+SpriteRenderer::SpriteRenderer(Shader *shader)
 {
 	this->shader = *shader;
 	this->initRenderData();
@@ -12,18 +12,18 @@ SpriteRenderer::~SpriteRenderer()
 	glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color)
+void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec3 size, GLfloat rotate, glm::vec3 color)
 {
 	// Prepare transformations
 	this->shader.Use();
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(position, 0.0f));  // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
+	model = glm::translate(model, position);  // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
 
 	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // Move origin of rotation to center of quad
 	model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
 	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
 
-	model = glm::scale(model, glm::vec3(size, 1.0f)); // Last scale
+	model = glm::scale(model, glm::vec3(size.x, size.y, 1.0f)); // Last scale
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetVector3f("spriteColor", color);
