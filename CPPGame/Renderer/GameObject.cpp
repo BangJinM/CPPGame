@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
+#include "Transform.h"
 GameObjectManager* GameObjectManager::s_Instance = NULL;
 
 GameObjectManager& GetGameObjectManager()
@@ -30,7 +31,8 @@ Component* GameObject::queryComponentImplementation(int classID) {
 void GameObject::Renderer() {
 	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_BaseRenderer);
 	if(renderer){
+		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
 		renderer->DrawSprite(*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
-			glm::vec3(200, 200,0), glm::vec3(300, 400,0), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			trans->m_LocalPosition, glm::vec3(1, 1, 1), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 	}
 }

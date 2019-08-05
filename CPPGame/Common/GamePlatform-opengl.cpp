@@ -10,6 +10,7 @@
 #include "Renderer/Transform.h"
 
 GameObject* gameObject;
+GameObject* gameObject1;
 int OpenGLApplication::Initialize()
 {
 	int result = 0;
@@ -58,9 +59,18 @@ int OpenGLApplication::Initialize()
 	//// Set render-specific controls
 	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 	gameObject = new GameObject();
-	Transform trans = Transform();
-	gameObject->addComponent(trans.getClassID(), &trans);
+	gameObject1 = new GameObject();
+	Transform *trans1 = new Transform();
+	Transform *trans = new Transform();
+	trans->SetLocalPosition(glm::vec3(400, 400, 0));
+	trans1->SetLocalPosition(glm::vec3(100, 100, 0));
+
+	gameObject->addComponent(trans->getClassID(), trans);
 	gameObject->addComponent(renderer->getClassID(), renderer);
+
+	gameObject1->addComponent(trans1->getClassID(), trans1);
+	gameObject1->addComponent(renderer->getClassID(), renderer);
+
 	return result;
 }
 
@@ -90,6 +100,7 @@ void OpenGLApplication::Tick()
 {
 	this->m_bQuit = glfwWindowShouldClose(window);
 	gameObject->Renderer();
+	gameObject1->Renderer();
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }

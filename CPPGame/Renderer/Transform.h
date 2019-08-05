@@ -20,7 +20,7 @@ public:
 
 	Transform(const glm::vec3& position = glm::vec3(0, 0, 0), const glm::qua<float>& rotation = glm::qua<float>(0, 0, 0, 0), const glm::vec3& scale = glm::vec3(1, 1, 1));
 	~Transform();
-private:
+public:
 	glm::vec3 m_LocalPosition, m_LocalScale; //Î»ÖÃ£¬Ðý×ª£¬Ëõ·Å
 	glm::qua<float> m_LocalRotation;
 };

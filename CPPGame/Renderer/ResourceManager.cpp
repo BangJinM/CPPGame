@@ -44,6 +44,9 @@ void ResourceManager::Clear()
 	// (Properly) delete all textures
 	for (auto iter : Textures)
 		glDeleteTextures(1, &iter.second.ID);
+	Shaders.clear();
+	Textures.clear();
+	ShaderFiles.clear();
 }
 
 Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile)
@@ -75,7 +78,7 @@ const GLchar * ResourceManager::loadShaderFile(const GLchar *file) {
 		}
 		catch (std::exception e)
 		{
-			std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
+			std::cout << "ERROR::SHADER: Failed to read shader files:"<< file << std::endl;
 		}
 		ShaderFiles[file] = code;
 	}
