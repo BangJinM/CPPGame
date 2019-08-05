@@ -33,6 +33,6 @@ void GameObject::Renderer() {
 	if(renderer){
 		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
 		renderer->DrawSprite(*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
-			trans->m_LocalPosition, glm::vec3(1, 1, 1), 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			trans->m_LocalPosition, trans->m_LocalScale, 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 	}
 }

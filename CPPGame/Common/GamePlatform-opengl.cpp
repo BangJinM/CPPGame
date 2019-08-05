@@ -62,8 +62,11 @@ int OpenGLApplication::Initialize()
 	gameObject1 = new GameObject();
 	Transform *trans1 = new Transform();
 	Transform *trans = new Transform();
+
 	trans->SetLocalPosition(glm::vec3(400, 400, 0));
+
 	trans1->SetLocalPosition(glm::vec3(100, 100, 0));
+	trans1->SetLocalScale(glm::vec3(1, 0.5, 1));
 
 	gameObject->addComponent(trans->getClassID(), trans);
 	gameObject->addComponent(renderer->getClassID(), renderer);

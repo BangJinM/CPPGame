@@ -14,6 +14,8 @@ SpriteRenderer::~SpriteRenderer()
 
 void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec3 scale, GLfloat rotate, glm::vec3 color)
 {
+	glm::vec4 qua = glm::vec4(1, 1, 1, 1);
+
 	glm::vec2 imageSize = glm::vec2(texture.Width,texture.Height);
 	glm::vec2 size = glm::vec2(imageSize.x*scale.x,imageSize.y*scale.y);
 	// Prepare transformations
