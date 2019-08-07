@@ -13,8 +13,8 @@ public:
 	ClassIDType m_ClassID = ClassIDType::CLASS_Undefined;
 
 	Component(ClassIDType classID):m_ClassID(classID){}
-
-	virtual void WillDestroyComponent(){}
+public:
+	//GameObject* m_Host; //¼ÄÖ÷
 };
 
 #endif

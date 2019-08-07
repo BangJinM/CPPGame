@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-void Transform::SetLocalRotation(const glm::qua<float>& rotation){
+void Transform::SetLocalRotation(const glm::vec3& rotation){
 	m_LocalRotation = rotation;
 	sendTransformChange();
 }
@@ -15,11 +15,17 @@ void Transform::SetLocalScale(const glm::vec3& scale) {
 	sendTransformChange();
 }
 
+void Transform::SetLocalAnchor(const glm::vec3 & anchor)
+{
+	m_Anchor = anchor;
+	sendTransformChange();
+}
+
 void Transform::sendTransformChange(){
 
 }
 
-Transform::Transform(const glm::vec3& position, const glm::qua<float>& rotation , const glm::vec3& scale)
+Transform::Transform(const glm::vec3& position, const glm::vec3& rotation , const glm::vec3& scale)
 	:m_LocalPosition(position),m_LocalRotation(rotation),m_LocalScale(scale),Component(ClassID(Transform)) {
 }
 

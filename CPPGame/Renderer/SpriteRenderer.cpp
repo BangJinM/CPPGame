@@ -12,22 +12,29 @@ SpriteRenderer::~SpriteRenderer()
 	glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec3 scale, GLfloat rotate, glm::vec3 color)
-{
-	glm::vec4 qua = glm::vec4(1, 1, 1, 1);
+//计算平移，旋转，缩放
+glm::mat4 getTransformMatrix(Texture2D &texture, glm::vec3 position, glm::vec3 scale, glm::vec3 rotate) {
+	glm::mat4 model = glm::mat4(1);
+	//texture大小
+	glm::vec2 imageSize = glm::vec2(texture.Width, texture.Height);
+	glm::vec2 size = glm::vec2(imageSize.x*scale.x, imageSize.y*scale.y);
 
-	glm::vec2 imageSize = glm::vec2(texture.Width,texture.Height);
-	glm::vec2 size = glm::vec2(imageSize.x*scale.x,imageSize.y*scale.y);
-	// Prepare transformations
-	this->shader.Use();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, position);  // First translate (transformations are: scale happens first, then rotation and then finall translation happens; reversed order)
-
-	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // Move origin of rotation to center of quad
-	model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
-	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Move origin back
-
+	//平移
+	model = glm::translate(model, position);
+	//旋转
+	glm::qua<float> quaternion = glm::qua<float>(glm::radians(rotate));
+	model = model * glm::mat4_cast(quaternion);
+	//缩放
 	model = glm::scale(model, glm::vec3(size.x, size.y, 1.0f)); // Last scale
+	
+	return model;
+}
+
+void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec3 scale, glm::vec3 rotate, glm::vec3 color)
+{
+	this->shader.Use();
+
+	glm::mat4 model = getTransformMatrix(texture, position, scale, rotate);
 
 	this->shader.SetMatrix4("model", model);
 	this->shader.SetVector3f("spriteColor", color);
@@ -40,19 +47,22 @@ void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec
 	glBindVertexArray(0);
 }
 
+
+
 void SpriteRenderer::initRenderData()
 {
 	// Configure VAO/VBO
 	GLuint VBO;
+
 	GLfloat vertices[] = {
 		// Pos      // Tex
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
+		-0.5f, 0.5f, 0.0f, 1.0f,
+		0.5f, -0.5f, 1.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f,
 
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f
+		-0.5f, 0.5f, 0.0f, 1.0f,
+		0.5f,0.5f, 1.0f, 1.0f,
+		0.5f, -0.5f, 1.0f, 0.0f
 	};
 
 	glGenVertexArrays(1, &this->quadVAO);

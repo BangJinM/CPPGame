@@ -63,10 +63,12 @@ int OpenGLApplication::Initialize()
 	Transform *trans1 = new Transform();
 	Transform *trans = new Transform();
 
-	trans->SetLocalPosition(glm::vec3(400, 400, 0));
+	trans->SetLocalPosition(glm::vec3(200, 200, 0));
+	trans->SetLocalRotation(glm::vec3(0, 0, 45));
 
-	trans1->SetLocalPosition(glm::vec3(100, 100, 0));
-	trans1->SetLocalScale(glm::vec3(1, 0.5, 1));
+	trans1->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight / 2, 0));
+	trans1->SetLocalScale(glm::vec3(.5,.5,1));
+	trans1->SetLocalRotation(glm::vec3(0, 0, 45));
 
 	gameObject->addComponent(trans->getClassID(), trans);
 	gameObject->addComponent(renderer->getClassID(), renderer);
@@ -102,7 +104,7 @@ void OpenGLApplication::keyInput(GLFWwindow* window, int key, int scancode, int 
 void OpenGLApplication::Tick()
 {
 	this->m_bQuit = glfwWindowShouldClose(window);
-	gameObject->Renderer();
+	//gameObject->Renderer();
 	gameObject1->Renderer();
 	glfwSwapBuffers(window);
 	glfwPollEvents();

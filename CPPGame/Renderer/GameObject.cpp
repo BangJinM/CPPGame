@@ -9,6 +9,7 @@ GameObjectManager& GetGameObjectManager()
 }
 
 void GameObject::addComponent(int classID, Component* component) {
+	//component->m_Host = this;
 	m_compenents.push_back(std::pair<int, Component* >(classID,component));
 }
 
@@ -32,7 +33,11 @@ void GameObject::Renderer() {
 	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_BaseRenderer);
 	if(renderer){
 		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
-		renderer->DrawSprite(*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
-			trans->m_LocalPosition, trans->m_LocalScale, 45.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		renderer->DrawSprite(
+			*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
+			trans->m_LocalPosition, 
+			trans->m_LocalScale, 
+			trans->m_LocalRotation
+		);
 	}
 }

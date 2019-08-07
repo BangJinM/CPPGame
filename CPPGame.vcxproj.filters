@@ -133,4 +133,7 @@
       <Filter>src\Renderer\shaders</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="更新日志.txt" />
+  </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ out vec2 TexCoords;
 uniform mat4 model;
 uniform mat4 projection;
 
+
 void main()
 {
     TexCoords = vertex.zw;
