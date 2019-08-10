@@ -160,6 +160,7 @@
     <ClCompile Include="CPPGame\Common\GamePlatform-opengl.h" />
     <ClCompile Include="CPPGame\Common\GamePlatform-win32.cpp" />
     <ClCompile Include="CPPGame\External\glad\src\glad.c" />
+    <ClCompile Include="CPPGame\Renderer\Camera.cpp" />
     <ClCompile Include="CPPGame\Renderer\Component.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\Camera.h" />
     <ClInclude Include="CPPGame\Renderer\ClassIDs.h" />
     <ClInclude Include="CPPGame\Renderer\Component.h" />
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />

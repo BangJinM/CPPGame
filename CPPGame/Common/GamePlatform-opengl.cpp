@@ -9,8 +9,11 @@
 #include "Renderer/GameObject.h"
 #include "Renderer/Transform.h"
 
+#include "Renderer/TextRenderer.h"
+
 GameObject* gameObject;
 GameObject* gameObject1;
+TextRenderer* text;
 int OpenGLApplication::Initialize()
 {
 	int result = 0;
@@ -76,6 +79,9 @@ int OpenGLApplication::Initialize()
 	gameObject1->addComponent(trans1->getClassID(), trans1);
 	gameObject1->addComponent(renderer->getClassID(), renderer);
 
+	ResourceManager::LoadShader("CPPGame/Renderer/shaders/DefaultText.vs", "CPPGame/Renderer/shaders/DefaultText.flag", nullptr, "text");
+	text = new TextRenderer();
+
 	return result;
 }
 
@@ -106,6 +112,7 @@ void OpenGLApplication::Tick()
 	this->m_bQuit = glfwWindowShouldClose(window);
 	//gameObject->Renderer();
 	gameObject1->Renderer();
+	text->DrawSprite(*ResourceManager::GetShader("text"), "(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }

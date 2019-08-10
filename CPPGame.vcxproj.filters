@@ -44,6 +44,9 @@
     <ClCompile Include="CPPGame\Renderer\TextRenderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Camera.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -99,6 +102,9 @@
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="CPPGame\Renderer\TextRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Camera.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
