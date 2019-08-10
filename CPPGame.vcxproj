@@ -23,32 +23,32 @@
     <ProjectGuid>{8C1A7AFE-76B9-42E0-AC54-B89402B0C21B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CPPGame</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -91,13 +91,14 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;$(SolutionDir)CPPGame\External\soil\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;$(SolutionDir)CPPGame\External\soil\includes;$(SolutionDir)CPPGame\External\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\soil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\soil\lib;$(SolutionDir)CPPGame\External\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -165,6 +166,7 @@
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
     <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
+    <ClCompile Include="CPPGame\Renderer\TextRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\Texture2D.cpp" />
     <ClCompile Include="CPPGame\Renderer\Transform.cpp" />
     <ClCompile Include="main.cpp" />
@@ -186,12 +188,15 @@
     <ClInclude Include="CPPGame\Renderer\ResourceManager.h" />
     <ClInclude Include="CPPGame\Renderer\Shader.h" />
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\TextRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
     <ClInclude Include="CPPGame\Renderer\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CPPGame\Renderer\shaders\Default.flag" />
     <None Include="CPPGame\Renderer\shaders\Default.vs" />
+    <None Include="CPPGame\Renderer\shaders\DefaultText.flag" />
+    <None Include="CPPGame\Renderer\shaders\DefaultText.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

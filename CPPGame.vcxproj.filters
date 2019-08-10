@@ -41,6 +41,9 @@
     <ClCompile Include="CPPGame\Renderer\Transform.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\TextRenderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -95,6 +98,9 @@
     <ClInclude Include="CPPGame\Renderer\Transform.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\TextRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -130,6 +136,12 @@
       <Filter>src\Renderer\shaders</Filter>
     </None>
     <None Include="CPPGame\Renderer\shaders\Default.flag">
+      <Filter>src\Renderer\shaders</Filter>
+    </None>
+    <None Include="CPPGame\Renderer\shaders\DefaultText.flag">
+      <Filter>src\Renderer\shaders</Filter>
+    </None>
+    <None Include="CPPGame\Renderer\shaders\DefaultText.vs">
       <Filter>src\Renderer\shaders</Filter>
     </None>
   </ItemGroup>
