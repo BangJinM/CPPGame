@@ -12,6 +12,7 @@
 #include "Renderer/TextRenderer.h"
 
 TextRenderer* text;
+GameObject* gameObject;
 
 int OpenGLApplication::Initialize()
 {
@@ -59,6 +60,20 @@ int OpenGLApplication::Initialize()
 	ResourceManager::GetShader("text")->Use();
 	ResourceManager::GetShader("text")->SetMatrix4("projection", projection);
 	text = new TextRenderer(*ResourceManager::GetShader("text"));
+
+	ResourceManager::LoadShader("CPPGame/Renderer/shaders/Default.vs", "CPPGame/Renderer/shaders/Default.flag", nullptr, "sprite");
+	glm::mat4 projection1 = glm::ortho(0.0f, static_cast<GLfloat>(this->m_Config.screenWidth), static_cast<GLfloat>(this->m_Config.screenHeight), 0.0f, -1.0f, 1.0f);
+	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
+	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection1);
+
+	gameObject = new GameObject();
+	Transform* trans = new Transform();
+	trans->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight/2, 0));
+	trans->SetLocalRotation(glm::vec3(0, 0, 45));
+	trans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
+	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	gameObject->addComponent(trans->getClassID(), trans);
+	gameObject->addComponent(renderer->getClassID(), renderer);
 	return result;
 }
 
@@ -87,6 +102,7 @@ void OpenGLApplication::keyInput(GLFWwindow* window, int key, int scancode, int 
 void OpenGLApplication::Tick()
 {
 	this->m_bQuit = glfwWindowShouldClose(window);
+	gameObject->Renderer();
 	text->DrawSprite("This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 	glfwSwapBuffers(window);
 	glfwPollEvents();

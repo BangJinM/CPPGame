@@ -33,7 +33,14 @@ Texture2D ResourceManager::LoadTexture(const GLchar *file, GLboolean alpha)
 
 Texture2D* ResourceManager::GetTexture(std::string name)
 {
-	return &Textures[name];
+	if (Textures.find(name) != Textures.end())
+		return &Textures[name];
+	const GLchar* file = name.data();
+	Texture2D texture = ResourceManager::LoadTexture(file, true);
+	if(&texture)
+		return &texture;
+	printf("Í¼Æ¬²»´æÔÚ£¡fileName = %s\n", name.data());
+	return nullptr;
 }
 
 void ResourceManager::Clear()

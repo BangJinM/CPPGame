@@ -180,6 +180,7 @@
     <ClInclude Include="CPPGame\Common\Input.h" />
     <ClInclude Include="CPPGame\Interface\IApplication .h" />
     <ClInclude Include="CPPGame\Interface\IRuntimeModule.h" />
+    <ClInclude Include="CPPGame\OpenGLDebug.h" />
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\Camera.h" />
     <ClInclude Include="CPPGame\Renderer\ClassIDs.h" />

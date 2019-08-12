@@ -107,6 +107,9 @@
     <ClInclude Include="CPPGame\Renderer\Camera.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="CPPGame\OpenGLDebug.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
