@@ -47,6 +47,9 @@
     <ClCompile Include="CPPGame\Renderer\Camera.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="CPPGame\OpenGLDebug.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
+      <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

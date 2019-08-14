@@ -33,6 +33,8 @@ void GameObject::Renderer() {
 	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_BaseRenderer);
 	if(renderer){
 		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
+		if (nullptr == trans)
+			return;
 		auto texture = *ResourceManager::GetTexture("Resources/Textures/awesomeface.png");
 		renderer->DrawSprite(
 			texture,

@@ -37,15 +37,13 @@ private:
 class TextRenderer :public BaseRenderer
 {
 public:
-	TextRenderer(Shader shader);
+	TextRenderer(Shader *shader);
 	~TextRenderer();
 	void DrawSprite(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 private:
-	Shader shader;
-	GLuint VAO,VBO;
 	std::map<GLchar, Character> Characters;
 	// Initializes and configures the quad's buffer and vertex attributes
-	void initRenderData();
+	virtual void initRenderData()override;
 };
 
 #endif

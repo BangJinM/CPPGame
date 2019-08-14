@@ -59,7 +59,7 @@ int OpenGLApplication::Initialize()
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_Config.screenWidth), 0.0f, static_cast<GLfloat>(m_Config.screenHeight));
 	ResourceManager::GetShader("text")->Use();
 	ResourceManager::GetShader("text")->SetMatrix4("projection", projection);
-	text = new TextRenderer(*ResourceManager::GetShader("text"));
+	text = new TextRenderer(ResourceManager::GetShader("text"));
 
 	ResourceManager::LoadShader("Resources/Shaders//Default.vs", "Resources/Shaders/Default.flag", nullptr, "sprite");
 	glm::mat4 projection1 = glm::ortho(0.0f, static_cast<GLfloat>(this->m_Config.screenWidth), static_cast<GLfloat>(this->m_Config.screenHeight), 0.0f, -1.0f, 1.0f);

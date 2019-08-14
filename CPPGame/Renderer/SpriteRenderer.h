@@ -19,12 +19,9 @@ public:
 	~SpriteRenderer();
 	// Renders a defined quad textured with given sprite
 	void DrawSprite(Texture2D& texture, glm::mat4 modelMatrix4 = glm::mat4(1) , glm::vec3 color = glm::vec3(1.0f));
-private:
-	// Render state
-	Shader shader;
-	GLuint quadVAO;
+
 	// Initializes and configures the quad's buffer and vertex attributes
-	void initRenderData();
+	void initRenderData() override;
 };
 
 #endif

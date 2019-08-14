@@ -1,10 +1,8 @@
 #include "TextRenderer.h"
 #include "ResourceManager.h"
 
-TextRenderer::TextRenderer(Shader shader)
-{
-	this->shader = shader;
-	this->initRenderData();
+TextRenderer::TextRenderer(Shader* shader):BaseRenderer(shader){
+	initRenderData();
 }
 
 TextRenderer::~TextRenderer()

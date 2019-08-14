@@ -162,6 +162,7 @@
     <ClCompile Include="CPPGame\External\glad\src\glad.c" />
     <ClCompile Include="CPPGame\Renderer\Camera.cpp" />
     <ClCompile Include="CPPGame\Renderer\Component.cpp" />
+    <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="CPPGame\Renderer\Camera.h" />
     <ClInclude Include="CPPGame\Renderer\ClassIDs.h" />
     <ClInclude Include="CPPGame\Renderer\Component.h" />
+    <ClInclude Include="CPPGame\Renderer\CubeRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />
     <ClInclude Include="CPPGame\Renderer\GameScene.h" />
     <ClInclude Include="CPPGame\Renderer\Node.h" />
