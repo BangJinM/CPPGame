@@ -8,6 +8,7 @@
 #include "GamePlatform-opengl.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <chrono>
 
 
 class OpenGLApplication : public BaseApplication
@@ -25,7 +26,11 @@ public:
 	static void keyInput(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
+	void calculateDeltaTime();
+
 	GLFWwindow* window;
+	float _deltaTime;
+	std::chrono::steady_clock::time_point _lastUpdate;
 };
 
 #endif //CPPGAME_COMMON_GAMEPLATFORM_OPENGL_H

@@ -1,6 +1,5 @@
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Transform.h"
+
 GameObjectManager* GameObjectManager::s_Instance = NULL;
 
 GameObjectManager& GetGameObjectManager()
@@ -8,19 +7,19 @@ GameObjectManager& GetGameObjectManager()
 	return *GameObjectManager::s_Instance;
 }
 
-void GameObject::addComponent(int classID, Component* component) {
+void Object::addComponent(int classID, Component* component) {
 	//component->m_Host = this;
 	m_compenents.push_back(std::pair<int, Component* >(classID,component));
 }
 
 template<class T> inline
-T* GameObject::getComponent(int classID) {
+T* Object::getComponent(int classID) {
 	Component* com;
 	com = queryComponentImplementation(classID);
 	return	static_cast<T*> (com);
 }
 
-Component* GameObject::queryComponentImplementation(int classID) {
+Component* Object::queryComponentImplementation(int classID) {
 	for (auto i = m_compenents.begin(); i!= m_compenents.end(); ++i)
 	{
 		if ((*i).first == classID)
@@ -48,5 +47,22 @@ void GameObject::Renderer() {
 		//	trans->m_LocalScale,
 		//	trans->m_LocalRotation
 		//);
+	}
+}
+
+void CubeObject::Renderer(Object* cameraObject)
+{
+	CubeRenderer* renderer = getComponent<CubeRenderer>(ClassIDType::CLASS_BaseRenderer);
+	if (renderer) {
+		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
+		if (nullptr == trans)
+			return;
+		auto texture = *ResourceManager::GetTexture("Resources/Textures/container.jpg");
+		renderer->DrawSprite(
+			texture,
+			cameraObject->getComponent<Transform>(ClassID(Transform))->getTransformMatrix4(),
+			cameraObject->getComponent<Camera>(ClassID(Camera))->getProjectionMatrix(),
+			trans->getTransformMatrix4()
+		);
 	}
 }

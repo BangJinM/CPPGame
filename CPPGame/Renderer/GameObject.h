@@ -12,6 +12,11 @@
 #include "Node.h"
 #include "ClassIDs.h"
 
+#include "ResourceManager.h"
+#include "Transform.h"
+#include "CubeRenderer.h"
+#include "Camera.h"
+
 class GameObject;
 
 typedef std::list<Node<GameObject> *> GameObjectList;
@@ -24,14 +29,12 @@ public:
 };
 GameObjectManager& GetGameObjectManager();
 
-class GameObject
+class Object
 {
 public:
 	template<class T> inline
 	T* getComponent(int classID);
 	void addComponent(int id, Component* component);
-
-	void Renderer();
 
 private:
 	Component* queryComponentImplementation(int classID);
@@ -39,6 +42,17 @@ private:
 private:
 	typedef std::pair<int, Component*> ComponentPair;
 	std::list<ComponentPair> m_compenents;
+};
+
+class GameObject :public Object {
+public:
+	void Renderer();
+};
+
+class CubeObject :public Object
+{
+public:
+	void Renderer(Object *cameraObject);
 };
 
 #endif

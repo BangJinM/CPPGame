@@ -10,10 +10,15 @@
 #include "Renderer/Transform.h"
 
 #include "Renderer/TextRenderer.h"
+#include "Renderer/Camera.h"
+
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
 
 TextRenderer* text;
-GameObject* gameObject;
-
+Object* gameObject;
+GameObject* cameraObject;
 int OpenGLApplication::Initialize()
 {
 	int result = 0;
@@ -50,6 +55,7 @@ int OpenGLApplication::Initialize()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_DEPTH_TEST);
 
 	glfwSetMouseButtonCallback(window, mouseInput);
 	glfwSetKeyCallback(window, keyInput);
@@ -66,14 +72,34 @@ int OpenGLApplication::Initialize()
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection1);
 
-	gameObject = new GameObject();
+	//gameObject = new GameObject();
+	//Transform* trans = new Transform();
+	//trans->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight/2, 0));
+	//trans->SetLocalRotation(glm::vec3(0, 0, 45));
+	//trans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
+	//SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	//gameObject->addComponent(trans->getClassID(), trans);
+	//gameObject->addComponent(renderer->getClassID(), renderer);
+
+	
+	ResourceManager::LoadShader("Resources/Shaders/DefaultCube.vs", "Resources/Shaders/DefaultCube.flag", nullptr, "cube");
+
+	cameraObject =new GameObject();
+	Transform* cameraTranform = new Transform();
+	Camera *camera = new Camera();
+	cameraTranform->SetLocalPosition(glm::vec3(0,0,1));
+	cameraObject->addComponent(cameraTranform->getClassID(), cameraTranform);
+	cameraObject->addComponent(camera->getClassID(), camera);
+
+	gameObject = new CubeObject();
 	Transform* trans = new Transform();
-	trans->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight/2, 0));
-	trans->SetLocalRotation(glm::vec3(0, 0, 45));
-	trans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
-	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	trans->SetLocalPosition(glm::vec3(0, 0, -3));
+	trans->SetLocalRotation(glm::vec3(0, 45, 45));
+	trans->SetLocalScale(glm::vec3(1, 1, 1));
+	CubeRenderer* renderer = new CubeRenderer(ResourceManager::GetShader("cube"));
 	gameObject->addComponent(trans->getClassID(), trans);
 	gameObject->addComponent(renderer->getClassID(), renderer);
+	_lastUpdate = std::chrono::steady_clock::now();
 	return result;
 }
 
@@ -98,12 +124,25 @@ void OpenGLApplication::keyInput(GLFWwindow* window, int key, int scancode, int 
 }
 
 
+void OpenGLApplication::calculateDeltaTime()
+{
+	auto now = std::chrono::steady_clock::now();
+	_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
+	_lastUpdate = now;
+	_deltaTime = MAX(1, _deltaTime);
+}
 
 void OpenGLApplication::Tick()
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	this->m_bQuit = glfwWindowShouldClose(window);
-	gameObject->Renderer();
-	text->DrawSprite("This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+	auto trans = gameObject->getComponent<Transform>(ClassID(Transform));
+	auto rotation = glm::vec3(45, 45, 45);
+	trans->SetLocalRotation(rotation);
+	((CubeObject*)gameObject)->Renderer((Object *)cameraObject);
+	std::string fps = "FPS = " + std::to_string(1/_deltaTime);
+	text->DrawSprite(fps, 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+	calculateDeltaTime();
 }
