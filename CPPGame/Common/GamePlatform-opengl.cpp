@@ -55,13 +55,13 @@ int OpenGLApplication::Initialize()
 	glfwSetKeyCallback(window, keyInput);
 
 
-	ResourceManager::LoadShader("CPPGame/Renderer/shaders/DefaultText.vs", "CPPGame/Renderer/shaders/DefaultText.flag", nullptr, "text");
+	ResourceManager::LoadShader("Resources/Shaders/DefaultText.vs", "Resources/Shaders/DefaultText.flag", nullptr, "text");
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_Config.screenWidth), 0.0f, static_cast<GLfloat>(m_Config.screenHeight));
 	ResourceManager::GetShader("text")->Use();
 	ResourceManager::GetShader("text")->SetMatrix4("projection", projection);
 	text = new TextRenderer(*ResourceManager::GetShader("text"));
 
-	ResourceManager::LoadShader("CPPGame/Renderer/shaders/Default.vs", "CPPGame/Renderer/shaders/Default.flag", nullptr, "sprite");
+	ResourceManager::LoadShader("Resources/Shaders//Default.vs", "Resources/Shaders/Default.flag", nullptr, "sprite");
 	glm::mat4 projection1 = glm::ortho(0.0f, static_cast<GLfloat>(this->m_Config.screenWidth), static_cast<GLfloat>(this->m_Config.screenHeight), 0.0f, -1.0f, 1.0f);
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection1);

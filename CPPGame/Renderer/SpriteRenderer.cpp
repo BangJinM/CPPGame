@@ -30,13 +30,15 @@ glm::mat4 getTransformMatrix(Texture2D &texture, glm::vec3 position, glm::vec3 s
 	return model;
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec3 position, glm::vec3 scale, glm::vec3 rotate, glm::vec3 color)
+void SpriteRenderer::DrawSprite(Texture2D &texture, glm::mat4 modelMatrix4, glm::vec3 color)
 {
 	this->shader.Use();
 
-	glm::mat4 model = getTransformMatrix(texture, position, scale, rotate);
+	glm::vec2 imageSize = glm::vec2(texture.Width, texture.Height);
 
-	this->shader.SetMatrix4("model", model);
+	modelMatrix4 = glm::scale(modelMatrix4, glm::vec3(imageSize.x, imageSize.y, 1.0f));
+
+	this->shader.SetMatrix4("model", modelMatrix4);
 	this->shader.SetVector3f("spriteColor", color);
 
 	glActiveTexture(GL_TEXTURE0);

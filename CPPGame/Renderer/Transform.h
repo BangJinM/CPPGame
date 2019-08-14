@@ -20,6 +20,8 @@ public:
 
 	void sendTransformChange();
 
+	glm::mat4 getTransformMatrix4();
+
 	Transform(
 		const glm::vec3& position = glm::vec3(0, 0, 0), 
 		const glm::vec3& rotation = glm::vec3(0, 0, 0), 

@@ -33,12 +33,10 @@ void GameObject::Renderer() {
 	SpriteRenderer* renderer = getComponent<SpriteRenderer>(ClassIDType::CLASS_BaseRenderer);
 	if(renderer){
 		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
-		auto texture = *ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png");
+		auto texture = *ResourceManager::GetTexture("Resources/Textures/awesomeface.png");
 		renderer->DrawSprite(
 			texture,
-			trans->m_LocalPosition,
-			trans->m_LocalScale,
-			trans->m_LocalRotation
+			trans->getTransformMatrix4()
 		);
 		//上面写法和下面写法一致，但是下面写法莫名其妙的会盖面texture的内容
 		//auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);

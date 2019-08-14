@@ -80,7 +80,7 @@ TextTextureManager::TextTextureManager() {
 
 	// Load font as face
 	FT_Face face;
-	if (FT_New_Face(ft, "CPPGame/Resources/arial.ttf", 0, &face))
+	if (FT_New_Face(ft, "Resources/Fonts/arial.ttf", 0, &face))
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
 	// Set size to load glyphs as

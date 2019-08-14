@@ -195,12 +195,6 @@
     <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
     <ClInclude Include="CPPGame\Renderer\Transform.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="CPPGame\Renderer\shaders\Default.flag" />
-    <None Include="CPPGame\Renderer\shaders\Default.vs" />
-    <None Include="CPPGame\Renderer\shaders\DefaultText.flag" />
-    <None Include="CPPGame\Renderer\shaders\DefaultText.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

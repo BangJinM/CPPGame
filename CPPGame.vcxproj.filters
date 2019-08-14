@@ -136,22 +136,5 @@
     <Filter Include="src\Renderer">
       <UniqueIdentifier>{57cf2674-803b-4a38-bc99-615cdc332827}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\shaders">
-      <UniqueIdentifier>{99e74fc6-0d08-4faa-aec9-1efd1a05f4b2}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CPPGame\Renderer\shaders\Default.vs">
-      <Filter>src\Renderer\shaders</Filter>
-    </None>
-    <None Include="CPPGame\Renderer\shaders\Default.flag">
-      <Filter>src\Renderer\shaders</Filter>
-    </None>
-    <None Include="CPPGame\Renderer\shaders\DefaultText.flag">
-      <Filter>src\Renderer\shaders</Filter>
-    </None>
-    <None Include="CPPGame\Renderer\shaders\DefaultText.vs">
-      <Filter>src\Renderer\shaders</Filter>
-    </None>
   </ItemGroup>
 </Project>
