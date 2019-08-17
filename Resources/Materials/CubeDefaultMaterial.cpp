@@ -1,8 +1,9 @@
 #include "CubeDefaultMaterial.h"
 
-#include "Renderer/GameObject.h"
-#include "Renderer/Transform.h"
 #include "Renderer/Camera.h"
+#include "Renderer/Transform.h"
+#include "Renderer/GameObject.h"
+#include "Renderer/ResourceManager.h"
 
 CubeDefaultMaterial::CubeDefaultMaterial(Object* camera):Material(camera){
 	m_Camera = camera;

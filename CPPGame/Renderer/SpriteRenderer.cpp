@@ -1,7 +1,7 @@
 #include "SpriteRenderer.h"
 
 
-SpriteRenderer::SpriteRenderer(Shader* shader):BaseRenderer(shader){
+SpriteRenderer::SpriteRenderer(Shader* shader, Material* material): material(material), BaseRenderer(shader){
 	initRenderData();
 }
 
@@ -11,26 +11,13 @@ SpriteRenderer::~SpriteRenderer()
 }
 
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::mat4 modelMatrix4, glm::vec3 color)
+void SpriteRenderer::DrawSprite(Object* object)
 {
-	this->shader.Use();
-
-	glm::vec2 imageSize = glm::vec2(texture.Width, texture.Height);
-
-	modelMatrix4 = glm::scale(modelMatrix4, glm::vec3(imageSize.x, imageSize.y, 1.0f));
-
-	this->shader.SetMatrix4("model", modelMatrix4);
-	this->shader.SetVector3f("spriteColor", color);
-
-	glActiveTexture(GL_TEXTURE0);
-	texture.Bind();
-
+	material->Use(object);
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
 }
-
-
 
 void SpriteRenderer::initRenderData()
 {

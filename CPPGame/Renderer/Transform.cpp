@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include <glm/gtc/quaternion.hpp>
 
 void Transform::SetLocalRotation(const glm::vec3& rotation){
 	m_LocalRotation = rotation;

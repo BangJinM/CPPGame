@@ -2,7 +2,7 @@
 #define SRC_RENDERER_SPRITE_DEFAULT_MATERIAL_H
 #include "Renderer/Material.h"
 
-class Object;
+class Camera;
 class SpriteDefaultMaterial:public Material
 {
 public:

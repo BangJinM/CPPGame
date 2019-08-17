@@ -6,15 +6,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <list>
 
-#include "Texture2D.h"
-#include "SpriteRenderer.h"
-#include "Component.h"
 #include "Node.h"
 #include "ClassIDs.h"
-
-#include "ResourceManager.h"
-#include "Transform.h"
-#include "CubeRenderer.h"
+#include "Component.h"
 
 class GameObject;
 
@@ -33,6 +27,7 @@ class Object
 public:
 	template<class T> inline
 	T* getComponent(int classID);
+
 	void addComponent(int id, Component* component);
 
 private:
@@ -45,7 +40,6 @@ private:
 
 class GameObject :public Object {
 public:
-	void Renderer();
 	void RendererMaterial();
 };
 
@@ -55,5 +49,12 @@ public:
 	void Renderer(Object *cameraObject);
 	void RendererMaterial();
 };
+
+template<class T> inline
+T* Object::getComponent(int classID) {
+	Component* com;
+	com = queryComponentImplementation(classID);
+	return	static_cast<T*> (com);
+}
 
 #endif

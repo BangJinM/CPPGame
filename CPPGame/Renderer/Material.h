@@ -13,6 +13,7 @@ public:
 	virtual void Use(Object* gameObject) {}
 
 	virtual ~Material() {}
+
 	Object* m_Camera;
 	Texture2D m_Texture;
 	Shader m_Shader;

@@ -1,10 +1,9 @@
 #ifndef __SRC_RENDERER_TRANSFORM_H__
 #define __SRC_RENDERER_TRANSFORM_H__
 #include "Component.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include "GameObject.h"
 
 class Transform :public Component
 {

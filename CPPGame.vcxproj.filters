@@ -17,9 +17,6 @@
     <ClCompile Include="CPPGame\External\glad\src\glad.c">
       <Filter>src\External\glad\src</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp">
-      <Filter>src\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
@@ -35,9 +32,6 @@
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\Component.cpp">
-      <Filter>src\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="CPPGame\Renderer\Transform.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
@@ -47,19 +41,16 @@
     <ClCompile Include="CPPGame\Renderer\Camera.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
-      <Filter>src\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\SpriteRendererMaterial.cpp">
-      <Filter>src\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Resources\Materials\SpriteDefaultMaterial.cpp">
       <Filter>res\Materials</Filter>
     </ClCompile>
     <ClCompile Include="Resources\Materials\CubeDefaultMaterial.cpp">
       <Filter>res\Materials</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\CubeRendererMaterial.cpp">
+    <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -82,9 +73,6 @@
     </ClInclude>
     <ClInclude Include="CPPGame\Common\Input.h">
       <Filter>src\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h">
-      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="CPPGame\Renderer\BaseRenderer.h">
       <Filter>src\Renderer</Filter>
@@ -125,13 +113,7 @@
     <ClInclude Include="CPPGame\OpenGLDebug.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="CPPGame\Renderer\Material.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\SpriteRendererMaterial.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Resources\Materials\SpriteDefaultMaterial.h">
@@ -140,7 +122,10 @@
     <ClInclude Include="Resources\Materials\CubeDefaultMaterial.h">
       <Filter>res\Materials</Filter>
     </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\CubeRendererMaterial.h">
+    <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

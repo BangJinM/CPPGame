@@ -2,7 +2,6 @@
 #include <tchar.h>
 #include "GamePlatform-opengl.h"
 #include "Renderer/ResourceManager.h"
-#include "Renderer/SpriteRenderer.h"
 #include "glm/glm.hpp"
 
 #include "Renderer/ClassIDs.h"
@@ -11,10 +10,10 @@
 
 #include "Renderer/TextRenderer.h"
 #include "Renderer/Camera.h"
-#include "Renderer/SpriteRendererMaterial.h"
+#include "Renderer/SpriteRenderer.h"
 #include "..//Resources/Materials/SpriteDefaultMaterial.h"
 #include "..//Resources/Materials/CubeDefaultMaterial.h"
-#include "Renderer/CubeRendererMaterial.h"
+#include "Renderer/CubeRenderer.h"
 #include "OpenGLDebug.h"
 
 #ifndef MAX
@@ -88,6 +87,8 @@ int OpenGLApplication::Initialize()
 	//gameObject->addComponent(trans->getClassID(), trans);
 	//gameObject->addComponent(renderer->getClassID(), renderer);
 
+
+
 	gameObjectMaterail = new GameObject();
 	Transform* materialTrans = new Transform();
 	materialTrans->SetLocalPosition(glm::vec3(200, 200, 0));
@@ -99,7 +100,7 @@ int OpenGLApplication::Initialize()
 
 	Material* material = new SpriteDefaultMaterial(cameraObject);
 
-	SpriteRendererMaterial* srm = new SpriteRendererMaterial(ResourceManager::GetShader("sprite"), material);
+	SpriteRenderer* srm = new SpriteRenderer(ResourceManager::GetShader("sprite"), material);
 
 	gameObjectMaterail->addComponent(srm->getClassID(),srm);
 	gameObjectMaterail->addComponent(materialTrans->getClassID(),materialTrans);
@@ -113,6 +114,9 @@ int OpenGLApplication::Initialize()
 	cameraObject->addComponent(cameraTranform->getClassID(), cameraTranform);
 	cameraObject->addComponent(cameraCube->getClassID(), cameraCube);
 
+	cameraObject->getComponent<Transform>(ClassID(Transform))->getTransformMatrix4();
+	cameraObject->getComponent<Camera>(ClassID(Camera))->getProjectionMatrix();
+
 	CubeDefaultMaterial* cdm = new CubeDefaultMaterial(cameraObject);
 
 	gameObject = new CubeObject();
@@ -121,10 +125,9 @@ int OpenGLApplication::Initialize()
 	transCube->SetLocalRotation(glm::vec3(0, 45, 45));
 	transCube->SetLocalScale(glm::vec3(1, 1, 1));
 
-	CubeRendererMaterial* rendererCube = new CubeRendererMaterial(ResourceManager::GetShader("cube"), cdm);
-	CubeRenderer* rend = new CubeRenderer(ResourceManager::GetShader("cube"));
+	CubeRenderer* rendererCube = new CubeRenderer(ResourceManager::GetShader("cube"), cdm);
 	gameObject->addComponent(transCube->getClassID(), transCube);
-	gameObject->addComponent(rend->getClassID(), rendererCube);
+	gameObject->addComponent(rendererCube->getClassID(), rendererCube);
 	_lastUpdate = std::chrono::steady_clock::now();
 
 
