@@ -15,7 +15,6 @@
 #include "ResourceManager.h"
 #include "Transform.h"
 #include "CubeRenderer.h"
-#include "Camera.h"
 
 class GameObject;
 
@@ -47,6 +46,7 @@ private:
 class GameObject :public Object {
 public:
 	void Renderer();
+	void RendererMaterial();
 };
 
 class CubeObject :public Object

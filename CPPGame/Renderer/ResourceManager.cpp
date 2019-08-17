@@ -95,6 +95,7 @@ const GLchar * ResourceManager::loadShaderFile(const GLchar *file) {
 
 Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alpha)
 {
+	std::cout << "LoadFile:" << file << std::endl;
 	// Create Texture object
 	Texture2D texture;
 	if (alpha)

@@ -13,7 +13,7 @@ enum CameraType {
 	Orthographic = 1	//正交投影
 };
 
-//当前阶段的相机就是在Transform类的基础上添加上了了Near和Far，完全可以把Near和Far抽出来新建一个Camera Component
+//Camera Component
 class Camera :public Component
 {
 public:
@@ -27,6 +27,8 @@ public:
 
 	Camera(glm::float32 m_Near = 1, glm::float32 m_Far = 1000, glm::float32 width = 1280, glm::float32 height = 800);
 
+	Camera(CameraType type, glm::float32 width = 1280, glm::float32 height = 800);
+
 	glm::mat4 getProjectionMatrix();
 
 	void setNear(glm::float32 near);
@@ -35,6 +37,8 @@ public:
 
 private:
 	glm::mat4 m_ProjectionMatrix4; //
+
+	CameraType m_CameraType = CameraType::Orthographic;
 
 	void updateCameraMatrix();
 };

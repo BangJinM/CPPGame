@@ -11,6 +11,9 @@
 
 #include "Renderer/TextRenderer.h"
 #include "Renderer/Camera.h"
+#include "Renderer/SpriteRendererMaterial.h"
+
+#include "OpenGLDebug.h"
 
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
@@ -18,7 +21,9 @@
 
 TextRenderer* text;
 Object* gameObject;
+Object* gameObjectMaterail;
 GameObject* cameraObject;
+
 int OpenGLApplication::Initialize()
 {
 	int result = 0;
@@ -72,33 +77,48 @@ int OpenGLApplication::Initialize()
 	ResourceManager::GetShader("sprite")->Use().SetInteger("image", 0);
 	ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection1);
 
-	//gameObject = new GameObject();
-	//Transform* trans = new Transform();
-	//trans->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight/2, 0));
-	//trans->SetLocalRotation(glm::vec3(0, 0, 45));
-	//trans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
-	//SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
-	//gameObject->addComponent(trans->getClassID(), trans);
-	//gameObject->addComponent(renderer->getClassID(), renderer);
+	gameObject = new GameObject();
+	Transform* trans = new Transform();
+	trans->SetLocalPosition(glm::vec3(m_Config.screenWidth/2, m_Config.screenHeight/2, 0));
+	trans->SetLocalRotation(glm::vec3(0, 0, 45));
+	trans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
+	SpriteRenderer* renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+	gameObject->addComponent(trans->getClassID(), trans);
+	gameObject->addComponent(renderer->getClassID(), renderer);
 
-	
+	gameObjectMaterail = new GameObject();
+	Transform* materialTrans = new Transform();
+	materialTrans->SetLocalPosition(glm::vec3(200, 200, 0));
+	materialTrans->SetLocalScale(glm::vec3(0.5, 0.5, 0.5));
+
+	cameraObject = new GameObject();
+	Camera* camera = new Camera(CameraType::Orthographic, m_Config.screenWidth, m_Config.screenHeight);
+	cameraObject->addComponent(camera->getClassID(), camera);
+
+	Material* material = new Material(cameraObject);
+
+	SpriteRendererMaterial* srm = new SpriteRendererMaterial(ResourceManager::GetShader("sprite"), material);
+
+	gameObjectMaterail->addComponent(srm->getClassID(),srm);
+	gameObjectMaterail->addComponent(materialTrans->getClassID(),materialTrans);
+
 	ResourceManager::LoadShader("Resources/Shaders/DefaultCube.vs", "Resources/Shaders/DefaultCube.flag", nullptr, "cube");
 
 	cameraObject =new GameObject();
 	Transform* cameraTranform = new Transform();
-	Camera *camera = new Camera();
+	Camera *cameraCube = new Camera();
 	cameraTranform->SetLocalPosition(glm::vec3(0,0,1));
 	cameraObject->addComponent(cameraTranform->getClassID(), cameraTranform);
-	cameraObject->addComponent(camera->getClassID(), camera);
+	cameraObject->addComponent(cameraCube->getClassID(), cameraCube);
 
 	gameObject = new CubeObject();
-	Transform* trans = new Transform();
-	trans->SetLocalPosition(glm::vec3(0, 0, -3));
-	trans->SetLocalRotation(glm::vec3(0, 45, 45));
-	trans->SetLocalScale(glm::vec3(1, 1, 1));
-	CubeRenderer* renderer = new CubeRenderer(ResourceManager::GetShader("cube"));
-	gameObject->addComponent(trans->getClassID(), trans);
-	gameObject->addComponent(renderer->getClassID(), renderer);
+	Transform* transCube = new Transform();
+	transCube->SetLocalPosition(glm::vec3(0, 0, -3));
+	transCube->SetLocalRotation(glm::vec3(0, 45, 45));
+	transCube->SetLocalScale(glm::vec3(1, 1, 1));
+	CubeRenderer* rendererCube = new CubeRenderer(ResourceManager::GetShader("cube"));
+	gameObject->addComponent(transCube->getClassID(), transCube);
+	gameObject->addComponent(rendererCube->getClassID(), rendererCube);
 	_lastUpdate = std::chrono::steady_clock::now();
 	return result;
 }
@@ -134,12 +154,12 @@ void OpenGLApplication::calculateDeltaTime()
 
 void OpenGLApplication::Tick()
 {
+	glCheckError();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	this->m_bQuit = glfwWindowShouldClose(window);
-	auto trans = gameObject->getComponent<Transform>(ClassID(Transform));
-	auto rotation = glm::vec3(45, 45, 45);
-	trans->SetLocalRotation(rotation);
-	((CubeObject*)gameObject)->Renderer((Object *)cameraObject);
+
+	((CubeObject*)gameObject)->Renderer((Object*)cameraObject);
+	((GameObject*)gameObjectMaterail)->RendererMaterial();
 	std::string fps = "FPS = " + std::to_string(1/_deltaTime);
 	text->DrawSprite(fps, 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 	glfwSwapBuffers(window);

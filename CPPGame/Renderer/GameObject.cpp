@@ -1,5 +1,6 @@
 #include "GameObject.h"
-
+#include "Camera.h"
+#include "SpriteRendererMaterial.h"
 GameObjectManager* GameObjectManager::s_Instance = NULL;
 
 GameObjectManager& GetGameObjectManager()
@@ -36,6 +37,29 @@ void GameObject::Renderer() {
 			return;
 		auto texture = *ResourceManager::GetTexture("Resources/Textures/awesomeface.png");
 		renderer->DrawSprite(
+			texture,
+			trans->getTransformMatrix4()
+		);
+		//上面写法和下面写法一致，但是下面写法莫名其妙的会盖面texture的内容
+		//auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
+		//renderer->DrawSprite(
+		//	*ResourceManager::GetTexture("G:/CPPGame/Game/Textures/awesomeface.png"),
+		//	trans->m_LocalPosition,
+		//	trans->m_LocalScale,
+		//	trans->m_LocalRotation
+		//);
+	}
+}
+
+void GameObject::RendererMaterial() {
+	SpriteRendererMaterial* renderer = getComponent<SpriteRendererMaterial>(ClassIDType::CLASS_BaseRenderer);
+	if (renderer) {
+		auto* trans = getComponent<Transform>(ClassIDType::CLASS_Transform);
+		if (nullptr == trans)
+			return;
+		auto texture = *ResourceManager::GetTexture("Resources/Textures/awesomeface.png");
+		renderer->DrawSprite(
+			this,
 			texture,
 			trans->getTransformMatrix4()
 		);

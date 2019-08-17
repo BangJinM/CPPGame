@@ -165,13 +165,16 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Material.cpp" />
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
     <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
+    <ClCompile Include="CPPGame\Renderer\SpriteRendererMaterial.cpp" />
     <ClCompile Include="CPPGame\Renderer\TextRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\Texture2D.cpp" />
     <ClCompile Include="CPPGame\Renderer\Transform.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Resources\Materials\SpriteDefaultMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -189,13 +192,16 @@
     <ClInclude Include="CPPGame\Renderer\CubeRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />
     <ClInclude Include="CPPGame\Renderer\GameScene.h" />
+    <ClInclude Include="CPPGame\Renderer\Material.h" />
     <ClInclude Include="CPPGame\Renderer\Node.h" />
     <ClInclude Include="CPPGame\Renderer\ResourceManager.h" />
     <ClInclude Include="CPPGame\Renderer\Shader.h" />
     <ClInclude Include="CPPGame\Renderer\SpriteRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\SpriteRendererMaterial.h" />
     <ClInclude Include="CPPGame\Renderer\TextRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
     <ClInclude Include="CPPGame\Renderer\Transform.h" />
+    <ClInclude Include="Resources\Materials\SpriteDefaultMaterial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

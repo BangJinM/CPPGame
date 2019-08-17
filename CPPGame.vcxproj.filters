@@ -50,6 +50,15 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Material.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\SpriteRendererMaterial.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Materials\SpriteDefaultMaterial.cpp">
+      <Filter>res\Materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -116,6 +125,15 @@
     <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Material.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\SpriteRendererMaterial.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Materials\SpriteDefaultMaterial.h">
+      <Filter>res\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -141,6 +159,9 @@
     </Filter>
     <Filter Include="src\Renderer">
       <UniqueIdentifier>{57cf2674-803b-4a38-bc99-615cdc332827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\Materials">
+      <UniqueIdentifier>{b806b05c-e578-4b02-9db9-3bacff9f84ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
