@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "SpriteRendererMaterial.h"
+#include "CubeRendererMaterial.h"
 GameObjectManager* GameObjectManager::s_Instance = NULL;
 
 GameObjectManager& GetGameObjectManager()
@@ -88,5 +89,13 @@ void CubeObject::Renderer(Object* cameraObject)
 			cameraObject->getComponent<Camera>(ClassID(Camera))->getProjectionMatrix(),
 			trans->getTransformMatrix4()
 		);
+	}
+}
+
+
+void CubeObject::RendererMaterial() {
+	CubeRendererMaterial* renderer = getComponent<CubeRendererMaterial>(ClassIDType::CLASS_BaseRenderer);
+	if (renderer) {
+		renderer->DrawSprite(this);
 	}
 }

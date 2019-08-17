@@ -2,7 +2,13 @@
 #include "OpenGLDebug.h"
 
 
-float vertices[] = {
+CubeRenderer::CubeRenderer(Shader* shader) :BaseRenderer(shader) {
+	initRenderData();
+}
+
+void CubeRenderer::initRenderData()
+{
+	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
 		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -44,14 +50,8 @@ float vertices[] = {
 		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
+	};
 
-CubeRenderer::CubeRenderer(Shader* shader) :BaseRenderer(shader) {
-	initRenderData();
-}
-
-void CubeRenderer::initRenderData()
-{
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -71,17 +71,16 @@ void CubeRenderer::initRenderData()
 
 void CubeRenderer::DrawSprite(Texture2D& texture, glm::mat4 cameraMatrix4, glm::mat4 projection, glm::mat4 model)
 {
-	glCheckError();
 	this->shader.Use();
 	this->shader.SetMatrix4("view", cameraMatrix4);
 	this->shader.SetMatrix4("projection", projection);
 	this->shader.SetMatrix4("model", model);
 	glActiveTexture(GL_TEXTURE0);
 	texture.Bind();
+
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
-	glCheckError();
 }
 
 

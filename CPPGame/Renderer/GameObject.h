@@ -53,6 +53,7 @@ class CubeObject :public Object
 {
 public:
 	void Renderer(Object *cameraObject);
+	void RendererMaterial();
 };
 
 #endif

@@ -56,6 +56,12 @@
     <ClCompile Include="Resources\Materials\SpriteDefaultMaterial.cpp">
       <Filter>res\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="Resources\Materials\CubeDefaultMaterial.cpp">
+      <Filter>res\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\CubeRendererMaterial.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -131,6 +137,12 @@
     <ClInclude Include="Resources\Materials\SpriteDefaultMaterial.h">
       <Filter>res\Materials</Filter>
     </ClInclude>
+    <ClInclude Include="Resources\Materials\CubeDefaultMaterial.h">
+      <Filter>res\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\CubeRendererMaterial.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -160,5 +172,28 @@
     <Filter Include="res\Materials">
       <UniqueIdentifier>{b806b05c-e578-4b02-9db9-3bacff9f84ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res\Shaders">
+      <UniqueIdentifier>{c99cf1c1-ea3c-4c94-9bec-897d82605c54}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\DefaultCube.flag">
+      <Filter>res\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\DefaultCube.vs">
+      <Filter>res\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\DefaultText.flag">
+      <Filter>res\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\DefaultText.vs">
+      <Filter>res\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\Default.flag">
+      <Filter>res\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\Default.vs">
+      <Filter>res\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

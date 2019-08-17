@@ -163,6 +163,7 @@
     <ClCompile Include="CPPGame\Renderer\Camera.cpp" />
     <ClCompile Include="CPPGame\Renderer\Component.cpp" />
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp" />
+    <ClCompile Include="CPPGame\Renderer\CubeRendererMaterial.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="CPPGame\Renderer\Texture2D.cpp" />
     <ClCompile Include="CPPGame\Renderer\Transform.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Resources\Materials\CubeDefaultMaterial.cpp" />
     <ClCompile Include="Resources\Materials\SpriteDefaultMaterial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,7 @@
     <ClInclude Include="CPPGame\Renderer\ClassIDs.h" />
     <ClInclude Include="CPPGame\Renderer\Component.h" />
     <ClInclude Include="CPPGame\Renderer\CubeRenderer.h" />
+    <ClInclude Include="CPPGame\Renderer\CubeRendererMaterial.h" />
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />
     <ClInclude Include="CPPGame\Renderer\GameScene.h" />
     <ClInclude Include="CPPGame\Renderer\Material.h" />
@@ -200,7 +203,16 @@
     <ClInclude Include="CPPGame\Renderer\TextRenderer.h" />
     <ClInclude Include="CPPGame\Renderer\Texture2D.h" />
     <ClInclude Include="CPPGame\Renderer\Transform.h" />
+    <ClInclude Include="Resources\Materials\CubeDefaultMaterial.h" />
     <ClInclude Include="Resources\Materials\SpriteDefaultMaterial.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\Default.flag" />
+    <None Include="Resources\Shaders\Default.vs" />
+    <None Include="Resources\Shaders\DefaultCube.flag" />
+    <None Include="Resources\Shaders\DefaultCube.vs" />
+    <None Include="Resources\Shaders\DefaultText.flag" />
+    <None Include="Resources\Shaders\DefaultText.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
