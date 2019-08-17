@@ -8,11 +8,11 @@ class Object;
 class Material
 {
 public:
-	Material(Object* camera);
+	Material(Object* camera) :m_Camera(camera) {}
 
-	void Use(Object* gameObject);
+	virtual void Use(Object* gameObject) {}
 
-	~Material();
+	virtual ~Material() {}
 	Object* m_Camera;
 	Texture2D m_Texture;
 	Shader m_Shader;

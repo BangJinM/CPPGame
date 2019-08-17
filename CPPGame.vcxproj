@@ -165,7 +165,6 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
-    <ClCompile Include="CPPGame\Renderer\Material.cpp" />
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
     <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />

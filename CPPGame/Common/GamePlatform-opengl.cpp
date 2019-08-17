@@ -12,7 +12,7 @@
 #include "Renderer/TextRenderer.h"
 #include "Renderer/Camera.h"
 #include "Renderer/SpriteRendererMaterial.h"
-
+#include "..//Resources/Materials/SpriteDefaultMaterial.h"
 #include "OpenGLDebug.h"
 
 #ifndef MAX
@@ -95,7 +95,7 @@ int OpenGLApplication::Initialize()
 	Camera* camera = new Camera(CameraType::Orthographic, m_Config.screenWidth, m_Config.screenHeight);
 	cameraObject->addComponent(camera->getClassID(), camera);
 
-	Material* material = new Material(cameraObject);
+	Material* material = new SpriteDefaultMaterial(cameraObject);
 
 	SpriteRendererMaterial* srm = new SpriteRendererMaterial(ResourceManager::GetShader("sprite"), material);
 

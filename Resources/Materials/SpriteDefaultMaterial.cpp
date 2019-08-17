@@ -3,7 +3,7 @@
 #include "Renderer/Transform.h"
 #include "Renderer/Camera.h"
 
-SpriteDefaultMaterial::SpriteDefaultMaterial(Object* camera) {
+SpriteDefaultMaterial::SpriteDefaultMaterial(Object* camera) :Material(camera){
 	m_Camera = camera;
 	m_Shader = ResourceManager::LoadShader("Resources/Shaders//Default.vs", "Resources/Shaders/Default.flag", nullptr, "sprite");
 	m_Texture = *ResourceManager::GetTexture("Resources/Textures/container.jpg");
@@ -30,3 +30,5 @@ void SpriteDefaultMaterial::Use(Object* host)
 	glActiveTexture(GL_TEXTURE0);
 	m_Texture.Bind();
 }
+
+SpriteDefaultMaterial::~SpriteDefaultMaterial() {}

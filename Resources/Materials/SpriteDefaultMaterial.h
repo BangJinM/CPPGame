@@ -1,18 +1,16 @@
 #ifndef SRC_RENDERER_SPRITE_DEFAULT_MATERIAL_H
 #define SRC_RENDERER_SPRITE_DEFAULT_MATERIAL_H
-#include "Renderer/Shader.h"
-#include "Renderer/Texture2D.h"
+#include "Renderer/Material.h"
 
 class Object;
-
-class SpriteDefaultMaterial
+class SpriteDefaultMaterial:public Material
 {
 public:
 	SpriteDefaultMaterial(Object* camera);
 
-	void Use(Object* gameObject);
+	void Use(Object* gameObject) override;
 
-	~SpriteDefaultMaterial();
+	~SpriteDefaultMaterial()override;
 	Object* m_Camera;
 	Texture2D m_Texture;
 	Shader m_Shader;
