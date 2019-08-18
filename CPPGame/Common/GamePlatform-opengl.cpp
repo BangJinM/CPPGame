@@ -160,7 +160,7 @@ void OpenGLApplication::calculateDeltaTime()
 	auto now = std::chrono::steady_clock::now();
 	_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
 	_lastUpdate = now;
-	_deltaTime = MAX(1, _deltaTime);
+	//_deltaTime = MAX(1, _deltaTime);
 }
 
 void OpenGLApplication::Tick()
@@ -171,7 +171,9 @@ void OpenGLApplication::Tick()
 
 	((CubeObject*)gameObject)->RendererMaterial();
 	((GameObject*)gameObjectMaterail)->RendererMaterial();
-	std::string fps = "FPS = " + std::to_string(1/_deltaTime);
+	std::string fps = "FPS = " + std::to_string(1000/_deltaTime);
+	std::string de = std::to_string(_deltaTime) + "\n";
+	printf(de.data());
 	text->DrawSprite(fps, 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 	glfwSwapBuffers(window);
 	glfwPollEvents();

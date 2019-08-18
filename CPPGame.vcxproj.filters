@@ -53,6 +53,12 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Mesh.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPGame\Renderer\Model.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
@@ -126,6 +132,12 @@
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Mesh.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPGame\Renderer\Model.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

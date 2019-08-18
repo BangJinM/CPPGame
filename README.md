@@ -10,3 +10,5 @@
 5.图片加载库：soil
 
 6.字体引擎：free type
+
+7.模型加载库：Assimp

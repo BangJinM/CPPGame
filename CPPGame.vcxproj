@@ -91,13 +91,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;$(SolutionDir)CPPGame\External\soil\includes;$(SolutionDir)CPPGame\External\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)CPPGame;$(SolutionDir)CPPGame\External\glew\include;$(SolutionDir)CPPGame\External\glad\include;$(SolutionDir)CPPGame\External\glm;$(SolutionDir)CPPGame\External\soil\includes;$(SolutionDir)CPPGame\External\freetype\include;$(SolutionDir)CPPGame\External\assimp\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\soil\lib;$(SolutionDir)CPPGame\External\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)CPPGame\External\glew\lib;$(SolutionDir)CPPGame\External\soil\lib;$(SolutionDir)CPPGame\External\freetype\win32;$(SolutionDir)CPPGame\External\assimp\lib\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;SOIL.lib;freetype.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
@@ -164,6 +164,8 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameObject.cpp" />
     <ClCompile Include="CPPGame\Renderer\GameScene.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Mesh.cpp" />
+    <ClCompile Include="CPPGame\Renderer\Model.cpp" />
     <ClCompile Include="CPPGame\Renderer\ResourceManager.cpp" />
     <ClCompile Include="CPPGame\Renderer\Shader.cpp" />
     <ClCompile Include="CPPGame\Renderer\SpriteRenderer.cpp" />
@@ -191,6 +193,8 @@
     <ClInclude Include="CPPGame\Renderer\GameObject.h" />
     <ClInclude Include="CPPGame\Renderer\GameScene.h" />
     <ClInclude Include="CPPGame\Renderer\Material.h" />
+    <ClInclude Include="CPPGame\Renderer\Mesh.h" />
+    <ClInclude Include="CPPGame\Renderer\Model.h" />
     <ClInclude Include="CPPGame\Renderer\Node.h" />
     <ClInclude Include="CPPGame\Renderer\ResourceManager.h" />
     <ClInclude Include="CPPGame\Renderer\Shader.h" />
