@@ -15,6 +15,7 @@
 #include "..//Resources/Materials/CubeDefaultMaterial.h"
 #include "Renderer/CubeRenderer.h"
 #include "OpenGLDebug.h"
+#include "Renderer/learnOpenGL/Model.h"
 
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
@@ -130,6 +131,8 @@ int OpenGLApplication::Initialize()
 	gameObject->addComponent(rendererCube->getClassID(), rendererCube);
 	_lastUpdate = std::chrono::steady_clock::now();
 
+
+	Model ourModel("Resources/Materials/nanosuit.obj");
 
 	return result;
 }

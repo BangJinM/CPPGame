@@ -53,11 +53,11 @@
     <ClCompile Include="CPPGame\Renderer\CubeRenderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\Mesh.cpp">
-      <Filter>src\Renderer</Filter>
+    <ClCompile Include="CPPGame\Renderer\learnOpenGL\Model.cpp">
+      <Filter>src\Renderer\learnOpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="CPPGame\Renderer\Model.cpp">
-      <Filter>src\Renderer</Filter>
+    <ClCompile Include="CPPGame\Renderer\learnOpenGL\Mesh.cpp">
+      <Filter>src\Renderer\learnOpenGl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,11 +134,8 @@
     <ClInclude Include="CPPGame\Renderer\CubeRenderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\Mesh.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="CPPGame\Renderer\Model.h">
-      <Filter>src\Renderer</Filter>
+    <ClInclude Include="CPPGame\Renderer\learnOpenGL\Mesh.h">
+      <Filter>src\Renderer\learnOpenGl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +169,9 @@
     <Filter Include="res\Shaders">
       <UniqueIdentifier>{c99cf1c1-ea3c-4c94-9bec-897d82605c54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Renderer\learnOpenGl">
+      <UniqueIdentifier>{22c20e18-6023-435f-b7bf-a1e3929e7ee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\DefaultCube.flag">
@@ -192,5 +192,10 @@
     <None Include="Resources\Shaders\Default.vs">
       <Filter>res\Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CPPGame\Renderer\learnOpenGL\Model.h">
+      <Filter>src\Renderer\learnOpenGl</Filter>
+    </Text>
   </ItemGroup>
 </Project>
