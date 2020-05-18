@@ -1,9 +1,0 @@
-#ifndef CPPGAME_COMMON_INPUT_H
-#define CPPGAME_COMMON_INPUT_H
-
-class Input
-{
-	
-};
-
-#endif //CPPGAME_COMMON_INPUT_H
