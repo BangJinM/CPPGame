@@ -4,25 +4,62 @@
 #include "IRuntimeModule.h"
 #include <list>
 #include <map>
+#include <functional>
 
 namespace GameEngine{
+	class InputManager;
+	extern InputManager* g_pInputManager;
     class InputManager :IRuntimeModule
     {
+		
+		typedef std::function<void()> CallBack;
+		struct GameEngineCallBack
+		{
+			std::list<CallBack> * callbacks;
+
+			GameEngineCallBack() {
+				callbacks = new std::list<CallBack>();
+			}
+
+			void push(CallBack callback) {
+				callbacks->push_back(callback);
+			}
+
+			void remove(CallBack callback) {
+				auto iter = callbacks->begin();
+				//while (iter != callbacks->end())
+				//{
+
+				//}
+			}
+
+			void dispatch() {
+				auto iter = callbacks->begin();
+				while (iter != callbacks->end())
+				{
+					CallBack callback = *iter;
+					(callback)();
+					++iter;
+				}
+			}
+		};
         public:
+            
             virtual int Initialize();
             virtual void Finalize();
             virtual void Tick();
 
-            void addClickEventListener(const char key, void* func);
+			static void addClickEventListener(const char key, CallBack callBack);
 
-            void removeClickEventListener(const char key, void *func);
+			static void removeClickEventListener(const char key, CallBack callBack);
 
-            void dispatchClickEvent(const char key);
+            static void dispatchClickEvent(const char key);
 
         private:
+            
             /* data */
-            std::map<char, std::list<void*>> _listeners;
+            std::map<char, GameEngineCallBack *> _listeners;
     };
-    extern InputManager* g_pInputManager;
+    
 }
 #endif
