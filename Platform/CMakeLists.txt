@@ -1,2 +1,2 @@
 
-add_subdirectory(Win)
+add_subdirectory(Windows)

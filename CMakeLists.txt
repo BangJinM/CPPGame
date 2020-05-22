@@ -22,12 +22,14 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 
 
-set(MYGE_TARGET_PLATFORM "Win")
+set(MYGE_TARGET_PLATFORM "Windows")
 
 
 set(MYGE_EXTERNAL_ROOT ${PROJECT_SOURCE_DIR}/External/${MYGE_TARGET_PLATFORM}/)
 
 include_directories("${PROJECT_SOURCE_DIR}/Platform/${MYGE_TARGET_PLATFORM}")
+
+include_directories("${PROJECT_SOURCE_DIR}/External/src/glm")
 
 include_directories("${MYGE_EXTERNAL_ROOT}include")
 set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)
