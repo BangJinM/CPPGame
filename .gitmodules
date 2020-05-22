@@ -1,0 +1,10 @@
+[submodule "External/src/glm"]
+	path = External/src/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "External/src/glfw"]
+	path = External/src/glfw
+	url = https://github.com/BangjinMa/glfw.git
+	branch = master
+[submodule "External/src/crossguid"]
+	path = External/src/crossguid
+	url = https://github.com/netwarm007/crossguid.git
