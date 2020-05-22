@@ -8,3 +8,6 @@
 [submodule "External/src/crossguid"]
 	path = External/src/crossguid
 	url = https://github.com/netwarm007/crossguid.git
+[submodule "External/src/OpenGEX"]
+	path = External/src/OpenGEX
+	url = https://github.com/BangjinMa/OpenGEX.git

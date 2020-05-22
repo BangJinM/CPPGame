@@ -20,7 +20,8 @@ namespace GameEngine{
         virtual void Tick();
 
         virtual bool IsQuit();
-
+	protected:
+		virtual void OnDraw() {};
     protected:
         // 标记是否在住循环中退�?
         static bool m_bQuit;
