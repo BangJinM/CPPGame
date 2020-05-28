@@ -2,8 +2,8 @@
 #define CPPGAME_Common_Scene_Material_H
 
 #include <string>
-#include <glm/glm.hpp>
-
+#include "MyMath.h"
+using namespace myMath;
 namespace GameEngine
 {
 
@@ -180,10 +180,10 @@ namespace GameEngine
                  unsigned int idx, std::string &pOut) const;
 
         bool Get(const char *pKey, unsigned int type,
-                 unsigned int idx, glm::vec<3, float, glm::defaultp> &pOut) const;
+                 unsigned int idx, vecterFloat3 &pOut) const;
 
         bool Get(const char *pKey, unsigned int type,
-                 unsigned int idx, glm::vec<4, float, glm::defaultp> &pOut) const;
+                 unsigned int idx, vecterFloat4 &pOut) const;
 
         bool Get(const char *pKey, unsigned int type,
                  unsigned int idx, UVTransform &pOut) const;
@@ -218,13 +218,13 @@ namespace GameEngine
                          unsigned int type = 0,
                          unsigned int index = 0);
 
-        bool AddProperty(const glm::vec<3, float, glm::defaultp> *pInput,
+        bool AddProperty(const vecterFloat3 *pInput,
                          unsigned int pNumValues,
                          const char *pKey,
                          unsigned int type = 0,
                          unsigned int index = 0);
 
-        bool AddProperty(const glm::vec<4, float, glm::defaultp> *pInput,
+        bool AddProperty(const vecterFloat4 *pInput,
                          unsigned int pNumValues,
                          const char *pKey,
                          unsigned int type = 0,

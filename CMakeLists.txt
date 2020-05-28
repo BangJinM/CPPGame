@@ -16,6 +16,7 @@ project (GameEngine)
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/Scene")
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
 
 set(MYGE_TARGET_PLATFORM "Windows")
 

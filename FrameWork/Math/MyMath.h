@@ -2,7 +2,9 @@
 #define GameEngine_Math_H
 
 #include <glm/glm.hpp>
-namespace Math{
+namespace myMath{
     typedef glm::vec<4, uint8_t, glm::defaultp> R8G8B8A8Unorm;
+    typedef glm::vec<3, float, glm::defaultp> vecterFloat3;
+    typedef glm::vec<4, float, glm::defaultp> vecterFloat4;
 }
 #endif

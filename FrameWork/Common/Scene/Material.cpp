@@ -88,11 +88,17 @@ namespace GameEngine
     }
     bool Material::AddProperty(const std::string *pInput, const char *pKey, unsigned int type, unsigned int index)
     {
-        return false;
+        return AddBinaryProperty((const void *)pInput, pInput->length(), pKey, type, index, aiPTI_String);
     }
-    bool Material::AddProperty(const glm::vec<3, float, glm::defaultp> *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
+
+    bool Material::AddProperty(const vecterFloat3 *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
     {
-        return false;
+		return AddBinaryProperty((const void *)pInput, pNumValues * sizeof(vecterFloat4), pKey, type, index, aiPTI_Buffer);
+    }
+
+    bool Material::AddProperty(const vecterFloat4 *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
+    {
+		return AddBinaryProperty((const void *)pInput, pNumValues * sizeof(vecterFloat4), pKey, type, index, aiPTI_Buffer);
     }
     bool Material::AddProperty(const int *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
     {
@@ -152,7 +158,11 @@ namespace GameEngine
     {
         return false;
     }
-    bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, glm::vec<3, float, glm::defaultp> &pOut) const
+    bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, vecterFloat3 &pOut) const
+    {
+        return false;
+    }
+    bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, vecterFloat4 &pOut) const
     {
         return false;
     }

@@ -2,7 +2,7 @@
 #define GameEngine_Image_H
 
 #include <cstdint>
-#include "Math.h"
+#include "MyMath.h"
 
 namespace GameEngine{
     struct Image {
