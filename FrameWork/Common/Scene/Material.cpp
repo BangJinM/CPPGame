@@ -2,14 +2,18 @@
 
 namespace GameEngine
 {
-    MaterialProperty::MaterialProperty() : mSemantic(0), mIndex(0), mDataLength(0), mType(PropertyTypeInfo::aiPTI_Float), mData(nullptr)
+    static const unsigned int DefaultNumAllocated = 5;  
+
+    MaterialProperty::MaterialProperty() :mKey(nullptr), mSemantic(0), mIndex(0), mDataLength(0), mType(PropertyTypeInfo::aiPTI_Float), mData(nullptr)
     {
     }
 
     MaterialProperty::~MaterialProperty()
     {
         delete[] mData;
+		delete[] mKey;
         mData = nullptr;
+		mKey = nullptr;
     }
 
     bool Material::AddBinaryProperty(const void *pInput, unsigned int pSizeInBytes, const char *pKey, unsigned int type, unsigned int index, PropertyTypeInfo pType)
@@ -45,8 +49,8 @@ namespace GameEngine
         pcNew->mDataLength = pSizeInBytes;
         pcNew->mData = new char[pSizeInBytes];
         memcpy(pcNew->mData, pInput, pSizeInBytes);
-
-        strcpy(pcNew->mKey, pKey);
+		pcNew->mKey = new char[sizeof(pKey)];
+        memcpy(pcNew->mKey, pKey, sizeof(pKey));
 
         if (UINT_MAX != iOutIndex)
         {
@@ -117,8 +121,9 @@ namespace GameEngine
     void Material::CopyPropertyList(Material *pcDest, const Material *pcSrc)
     {
     }
-    Material::Material()
+    Material::Material(): mProperties( nullptr ), mNumProperties( 0 ), mNumAllocated( DefaultNumAllocated )
     {
+        mProperties = new MaterialProperty*[ DefaultNumAllocated ];
     }
     Material::~Material()
     {
