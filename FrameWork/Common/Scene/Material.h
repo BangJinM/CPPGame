@@ -116,7 +116,7 @@ namespace GameEngine
 
     struct MaterialProperty
     {
-        char * mKey;
+        char *mKey;
 
         unsigned int mSemantic;
 
@@ -187,6 +187,8 @@ namespace GameEngine
 
         bool Get(const char *pKey, unsigned int type,
                  unsigned int idx, UVTransform &pOut) const;
+
+        static bool getMaterialProperty(const Material* pMat, const char *pKey, unsigned int type, unsigned int index, const MaterialProperty **pPropOut);
 
         unsigned int GetTextureCount(TextureType type) const;
 
@@ -270,23 +272,23 @@ namespace GameEngine
         unsigned int mNumAllocated;
     };
 
-	template<typename Type>
-	inline bool Material::Get(const char * pKey, unsigned int type, unsigned int idx, Type * pOut, unsigned int * pMax) const
-	{
-		return false;
-	}
+    template <typename Type>
+    inline bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, Type *pOut, unsigned int *pMax) const
+    {
+        return false;
+    }
 
-	template<typename Type>
-	inline bool Material::Get(const char * pKey, unsigned int type, unsigned int idx, Type & pOut) const
-	{
-		return false;
-	}
+    template <typename Type>
+    inline bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, Type &pOut) const
+    {
+        return false;
+    }
 
-	template<typename Type>
-	inline bool Material::AddProperty(const Type * pInput, unsigned int pNumValues, const char * pKey, unsigned int type, unsigned int index)
-	{
-		return false;
-	}
+    template <typename Type>
+    inline bool Material::AddProperty(const Type *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
+    {
+        return false;
+    }
 
 } // namespace GameEngine
 

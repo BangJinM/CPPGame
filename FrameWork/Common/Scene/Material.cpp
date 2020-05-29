@@ -49,9 +49,10 @@ namespace GameEngine
         pcNew->mDataLength = pSizeInBytes;
         pcNew->mData = new char[pSizeInBytes];
         memcpy(pcNew->mData, pInput, pSizeInBytes);
-		pcNew->mKey = new char[sizeof(pKey)];
-        memcpy(pcNew->mKey, pKey, sizeof(pKey));
-
+		int size = strlen(pKey) * sizeof(char);
+		pcNew->mKey = new char[size + 1];
+        memset(pcNew->mKey, '\0', size + 1);
+        memcpy(pcNew->mKey, pKey, size);
         if (UINT_MAX != iOutIndex)
         {
             mProperties[iOutIndex] = pcNew;
@@ -160,6 +161,13 @@ namespace GameEngine
     }
     bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, vecterFloat3 &pOut) const
     {
+        const MaterialProperty* prop;
+        getMaterialProperty(this, pKey,type,idx, (const MaterialProperty**) &prop);
+		if (prop) {
+			vecterFloat3* p = (vecterFloat3*)prop->mData;
+			pOut = *p;
+			return true;
+		}
         return false;
     }
     bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, vecterFloat4 &pOut) const
@@ -170,6 +178,24 @@ namespace GameEngine
     {
         return false;
     }
+
+	bool Material::getMaterialProperty(const Material* pMat, const char * pKey, unsigned int type, unsigned int index, const MaterialProperty ** pPropOut)
+	{
+		for (unsigned int i = 0; i < pMat->mNumProperties; ++i) {
+			MaterialProperty* prop = pMat->mProperties[i];
+
+			if (prop /* just for safety ... */
+				&& 0 == strcmp(prop->mKey, pKey)
+				&& (UINT_MAX == type || prop->mSemantic == type) /* UINT_MAX is a wild-card, but this is undocumented :-) */
+				&& (UINT_MAX == index || prop->mIndex == index))
+			{
+				*pPropOut = pMat->mProperties[i];
+				return true;
+			}
+		}
+		*pPropOut = NULL;
+		return false;
+	}
     unsigned int Material::GetTextureCount(TextureType type) const
     {
         return 0;
