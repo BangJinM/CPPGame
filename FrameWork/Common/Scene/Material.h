@@ -135,9 +135,9 @@ namespace GameEngine
     struct UVTransform
     {
 
-        glm::vec<2, float, glm::defaultp> mTranslation;
+        vecterFloat2 mTranslation;
 
-        glm::vec<2, float, glm::defaultp> mScaling;
+        vecterFloat2 mScaling;
 
         float mRotation;
 
@@ -281,13 +281,20 @@ namespace GameEngine
     template <typename Type>
     inline bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, Type &pOut) const
     {
-        return false;
+        const MaterialProperty* prop;
+		getMaterialProperty(this, pKey, type, idx, (const MaterialProperty**)&prop);
+		if (prop) {
+			UVTransform* p = (UVTransform*)prop->mData;
+			pOut = *p;
+			return true;
+		}
+		return false;
     }
 
     template <typename Type>
     inline bool Material::AddProperty(const Type *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
     {
-        return false;
+        return AddBinaryProperty((const void *)pInput, pInput->length(), pKey, type, index, aiPTI_Buffer);
     }
 
 } // namespace GameEngine
