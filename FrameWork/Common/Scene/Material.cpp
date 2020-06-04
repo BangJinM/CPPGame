@@ -157,15 +157,7 @@ namespace GameEngine
     }
     bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, std::string &pOut) const
     {
-        const MaterialProperty* prop;
-        getMaterialProperty(this, pKey,type,idx, (const MaterialProperty**) &prop);
-		if (prop) {
-			string* p = (std::string*)prop->mData;
-			pOut = *p;
-			return true;
-		}
-        return false;
-        return false;
+		return false;
     }
     bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, vecterFloat3 &pOut) const
     {

@@ -2,6 +2,8 @@
 #include <string>
 #include "AssetLoader.h"
 #include "MemoryManager.h"
+#include "ObjParser.h"
+#include "Scene.h"
 
 using namespace std;
 using namespace GameEngine;
@@ -15,8 +17,7 @@ int main(int , char** )
     g_pMemoryManager->Initialize();
 
     AssetLoader asset_loader;
-    string shader_pgm = asset_loader.SyncOpenAndReadTextFileToString("Shaders/copy.ps");
-
+    string shader_pgm = asset_loader.SyncOpenAndReadTextFileToString("Scene/Shape_Cube.obj");
     cout << shader_pgm;
 
     g_pMemoryManager->Finalize();

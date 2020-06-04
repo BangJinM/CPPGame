@@ -2,6 +2,10 @@ SET( Scene
     Scene/Material.cpp
 )
 
+SET( Parser
+    Parser/ObjParser.cpp
+)
+
 SET( Common
     InputManager.cpp
     BaseApplication.cpp
@@ -11,10 +15,18 @@ SET( Common
     main.cpp
 )
 
+file(GLOB_RECURSE CURRENT_HEADERS  *.h *.hpp)
+source_group(include FILES ${CURRENT_HEADERS}) 
+
 add_library(Common
     ${Common}    
     ${Scene}
+    ${Parser}
+    ${CURRENT_HEADERS}
 )
 
-SOURCE_GROUP( Common\\Scene FILES ${Scene})
-SOURCE_GROUP( Common FILES ${Common})
+
+SOURCE_GROUP( src\\Parser FILES ${Parser})
+SOURCE_GROUP( src\\Scene FILES ${Scene})
+SOURCE_GROUP( src FILES ${Common})
+

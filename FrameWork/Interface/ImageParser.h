@@ -4,7 +4,7 @@
 #include "Buffer.hpp"
 
 namespace GameEngine {
-    interface ImageParser
+    class ImageParser
     {
     public:
         virtual Image Parse(const Buffer& buf) = 0;
