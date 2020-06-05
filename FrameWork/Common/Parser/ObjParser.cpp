@@ -129,9 +129,12 @@ namespace GameEngine
 
 	std::unique_ptr<Scene> ObjParser::LoadObj(std::istream &inStream)
 	{
-		std::vector<float> v;
-		std::vector<float> vn;
-		std::vector<float> vt;
+		std::vector<float> vertices;
+		std::vector<float> vertexNormals;
+		std::vector<float> textureVertices;
+		std::vector<int> verticeIndex;	   // 顶点索引
+		std::vector<int> texturCoordIndex; // 顶点索引
+		std::vector<int> normalIndex;	   // 顶点索引
 
 		int maxchars = 8192;			 // Alloc enough size.
 		std::vector<char> buf(maxchars); // Alloc enough size.
@@ -141,15 +144,9 @@ namespace GameEngine
 			std::string linebuf(&buf[0]);
 
 			// Trim newline '\r\n' or '\n'
-			if (linebuf.size() > 0)
+			while (linebuf.size() > 0 && (linebuf[linebuf.size() - 1] == '\n' || linebuf[linebuf.size() - 1] == '\r'))
 			{
-				if (linebuf[linebuf.size() - 1] == '\n')
-					linebuf.erase(linebuf.size() - 1);
-			}
-			if (linebuf.size() > 0)
-			{
-				if (linebuf[linebuf.size() - 1] == '\r')
-					linebuf.erase(linebuf.size() - 1);
+				linebuf.erase(linebuf.size() - 1);
 			}
 
 			// Skip if empty line.
@@ -168,24 +165,105 @@ namespace GameEngine
 
 			if (token[0] == '#')
 				continue; // comment line
-				
-			if (token[0] == 'g')
-				printf(linebuf.data());// comment line
+
 			// vertex
 			if (token[0] == 'v' && isSpace((token[1])))
 			{
 				token += 2;
 				float x, y, z;
 				parseFloat3(x, y, z, token);
-				v.push_back(x);
-				v.push_back(y);
-				v.push_back(z);
+				vertices.push_back(x);
+				vertices.push_back(y);
+				vertices.push_back(z);
 				continue;
 			}
-			printf(linebuf.data());
-			printf("\n");
+
+			// normal
+			if (token[0] == 'v' && token[1] == 'n' && isSpace((token[2])))
+			{
+				token += 3;
+				float x, y, z;
+				parseFloat3(x, y, z, token);
+				vertexNormals.push_back(x);
+				vertexNormals.push_back(y);
+				vertexNormals.push_back(z);
+				continue;
+			}
+
+			// texcoord
+			if (token[0] == 'v' && token[1] == 't' && isSpace((token[2])))
+			{
+				token += 3;
+				float x, y;
+				parseFloat2(x, y, token);
+				textureVertices.push_back(x);
+				textureVertices.push_back(y);
+				continue;
+			}
+
+			// face
+			if (token[0] == 'f' && isSpace((token[1])))
+			{
+				token += 2;
+				token += strspn(token, " \t");
+
+				auto first = static_cast<int>(vertices.size() / 3);
+				auto second = static_cast<int>(vertexNormals.size() / 3);
+				auto third = static_cast<int>(textureVertices.size() / 2);
+				while (!isNewLine(token[0]))
+				{
+					int v_idx,vn_idx,vt_idx;
+					parseTriple(token, first, second, third, verticeIndex, normalIndex, texturCoordIndex);
+					size_t n = strspn(token, " \t\r");
+					token += n;
+				}
+
+				continue;
+			}
 		}
 		return std::unique_ptr<Scene>();
+	}
+	void ObjParser::parseTriple(const char *& token, int vsize, int vnsize, int vtsize, std::vector<int> & verticeIndex, std::vector<int>&  normalIndex, std::vector<int>&  texturCoordIndex)
+	{
+		int v_idx, vn_idx, vt_idx;
+		v_idx = fixIndex(atoi(token), vsize);
+		token += strcspn(token, "/ \t\r");
+		if (token[0] != '/')
+		{
+			verticeIndex.push_back(v_idx);
+			return;
+		}
+		token++;
+
+		// i//k
+		if (token[0] == '/')
+		{
+			token++;
+			vn_idx = fixIndex(atoi(token), vnsize);
+			token += strcspn(token, "/ \t\r");
+			verticeIndex.push_back(v_idx);
+			normalIndex.push_back(vn_idx);
+			return;
+		}
+
+		// i/j/k or i/j
+		vt_idx = fixIndex(atoi(token), vtsize);
+		token += strcspn(token, "/ \t\r");
+		if (token[0] != '/')
+		{
+			verticeIndex.push_back(v_idx);
+			texturCoordIndex.push_back(vt_idx);
+			return;
+		}
+
+		// i/j/k
+		token++; // skip '/'
+		vn_idx = fixIndex(atoi(token), vnsize);
+		token += strcspn(token, "/ \t\r");
+		verticeIndex.push_back(v_idx);
+		normalIndex.push_back(vn_idx);
+		texturCoordIndex.push_back(vt_idx);
+		return;
 	}
 
 } // namespace GameEngine

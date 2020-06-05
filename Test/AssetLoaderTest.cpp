@@ -4,7 +4,7 @@
 #include "MemoryManager.h"
 #include "ObjParser.h"
 #include "Scene.h"
-
+#include "ObjParser.h"
 using namespace std;
 using namespace GameEngine;
 
@@ -18,6 +18,8 @@ int main(int , char** )
 
     AssetLoader asset_loader;
     string shader_pgm = asset_loader.SyncOpenAndReadTextFileToString("Scene/Shape_Cube.obj");
+	ObjParser obj;
+	obj.Parse(shader_pgm);
     cout << shader_pgm;
 
     g_pMemoryManager->Finalize();
