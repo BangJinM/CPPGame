@@ -3,7 +3,7 @@ SET( Scene
 )
 
 SET( Parser
-    Parser/ObjParser.cpp
+    Parser/ObjLoader.cpp
 )
 
 SET( Common
