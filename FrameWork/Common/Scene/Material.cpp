@@ -113,11 +113,7 @@ namespace GameEngine
     {
         return false;
     }
-    bool Material::AddProperty(const UVTransform *pInput, unsigned int pNumValues, const char *pKey, unsigned int type, unsigned int index)
-    {
 
-        return false;
-    }
     bool Material::RemoveProperty(const char *pKey, unsigned int type, unsigned int index)
     {
         return false;
@@ -128,7 +124,7 @@ namespace GameEngine
     void Material::CopyPropertyList(Material *pcDest, const Material *pcSrc)
     {
     }
-    Material::Material(): mProperties( nullptr ), mNumProperties( 0 ), mNumAllocated( DefaultNumAllocated )
+    Material::Material(): mProperties( nullptr ), mNumProperties( 0 ), mNumAllocated( DefaultNumAllocated ),Component(ClassID(Material))
     {
         mProperties = new MaterialProperty*[ DefaultNumAllocated ];
     }
@@ -181,17 +177,7 @@ namespace GameEngine
 		}
         return false;
     }
-    bool Material::Get(const char *pKey, unsigned int type, unsigned int idx, UVTransform &pOut) const
-    {
-		const MaterialProperty* prop;
-		getMaterialProperty(this, pKey, type, idx, (const MaterialProperty**)&prop);
-		if (prop) {
-			UVTransform* p = (UVTransform*)prop->mData;
-			pOut = *p;
-			return true;
-		}
-		return false;
-    }
+
 
 	bool Material::getMaterialProperty(const Material* pMat, const char * pKey, unsigned int type, unsigned int index, const MaterialProperty ** pPropOut)
 	{

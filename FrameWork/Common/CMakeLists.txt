@@ -1,5 +1,8 @@
 SET( Scene
     Scene/Material.cpp
+    Scene/GameObject.cpp
+    Scene/Mesh.cpp
+    Scene/Scene.cpp
 )
 
 SET( Parser
@@ -24,7 +27,11 @@ add_library(Common
     ${Parser}
     ${CURRENT_HEADERS}
 )
-
+target_link_libraries(Common Glad)
+add_library( Glad
+    ${PROJECT_SOURCE_DIR}/External/src/glad/src/glad.c
+)
+target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad/include")
 
 SOURCE_GROUP( src\\Parser FILES ${Parser})
 SOURCE_GROUP( src\\Scene FILES ${Scene})

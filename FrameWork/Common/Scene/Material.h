@@ -3,7 +3,8 @@
 
 #include <string>
 #include "MyMath.h"
-using namespace myMath;
+#include "Component.h"
+
 namespace GameEngine
 {
 
@@ -132,23 +133,7 @@ namespace GameEngine
         ~MaterialProperty();
     };
 
-    struct UVTransform
-    {
-
-        vecterFloat2 mTranslation;
-
-        vecterFloat2 mScaling;
-
-        float mRotation;
-
-        UVTransform()
-            : mTranslation(0.0, 0.0), mScaling(1.0, 1.0), mRotation(0.0)
-        {
-            // nothing to be done here ...
-        }
-    };
-
-    struct Material
+    struct Material:public Component
     {
     public:
         Material();
@@ -185,8 +170,6 @@ namespace GameEngine
         bool Get(const char *pKey, unsigned int type,
                  unsigned int idx, vecterFloat4 &pOut) const;
 
-        bool Get(const char *pKey, unsigned int type,
-                 unsigned int idx, UVTransform &pOut) const;
 
         static bool getMaterialProperty(const Material* pMat, const char *pKey, unsigned int type, unsigned int index, const MaterialProperty **pPropOut);
 
@@ -250,12 +233,6 @@ namespace GameEngine
                          unsigned int type = 0,
                          unsigned int index = 0);
 
-        bool AddProperty(const UVTransform *pInput,
-                         unsigned int pNumValues,
-                         const char *pKey,
-                         unsigned int type = 0,
-                         unsigned int index = 0);
-
         bool RemoveProperty(const char *pKey,
                             unsigned int type = 0,
                             unsigned int index = 0);
@@ -284,7 +261,7 @@ namespace GameEngine
         const MaterialProperty* prop;
 		getMaterialProperty(this, pKey, type, idx, (const MaterialProperty**)&prop);
 		if (prop) {
-			UVTransform* p = (UVTransform*)prop->mData;
+			Type* p = (Type*)prop->mData;
 			pOut = *p;
 			return true;
 		}

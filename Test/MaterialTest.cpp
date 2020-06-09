@@ -4,7 +4,7 @@
 #include "InputManager.h"
 #include "Material.h"
 #include "MyMath.h"
-using namespace myMath;
+
 using namespace GameEngine;
 int main(int , char** )
 {

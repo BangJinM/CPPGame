@@ -10,13 +10,6 @@ namespace GameEngine{
     private:
         /* data */
     public:
-        BMPParser(/* args */){
-
-        }
-        ~BMPParser(){
-            
-        }
-
         virtual Image Parse(const Buffer& buf){
 
         }

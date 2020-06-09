@@ -27,6 +27,7 @@ set(MYGE_EXTERNAL_ROOT ${PROJECT_SOURCE_DIR}/External/${MYGE_TARGET_PLATFORM}/)
 
 include_directories("${PROJECT_SOURCE_DIR}/Platform/${MYGE_TARGET_PLATFORM}")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/glm")
+include_directories("${PROJECT_SOURCE_DIR}/External/src/glad/include")
 
 include_directories("${MYGE_EXTERNAL_ROOT}include")
 set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)

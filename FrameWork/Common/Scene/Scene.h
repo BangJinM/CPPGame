@@ -6,15 +6,15 @@
 #include "Scene.h"
 namespace GameEngine
 {
-    class Scene
-    {
-    private:
-        /* data */
-    public:
-		Scene(/* args */) {}
-		~Scene() {}
-    };
-    
+  class Scene
+  {
+  private:
+    /* data */
+  public:
+    Scene(/* args */);
+    ~Scene();
+  };
+
 } // namespace GameEngine
 
 #endif
