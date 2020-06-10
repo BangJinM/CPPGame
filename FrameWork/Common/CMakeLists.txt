@@ -3,6 +3,8 @@ SET( Scene
     Scene/GameObject.cpp
     Scene/Mesh.cpp
     Scene/Scene.cpp
+    Scene/MeshRendererCommand.cpp
+    Scene/Material.cpp
 )
 
 SET( Parser

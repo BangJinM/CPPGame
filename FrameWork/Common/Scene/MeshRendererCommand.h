@@ -11,7 +11,8 @@ namespace GameEngine
     {
     public:
         MeshRendererCommand();
-
+		~MeshRendererCommand();
+		virtual void excecute();
     private:
         Material *m_MaterailID;
         GLuint vao;

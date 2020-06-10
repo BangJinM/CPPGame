@@ -7,6 +7,8 @@ namespace GameEngine
     {
     public:
         RendererCommand(){}
+
+		virtual void excecute() = 0;
     };
 } // namespace GameEngine
 #endif
