@@ -94,7 +94,7 @@ void OpenGLApplication::Tick()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	this->m_bQuit = glfwWindowShouldClose(window);
 	// ((CubeObject*)gameObject)->RendererMaterial();
-	// ((GameObject*)gameObjectMaterail)->RendererMaterial();
+	// ((BaseObject*)gameObjectMaterail)->RendererMaterial();
 	// std::string fps = "FPS = " + std::to_string(1000/_deltaTime);
 	// std::string de = std::to_string(_deltaTime) + "\n";
 	// printf(de.data());

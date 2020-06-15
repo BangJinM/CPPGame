@@ -10,6 +10,7 @@ namespace GameEngine
     {
     public:
         Mesh();
+
     private:
         std::vector<float> m_Positions;
         std::vector<float> m_Normals;

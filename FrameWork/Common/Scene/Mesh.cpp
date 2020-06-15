@@ -2,5 +2,4 @@
 
 GameEngine::Mesh::Mesh():Component(ClassID(Mesh))
 {
-
 }

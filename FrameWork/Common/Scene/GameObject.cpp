@@ -2,28 +2,28 @@
 #include "Component.h"
 namespace GameEngine
 {
-    Component *GameObject::addComponent(Component *component)
+    Component *BaseObject::addComponent(Component *component)
     {
         return nullptr;
     }
 
-    void GameObject::addChild(GameObject *child)
+    void BaseObject::addChild(BaseObject *child)
     {
     }
 
-    void GameObject::getChildByName()
+    void BaseObject::getChildByName()
     {
     }
 
-    void GameObject::deleteChild(GameObject *child)
+    void BaseObject::deleteChild(BaseObject *child)
     {
     }
 
-    GameObject::GameObject()
+    BaseObject::BaseObject()
     {
     }
 
-    Component *GameObject::getComponentBy(int classID)
+    Component *BaseObject::getComponentBy(int classID)
     {
         auto itor = m_compenents.find(classID);
         if (itor != m_compenents.cend())

@@ -7,9 +7,12 @@
 
 namespace GameEngine
 {
-	class GameObject;
-	typedef std::list<GameObject *> GameObjectArray;
-    class GameObject
+    class BaseObject;
+    class Mesh;
+    class Material;
+
+    typedef std::list<BaseObject *> GameObjectArray;
+    class BaseObject
     {
 
         friend class Component;
@@ -20,13 +23,13 @@ namespace GameEngine
 
         Component *addComponent(Component *component);
 
-        void addChild(GameObject *child);
+        void addChild(BaseObject *child);
 
         void getChildByName();
 
-        void deleteChild(GameObject *child);
+        void deleteChild(BaseObject *child);
 
-        GameObject();
+        BaseObject();
 
     private:
         Component *getComponentBy(int classID);
@@ -34,14 +37,24 @@ namespace GameEngine
     private:
         std::map<int, Component *> m_compenents;
 
-        GameObject *m_parent;
+        BaseObject *m_parent;
 
         GameObjectArray m_children;
 
         std::string m_name;
     };
+
+    class GameObject
+    {
+    public:
+        
+    private:
+        Mesh *m_Mesh;
+        Material *m_Material;
+    };
+
     template <class T>
-    inline Component *GameObject::getComponent()
+    inline Component *BaseObject::getComponent()
     {
         auto itor = m_compenents.find(ClassID(T));
         if (itor != m_compenents.cend())
@@ -49,7 +62,6 @@ namespace GameEngine
             return static_cast<T *>(itor->second);
         }
         return nullptr;
-        
     }
 } // namespace GameEngine
 #endif
