@@ -4,17 +4,19 @@
 #include <string>
 #include "MyMath.h"
 #include "Component.h"
-#include <map>
 #include "MyMath.h"
+#include "ClassIDs.h"
+
+#include <map>
 #include <vector>
 #include <string>
 
 namespace GameEngine
 {
 
-    struct material_t
+    class Material:public Component
     {
-        material_t()
+        Material():Component(ClassID(Mesh))
         {
             name = "";
             ambient_texname = "";
@@ -32,7 +34,7 @@ namespace GameEngine
             ior = 1.f;
             unknown_parameter.clear();
         }
-        ~material_t() {}
+        ~Material() {}
 
         std::string name;
         vecterFloat3 ambient;

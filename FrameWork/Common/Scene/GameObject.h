@@ -49,8 +49,8 @@ namespace GameEngine
     public:
         
     private:
-        Mesh *m_Mesh;
-        Material *m_Material;
+        std::string m_Name;
+        bool m_isVisual;
     };
 
     template <class T>
