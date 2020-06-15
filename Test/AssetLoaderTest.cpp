@@ -7,6 +7,7 @@
 #include "ObjParser.h"
 #include "AssetLoader.h"
 #include "ObjLoader.h"
+#include "ObjMaterialLoader.h"
 using namespace std;
 using namespace GameEngine;
 

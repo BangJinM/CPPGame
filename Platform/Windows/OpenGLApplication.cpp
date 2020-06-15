@@ -6,7 +6,7 @@
 #include "InputManager.h"
 #include "AssetLoader.h"
 #include "glad/glad_wgl.h"
-
+#include "GraphicsManager.h"
 using namespace GameEngine;
 
 namespace GameEngine
@@ -16,6 +16,7 @@ namespace GameEngine
     MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
     InputManager *g_pInputManager = static_cast<InputManager *>(new InputManager);
     AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
+	GraphicsManager* g_pGraphicsManager = static_cast<GraphicsManager*>(new GraphicsManager);
 
 } // namespace GameEngine
 

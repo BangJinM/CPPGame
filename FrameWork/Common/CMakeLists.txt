@@ -9,6 +9,7 @@ SET( Scene
 
 SET( Parser
     Parser/ObjLoader.cpp
+    Parser/ObjMaterialLoader.cpp
 )
 
 SET( Common
@@ -17,6 +18,7 @@ SET( Common
     Allocator.cpp
     MemoryManager.cpp
     AssetLoader.cpp
+    GraphicsManager.cpp
     main.cpp
 )
 

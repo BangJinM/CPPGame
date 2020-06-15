@@ -1,8 +1,10 @@
 #pragma once
 #include "IRuntimeModule.h"
-
-namespace My {
-    class GraphicsManager : implements IRuntimeModule
+#include <vector>
+#include "RendererCommand.h"
+namespace GameEngine
+{
+    class GraphicsManager : public IRuntimeModule
     {
     public:
         virtual ~GraphicsManager() {}
@@ -13,9 +15,10 @@ namespace My {
         virtual void Tick();
 
         virtual void Clear();
-        virtual void Draw();
+
+    private:
+        std::vector<RendererCommand> m_RendererCommands;
     };
 
-    extern GraphicsManager* g_pGraphicsManager;
-}
-
+    extern GraphicsManager *g_pGraphicsManager;
+} // namespace GameEngine

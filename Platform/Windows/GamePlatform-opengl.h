@@ -7,32 +7,30 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <chrono>
+#include <vector>
 
-namespace GameEngine{
-
-class RendererCommand;
-
-class OpenGLApplication : public BaseApplication
+namespace GameEngine
 {
-public:
-	OpenGLApplication(GfxConfiguration& config);
 
-	virtual int Initialize();
-	virtual void Finalize();
-	// One cycle of the main loop
-	virtual void Tick();
+	class OpenGLApplication : public BaseApplication
+	{
+	public:
+		OpenGLApplication(GfxConfiguration &config);
 
-	static void mouseInput(GLFWwindow* window, int button, int action, int mods);
-	static void keyInput(GLFWwindow* window, int key, int scancode, int action, int mods);
+		virtual int Initialize();
+		virtual void Finalize();
+		// One cycle of the main loop
+		virtual void Tick();
 
-private:
-	void calculateDeltaTime();
+		static void mouseInput(GLFWwindow *window, int button, int action, int mods);
+		static void keyInput(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-	GLFWwindow* window;
-	float _deltaTime;
-	std::chrono::steady_clock::time_point _lastUpdate;
+	private:
+		void calculateDeltaTime();
 
-	std::vector<RendererCommand> m_RendererCommands;
-};
-}
+		GLFWwindow *window;
+		float _deltaTime;
+		std::chrono::steady_clock::time_point _lastUpdate;
+	};
+} // namespace GameEngine
 #endif //CPPGAME_COMMON_GAMEPLATFORM_OPENGL_H

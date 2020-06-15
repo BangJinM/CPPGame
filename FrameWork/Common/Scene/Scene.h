@@ -13,6 +13,8 @@ namespace GameEngine
   public:
     Scene(/* args */);
     ~Scene();
+
+    void getFirstGameObject();
   };
 
 } // namespace GameEngine

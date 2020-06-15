@@ -1,13 +1,12 @@
 #include <iostream>
-#include "GraphicsManager.hpp"
-#include "cbuffer.h"
+#include "GraphicsManager.h"
 
-using namespace My;
+using namespace GameEngine;
 using namespace std;
 
 int GraphicsManager::Initialize()
 {
-    int result = 0;
+    int result = 1;
     return result;
 }
 
@@ -22,8 +21,3 @@ void GraphicsManager::Tick()
 void GraphicsManager::Clear()
 {
 }
-
-void GraphicsManager::Draw()
-{
-}
-

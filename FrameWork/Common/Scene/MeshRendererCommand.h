@@ -3,6 +3,7 @@
 
 #include "RendererCommand.h"
 #include "MyMath.h"
+#include "Mesh.h"
 #include <glad/glad.h>
 namespace GameEngine
 {
@@ -10,16 +11,23 @@ namespace GameEngine
     class MeshRendererCommand : public RendererCommand
     {
     public:
+
         MeshRendererCommand();
+
 		~MeshRendererCommand();
+
 		virtual void excecute();
+
     private:
+
         Material *m_MaterailID;
-        GLuint vao;
-        GLenum mode;
-        GLenum type;
-        GLsizei count;
-		Matrix4X4f transform;
+        Mesh * m_Mesh;
+        
+        GLuint m_Vao;
+        GLenum m_Mode;
+        GLenum m_Yype;
+        GLsizei m_Count;
+		Matrix4X4f m_Transform;
     };
 } // namespace GameEngine
 #endif
