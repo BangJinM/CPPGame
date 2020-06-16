@@ -2,7 +2,7 @@
 namespace GameEngine
 {
 
-    MeshRendererCommand::MeshRendererCommand():RendererCommand(ClassID(MeshRendererCommand))
+    MeshRendererCommand::MeshRendererCommand()
     {
     }
 

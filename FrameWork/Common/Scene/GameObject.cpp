@@ -32,4 +32,8 @@ namespace GameEngine
         }
         return nullptr;
     }
+	void GameObject::draw()
+	{
+		
+	}
 } // namespace GameEngine

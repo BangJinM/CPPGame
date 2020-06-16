@@ -1,11 +1,8 @@
 #ifndef CPPGAME_Common_Scene_Material_H
 #define CPPGAME_Common_Scene_Material_H
 
-#include <string>
 #include "MyMath.h"
 #include "Component.h"
-#include "MyMath.h"
-#include "ClassIDs.h"
 
 #include <map>
 #include <vector>
@@ -14,9 +11,9 @@
 namespace GameEngine
 {
 
-    class Material:public Component
+    class Material : public Component
     {
-        Material():Component(ClassID(Mesh))
+        Material() : Component(ClassID(Material))
         {
             name = "";
             ambient_texname = "";

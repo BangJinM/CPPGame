@@ -12,6 +12,7 @@ enum ClassIDType
 	DefineClassID(MeshRendererCommand, 2),
 	DefineClassID(Mesh, 3),
 	DefineClassID(Material, 4),
+	DefineClassID(Transform, 5),
 };
 
 //make sure people dont accidentally define classids in other files:

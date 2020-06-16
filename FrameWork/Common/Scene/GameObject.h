@@ -4,6 +4,10 @@
 #include "ClassIDs.h"
 #include <map>
 #include <list>
+#include "Mesh.h"
+#include "Material.h"
+#include "Transform.h"
+
 
 namespace GameEngine
 {
@@ -41,16 +45,18 @@ namespace GameEngine
 
         GameObjectArray m_children;
 
-        std::string m_name;
+        std::string m_Name;
     };
 
-    class GameObject
+    class GameObject:BaseObject
     {
     public:
-        
+		void draw();
     private:
-        std::string m_Name;
-        bool m_isVisual;
+		bool m_isVisual = true;
+        Transform m_Transfrom;
+        Mesh m_Mesh;
+        Material m_Material;
     };
 
     template <class T>
