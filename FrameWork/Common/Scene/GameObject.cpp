@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "glad/glad.h"
 namespace GameEngine
 {
     Component *BaseObject::addComponent(Component *component)
@@ -32,8 +33,26 @@ namespace GameEngine
         }
         return nullptr;
     }
-	void GameObject::draw()
-	{
-		
-	}
+    GameObject::GameObject()
+    {
+        m_Transfrom = new Transform();
+        m_Material = nullptr;
+        m_Mesh = nullptr;
+    }
+    void GameObject::draw()
+    {
+        if (m_Mesh != nullptr)
+        {
+            // Allocate an OpenGL vertex array object.
+            GLuint vao;
+            glGenVertexArrays(1, &vao);
+
+            // Bind the vertex array object to store all the buffers and vertex attributes we create here.
+            glBindVertexArray(vao);
+
+            GLuint buffer_id;
+
+            
+        }
+    }
 } // namespace GameEngine

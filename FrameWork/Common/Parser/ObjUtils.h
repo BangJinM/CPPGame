@@ -20,7 +20,6 @@
 #include <sstream>
 
 #include "AssetLoader.h"
-#include "ObjLoader.h"
 
 namespace GameEngine
 {

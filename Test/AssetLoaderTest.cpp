@@ -2,9 +2,7 @@
 #include <string>
 #include "AssetLoader.h"
 #include "MemoryManager.h"
-#include "ObjParser.h"
 #include "Scene.h"
-#include "ObjParser.h"
 #include "AssetLoader.h"
 #include "ObjLoader.h"
 #include "ObjMaterialLoader.h"
@@ -20,13 +18,14 @@ namespace GameEngine
 int main(int, char **)
 {
     g_pMemoryManager->Initialize();
-
+    g_pAssetLoader->Initialize();
 	std::vector<shape_t> shapes;
 	std::vector<material_t> materials;
-	LoadObj(shapes, materials, "Scene/53b2ae21a87d7.obj", "Scene/");
+	ObjParser parser;
+	parser.Parse(g_pAssetLoader->SyncOpenAndReadTextFileToString("Scene/53b2ae21a87d7.obj"));
     g_pMemoryManager->Finalize();
-
+    g_pAssetLoader->Finalize();
     delete g_pMemoryManager;
-
+	delete g_pAssetLoader;
     return 0;
 }

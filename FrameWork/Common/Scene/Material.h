@@ -13,6 +13,7 @@ namespace GameEngine
 
     class Material : public Component
     {
+	public:
         Material() : Component(ClassID(Material))
         {
             name = "";

@@ -8,7 +8,6 @@
 #include "Material.h"
 #include "Transform.h"
 
-
 namespace GameEngine
 {
     class BaseObject;
@@ -34,7 +33,10 @@ namespace GameEngine
         void deleteChild(BaseObject *child);
 
         BaseObject();
-
+        
+        void setName(std::string name){
+            m_Name = name;
+        }
     private:
         Component *getComponentBy(int classID);
 
@@ -48,15 +50,17 @@ namespace GameEngine
         std::string m_Name;
     };
 
-    class GameObject:BaseObject
+    class GameObject : BaseObject
     {
     public:
-		void draw();
+        GameObject();
+        void draw();
+
     private:
-		bool m_isVisual = true;
-        Transform m_Transfrom;
-        Mesh m_Mesh;
-        Material m_Material;
+        bool m_isVisual = true;
+        Transform *m_Transfrom;
+        Mesh *m_Mesh;
+        Material *m_Material;
     };
 
     template <class T>

@@ -26,12 +26,12 @@ namespace GameEngine
 	}
 	void Transform::setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation)
 	{
-		m_Matrix = {
-			position.x, position.y,position.z,m_Matrix[3],
-			rotation.x,rotation.y,rotation.z,m_Matrix[7],
-			scale.x,scale.y,scale.z,m_Matrix[11],
-			m_Matrix[12],m_Matrix[13],m_Matrix[14],m_Matrix[15],
-		};
+		//m_Matrix = {
+		//	position.x, position.y,position.z,m_Matrix[3],
+		//	rotation.x,rotation.y,rotation.z,m_Matrix[7],
+		//	scale.x,scale.y,scale.z,m_Matrix[11],
+		//	m_Matrix[12],m_Matrix[13],m_Matrix[14],m_Matrix[15],
+		//};
 	}
 } // namespace GameEngine
 

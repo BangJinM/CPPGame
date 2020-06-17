@@ -11,6 +11,12 @@ find_package(OpenGL REQUIRED)
 
 add_library(WindowsApplication WindowsApplication.cpp)
 
+
+
+# ---------------------------------------------------------
+
+
+
 add_executable(Windows2 
     OpenGLApplication.cpp
     ${PROJECT_SOURCE_DIR}/External/src/glad/src/glad_wgl.c

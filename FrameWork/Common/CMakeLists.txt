@@ -7,7 +7,6 @@ SET( Scene
 )
 
 SET( Parser
-    Parser/ObjLoader.cpp
     Parser/ObjMaterialLoader.cpp
 )
 
