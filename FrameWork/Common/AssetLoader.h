@@ -4,24 +4,28 @@
 #include "Buffer.h"
 #include <string>
 #include <vector>
-namespace GameEngine{
-    class AssetLoader : public IRuntimeModule{
+namespace GameEngine
+{
+    class AssetLoader : public IRuntimeModule
+    {
     public:
-        virtual ~AssetLoader() {};
+        virtual ~AssetLoader(){};
 
         virtual int Initialize();
         virtual void Finalize();
 
         virtual void Tick();
 
-        typedef void* AssetFilePtr;
+        typedef void *AssetFilePtr;
 
-        enum AssetOpenMode {
-            MY_OPEN_TEXT   = 0, /// Open In Text Mode
-            MY_OPEN_BINARY = 1, /// Open In Binary Mode 
+        enum AssetOpenMode
+        {
+            MY_OPEN_TEXT = 0,   /// Open In Text Mode
+            MY_OPEN_BINARY = 1, /// Open In Binary Mode
         };
 
-        enum AssetSeekBase {
+        enum AssetSeekBase
+        {
             MY_SEEK_SET = 0, /// SEEK_SET
             MY_SEEK_CUR = 1, /// SEEK_CUR
             MY_SEEK_END = 2  /// SEEK_END
@@ -33,25 +37,25 @@ namespace GameEngine{
 
         bool FileExists(const char *filePath);
 
-        AssetFilePtr OpenFile(const char* name, AssetOpenMode mode);
+        AssetFilePtr OpenFile(const char *name, AssetOpenMode mode);
 
         Buffer SyncOpenAndReadText(const char *filePath);
 
         Buffer SyncOpenAndReadBinary(const char *filePath);
 
-        size_t SyncRead(const AssetFilePtr& fp, Buffer& buf);
+        size_t SyncRead(const AssetFilePtr &fp, Buffer &buf);
 
-        void CloseFile(AssetFilePtr& fp);
+        void CloseFile(AssetFilePtr &fp);
 
-        size_t GetSize(const AssetFilePtr& fp);
+        size_t GetSize(const AssetFilePtr &fp);
 
         int32_t Seek(AssetFilePtr fp, long offset, AssetSeekBase where);
 
-        inline std::string SyncOpenAndReadTextFileToString(const char* fileName)
+        inline std::string SyncOpenAndReadTextFileToString(const char *fileName)
         {
             std::string result;
             Buffer buffer = SyncOpenAndReadText(fileName);
-            char* content = reinterpret_cast<char*>(buffer.m_pData);
+            char *content = reinterpret_cast<char *>(buffer.m_pData);
 
             if (content)
             {
@@ -60,10 +64,13 @@ namespace GameEngine{
 
             return result;
         }
+
+        std::string getFileExtension(const std::string &filePath) const;
+
     private:
         std::vector<std::string> m_strSearchPath;
     };
-    
-}
+
+} // namespace GameEngine
 
 #endif

@@ -1,5 +1,5 @@
 #include "AssetLoader.h"
-
+#include <algorithm>
 int GameEngine::AssetLoader::Initialize()
 {
     return 0;
@@ -184,3 +184,17 @@ int32_t GameEngine::AssetLoader::Seek(AssetFilePtr fp, long offset, AssetSeekBas
     return fseek(static_cast<FILE*>(fp), offset, static_cast<int>(where));
 }
 
+
+std::string GameEngine::AssetLoader::getFileExtension(const std::string& filePath) const
+{
+    std::string fileExtension;
+    size_t pos = filePath.find_last_of('.');
+    if (pos != std::string::npos)
+    {
+        fileExtension = filePath.substr(pos, filePath.length());
+
+        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+    }
+
+    return fileExtension;
+}
