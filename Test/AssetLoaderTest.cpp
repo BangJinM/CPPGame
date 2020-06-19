@@ -21,7 +21,7 @@ int main(int, char **)
     g_pAssetLoader->Initialize();
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
-    tinyobj::LoadObj(shapes, materials, "Scene/53b2ae21a87d7.obj", "Scene/");
+    tinyobj::LoadObj(shapes, materials, "Scene/model.obj", "Materials/");
 	ObjParser parser;
 	parser.Parse(shapes);
     g_pMemoryManager->Finalize();
