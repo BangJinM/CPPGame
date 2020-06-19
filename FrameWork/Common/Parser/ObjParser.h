@@ -65,24 +65,26 @@ namespace GameEngine
 					meshdata->vertex.push_back(mesh.positions[k * 3]);
 					meshdata->vertex.push_back(mesh.positions[k * 3 + 1]);
 					meshdata->vertex.push_back(mesh.positions[k * 3 + 2]);
-
+					meshdata.vertexSizeInFloat += 3;
 					if (hasnormal)
 					{
 						meshdata->vertex.push_back(mesh.normals[k * 3]);
 						meshdata->vertex.push_back(mesh.normals[k * 3 + 1]);
 						meshdata->vertex.push_back(mesh.normals[k * 3 + 2]);
+						meshdata.vertexSizeInFloat += 3;
 					}
 
 					if (hastex)
 					{
 						meshdata->vertex.push_back(mesh.texcoords[k * 2]);
 						meshdata->vertex.push_back(mesh.texcoords[k * 2 + 1]);
+						meshdata.vertexSizeInFloat += 2;
 					}
 				}
 
 				//split into submesh according to material
 				std::map<int, std::vector<unsigned short>> subMeshMap;
-				for (size_t k = 0, size = mesh.material_ids.size(); k < size; ++k)
+				for (size_t k = 0, size = mesh.indices.size() / 3; k < size; ++k)
 				{
 					int id = mesh.material_ids[k];
 					size_t idx = k * 3;
@@ -91,11 +93,14 @@ namespace GameEngine
 					subMeshMap[id].push_back(mesh.indices[idx + 2]);
 				}
 
+				meshdata.indices = mesh.indices;
+
 				auto node = std::unique_ptr<GameObject>();
 				//node->setName(shape.name);
 			}
 		}
 	}; // namespace GameEngine
+
 } // namespace GameEngine
 
 #endif // _TINY_OBJ_LOADER_H

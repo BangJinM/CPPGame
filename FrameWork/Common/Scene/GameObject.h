@@ -33,10 +33,12 @@ namespace GameEngine
         void deleteChild(BaseObject *child);
 
         BaseObject();
-        
-        void setName(std::string name){
+
+        void setName(std::string name)
+        {
             m_Name = name;
         }
+
     private:
         Component *getComponentBy(int classID);
 
@@ -59,7 +61,7 @@ namespace GameEngine
     private:
         bool m_isVisual = true;
         Transform *m_Transfrom;
-        MeshDatas *m_Mesh;
+        std::vector<Mesh> m_Meshs;
         Material *m_Material;
     };
 

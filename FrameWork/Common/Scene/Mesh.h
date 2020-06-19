@@ -49,10 +49,12 @@ namespace GameEngine
         //size in bytes
         int attribSizeBytes;
     };
+
     struct MeshData
     {
         typedef std::vector<unsigned short> IndexArray;
         std::vector<float> vertex;
+        std::vector<int> indices;
         int vertexSizeInFloat;
         std::vector<IndexArray> subMeshIndices;
         std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
@@ -97,26 +99,23 @@ namespace GameEngine
         }
     };
 
-    struct MeshDatas : public Component
+    //https://learnopengl-cn.github.io/03%20Model%20Loading/02%20Mesh
+    class Mesh
     {
-        std::vector<MeshData *> meshDatas;
+    public:
+        /*  网格数据  */
+        MeshData m_MeshData;
+        //std::vector<Texture> textures;
+        /*  函数  */
+        Mesh(MeshData meshData /*, vector<Texture> textures*/);
+        void Draw();
 
-        MeshDatas() : Component(ClassID(MeshDatas))
-        {
-        }
-
-        void resetData()
-        {
-            for (auto &it : meshDatas)
-            {
-                delete it;
-            }
-            meshDatas.clear();
-        }
-        ~MeshDatas()
-        {
-            resetData();
-        }
+    private:
+        /*  渲染数据  */
+        unsigned int VAO, VBO, EBO;
+        /*  函数  */
+        void setupMesh();
     };
+
 } // namespace GameEngine
 #endif

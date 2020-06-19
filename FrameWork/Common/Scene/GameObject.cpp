@@ -37,22 +37,12 @@ namespace GameEngine
     {
         m_Transfrom = new Transform();
         m_Material = nullptr;
-        m_Mesh = nullptr;
     }
     void GameObject::draw()
     {
-        if (m_Mesh != nullptr)
+        for (size_t i = 0; i < m_Meshs.size(); i++)
         {
-            // Allocate an OpenGL vertex array object.
-            GLuint vao;
-            glGenVertexArrays(1, &vao);
-
-            // Bind the vertex array object to store all the buffers and vertex attributes we create here.
-            glBindVertexArray(vao);
-
-            GLuint buffer_id;
-
-            
+            m_Meshs[i].Draw();
         }
     }
 } // namespace GameEngine
