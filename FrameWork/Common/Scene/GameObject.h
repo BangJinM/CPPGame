@@ -11,7 +11,7 @@
 namespace GameEngine
 {
     class BaseObject;
-    class Mesh;
+    class MeshDatas;
     class Material;
 
     typedef std::list<BaseObject *> GameObjectArray;
@@ -59,7 +59,7 @@ namespace GameEngine
     private:
         bool m_isVisual = true;
         Transform *m_Transfrom;
-        Mesh *m_Mesh;
+        MeshDatas *m_Mesh;
         Material *m_Material;
     };
 

@@ -21,7 +21,7 @@ namespace GameEngine
     private:
 
         Material *m_MaterailID;
-        Mesh * m_Mesh;
+        // Mesh * m_Mesh;
         
         GLuint m_Vao;
         GLenum m_Mode;

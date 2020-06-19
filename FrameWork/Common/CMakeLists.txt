@@ -6,8 +6,11 @@ SET( Scene
     Scene/Transform.cpp
 )
 
-SET( Parser
-    Parser/ObjMaterialLoader.cpp
+#SET( Parser
+#)
+
+SET( 3dloader
+    3dloader/ObjLoader.cpp
 )
 
 SET( Common
@@ -26,7 +29,8 @@ source_group(include FILES ${CURRENT_HEADERS})
 add_library(Common
     ${Common}    
     ${Scene}
-    ${Parser}
+    #${Parser}
+    ${3dloader}
     ${CURRENT_HEADERS}
 )
 target_link_libraries(Common Glad)
@@ -36,6 +40,7 @@ add_library( Glad
 target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad/include")
 
 SOURCE_GROUP( src\\Parser FILES ${Parser})
+SOURCE_GROUP( src\\3dloader FILES ${3dloader})
 SOURCE_GROUP( src\\Scene FILES ${Scene})
 SOURCE_GROUP( src FILES ${Common})
 

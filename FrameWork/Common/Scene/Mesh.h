@@ -8,7 +8,8 @@
 namespace GameEngine
 {
 
-    enum MeshValueType{
+    enum MeshValueType
+    {
         /**Index 0 will be used as Position.*/
         VERTEX_ATTRIB_POSITION,
         /**Index 1 will be used as Color.*/
@@ -37,29 +38,6 @@ namespace GameEngine
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
 
-    typedef struct
-    {
-        std::vector<float> positions;
-        std::vector<float> normals;
-        std::vector<float> texcoords;
-        std::vector<unsigned short> indices;
-        std::vector<int> material_ids; // per-mesh material ID
-    } mesh_t;
-
-    struct shape_t
-    {
-        std::string name;
-        mesh_t mesh;
-    };
-
-    class Mesh : public Component
-    {
-    public:
-        Mesh();
-
-    private:
-        std::vector<shape_t> meshs;
-    };
     struct MeshVertexAttrib
     {
         //attribute size
@@ -119,9 +97,13 @@ namespace GameEngine
         }
     };
 
-    struct MeshDatas
+    struct MeshDatas : public Component
     {
         std::vector<MeshData *> meshDatas;
+
+        MeshDatas() : Component(ClassID(MeshDatas))
+        {
+        }
 
         void resetData()
         {

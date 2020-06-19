@@ -10,7 +10,7 @@ enum ClassIDType
 	DefineClassID(Undefined, -1),
 	DefineClassID(RendererCommand, 1),
 	DefineClassID(MeshRendererCommand, 2),
-	DefineClassID(Mesh, 3),
+	DefineClassID(MeshDatas, 3),
 	DefineClassID(Material, 4),
 	DefineClassID(Transform, 5),
 };
