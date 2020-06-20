@@ -54,7 +54,7 @@ namespace GameEngine
     {
         typedef std::vector<unsigned short> IndexArray;
         std::vector<float> vertex;
-        std::vector<int> indices;
+        std::vector<unsigned int> indices;
         int vertexSizeInFloat;
         std::vector<IndexArray> subMeshIndices;
         std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)

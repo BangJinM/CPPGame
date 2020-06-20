@@ -93,11 +93,8 @@ namespace GameEngine
 					subMeshMap[id].push_back(mesh.indices[idx]);
 					subMeshMap[id].push_back(mesh.indices[idx + 1]);
 					subMeshMap[id].push_back(mesh.indices[idx + 2]);
-
-					meshdata->indices.push_back(mesh.indices[idx]);
-					meshdata->indices.push_back(mesh.indices[idx]+1);
-					meshdata->indices.push_back(mesh.indices[idx]+ 2);
 				}
+				meshdata->indices = mesh.indices;
 				parent->m_Meshs.push_back(new Mesh(meshdata));
 				//node->setName(shape.name);
 			}
