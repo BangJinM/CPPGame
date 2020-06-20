@@ -58,10 +58,10 @@ namespace GameEngine
         GameObject();
         void draw();
 
-    private:
+    //private:
         bool m_isVisual = true;
         Transform *m_Transfrom;
-        std::vector<Mesh> m_Meshs;
+        std::vector<Mesh*> m_Meshs;
         Material *m_Material;
     };
 

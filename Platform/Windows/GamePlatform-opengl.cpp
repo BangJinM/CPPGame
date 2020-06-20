@@ -6,9 +6,12 @@
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
+#include "ObjParser.h"
+#include "ObjLoader.h"
+#include "Mesh.h"
+
 namespace GameEngine
 {
-
 	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
 	OpenGLApplication g_App(config);
 	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
@@ -18,6 +21,8 @@ namespace GameEngine
 	IApplication *g_pApp = &g_App;
 
 	OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config) {}
+
+	GameObject *gameobject;
 
 	int OpenGLApplication::Initialize()
 	{
@@ -56,6 +61,12 @@ namespace GameEngine
 		glfwSetMouseButtonCallback(window, mouseInput);
 		glfwSetKeyCallback(window, keyInput);
 
+
+		std::vector<tinyobj::shape_t> shapes;
+		std::vector<tinyobj::material_t> materials;
+		tinyobj::LoadObj(shapes, materials, "Scene/model.obj", "Materials/");
+		ObjParser parser;
+		gameobject = parser.Parse(shapes);
 		return result;
 	}
 
@@ -86,15 +97,9 @@ namespace GameEngine
 	}
 	void OpenGLApplication::Tick()
 	{
-		// glCheckError();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		this->m_bQuit = glfwWindowShouldClose(window);
-		// ((CubeObject*)gameObject)->RendererMaterial();
-		// ((BaseObject*)gameObjectMaterail)->RendererMaterial();
-		// std::string fps = "FPS = " + std::to_string(1000/_deltaTime);
-		// std::string de = std::to_string(_deltaTime) + "\n";
-		// printf(de.data());
-		// text->DrawSprite(fps, 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+		gameobject->draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 		// calculateDeltaTime();

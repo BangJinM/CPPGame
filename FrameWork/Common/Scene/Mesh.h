@@ -104,10 +104,10 @@ namespace GameEngine
     {
     public:
         /*  网格数据  */
-        MeshData m_MeshData;
+        MeshData *m_MeshData;
         //std::vector<Texture> textures;
         /*  函数  */
-        Mesh(MeshData meshData /*, vector<Texture> textures*/);
+        Mesh(MeshData *meshData /*, vector<Texture> textures*/);
         void Draw();
 
     private:

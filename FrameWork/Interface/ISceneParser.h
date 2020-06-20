@@ -10,7 +10,7 @@ namespace GameEngine
     class ISceneParser
     {
     public:
-        virtual std::unique_ptr<GameObject> Parse(std::vector<tinyobj::shape_t>) = 0;
+        virtual GameObject* Parse(std::vector<tinyobj::shape_t>) = 0;
     };
 } // namespace GameEngine
 #endif
