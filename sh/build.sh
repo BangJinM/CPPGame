@@ -1,6 +1,7 @@
 sh build_crossguid.sh
 sh build_glfw.sh
 sh build_OpenGEX.sh
+sh build_glm.sh
 
 mkdir -p ../build
 pushd ../build
