@@ -6,9 +6,6 @@
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
-#include "ObjParser.h"
-#include "ObjLoader.h"
-#include "Mesh.h"
 
 namespace GameEngine
 {
@@ -21,8 +18,6 @@ namespace GameEngine
 	IApplication *g_pApp = &g_App;
 
 	OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config) {}
-
-	GameObject *gameobject;
 
 	int OpenGLApplication::Initialize()
 	{
@@ -61,12 +56,6 @@ namespace GameEngine
 		glfwSetMouseButtonCallback(window, mouseInput);
 		glfwSetKeyCallback(window, keyInput);
 
-
-		std::vector<tinyobj::shape_t> shapes;
-		std::vector<tinyobj::material_t> materials;
-		tinyobj::LoadObj(shapes, materials, "Scene/model.obj", "Materials/");
-		ObjParser parser;
-		gameobject = parser.Parse(shapes);
 		return result;
 	}
 
@@ -76,9 +65,6 @@ namespace GameEngine
 
 	void OpenGLApplication::mouseInput(GLFWwindow *window, int key, int action, int mods)
 	{
-		//if (action == GLFW_PRESS)
-		//	if (key == GLFW_MOUSE_BUTTON_LEFT)
-		//		glfwSetWindowShouldClose(window, true);
 	}
 
 	void OpenGLApplication::keyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -93,15 +79,13 @@ namespace GameEngine
 		auto now = std::chrono::steady_clock::now();
 		_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
 		_lastUpdate = now;
-		//_deltaTime = MAX(1, _deltaTime);
 	}
 	void OpenGLApplication::Tick()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		this->m_bQuit = glfwWindowShouldClose(window);
-		gameobject->draw();
+		g_pGraphicsManager->Draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		// calculateDeltaTime();
 	}
 } // namespace GameEngine

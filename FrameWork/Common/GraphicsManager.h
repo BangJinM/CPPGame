@@ -4,6 +4,7 @@
 #include "RendererCommand.h"
 namespace GameEngine
 {
+    class GameObject;
     class GraphicsManager : public IRuntimeModule
     {
     public:
@@ -13,11 +14,14 @@ namespace GameEngine
         virtual void Finalize();
 
         virtual void Tick();
-
+        virtual void Draw();
         virtual void Clear();
 
     private:
         std::vector<RendererCommand> m_RendererCommands;
+
+        GameObject *gameobject;
+        GameObject *cameraObject;
     };
 
     extern GraphicsManager *g_pGraphicsManager;

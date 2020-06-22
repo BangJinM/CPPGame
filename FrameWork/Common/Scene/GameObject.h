@@ -63,7 +63,7 @@ namespace GameEngine
         std::string m_Name;
     };
 
-    class GameObject : BaseObject
+    class GameObject : public BaseObject
     {
     public:
         GameObject();

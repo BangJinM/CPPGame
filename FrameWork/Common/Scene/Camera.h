@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Component.h"
+#include "Transform.h"
 namespace GameEngine
 {
     class Camera : public Component
@@ -21,7 +22,7 @@ namespace GameEngine
     public:
         Camera(glm::float32 m_Near = 1, glm::float32 m_Far = 1000, glm::float32 width = 1280, glm::float32 height = 800);
         glm::mat4 getViewMatrix();
-        glm::mat4 getProjectionMatrix();
+        glm::mat4 getProjectionMatrix(Transform model);
 
     private:
         //			y
