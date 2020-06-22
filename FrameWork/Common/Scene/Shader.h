@@ -15,7 +15,7 @@ namespace GameEngine
         unsigned int ID;
         // constructor generates the shader on the fly
         // ------------------------------------------------------------------------
-        Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = nullptr)
+        Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = "")
         {
 
             const char *vShaderCode = vertexCode.c_str();
