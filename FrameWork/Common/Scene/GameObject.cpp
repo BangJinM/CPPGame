@@ -3,21 +3,43 @@
 #include "glad/glad.h"
 namespace GameEngine
 {
-    Component *BaseObject::addComponent(Component *component)
+    void BaseObject::addComponent(Component *component)
     {
-        return nullptr;
+        auto begin = m_compenents.find(component->getClassID());
+        if (begin != m_compenents.end())
+        {
+            return;
+        }
+        m_compenents.insert(std::pair<int, Component *>(component->getClassID(), component));
     }
 
     void BaseObject::addChild(BaseObject *child)
     {
+        auto begin = m_children.find(child->getName());
+        if (begin != m_children.end())
+        {
+            return;
+        }
+        m_children.insert(std::pair<std::string, BaseObject *>(child->getName(), child));
     }
 
-    void BaseObject::getChildByName()
+    BaseObject *BaseObject::getChildByName(std::string name)
     {
+        auto begin = m_children.find(name);
+        if (begin != m_children.end())
+        {
+            return begin->second;
+        }
+        return nullptr;
     }
 
     void BaseObject::deleteChild(BaseObject *child)
     {
+        auto begin = m_children.find(child->getName());
+        if (begin != m_children.end())
+        {
+            m_children.erase(child->getName());
+        }
     }
 
     BaseObject::BaseObject()
@@ -27,7 +49,7 @@ namespace GameEngine
     Component *BaseObject::getComponentBy(int classID)
     {
         auto itor = m_compenents.find(classID);
-        if (itor != m_compenents.cend())
+        if (itor != m_compenents.end())
         {
             return itor->second;
         }

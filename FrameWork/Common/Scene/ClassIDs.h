@@ -13,6 +13,7 @@ enum ClassIDType
 	DefineClassID(MeshDatas, 3),
 	DefineClassID(Material, 4),
 	DefineClassID(Transform, 5),
+	DefineClassID(Camera, 5),
 };
 
 //make sure people dont accidentally define classids in other files:

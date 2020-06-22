@@ -14,7 +14,6 @@ namespace GameEngine
     class MeshDatas;
     class Material;
 
-    typedef std::list<BaseObject *> GameObjectArray;
     class BaseObject
     {
 
@@ -22,15 +21,25 @@ namespace GameEngine
 
     public:
         template <class T>
-        inline Component *getComponent();
+        inline T *getComponent();
 
-        Component *addComponent(Component *component);
+        void addComponent(Component *component);
 
         void addChild(BaseObject *child);
 
-        void getChildByName();
+        BaseObject * getChildByName(std::string name);
 
         void deleteChild(BaseObject *child);
+
+        void setParent(BaseObject *parent)
+        {
+            m_Parent = parent;
+        }
+
+        BaseObject *getParent()
+        {
+            return m_Parent;
+        }
 
         BaseObject();
 
@@ -39,15 +48,17 @@ namespace GameEngine
             m_Name = name;
         }
 
+        std::string getName() { return m_Name; }
+
     private:
         Component *getComponentBy(int classID);
 
     private:
         std::map<int, Component *> m_compenents;
 
-        BaseObject *m_parent;
+        BaseObject *m_Parent;
 
-        GameObjectArray m_children;
+        std::map<std::string, BaseObject *> m_children;
 
         std::string m_Name;
     };
@@ -58,20 +69,25 @@ namespace GameEngine
         GameObject();
         void draw();
 
-    //private:
+        //private:
         bool m_isVisual = true;
         Transform *m_Transfrom;
-        std::vector<Mesh*> m_Meshs;
+        std::vector<Mesh *> m_Meshs;
         Material *m_Material;
     };
 
     template <class T>
-    inline Component *BaseObject::getComponent()
+    inline T *BaseObject::getComponent()
     {
-        auto itor = m_compenents.find(ClassID(T));
-        if (itor != m_compenents.cend())
+        T compenent = T();
+        Component *t = dynamic_cast<Component *>(&compenent);
+        if (t)
         {
-            return static_cast<T *>(itor->second);
+            auto itor = m_compenents.find(compenent.getClassID());
+            if (itor != m_compenents.end())
+            {
+                return static_cast<T *>(itor->second);
+            }
         }
         return nullptr;
     }

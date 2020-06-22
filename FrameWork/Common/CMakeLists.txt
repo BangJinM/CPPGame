@@ -4,6 +4,7 @@ SET( Scene
     Scene/Scene.cpp
     Scene/MeshRendererCommand.cpp
     Scene/Transform.cpp
+    Scene/Camera.cpp
 )
 
 #SET( Parser
