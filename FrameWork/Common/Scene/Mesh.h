@@ -5,6 +5,7 @@
 #include "Component.h"
 #include <glad/glad.h>
 #include <vector>
+#include "Material.h"
 namespace GameEngine
 {
 
@@ -105,9 +106,9 @@ namespace GameEngine
     public:
         /*  网格数据  */
         MeshData *m_MeshData;
-        //std::vector<Texture> textures;
+        Material *m_Material;
         /*  函数  */
-        Mesh(MeshData *meshData /*, vector<Texture> textures*/);
+        Mesh(MeshData *meshData , Material *material = nullptr);
         void Draw();
 
     private:

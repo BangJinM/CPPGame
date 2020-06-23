@@ -13,7 +13,6 @@
 namespace GameEngine
 {
 
-
     struct NTextureData
     {
         enum class Usage
@@ -36,20 +35,20 @@ namespace GameEngine
         GLenum wrapS;
         GLenum wrapT;
     };
-	struct NMaterialData
-	{
-		std::vector<NTextureData> textures;
-		std::string id;
-		const NTextureData *getTextureData(const NTextureData::Usage &type) const
-		{
-			for (const auto &it : textures)
-			{
-				if (it.type == type)
-					return &it;
-			}
-			return nullptr;
-		}
-	};
+    struct NMaterialData
+    {
+        std::vector<NTextureData> textures;
+        std::string id;
+        const NTextureData *getTextureData(const NTextureData::Usage &type) const
+        {
+            for (const auto &it : textures)
+            {
+                if (it.type == type)
+                    return &it;
+            }
+            return nullptr;
+        }
+    };
     class Material : public Component
     {
     public:
@@ -59,6 +58,8 @@ namespace GameEngine
         }
         ~Material() {}
 
+        void use();
+        NMaterialData *m_NMaterialData;
         Shader *m_Shader;
     };
 } // namespace GameEngine
