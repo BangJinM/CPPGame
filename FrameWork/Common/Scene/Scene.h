@@ -4,8 +4,10 @@
 #include <cstdint>
 #include "ISceneParser.h"
 #include "Scene.h"
+
 namespace GameEngine
 {
+  class Camera;
   class Scene
   {
   private:
@@ -14,11 +16,11 @@ namespace GameEngine
     Scene(/* args */);
     ~Scene();
 
-    GameObject* getFirstGameObject();
+    GameObject *getFirstGameObject();
     void Draw();
 
     GameObject *gameobject;
-    GameObject *cameraObject;
+    std::vector<Camera> m_Cameras;
   };
 
 } // namespace GameEngine

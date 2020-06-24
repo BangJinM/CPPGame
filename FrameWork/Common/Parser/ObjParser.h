@@ -84,18 +84,11 @@ namespace GameEngine
 					}
 				}
 
-				//split into submesh according to material
 				std::map<int, std::vector<unsigned short>> subMeshMap;
-				for (size_t k = 0, size = mesh.indices.size() / 3; k < size; ++k)
-				{
-					int id = mesh.material_ids[k];
-					size_t idx = k * 3;
-					subMeshMap[id].push_back(mesh.indices[idx]);
-					subMeshMap[id].push_back(mesh.indices[idx + 1]);
-					subMeshMap[id].push_back(mesh.indices[idx + 2]);
-				}
 				meshdata->indices = mesh.indices;
-				parent->m_Meshs.push_back(new Mesh(meshdata));
+				Mesh *m_Mesh = new Mesh(meshdata);
+				// mesh->ma
+				parent->m_Meshs.push_back(m_Mesh);
 				//node->setName(shape.name);
 			}
 		}

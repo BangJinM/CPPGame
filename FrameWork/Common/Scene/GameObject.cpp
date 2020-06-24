@@ -60,7 +60,8 @@ namespace GameEngine
         m_Transfrom = new Transform();
         m_Material = nullptr;
     }
-    void GameObject::draw()
+
+    void GameObject::Draw()
     {
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {

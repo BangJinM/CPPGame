@@ -67,7 +67,7 @@ namespace GameEngine
     {
     public:
         GameObject();
-        void draw();
+        void Draw();
 
         //private:
         bool m_isVisual = true;

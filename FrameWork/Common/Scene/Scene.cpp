@@ -19,8 +19,7 @@ namespace GameEngine
 	Scene::Scene()
 	{
 		Camera *camera = new Camera();
-		cameraObject = new GameObject();
-		cameraObject->addComponent(camera);
+
 		std::string vert = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert");
 		std::string flag = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.flag");
 		Shader shader(vert, flag);
@@ -56,6 +55,6 @@ namespace GameEngine
 
 	void Scene::Draw()
 	{
-		gameobject->draw();
+		gameobject->Draw();
 	}
 } // namespace GameEngine

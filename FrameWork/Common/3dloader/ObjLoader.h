@@ -44,6 +44,7 @@ namespace tinyobj {
     
     typedef struct {
         std::string name;
+        int materialID;
         mesh_t mesh;
     } shape_t;
     

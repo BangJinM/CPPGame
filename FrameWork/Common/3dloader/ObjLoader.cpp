@@ -402,12 +402,11 @@ namespace tinyobj {
                 shape.mesh.indices.push_back(v0);
                 shape.mesh.indices.push_back(v1);
                 shape.mesh.indices.push_back(v2);
-                
-                shape.mesh.material_ids.push_back(material_id);
             }
         }
         
         shape.name = name;
+        shape.materialID = material_id;
         
         if (clearCache)
             vertexCache.clear();
