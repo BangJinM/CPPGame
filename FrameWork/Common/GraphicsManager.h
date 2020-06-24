@@ -4,7 +4,7 @@
 #include "RendererCommand.h"
 namespace GameEngine
 {
-    class GameObject;
+    class Scene;
     class GraphicsManager : public IRuntimeModule
     {
     public:
@@ -20,8 +20,7 @@ namespace GameEngine
     private:
         std::vector<RendererCommand> m_RendererCommands;
 
-        GameObject *gameobject;
-        GameObject *cameraObject;
+        Scene* m_Scene;
     };
 
     extern GraphicsManager *g_pGraphicsManager;

@@ -14,7 +14,11 @@ namespace GameEngine
     Scene(/* args */);
     ~Scene();
 
-    void getFirstGameObject();
+    GameObject* getFirstGameObject();
+    void Draw();
+
+    GameObject *gameobject;
+    GameObject *cameraObject;
   };
 
 } // namespace GameEngine

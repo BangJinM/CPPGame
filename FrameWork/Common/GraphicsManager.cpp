@@ -2,15 +2,8 @@
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
 #include "glad/glad.h"
-//一下测试
-#include "ObjParser.h"
-#include "ObjLoader.h"
-#include "Mesh.h"
-#include "Camera.h"
-#include "GameObject.h"
-#include "Shader.h"
-#include "ObjMaterialParser.h"
-#include "stb_image.h"
+
+#include "Scene.h"
 
 using namespace std;
 
@@ -46,49 +39,10 @@ namespace GameEngine
                 // Enable back face culling.
                 glEnable(GL_CULL_FACE);
                 glCullFace(GL_BACK);
-
-                // Initialize the world/model matrix to the identity matrix.
-                // BuildIdentityMatrix(m_worldMatrix);
-
-                // // Set the field of view and screen aspect ratio.
-                // float fieldOfView = PI / 4.0f;
-                // const GfxConfiguration &conf = g_pApp->GetConfiguration();
-
-                // float screenAspect = (float)conf.screenWidth / (float)conf.screenHeight;
-
-                // Build the perspective projection matrix.
-                // BuildPerspectiveFovLHMatrix(m_projectionMatrix, fieldOfView, screenAspect, screenNear, screenDepth);
-
-                // 摄像机
-                Camera *camera = new Camera();
-                cameraObject = new GameObject();
-                cameraObject->addComponent(camera);
-                std::string vert = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert");
-                std::string flag = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.flag");
-                Shader shader(vert, flag);
-
-				int width, height, nrChannels;
-				unsigned char *data;
-
-				//int width, height, nrChannels;
-				Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary("Textures/arm_dif.png");
-				unsigned char * picData = reinterpret_cast<unsigned char *>(buffer.m_pData);
-				data = stbi_load_from_memory(picData, buffer.m_szSize, &width, &height, &nrChannels, 0);
-
-                Material material = Material(&shader);
-
-                std::vector<tinyobj::shape_t> shapes;
-                std::vector<tinyobj::material_t> materials;
-                tinyobj::LoadObj(shapes, materials, "Scene/model.obj", "Materials/");
-                ObjParser parser;
-                gameobject = parser.Parse(shapes);
-				gameobject->addComponent(&material);
-                ObjMaterialParser omp;
-                omp.Parse(materials);
             }
 
-            // InitializeShader(VS_SHADER_SOURCE_FILE, PS_SHADER_SOURCE_FILE);
-            // InitializeBuffers();
+            m_Scene = new Scene();
+
             result = 1;
         }
 
@@ -106,7 +60,7 @@ namespace GameEngine
 
     void GraphicsManager::Draw()
     {
-        gameobject->draw();
+        m_Scene->Draw();
     }
 
     void GraphicsManager::Clear()
