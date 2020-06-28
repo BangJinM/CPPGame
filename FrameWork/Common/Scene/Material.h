@@ -37,29 +37,26 @@ namespace GameEngine
     };
     struct NMaterialData
     {
-        std::vector<NTextureData> textures;
-        std::string id;
-        const NTextureData *getTextureData(const NTextureData::Usage &type) const
-        {
-            for (const auto &it : textures)
-            {
-                if (it.type == type)
-                    return &it;
-            }
-            return nullptr;
-        }
+        enum MaterialType{
+            Unknown = -1,
+            Texture, 
+            Num,
+        };
+        std::string name;
+        MaterialType type;
+        char * data;
+        int size;
     };
     class Material : public Component
     {
     public:
-        Material(Shader *shader) : Component(ClassID(Material))
+        Material() : Component(ClassID(Material))
         {
-            m_Shader = shader;
         }
         ~Material() {}
 
         void use();
-        NMaterialData *m_NMaterialData;
+        std::vector<NMaterialData> m_MaterialDatas;
         Shader *m_Shader;
     };
 } // namespace GameEngine

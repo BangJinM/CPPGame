@@ -37,20 +37,14 @@ namespace GameEngine
 		return errorCode;
 	}
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
-	Mesh::Mesh(MeshData *meshData, int material)
+	Mesh::Mesh(MeshData *meshData)
 	{
 		m_MeshData = meshData;
-		m_Material = material;
 		setupMesh();
 	}
-	void Mesh::Draw(Material *material)
+	void Mesh::Draw()
 	{
 		// draw mesh
-		if (material)
-		{
-			material->use();
-		}
-
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, m_MeshData->indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);

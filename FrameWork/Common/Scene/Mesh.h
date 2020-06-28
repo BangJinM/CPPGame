@@ -103,10 +103,9 @@ namespace GameEngine
     public:
         /*  网格数据  */
         MeshData *m_MeshData;
-        int m_Material;
         /*  函数  */
-        Mesh(MeshData *meshData , int material = -1);
-        void Draw(Material *material);
+        Mesh(MeshData *meshData);
+        void Draw();
 
     private:
         /*  渲染数据  */

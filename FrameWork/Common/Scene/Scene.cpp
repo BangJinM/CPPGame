@@ -8,9 +8,8 @@
 #include "Camera.h"
 #include "GameObject.h"
 #include "Shader.h"
-#include "ObjMaterialParser.h"
-#include "stb_image.h"
 #include "AssetLoader.h"
+#include "TextureParser.h"
 
 namespace GameEngine
 {
@@ -26,22 +25,8 @@ namespace GameEngine
 
 		int width, height, nrChannels;
 		unsigned char *data;
-
-		//int width, height, nrChannels;
-		Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary("Textures/arm_dif.png");
-		unsigned char *picData = reinterpret_cast<unsigned char *>(buffer.m_pData);
-		data = stbi_load_from_memory(picData, buffer.m_szSize, &width, &height, &nrChannels, 0);
-
-		Material material = Material(&shader);
-
-		std::vector<tinyobj::shape_t> shapes;
-		std::vector<tinyobj::material_t> materials;
-		tinyobj::LoadObj(shapes, materials, "Scene/model.obj", "Materials/");
-		ObjParser parser;
-		gameobject = parser.Parse(shapes);
-		gameobject->addComponent(&material);
-		ObjMaterialParser omp;
-		omp.Parse(materials);
+		auto image = TextureParser::getTextureByPath("Textures/arm_dif.png");
+		gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
 	}
 
 	Scene::~Scene()

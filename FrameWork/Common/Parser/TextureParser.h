@@ -3,17 +3,20 @@
 
 
 #include <cstdint>
-#include "ImageParser.h"
+
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "Image.h"
+#include "AssetLoader.h"
 
 namespace GameEngine
 {
-    class TextureParser : public ImageParser
+    extern AssetLoader *g_pAssetLoader;
+
+    class TextureParser 
     {
-    private:
-        /* data */
     public:
-        virtual Image Parse(const Buffer &buf)
+        static Image Parse(const Buffer &buf)
         {
             int width, height, nrChannels;
             unsigned char *data;
@@ -26,6 +29,11 @@ namespace GameEngine
             image.data = data;
             return image;
         }
+
+        static Image getTextureByPath(std::string path){
+			auto buf = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
+            return Parse(buf);
+		}
     };
 
 } // namespace GameEngine

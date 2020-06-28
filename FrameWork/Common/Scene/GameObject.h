@@ -73,7 +73,7 @@ namespace GameEngine
         bool m_isVisual = true;
         Transform *m_Transfrom;
         std::vector<Mesh *> m_Meshs;
-        Material *m_Material;
+        std::vector<Material *> m_Materials;
     };
 
     template <class T>
