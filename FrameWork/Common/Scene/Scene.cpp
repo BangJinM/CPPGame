@@ -34,7 +34,8 @@ namespace GameEngine
 
 		auto gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
 		Transform *transformG = new Transform();
-		m_Gameobjects.push_back(transformG);
+		m_Gameobjects.push_back(gameobject);
+		gameobject->addComponent(transformG);
 	}
 
 
