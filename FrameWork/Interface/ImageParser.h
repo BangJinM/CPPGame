@@ -1,7 +1,8 @@
 #ifndef CPPGAME_INTERFACE_ImageParser_H
 #define CPPGAME_INTERFACE_ImageParser_H
-#include "Image.hpp"
-#include "Buffer.hpp"
+
+#include "Buffer.h"
+#include "Image.h"
 
 namespace GameEngine {
     class ImageParser

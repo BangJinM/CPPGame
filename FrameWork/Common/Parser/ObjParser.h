@@ -87,6 +87,7 @@ namespace GameEngine
 				std::map<int, std::vector<unsigned short>> subMeshMap;
 				meshdata->indices = mesh.indices;
 				Mesh *m_Mesh = new Mesh(meshdata);
+				m_Mesh->m_Material = shape.materialID;
 				// mesh->ma
 				parent->m_Meshs.push_back(m_Mesh);
 				//node->setName(shape.name);

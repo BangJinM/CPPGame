@@ -57,8 +57,6 @@ namespace GameEngine
         std::vector<float> vertex;
         std::vector<unsigned int> indices;
         int vertexSizeInFloat;
-        std::vector<IndexArray> subMeshIndices;
-        std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
         int numIndex;
         std::vector<MeshVertexAttrib> attribs;
         int attribCount;
@@ -84,7 +82,6 @@ namespace GameEngine
         void resetData()
         {
             vertex.clear();
-            subMeshIndices.clear();
             attribs.clear();
             vertexSizeInFloat = 0;
             numIndex = 0;
@@ -106,9 +103,9 @@ namespace GameEngine
     public:
         /*  网格数据  */
         MeshData *m_MeshData;
-        Material *m_Material;
+        int m_Material;
         /*  函数  */
-        Mesh(MeshData *meshData , Material *material = nullptr);
+        Mesh(MeshData *meshData , int material = -1);
         void Draw();
 
     private:
