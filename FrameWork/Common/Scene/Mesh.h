@@ -106,7 +106,7 @@ namespace GameEngine
         int m_Material;
         /*  函数  */
         Mesh(MeshData *meshData , int material = -1);
-        void Draw();
+        void Draw(Material *material);
 
     private:
         /*  渲染数据  */

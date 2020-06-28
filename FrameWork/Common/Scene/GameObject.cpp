@@ -65,7 +65,7 @@ namespace GameEngine
     {
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
-            m_Meshs[i]->Draw();
+            m_Meshs[i]->Draw(m_Material);
         }
     }
 } // namespace GameEngine
