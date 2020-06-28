@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "AssetLoader.h"
 #include "TextureParser.h"
+#include "Transform.h"
 
 namespace GameEngine
 {
@@ -17,29 +18,53 @@ namespace GameEngine
 
 	Scene::Scene()
 	{
+		initScene();
+		updateCamera();
+	}
+
+	void Scene::initScene()
+	{
 		Camera *camera = new Camera();
+		Transform *transform = new Transform();
+		GameObject *cameraObject = new GameObject();
+		cameraObject->addComponent(camera);
+		cameraObject->addComponent(transform);
+		m_Gameobjects.push_back(cameraObject);
 
-		std::string vert = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert");
-		std::string flag = g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.flag");
-		Shader shader(vert, flag);
 
-		int width, height, nrChannels;
-		unsigned char *data;
-		auto image = TextureParser::getTextureByPath("Textures/arm_dif.png");
-		gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
+		auto gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
+		Transform *transformG = new Transform();
+		m_Gameobjects.push_back(transformG);
+	}
+
+
+	void Scene::updateCamera()
+	{
+		for (size_t i = 0; i < m_Gameobjects.size(); i++)
+		{
+			auto camera = m_Gameobjects[i]->getComponent<Camera>();
+			m_Cameras.push_back(camera);
+		}
+		
+	}
+
+	void Scene::addChild(BaseObject *child)
+	{
+	}
+
+	void Scene::deleteChild(BaseObject *child)
+	{
 	}
 
 	Scene::~Scene()
 	{
 	}
 
-	GameObject *Scene::getFirstGameObject()
-	{
-		return gameobject;
-	}
-
 	void Scene::Draw()
 	{
-		gameobject->Draw();
+		for (size_t i = 0; i < m_Gameobjects.size(); i++)
+		{
+			m_Gameobjects[i]->Draw();
+		}
 	}
 } // namespace GameEngine

@@ -2,12 +2,16 @@
 #define GameEngine_Common_Scene_H
 
 #include <cstdint>
-#include "ISceneParser.h"
+#include <vector>
+#include <string>
+
 #include "Scene.h"
 
 namespace GameEngine
 {
   class Camera;
+  class GameObject;
+  class BaseObject;
   class Scene
   {
   private:
@@ -15,12 +19,14 @@ namespace GameEngine
   public:
     Scene(/* args */);
     ~Scene();
-
-    GameObject *getFirstGameObject();
+    void addChild(BaseObject *child);
+    void deleteChild(BaseObject *child);
     void Draw();
-
-    GameObject *gameobject;
-    std::vector<Camera> m_Cameras;
+    void initScene();
+    void updateCamera();
+    std::string m_Name;
+    std::vector<Camera *> m_Cameras;
+    std::vector<GameObject *> m_Gameobjects;
   };
 
 } // namespace GameEngine

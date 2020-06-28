@@ -12,6 +12,7 @@
 #include <map>
 
 #include "ObjLoader.h"
+#include "GameObject.h"
 #include "TextureParser.h"
 
 namespace GameEngine

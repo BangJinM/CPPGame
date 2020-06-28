@@ -11,6 +11,7 @@ namespace GameEngine
             return;
         }
         m_compenents.insert(std::pair<int, Component *>(component->getClassID(), component));
+        component->setHost(this);
     }
 
     void BaseObject::addChild(BaseObject *child)

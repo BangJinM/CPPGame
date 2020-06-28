@@ -18,6 +18,10 @@ namespace GameEngine
 
         Component(ClassIDType classID) : m_ClassID(classID) {}
 
+        void setHost(BaseObject *host){
+            m_Host = host;
+        }
+
     public:
         BaseObject* m_Host; //寄主
     };
