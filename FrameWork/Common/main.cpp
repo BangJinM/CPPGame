@@ -60,9 +60,9 @@ int main(int argc, char *argv[])
 		g_pGraphicsManager->Tick();
 	}
 	g_pGraphicsManager->Finalize();
-	g_pMemoryManager->Finalize();
 	g_pInputManager->Finalize();
 	g_pAssetLoader->Finalize();
+	g_pMemoryManager->Finalize();
 	g_pApp->Finalize();
 
 	return 0;

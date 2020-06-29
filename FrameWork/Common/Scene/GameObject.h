@@ -67,6 +67,7 @@ namespace GameEngine
     {
     public:
         GameObject();
+		~GameObject();
         void Draw();
 
         //private:

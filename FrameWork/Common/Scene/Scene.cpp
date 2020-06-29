@@ -36,6 +36,15 @@ namespace GameEngine
 		Transform *transformG = new Transform();
 		m_Gameobjects.push_back(gameobject);
 		gameobject->addComponent(transformG);
+
+		
+		Shader shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shader/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shader/default.flag"));
+
+		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
+		{
+			gameobject->m_Materials[i]->setShader(&shader);
+		}
+		
 	}
 
 
@@ -59,10 +68,13 @@ namespace GameEngine
 
 	Scene::~Scene()
 	{
+		m_Gameobjects.clear();
+		m_Cameras.clear();
 	}
 
 	void Scene::Draw()
 	{
+		if (m_Cameras[0])
 		for (size_t i = 0; i < m_Gameobjects.size(); i++)
 		{
 			m_Gameobjects[i]->Draw();

@@ -52,11 +52,18 @@ namespace GameEngine
     public:
         Material() : Component(ClassID(Material))
         {
+            m_Shader = nullptr;
         }
-        ~Material() {}
+        ~Material() {
+            m_MaterialDatas.clear();
+        }
 
         void use();
+
+        void setShader(Shader *shader);
+
         std::vector<NMaterialData> m_MaterialDatas;
+
         Shader *m_Shader;
     };
 } // namespace GameEngine

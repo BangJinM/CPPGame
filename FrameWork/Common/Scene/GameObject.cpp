@@ -61,6 +61,12 @@ namespace GameEngine
         m_Transfrom = new Transform();
     }
 
+	GameObject::~GameObject()
+	{
+		m_Meshs.clear();
+		m_Materials.clear();
+	}
+
     void GameObject::Draw()
     {
         for (size_t i = 0; i < m_Meshs.size(); i++)
