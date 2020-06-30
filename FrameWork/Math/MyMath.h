@@ -7,6 +7,6 @@ namespace GameEngine{
     typedef glm::vec3 vecterFloat3;
     typedef glm::vec4 vecterFloat4;
     typedef glm::vec2 vecterFloat2;
-    typedef glm::mat4x4 Matrix4X4f;
+    typedef glm::mat4 GlmMat4;
 }
 #endif

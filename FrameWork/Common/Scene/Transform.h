@@ -22,9 +22,9 @@ namespace GameEngine
         void setRotation(vecterFloat3 rotation);
         void setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation);
 
-        Matrix4X4f getMatrix(){ return m_Matrix;}
+        GlmMat4 getMatrix(){ return m_Matrix;}
     private:
-        Matrix4X4f m_Matrix;
+        GlmMat4 m_Matrix;
 
         vecterFloat3 m_Position;
         vecterFloat3 m_Scale;

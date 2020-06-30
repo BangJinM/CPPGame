@@ -8,7 +8,7 @@ namespace GameEngine
 		m_Position = vecterFloat3(0, 0, 0);
 		m_Scale = vecterFloat3(1, 1, 1);
 		m_Rotation = vecterFloat3(0, 0, 0);
-		m_Matrix = Matrix4X4f(1.0f);
+		m_Matrix = GlmMat4(1.0f);
 		setMatrix(m_Position, m_Scale, m_Rotation);
 	}
 

@@ -27,7 +27,7 @@ namespace GameEngine
         GLenum m_Mode;
         GLenum m_Yype;
         GLsizei m_Count;
-		Matrix4X4f m_Transform;
+		GlmMat4 m_Transform;
     };
 } // namespace GameEngine
 #endif

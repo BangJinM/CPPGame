@@ -7,17 +7,8 @@ namespace GameEngine
 	{
 	}
 
-	glm::mat4 Camera::getViewMatrix()
+	glm::mat4 Camera::getProjectionMatrix()
 	{
-		return this->m_ViewMatrix4;
-	}
-
-	glm::mat4 Camera::getProjectionMatrix(Transform model)
-	{
-		//观察矩阵
-		auto m_ViewMatrix4 = model.getMatrix();
-
-		//投影矩阵
 		m_ProjectionMatrix4 = glm::perspective(glm::radians(m_FieldofView), m_ScreenWidth / m_ScreenHeight, this->m_Near, this->m_Far);
 		return this->m_ProjectionMatrix4;
 	}

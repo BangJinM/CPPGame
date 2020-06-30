@@ -1,11 +1,18 @@
-#version 330 core
-layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
+attribute vec4 a_position;
+attribute vec2 a_texCoord;
+attribute vec4 a_color;
 
-uniform mat4 model;
-uniform mat4 projection;
-
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+varying mediump vec2 v_texCoord;
+#else
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+#endif
 
 void main()
 {
-    gl_Position = projection * model * vec4(vertex.xy, 0.0, 1.0);
+    gl_Position = a_position;
+    v_fragmentColor = a_color;
+    v_texCoord = a_texCoord;
 }

@@ -67,13 +67,14 @@ namespace GameEngine
 		m_Materials.clear();
 	}
 
-    void GameObject::Draw()
+    void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)
     {
+        auto modelMat = getComponent<Transform>()->getMatrix();
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
             if (m_Materials[i])
             {
-                m_Materials[i]->use();
+                m_Materials[i]->use(viewMat, projectMat, modelMat);
             }
             m_Meshs[i]->Draw();
         }

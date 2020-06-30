@@ -11,7 +11,8 @@
 #include "AssetLoader.h"
 #include "TextureParser.h"
 #include "Transform.h"
-
+#include "MyMath.h"
+#include "OpenGLDebugger.h"
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
@@ -26,27 +27,25 @@ namespace GameEngine
 	{
 		Camera *camera = new Camera();
 		Transform *transform = new Transform();
+		transform->setPosition(vecterFloat3(0, 0, 3));
 		GameObject *cameraObject = new GameObject();
 		cameraObject->addComponent(camera);
 		cameraObject->addComponent(transform);
 		m_Gameobjects.push_back(cameraObject);
 
-
 		auto gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
+		Shader* shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.flag"));
+		OpenGLDebugger::glCheckError();
+		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
+		{
+			gameobject->m_Materials[i]->setShader(shader);
+		}
 		Transform *transformG = new Transform();
 		m_Gameobjects.push_back(gameobject);
 		gameobject->addComponent(transformG);
 
-		
-		Shader shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shader/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shader/default.flag"));
 
-		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
-		{
-			gameobject->m_Materials[i]->setShader(&shader);
-		}
-		
 	}
-
 
 	void Scene::updateCamera()
 	{
@@ -55,7 +54,6 @@ namespace GameEngine
 			auto camera = m_Gameobjects[i]->getComponent<Camera>();
 			m_Cameras.push_back(camera);
 		}
-		
 	}
 
 	void Scene::addChild(BaseObject *child)
@@ -74,10 +72,15 @@ namespace GameEngine
 
 	void Scene::Draw()
 	{
+		GlmMat4 viewMx, projectMx;
 		if (m_Cameras[0])
+		{
+			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
+			projectMx = m_Cameras[0]->getProjectionMatrix();
+		}
 		for (size_t i = 0; i < m_Gameobjects.size(); i++)
 		{
-			m_Gameobjects[i]->Draw();
+			m_Gameobjects[i]->Draw(viewMx, projectMx);
 		}
 	}
 } // namespace GameEngine

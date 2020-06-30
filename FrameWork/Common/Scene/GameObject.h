@@ -68,7 +68,7 @@ namespace GameEngine
     public:
         GameObject();
 		~GameObject();
-        void Draw();
+        void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
         //private:
         bool m_isVisual = true;

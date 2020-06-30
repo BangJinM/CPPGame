@@ -1,42 +1,8 @@
 #include "Mesh.h"
-#include <iostream>
+#include "OpenGLDebugger.h"
 namespace GameEngine
 {
-	GLenum glCheckError_(const char *file, int line)
-	{
-		GLenum errorCode;
-		while ((errorCode = glGetError()) != GL_NO_ERROR)
-		{
-			std::string error;
-			switch (errorCode)
-			{
-			case GL_INVALID_ENUM:
-				error = "INVALID_ENUM";
-				break;
-			case GL_INVALID_VALUE:
-				error = "INVALID_VALUE";
-				break;
-			case GL_INVALID_OPERATION:
-				error = "INVALID_OPERATION";
-				break;
-			case GL_STACK_OVERFLOW:
-				error = "STACK_OVERFLOW";
-				break;
-			case GL_STACK_UNDERFLOW:
-				error = "STACK_UNDERFLOW";
-				break;
-			case GL_OUT_OF_MEMORY:
-				error = "OUT_OF_MEMORY";
-				break;
-			case GL_INVALID_FRAMEBUFFER_OPERATION:
-				error = "INVALID_FRAMEBUFFER_OPERATION";
-				break;
-			}
-			std::cout << error.c_str() << " | " << file << " (" << line << ")" << std::endl;
-		}
-		return errorCode;
-	}
-#define glCheckError() glCheckError_(__FILE__, __LINE__)
+	
 	Mesh::Mesh(MeshData *meshData)
 	{
 		m_MeshData = meshData;
@@ -45,10 +11,11 @@ namespace GameEngine
 	void Mesh::Draw()
 	{
 		// draw mesh
+		OpenGLDebugger::glCheckError();
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, m_MeshData->indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
-		glCheckError();
+		OpenGLDebugger::glCheckError();
 	}
 	void Mesh::setupMesh()
 	{
@@ -67,17 +34,17 @@ namespace GameEngine
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_MeshData->indices.size() * sizeof(unsigned int), &m_MeshData->indices[0], GL_STATIC_DRAW);
-		glCheckError();
+		OpenGLDebugger::glCheckError();
 		int offest = 0;
 		for (size_t i = 0; i < m_MeshData->attribs.size(); i++)
 		{
 			auto data = m_MeshData->attribs[i];
-			glEnableVertexAttribArray(i);
-			glVertexAttribPointer(i, data.size, GL_FLOAT, GL_FALSE, m_MeshData->vertexSizeInFloat * sizeof(float), (void *)offest);
+			glEnableVertexAttribArray(data.vertexAttrib);
+			glVertexAttribPointer(data.vertexAttrib, data.size, GL_FLOAT, GL_FALSE, m_MeshData->vertexSizeInFloat * sizeof(float), (void *)offest);
 			offest += data.attribSizeBytes;
-			glCheckError();
+			OpenGLDebugger::glCheckError();
 		}
-		glCheckError();
+		OpenGLDebugger::glCheckError();
 		glBindVertexArray(0);
 	}
 } // namespace GameEngine

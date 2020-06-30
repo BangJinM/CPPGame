@@ -58,7 +58,7 @@ namespace GameEngine
             m_MaterialDatas.clear();
         }
 
-        void use();
+        void use(GlmMat4 viewMat, GlmMat4 projectMat, GlmMat4 model);
 
         void setShader(Shader *shader);
 

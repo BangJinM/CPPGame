@@ -21,8 +21,7 @@ namespace GameEngine
 
     public:
         Camera(glm::float32 m_Near = 1, glm::float32 m_Far = 1000, glm::float32 width = 1280, glm::float32 height = 800);
-        glm::mat4 getViewMatrix();
-        glm::mat4 getProjectionMatrix(Transform model);
+        glm::mat4 getProjectionMatrix();
 
     private:
         //			y

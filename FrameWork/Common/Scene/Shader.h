@@ -9,9 +9,54 @@
 
 namespace GameEngine
 {
+    enum MeshValueType
+    {
+        /**Index 0 will be used as Position.*/
+        VERTEX_ATTRIB_POSITION,
+        /**Index 1 will be used as Color.*/
+        VERTEX_ATTRIB_COLOR,
+        /**Index 2 will be used as Tex coord unit 0.*/
+        VERTEX_ATTRIB_TEX_COORD,
+        /**Index 3 will be used as Tex coord unit 1.*/
+        VERTEX_ATTRIB_TEX_COORD1,
+        /**Index 4 will be used as Tex coord unit 2.*/
+        VERTEX_ATTRIB_TEX_COORD2,
+        /**Index 5 will be used as Tex coord unit 3.*/
+        VERTEX_ATTRIB_TEX_COORD3,
+        /**Index 6 will be used as Normal.*/
+        VERTEX_ATTRIB_NORMAL,
+        /**Index 7 will be used as Blend weight for hardware skin.*/
+        VERTEX_ATTRIB_BLEND_WEIGHT,
+        /**Index 8 will be used as Blend index.*/
+        VERTEX_ATTRIB_BLEND_INDEX,
+        /**Index 9 will be used as tangent.*/
+        VERTEX_ATTRIB_TANGENT,
+        /**Index 10 will be used as Binormal.*/
+        VERTEX_ATTRIB_BINORMAL,
+        VERTEX_ATTRIB_MAX,
+
+        // backward compatibility
+        VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
+    };
     class Shader
     {
     public:
+        const char *COCOS2D_SHADER_UNIFORMS =
+            "uniform mat4 CC_PMatrix;\n"
+            "uniform mat4 CC_MultiViewPMatrix[4];\n"
+            "uniform mat4 CC_MVMatrix;\n"
+            "uniform mat4 CC_MVPMatrix;\n"
+            "uniform mat4 CC_MultiViewMVPMatrix[4];\n"
+            "uniform mat3 CC_NormalMatrix;\n"
+            "uniform vec4 CC_Time;\n"
+            "uniform vec4 CC_SinTime;\n"
+            "uniform vec4 CC_CosTime;\n"
+            "uniform vec4 CC_Random01;\n"
+            "uniform sampler2D CC_Texture0;\n"
+            "uniform sampler2D CC_Texture1;\n"
+            "uniform sampler2D CC_Texture2;\n"
+            "uniform sampler2D CC_Texture3;\n"
+            "//CC INCLUDES END\n\n";
         unsigned int ID;
         // constructor generates the shader on the fly
         // ------------------------------------------------------------------------
@@ -22,24 +67,37 @@ namespace GameEngine
             const char *fShaderCode = fragmentCode.c_str();
             // 2. compile shaders
             unsigned int vertex, fragment;
-            // vertex shader
-            vertex = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vertex, 1, &vShaderCode, NULL);
-            glCompileShader(vertex);
+
+            if (vShaderCode)
+            {
+                if (!compileShader(&vertex, GL_VERTEX_SHADER, vShaderCode))
+                {
+                    return;
+                }
+            }
+
+            if (fShaderCode)
+            {
+                if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fShaderCode))
+                {
+                    return;
+                }
+            }
+
             checkCompileErrors(vertex, "VERTEX");
-            // fragment Shader
-            fragment = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fragment, 1, &fShaderCode, NULL);
-            glCompileShader(fragment);
             checkCompileErrors(fragment, "FRAGMENT");
-            // if geometry shader is given, compile geometry shader
+
             unsigned int geometry;
             if (geometryCode.size() > 0)
             {
                 const char *gShaderCode = geometryCode.c_str();
-                geometry = glCreateShader(GL_GEOMETRY_SHADER);
-                glShaderSource(geometry, 1, &gShaderCode, NULL);
-                glCompileShader(geometry);
+                if (gShaderCode)
+                {
+                    if (!compileShader(&geometry, GL_FRAGMENT_SHADER, gShaderCode))
+                    {
+                        return;
+                    }
+                }
                 checkCompileErrors(geometry, "GEOMETRY");
             }
             // shader Program
@@ -56,8 +114,70 @@ namespace GameEngine
             if (geometryCode.size() > 0)
                 glDeleteShader(geometry);
         }
+
+        void bindPredefinedVertexAttribs()
+        {
+            static const struct
+            {
+                const char *attributeName;
+                int location;
+            } attribute_locations[] =
+                {
+                    {"a_Position", MeshValueType::VERTEX_ATTRIB_POSITION},
+                    {"a_Color", MeshValueType::VERTEX_ATTRIB_COLOR},
+                    {"a_TextureCoord", MeshValueType::VERTEX_ATTRIB_TEX_COORD},
+                    {"a_TextureCoord1", MeshValueType::VERTEX_ATTRIB_TEX_COORD1},
+                    {"a_TextureCoord2", MeshValueType::VERTEX_ATTRIB_TEX_COORD2},
+                    {"a_TextureCoord3", MeshValueType::VERTEX_ATTRIB_TEX_COORD3},
+                    {"a_Normal", MeshValueType::VERTEX_ATTRIB_NORMAL},
+                };
+
+            const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
+
+            for (int i = 0; i < size; i++)
+            {
+                glBindAttribLocation(ID, attribute_locations[i].location, attribute_locations[i].attributeName);
+            }
+        }
+
         // activate the shader
         // ------------------------------------------------------------------------
+
+        bool compileShader(GLuint *shader, GLenum type, const GLchar *source)
+        {
+            GLint status;
+
+            if (!source)
+            {
+                return false;
+            }
+
+            const GLchar *sources[] = {
+                "#version 330 core\n",
+                COCOS2D_SHADER_UNIFORMS,
+                source};
+
+            *shader = glCreateShader(type);
+            glShaderSource(*shader, sizeof(sources) / sizeof(*sources), sources, nullptr);
+            glCompileShader(*shader);
+
+            glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+
+            if (!status)
+            {
+                GLsizei length;
+                glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
+                GLchar *src = (GLchar *)malloc(sizeof(GLchar) * length);
+
+                glGetShaderSource(*shader, length, nullptr, src);
+                free(src);
+
+                return false;
+            }
+
+            return (status == GL_TRUE);
+        }
+
         void use()
         {
             glUseProgram(ID);
@@ -144,6 +264,8 @@ namespace GameEngine
                     glGetProgramInfoLog(shader, 1024, NULL, infoLog);
                 }
             }
+            if (!success)
+                printf(infoLog);
         }
     };
 
