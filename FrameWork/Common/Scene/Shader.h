@@ -106,6 +106,7 @@ namespace GameEngine
             glAttachShader(ID, fragment);
             if (geometryCode.size() > 0)
                 glAttachShader(ID, geometry);
+            bindPredefinedVertexAttribs();
             glLinkProgram(ID);
             checkCompileErrors(ID, "PROGRAM");
             // delete the shaders as they're linked into our program now and no longer necessery
