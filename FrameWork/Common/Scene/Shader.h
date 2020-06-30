@@ -123,13 +123,13 @@ namespace GameEngine
                 int location;
             } attribute_locations[] =
                 {
-                    {"a_Position", MeshValueType::VERTEX_ATTRIB_POSITION},
-                    {"a_Color", MeshValueType::VERTEX_ATTRIB_COLOR},
-                    {"a_TextureCoord", MeshValueType::VERTEX_ATTRIB_TEX_COORD},
-                    {"a_TextureCoord1", MeshValueType::VERTEX_ATTRIB_TEX_COORD1},
-                    {"a_TextureCoord2", MeshValueType::VERTEX_ATTRIB_TEX_COORD2},
-                    {"a_TextureCoord3", MeshValueType::VERTEX_ATTRIB_TEX_COORD3},
-                    {"a_Normal", MeshValueType::VERTEX_ATTRIB_NORMAL},
+                    {"a_position", MeshValueType::VERTEX_ATTRIB_POSITION},
+                    {"a_color", MeshValueType::VERTEX_ATTRIB_COLOR},
+                    {"a_texCoord", MeshValueType::VERTEX_ATTRIB_TEX_COORD},
+                    {"a_texCoord1", MeshValueType::VERTEX_ATTRIB_TEX_COORD1},
+                    {"a_texCoord2", MeshValueType::VERTEX_ATTRIB_TEX_COORD2},
+                    {"a_texCoord3", MeshValueType::VERTEX_ATTRIB_TEX_COORD3},
+                    {"a_normal", MeshValueType::VERTEX_ATTRIB_NORMAL},
                 };
 
             const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
