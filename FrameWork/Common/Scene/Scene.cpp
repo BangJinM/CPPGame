@@ -34,7 +34,7 @@ namespace GameEngine
 		m_Gameobjects.push_back(cameraObject);
 
 		auto gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
-		Shader* shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.flag"));
+		Shader* shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.frag"));
 		OpenGLDebugger::glCheckError();
 		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
 		{

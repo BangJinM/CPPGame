@@ -96,23 +96,27 @@ namespace GameEngine
 				Mesh *m_Mesh = new Mesh(meshdata);
 				// m_Mesh->m_Material = shape.materialID;
 				// mesh->ma
-				parent->m_Materials.push_back(materialParse(materials[shape.materialID]));
+				if (shape.materialID > 0)
+					parent->m_Materials.push_back(materialParse(materials[shape.materialID]));
+				else
+					parent->m_Materials.push_back(new Material());
+
 				parent->m_Meshs.push_back(m_Mesh);
 				//node->setName(shape.name);
 			}
 		}
 
-		static Material* materialParse(tinyobj::material_t m_t)
+		static Material *materialParse(tinyobj::material_t m_t)
 		{
-			Material* material = new Material();
-			// if(m_t.ambient_texname != ""){
-			// 	NMaterialData data;
-			// 	data.name = m_t.ambient_texname;
-			// 	TextureParser::getTextureByPath(m_t.ambient_texname);
-			// } 
+			Material *material = new Material();
+			if (m_t.ambient_texname != "")
+			{
+				NMaterialData data;
+				data.name = m_t.ambient_texname;
+				TextureParser::getTextureByPath(m_t.ambient_texname);
+			}
 			return material;
 		}
-
 
 	}; // namespace GameEngine
 

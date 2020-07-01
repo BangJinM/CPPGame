@@ -57,7 +57,7 @@ namespace GameEngine
             "uniform sampler2D CC_Texture2;\n"
             "uniform sampler2D CC_Texture3;\n"
             "//CC INCLUDES END\n\n";
-        unsigned int ID;
+        unsigned int ID = 0;
         // constructor generates the shader on the fly
         // ------------------------------------------------------------------------
         Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = "")
@@ -154,7 +154,6 @@ namespace GameEngine
             }
 
             const GLchar *sources[] = {
-                "#version 330 core\n",
                 COCOS2D_SHADER_UNIFORMS,
                 source};
 

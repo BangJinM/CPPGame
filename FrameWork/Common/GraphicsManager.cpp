@@ -59,7 +59,7 @@ namespace GameEngine
     }
 
     void GraphicsManager::Draw()
-    {
+    {        
         m_Scene->Draw();
     }
 

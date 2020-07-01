@@ -72,7 +72,7 @@ namespace GameEngine
         auto modelMat = getComponent<Transform>()->getMatrix();
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
-            if (m_Materials[i])
+            if (m_Materials.size()>i && m_Materials[i])
             {
                 m_Materials[i]->use(viewMat, projectMat, modelMat);
             }
