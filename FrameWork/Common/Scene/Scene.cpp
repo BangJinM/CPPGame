@@ -26,25 +26,27 @@ namespace GameEngine
 	void Scene::initScene()
 	{
 		Camera *camera = new Camera();
+
 		Transform *transform = new Transform();
-		transform->setPosition(vecterFloat3(0, 0, 3));
+		transform->setPosition(vecterFloat3(0.0f, 0.0f, -20.f));
+
 		GameObject *cameraObject = new GameObject();
 		cameraObject->addComponent(camera);
 		cameraObject->addComponent(transform);
 		m_Gameobjects.push_back(cameraObject);
 
-		auto gameobject = ObjParser::Parse("Scene/model.obj", "Materials/");
+		auto gameobject = ObjParser::Parse("Scene/Shape_Cube.obj", "Materials/");
 		Shader* shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.frag"));
 		OpenGLDebugger::glCheckError();
 		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
 		{
 			gameobject->m_Materials[i]->setShader(shader);
 		}
+
 		Transform *transformG = new Transform();
+		transformG->setScale(glm::vec3(1.f / 50, 1.f / 50, 1.f / 50));
 		m_Gameobjects.push_back(gameobject);
 		gameobject->addComponent(transformG);
-
-
 	}
 
 	void Scene::updateCamera()

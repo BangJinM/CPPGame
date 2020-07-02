@@ -15,24 +15,24 @@ namespace GameEngine
 	void Transform::setPosition(vecterFloat3 position)
 	{
 		m_Position = position;
-		setMatrix(m_Position, m_Rotation, m_Scale);
+		setMatrix(m_Position, m_Scale, m_Rotation);
 	}
 	void Transform::setScale(vecterFloat3 scale)
 	{
 		m_Scale = scale;
-		setMatrix(m_Position, m_Rotation, m_Scale);
+		setMatrix(m_Position, m_Scale, m_Rotation);
 	}
 	void Transform::setRotation(vecterFloat3 rotation)
 	{
 		
 		m_Rotation = rotation;
-		setMatrix(m_Position, m_Rotation, m_Scale);
+		setMatrix(m_Position, m_Scale, m_Rotation);
 	}
 	void Transform::setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation)
 	{
+		m_Matrix = glm::translate(m_Matrix, position);
 		m_Matrix = glm::scale(m_Matrix, scale);
 		glm::qua<float> q = glm::qua<float>(glm::radians(rotation)); //创建一个四元数
 		m_Matrix = glm::mat4_cast(q) * m_Matrix;	//得到一个旋转的模型矩阵
-		m_Matrix = glm::translate(m_Matrix, rotation);
 	}
 } // namespace GameEngine

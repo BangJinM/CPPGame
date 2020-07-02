@@ -20,7 +20,7 @@ namespace GameEngine
         };
 
     public:
-        Camera(glm::float32 m_Near = 1, glm::float32 m_Far = 1000, glm::float32 width = 1280, glm::float32 height = 800);
+        Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000, glm::float32 width = 960, glm::float32 height = 540, glm::float32 fieldofView = 45);
         glm::mat4 getProjectionMatrix();
 
     private:
@@ -41,7 +41,6 @@ namespace GameEngine
         glm::float32 m_ScreenWidth;  //屏幕宽度
         glm::float32 m_ScreenHeight; //屏幕高度
 
-        glm::mat4 m_ViewMatrix4;
         glm::mat4 m_ProjectionMatrix4;
     };
 } // namespace GameEngine

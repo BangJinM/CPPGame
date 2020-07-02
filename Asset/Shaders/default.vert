@@ -13,7 +13,7 @@ varying vec2 v_texCoord;
 void main()
 {
     // gl_Position = projection * view * model * vec4(a_position, 1.0f);
-    gl_Position = view *model *vec4( a_position, 1);
+    gl_Position = projection * view * model *vec4( a_position, 1);
     v_fragmentColor = vec4( a_normal, 1.0f);
     v_texCoord = a_texCoord;
 }
