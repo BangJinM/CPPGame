@@ -6,20 +6,24 @@
 #include "OpenGLDebugger.h"
 namespace GameEngine
 {
-    void Material::use(GlmMat4 viewMat, GlmMat4 projectMat, GlmMat4 model)
+	void Material::use()
     {
-        if (m_Shader != nullptr)
-        {
-            OpenGLDebugger::glCheckError();
-            m_Shader->use();
-			OpenGLDebugger::glCheckError();
-            m_Shader->setMat4("projection", projectMat);
-            OpenGLDebugger::glCheckError();
-            m_Shader->setMat4("view", viewMat);
-            OpenGLDebugger::glCheckError();
-            m_Shader->setMat4("model", model);
-            OpenGLDebugger::glCheckError();
-        }
+		m_Shader->use();
+		for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+		{
+			auto data = m_MaterialDatas[i];
+
+			switch (data->type)
+			{
+			case MaterialType::Mat4:
+			{
+				auto property = (GlmMat4 *)data->data;
+				m_Shader->set(data->name, *property);
+			}
+			default:
+				break;
+			}
+		}
     }
 
     void Material::setShader(Shader *shader)

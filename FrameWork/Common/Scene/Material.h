@@ -35,16 +35,22 @@ namespace GameEngine
         GLenum wrapS;
         GLenum wrapT;
     };
+
+	enum MaterialType
+	{
+		Unknown = -1,
+		Texture,
+		Float,
+		Vec3,
+		Mat4,
+	};
+
     struct NMaterialData
     {
-        enum MaterialType{
-            Unknown = -1,
-            Texture, 
-            Num,
-        };
+        
         std::string name;
         MaterialType type;
-        char * data;
+        void *data;
         int size;
     };
     class Material : public Component
@@ -54,18 +60,37 @@ namespace GameEngine
         {
             m_Shader = nullptr;
         }
-        ~Material() {
+		Material(Material * material) : Component(ClassID(Material))
+		{
+			m_Shader = material->m_Shader;
+			m_MaterialDatas = material->m_MaterialDatas;
+		}
+        ~Material()
+        {
             m_MaterialDatas.clear();
         }
 
-        void use(GlmMat4 viewMat, GlmMat4 projectMat, GlmMat4 model);
+		template <typename Type>
+        void AddProperty(Type value, std::string name, MaterialType type);
+
+        void use();
 
         void setShader(Shader *shader);
 
-        std::vector<NMaterialData> m_MaterialDatas;
+        std::vector<NMaterialData *> m_MaterialDatas;
 
         Shader *m_Shader;
     };
+	template<typename Type>
+	inline void Material::AddProperty(Type value, std::string name, MaterialType type)
+	{
+		NMaterialData* data = new NMaterialData();
+		data->name = name;
+		data->data = &value;
+		auto temp = (GlmMat4 *)data->data;
+		data->type = type;
+		m_MaterialDatas.push_back(data);
+	}
 } // namespace GameEngine
 
 #endif //MAENGINE_IAPPLICATION_H

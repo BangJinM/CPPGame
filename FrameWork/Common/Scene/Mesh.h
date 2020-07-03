@@ -77,7 +77,7 @@ namespace GameEngine
         Mesh(MeshData *meshData);
         void Draw();
 
-    private:
+    public:
         /*  渲染数据  */
         unsigned int VAO, VBO, EBO;
         /*  函数  */

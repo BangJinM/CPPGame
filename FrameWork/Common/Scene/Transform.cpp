@@ -30,6 +30,7 @@ namespace GameEngine
 	}
 	void Transform::setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation)
 	{
+		m_Matrix = GlmMat4(1.0f);
 		m_Matrix = glm::translate(m_Matrix, position);
 		m_Matrix = glm::scale(m_Matrix, scale);
 		glm::qua<float> q = glm::qua<float>(glm::radians(rotation)); //创建一个四元数

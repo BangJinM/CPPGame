@@ -5,29 +5,25 @@
 #include "MyMath.h"
 #include "Mesh.h"
 #include <glad/glad.h>
+#include "Material.h"
 namespace GameEngine
 {
-    class Material;
     class MeshRendererCommand : public RendererCommand
     {
     public:
-
         MeshRendererCommand();
 
-		~MeshRendererCommand();
+        ~MeshRendererCommand();
 
-		virtual void excecute();
+        virtual void excecute();
 
-    private:
+    public:
 
-        Material *m_MaterailID;
-        // Mesh * m_Mesh;
-        
+        Material *material;
         GLuint m_Vao;
         GLenum m_Mode;
         GLenum m_Yype;
         GLsizei m_Count;
-		GlmMat4 m_Transform;
     };
 } // namespace GameEngine
 #endif

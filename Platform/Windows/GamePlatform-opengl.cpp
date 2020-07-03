@@ -82,10 +82,7 @@ namespace GameEngine
 	}
 	void OpenGLApplication::Tick()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		this->m_bQuit = glfwWindowShouldClose(window);
-		g_pGraphicsManager->Draw();
-		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 } // namespace GameEngine

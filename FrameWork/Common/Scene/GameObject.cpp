@@ -1,8 +1,13 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "glad/glad.h"
+#include "MeshRendererCommand.h"
+#include "GraphicsManager.h"
+
 namespace GameEngine
 {
+    extern GraphicsManager *g_pGraphicsManager;
+
     void BaseObject::addComponent(Component *component)
     {
         auto begin = m_compenents.find(component->getClassID());
@@ -61,22 +66,34 @@ namespace GameEngine
         m_Transfrom = new Transform();
     }
 
-	GameObject::~GameObject()
-	{
-		m_Meshs.clear();
-		m_Materials.clear();
-	}
+    GameObject::~GameObject()
+    {
+        m_Meshs.clear();
+        m_Materials.clear();
+    }
 
     void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)
     {
         auto modelMat = getComponent<Transform>()->getMatrix();
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
-            if (m_Materials.size()>i && m_Materials[i])
-            {
-                m_Materials[i]->use(viewMat, projectMat, modelMat);
+            MeshRendererCommand* renderer = new MeshRendererCommand();
+            if (m_Materials.size() > i && m_Materials[i])
+            {	
+				Material *material = new Material(m_Materials[i]);
+				material->AddProperty<GlmMat4>(projectMat, "projection", MaterialType::Mat4);
+				material->AddProperty<GlmMat4>(viewMat, "view", MaterialType::Mat4);
+				material->AddProperty<GlmMat4>(modelMat, "model", MaterialType::Mat4);
+				material->use();
+				renderer->material = material;
             }
-            m_Meshs[i]->Draw();
+			renderer->material->use();
+            renderer->m_Vao = m_Meshs[i]->VAO;
+            renderer->m_Mode = GL_TRIANGLES;
+            renderer->m_Count = m_Meshs[i]->m_MeshData->indices.size();
+            renderer->m_Yype = GL_UNSIGNED_INT;
+			
+            g_pGraphicsManager->addRendererCommand(renderer);
         }
     }
 } // namespace GameEngine

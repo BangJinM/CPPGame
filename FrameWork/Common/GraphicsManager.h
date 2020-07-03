@@ -17,8 +17,9 @@ namespace GameEngine
         virtual void Draw();
         virtual void Clear();
 
+        void addRendererCommand(RendererCommand *command);
     private:
-        std::vector<RendererCommand> m_RendererCommands;
+        std::vector<RendererCommand *> m_RendererCommands;
 
         Scene* m_Scene;
     };

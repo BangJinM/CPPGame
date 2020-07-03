@@ -11,11 +11,11 @@ namespace GameEngine
 	void Mesh::Draw()
 	{
 		// draw mesh
-		OpenGLDebugger::glCheckError();
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, m_MeshData->indices.size(), GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-		OpenGLDebugger::glCheckError();
+		//OpenGLDebugger::glCheckError();
+		//glBindVertexArray(VAO);
+		//glDrawElements(GL_TRIANGLES, m_MeshData->indices.size(), GL_UNSIGNED_INT, 0);
+		//glBindVertexArray(0);
+		//OpenGLDebugger::glCheckError();
 	}
 	void Mesh::setupMesh()
 	{

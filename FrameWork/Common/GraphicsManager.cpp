@@ -2,8 +2,8 @@
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
 #include "glad/glad.h"
-
 #include "Scene.h"
+#include <GLFW/glfw3.h>
 
 using namespace std;
 
@@ -55,15 +55,27 @@ namespace GameEngine
 
     void GraphicsManager::Tick()
     {
-        //
+        auto window = glfwGetCurrentContext();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        m_Scene->Draw();
+        Draw();
+        glfwSwapBuffers(window);
     }
 
     void GraphicsManager::Draw()
-    {        
-        m_Scene->Draw();
+    {
+        for (size_t i = 0; i < m_RendererCommands.size(); i++)
+        {
+            m_RendererCommands[i]->excecute();
+        }
+        m_RendererCommands.clear();
     }
 
     void GraphicsManager::Clear()
     {
+    }
+    void GraphicsManager::addRendererCommand(RendererCommand *command)
+    {
+        m_RendererCommands.push_back(command);
     }
 } // namespace GameEngine
