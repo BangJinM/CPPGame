@@ -19,7 +19,7 @@ namespace GameEngine
 
     public:
 
-        Material *material;
+        Material material;
         GLuint m_Vao;
         GLenum m_Mode;
         GLenum m_Yype;

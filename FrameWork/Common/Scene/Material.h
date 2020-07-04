@@ -9,6 +9,7 @@
 #include <string>
 
 #include "Shader.h"
+#include "Buffer.h"
 
 namespace GameEngine
 {
@@ -36,21 +37,20 @@ namespace GameEngine
         GLenum wrapT;
     };
 
-	enum MaterialType
-	{
-		Unknown = -1,
-		Texture,
-		Float,
-		Vec3,
-		Mat4,
-	};
+    enum MaterialType
+    {
+        Unknown = -1,
+        Texture,
+        Float,
+        Mat4,
+    };
 
     struct NMaterialData
     {
-        
+
         std::string name;
         MaterialType type;
-        void *data;
+        Buffer* buffer;
         int size;
     };
     class Material : public Component
@@ -60,37 +60,43 @@ namespace GameEngine
         {
             m_Shader = nullptr;
         }
-		Material(Material * material) : Component(ClassID(Material))
-		{
-			m_Shader = material->m_Shader;
-			m_MaterialDatas = material->m_MaterialDatas;
-		}
+        Material(Material *material) : Component(ClassID(Material))
+        {
+            m_Shader = material->m_Shader;
+        }
         ~Material()
         {
+            //for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+            //{
+            //    delete( m_MaterialDatas[i].buffer);
+            //}
             m_MaterialDatas.clear();
         }
 
-		template <typename Type>
-        void AddProperty(Type value, std::string name, MaterialType type);
+        template <typename Type>
+        void AddProperty(Type value, std::string name, int size, MaterialType type);
 
         void use();
 
         void setShader(Shader *shader);
 
-        std::vector<NMaterialData *> m_MaterialDatas;
+        std::vector<NMaterialData> m_MaterialDatas;
 
         Shader *m_Shader;
     };
-	template<typename Type>
-	inline void Material::AddProperty(Type value, std::string name, MaterialType type)
-	{
-		NMaterialData* data = new NMaterialData();
-		data->name = name;
-		data->data = &value;
-		auto temp = (GlmMat4 *)data->data;
-		data->type = type;
-		m_MaterialDatas.push_back(data);
-	}
+    template <typename Type>
+    inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
+    {
+        NMaterialData data;
+        data.name = name;
+        data.buffer = new Buffer(size + 1);
+        data.buffer->m_pData[size] = '\0';
+
+        memcpy(data.buffer->m_pData, value, size);
+        data.size = size;
+        data.type = type;
+        m_MaterialDatas.push_back(data);
+    }
 } // namespace GameEngine
 
 #endif //MAENGINE_IAPPLICATION_H

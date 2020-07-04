@@ -50,15 +50,17 @@ int main(int argc, char *argv[])
 		printf("App Initialize failed, will exit now.");
 		return ret;
 	}
-
+	int i = 1;
 	while (!g_pApp->IsQuit())
 	{
+
 		try
 		{
 			g_pMemoryManager->Tick();
 			g_pInputManager->Tick();
 			g_pAssetLoader->Tick();
 			g_pApp->Tick();
+			printf("%d\n", i++);
 			g_pGraphicsManager->Tick();
 		}
 		catch (const std::exception&)

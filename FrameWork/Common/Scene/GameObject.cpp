@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "MeshRendererCommand.h"
 #include "GraphicsManager.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace GameEngine
 {
@@ -80,14 +81,12 @@ namespace GameEngine
             MeshRendererCommand* renderer = new MeshRendererCommand();
             if (m_Materials.size() > i && m_Materials[i])
             {	
-				Material *material = new Material(m_Materials[i]);
-				material->AddProperty<GlmMat4>(projectMat, "projection", MaterialType::Mat4);
-				material->AddProperty<GlmMat4>(viewMat, "view", MaterialType::Mat4);
-				material->AddProperty<GlmMat4>(modelMat, "model", MaterialType::Mat4);
-				material->use();
-				renderer->material = material;
+				renderer->material.m_Shader = m_Materials[i]->m_Shader;
+				renderer->material.AddProperty(glm::value_ptr( projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
+				renderer->material.AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
+				renderer->material.AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
             }
-			renderer->material->use();
+			renderer->material.use();
             renderer->m_Vao = m_Meshs[i]->VAO;
             renderer->m_Mode = GL_TRIANGLES;
             renderer->m_Count = m_Meshs[i]->m_MeshData->indices.size();
