@@ -25,7 +25,7 @@ namespace GameEngine
     {
         typedef std::vector<unsigned short> IndexArray;
         std::vector<float> vertex;
-        std::vector<unsigned int> indices;
+        std::vector<int> indices;
         int vertexSizeInFloat;
         int numIndex;
         std::vector<MeshVertexAttrib> attribs;

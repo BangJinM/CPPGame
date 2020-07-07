@@ -10,8 +10,6 @@ set (CMAKE_C_FLAGS_RELEASE          "-O4 -DNDEBUG")
 set (CMAKE_C_FLAGS_RELWITHDEBINFO   "-O2 /Debug")
 set (CMAKE_C_STANDARD 11)
 
-
-
 project (GameEngine)
 
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common")
@@ -29,6 +27,15 @@ set(MYGE_EXTERNAL_ROOT ${PROJECT_SOURCE_DIR}/External/${MYGE_TARGET_PLATFORM}/)
 include_directories("${PROJECT_SOURCE_DIR}/Platform/${MYGE_TARGET_PLATFORM}")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/glm")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/glad/include")
+include_directories("${PROJECT_SOURCE_DIR}/External/src/cJSON")
+
+add_library( cJson
+    ${PROJECT_SOURCE_DIR}/External/src/cJson/cJson.c
+)
+
+add_library( Glad
+    ${PROJECT_SOURCE_DIR}/External/src/glad/src/glad.c
+)
 
 include_directories("${MYGE_EXTERNAL_ROOT}include")
 set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)
@@ -36,4 +43,5 @@ set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)
 add_subdirectory(FrameWork)
 add_subdirectory(Platform)
 add_subdirectory(Test)
+add_subdirectory(Editor)
 

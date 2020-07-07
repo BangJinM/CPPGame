@@ -56,7 +56,7 @@ namespace GameEngine
         inline std::string SyncOpenAndReadTextFileToString(const char *fileName)
         {
             auto fBegin = m_Assets.find(fileName);
-            if(fBegin != m_Assets.end())
+            if (fBegin != m_Assets.end())
                 return fBegin->second;
             std::string result;
             Buffer buffer = SyncOpenAndReadText(fileName);
@@ -73,7 +73,14 @@ namespace GameEngine
 
         std::string getFileExtension(const std::string &filePath) const;
 
+		std::string GetFileName(const std::string &filePath)const;
+
+        void WriteFile(const std::string &file, const std::string path);
+
+        void getFullPath(std::string path);
+
     private:
+
         std::vector<std::string> m_strSearchPath;
         std::map<std::string, std::string> m_Assets;
     };
