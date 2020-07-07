@@ -11,3 +11,6 @@
 [submodule "External/src/OpenGEX"]
 	path = External/src/OpenGEX
 	url = https://github.com/BangjinMa/OpenGEX.git
+[submodule "External/src/cJSON"]
+	path = External/src/cJSON
+	url = https://github.com/BangjinMa/cJSON.git
