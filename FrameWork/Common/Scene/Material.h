@@ -57,8 +57,7 @@ namespace GameEngine
             buffer = new char[size+1];
         }
         ~NMaterialData(){
-            if ( buffer)
-                delete buffer;
+			delete buffer;
         }
     };
     class Material : public Component
@@ -78,8 +77,15 @@ namespace GameEngine
             {
                 delete( m_MaterialDatas[i]);
             }
-            m_MaterialDatas.clear();
         }
+
+		void Clear() {
+			for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+			{
+				delete(m_MaterialDatas[i]);
+			}
+			m_MaterialDatas.clear();
+		}
 
         template <typename Type>
         void AddProperty(Type value, std::string name, int size, MaterialType type);

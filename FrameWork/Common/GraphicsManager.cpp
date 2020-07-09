@@ -67,6 +67,7 @@ namespace GameEngine
         for (size_t i = 0; i < m_RendererCommands.size(); i++)
         {
             m_RendererCommands[i]->excecute();
+			delete m_RendererCommands[i];
         }
         m_RendererCommands.clear();
     }

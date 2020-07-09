@@ -79,7 +79,7 @@ namespace GameEngine
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
             MeshRendererCommand* renderer = new MeshRendererCommand();
-			m_Materials[i]->m_MaterialDatas.clear();
+			m_Materials[i]->Clear();
             if (m_Materials.size() > i && m_Materials[i])
             {	
 				renderer->material = m_Materials[i];
