@@ -50,8 +50,16 @@ namespace GameEngine
 
         std::string name;
         MaterialType type;
-        Buffer* buffer;
+        char* buffer;
         int size;
+
+        NMaterialData(int size){
+            buffer = new char[size+1];
+        }
+        ~NMaterialData(){
+            if ( buffer)
+                delete buffer;
+        }
     };
     class Material : public Component
     {
@@ -66,10 +74,10 @@ namespace GameEngine
         }
         ~Material()
         {
-            //for (size_t i = 0; i < m_MaterialDatas.size(); i++)
-            //{
-            //    delete( m_MaterialDatas[i].buffer);
-            //}
+            for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+            {
+                delete( m_MaterialDatas[i]);
+            }
             m_MaterialDatas.clear();
         }
 
@@ -80,21 +88,19 @@ namespace GameEngine
 
         void setShader(Shader *shader);
 
-        std::vector<NMaterialData> m_MaterialDatas;
+        std::vector<NMaterialData *> m_MaterialDatas;
 
         Shader *m_Shader;
     };
     template <typename Type>
     inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
     {
-        NMaterialData data;
-        data.name = name;
-        data.buffer = new Buffer(size + 1);
-        data.buffer->m_pData[size] = '\0';
-
-        memcpy(data.buffer->m_pData, value, size);
-        data.size = size;
-        data.type = type;
+        NMaterialData* data = new NMaterialData(size);
+        data->name = name;
+		memcpy(data->buffer, value, size);
+        data->buffer[size] = '\0';
+        data->size = size;
+        data->type = type;
         m_MaterialDatas.push_back(data);
     }
 } // namespace GameEngine

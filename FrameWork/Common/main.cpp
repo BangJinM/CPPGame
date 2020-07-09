@@ -54,19 +54,15 @@ int main(int argc, char *argv[])
 	while (!g_pApp->IsQuit())
 	{
 
-		try
-		{
+
 			g_pMemoryManager->Tick();
 			g_pInputManager->Tick();
 			g_pAssetLoader->Tick();
 			g_pApp->Tick();
 			printf("%d\n", i++);
 			g_pGraphicsManager->Tick();
-		}
-		catch (const std::exception&)
-		{
 
-		}
+
 	}
 	g_pGraphicsManager->Finalize();
 	g_pInputManager->Finalize();

@@ -10,45 +10,47 @@ using namespace GameEngine;
 
 namespace GameEngine
 {
-    MemoryManager *g_pMemoryManager = new MemoryManager();
-    AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
+	MemoryManager *g_pMemoryManager = new MemoryManager();
+	AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
 } // namespace GameEngine
 
 int main(int, char **)
 {
-    g_pMemoryManager->Initialize();
-    g_pAssetLoader->Initialize();
+	g_pMemoryManager->Initialize();
+	g_pAssetLoader->Initialize();
 
-	std::vector<tinyobj::shape_t> shapes;
-	std::vector<tinyobj::material_t> materials;
-	std::string path = "Scene/Shape_Cube.obj";
-	tinyobj::LoadObj(shapes, materials, path.c_str(), "Materials/");
+	//std::string sv = "Shaders/default.vert";
+	//std::string sf = "Shaders/default.frag";
+	std::string name = "default";
 
-	/*cJSON * root = cJSON_CreateString(g_pAssetLoader->GetFileName(path).c_str());*/
-	cJSON * root = cJSON_CreateObject();
-	cJSON * object1 = cJSON_CreateObject();
-	cJSON_AddItemToObject(root, g_pAssetLoader->GetFileName(path).c_str(), object1);
-	for (size_t i = 0; i < shapes.size(); i++)
-	{
-		auto shap = shapes[i];
-		cJSON * item = cJSON_CreateObject();
-		cJSON_AddItemToObject(object1, shap.name.c_str(), item);
-		if (shap.mesh.indices.size() > 0)
-			cJSON_AddItemToObject(item, "indices", cJSON_CreateIntArray(&shap.mesh.indices[0], shap.mesh.indices.size()));
-		if (shap.mesh.normals.size() > 0)
-			cJSON_AddItemToObject(item, "normals", cJSON_CreateFloatArray(&shap.mesh.normals[0], shap.mesh.normals.size()));
-		if (shap.mesh.texcoords.size() > 0)
-			cJSON_AddItemToObject(item, "texcoords", cJSON_CreateFloatArray(&shap.mesh.texcoords[0], shap.mesh.texcoords.size()));
-		if (shap.mesh.positions.size() > 0)
-			cJSON_AddItemToObject(item, "positions", cJSON_CreateFloatArray(&shap.mesh.positions[0], shap.mesh.positions.size()));
-	}
-	char *cjson_str = cJSON_Print(root);
-    auto fullPath = "../../Asset/" + path;
-	g_pAssetLoader->WriteFile(cjson_str, fullPath);
+	//float color[3] = {1, 1, 1};
+	//std::string type = "Mat4";
+	//std::string colorName = "color";
+	///*cJSON * root = cJSON_CreateString(g_pAssetLoader->GetFileName(path).c_str());*/
+	//cJSON *root = cJSON_CreateObject();
+	//cJSON *object1 = cJSON_CreateObject();
+	//cJSON_AddItemToObject(root, name.c_str(), object1);
+	//cJSON_AddItemToObject(object1, "vert", cJSON_CreateString(sv.c_str()));
+	//cJSON_AddItemToObject(object1, "frag", cJSON_CreateString(sf.c_str()));
+	//cJSON *attrs = cJSON_CreateObject();
+	//cJSON *attr = cJSON_CreateObject();
+	//cJSON_AddItemToObject(object1, colorName.c_str(), attrs);
+	//cJSON_AddItemToObject(attrs, colorName.c_str(), attr);
+	//cJSON_AddItemToObject(attr, "name", cJSON_CreateString(colorName.c_str()));
+	//cJSON_AddItemToObject(attr, "type", cJSON_CreateString(type.c_str()));
+	//cJSON_AddItemToObject(attr, "value", cJSON_CreateFloatArray(color, 3));
+
+	//char *cjson_str = cJSON_Print(root);
+	//std::string fullPath = "../../Asset/Materials/" + name + ".gemtl";
+	//g_pAssetLoader->WriteFile(cjson_str, fullPath);
+
+	auto text = g_pAssetLoader->SyncOpenAndReadTextFileToString(("Materials/" + name + ".gemtl").c_str());
+	auto json = cJSON_Parse(text.c_str());
+	char *cjson_str = cJSON_Print(json);
 	printf(cjson_str);
-    g_pMemoryManager->Finalize();
-    g_pAssetLoader->Finalize();
-    delete g_pMemoryManager;
-    delete g_pAssetLoader;
-    return 0;
+	g_pMemoryManager->Finalize();
+	g_pAssetLoader->Finalize();
+	delete g_pMemoryManager;
+	delete g_pAssetLoader;
+	return 0;
 }

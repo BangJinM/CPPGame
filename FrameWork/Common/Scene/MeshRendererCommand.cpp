@@ -14,8 +14,8 @@ namespace GameEngine
 
     void MeshRendererCommand::excecute()
     {
-		if(material.m_Shader)
-			material.use();
+		if(material)
+			material->use();
         glBindVertexArray(m_Vao);
         glDrawElements(m_Mode, m_Count, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

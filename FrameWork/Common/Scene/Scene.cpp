@@ -43,9 +43,12 @@ namespace GameEngine
 			gameobject->m_Materials[i]->setShader(shader);
 		}
 
+		Material* material = new Material();
+		material->setShader(shader);
 		Transform *transformG = new Transform();
 		transformG->setScale(glm::vec3(1.f / 50, 1.f / 50, 1.f / 50));
 		m_Gameobjects.push_back(gameobject);
+		gameobject->m_Materials.push_back(material);
 		gameobject->addComponent(transformG);
 	}
 
