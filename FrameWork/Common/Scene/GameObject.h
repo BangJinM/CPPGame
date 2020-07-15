@@ -42,7 +42,10 @@ namespace GameEngine
         }
 
         BaseObject();
+		virtual ~BaseObject()
+		{
 
+		}
         void setName(std::string name)
         {
             m_Name = name;
@@ -67,12 +70,12 @@ namespace GameEngine
     {
     public:
         GameObject();
-		~GameObject();
+		GameObject(const GameObject& gameObject);
+		virtual ~GameObject();
         void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
         //private:
         bool m_isVisual = true;
-        Transform *m_Transfrom;
         std::vector<Mesh *> m_Meshs;
         std::vector<Material *> m_Materials;
     };

@@ -39,7 +39,7 @@ namespace GameEngine
 			for (auto &shape : shapes)
 			{
 				auto mesh = shape.mesh;
-				MeshData *meshdata = new (std::nothrow) MeshData();
+				MeshData *meshdata = new MeshData();
 				MeshVertexAttrib attrib;
 				attrib.size = 3;
 				attrib.type = GL_FLOAT;

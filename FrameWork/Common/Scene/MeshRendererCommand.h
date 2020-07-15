@@ -6,17 +6,27 @@
 #include "Mesh.h"
 #include <glad/glad.h>
 #include "Material.h"
+#include "OpenGLDebugger.h"
 namespace GameEngine
 {
     class MeshRendererCommand : public RendererCommand
     {
     public:
-        MeshRendererCommand();
+        MeshRendererCommand(){}
 
-        ~MeshRendererCommand();
+		virtual ~MeshRendererCommand(){
+			delete material;
+		}
 
-        virtual void excecute();
-
+        virtual void excecute()
+		{
+			if (material)
+				material->use();
+			glBindVertexArray(m_Vao);
+			glDrawElements(m_Mode, m_Count, GL_UNSIGNED_INT, 0);
+			glBindVertexArray(0);
+			OpenGLDebugger::glCheckError();
+		}
     public:
 
         Material *material;

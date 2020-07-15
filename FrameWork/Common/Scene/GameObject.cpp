@@ -64,11 +64,22 @@ namespace GameEngine
     }
     GameObject::GameObject()
     {
-        m_Transfrom = new Transform();
     }
 
-    GameObject::~GameObject()
+	GameObject::GameObject(const GameObject & gameObject)
+	{
+	}
+
+	GameObject::~GameObject()
     {
+		for (size_t i = 0; i < m_Meshs.size(); i++)
+		{
+			delete m_Meshs[i];
+		}
+		for (size_t i = 0; i < m_Materials.size(); i++)
+		{
+			delete m_Materials[i];
+		}
         m_Meshs.clear();
         m_Materials.clear();
     }
@@ -79,14 +90,13 @@ namespace GameEngine
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
             MeshRendererCommand* renderer = new MeshRendererCommand();
-			m_Materials[i]->Clear();
-            if (m_Materials.size() > i && m_Materials[i])
-            {	
-				renderer->material = m_Materials[i];
+			if (m_Materials.size() > i && m_Materials[i])
+			{	
+				renderer->material = new Material(*m_Materials[i]);
 				renderer->material->AddProperty(glm::value_ptr( projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
 				renderer->material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
 				renderer->material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
-            }
+			}
             renderer->m_Vao = m_Meshs[i]->VAO;
             renderer->m_Mode = GL_TRIANGLES;
             renderer->m_Count = m_Meshs[i]->m_MeshData->indices.size();

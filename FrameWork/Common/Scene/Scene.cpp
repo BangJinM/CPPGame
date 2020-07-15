@@ -22,30 +22,36 @@ namespace GameEngine
 		initScene();
 		updateCamera();
 	}
-
+	Transform *transformG;
+	Transform *transform;
+	Material* material;
+	GameObject *cameraObject;
+	Camera *camera;
+	Shader* shader;
+	GameObject *gameobject;
 	void Scene::initScene()
 	{
-		Camera *camera = new Camera();
+		camera = new Camera();
 
-		Transform *transform = new Transform();
+		transform = new Transform();
 		transform->setPosition(vecterFloat3(0.0f, 0.0f, -20.f));
 
-		GameObject *cameraObject = new GameObject();
+		cameraObject = new GameObject();
 		cameraObject->addComponent(camera);
 		cameraObject->addComponent(transform);
 		m_Gameobjects.push_back(cameraObject);
 
-		auto gameobject = ObjParser::Parse("Scene/Shape_Cube.obj", "Materials/");
-		Shader* shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.frag"));
+		gameobject = ObjParser::Parse("Scene/Shape_Cube.obj", "Materials/");
+		shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.frag"));
 		OpenGLDebugger::glCheckError();
 		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
 		{
 			gameobject->m_Materials[i]->setShader(shader);
 		}
 
-		Material* material = new Material();
+		material = new Material();
 		material->setShader(shader);
-		Transform *transformG = new Transform();
+		transformG = new Transform();
 		transformG->setScale(glm::vec3(1.f / 50, 1.f / 50, 1.f / 50));
 		m_Gameobjects.push_back(gameobject);
 		gameobject->m_Materials.push_back(material);
@@ -71,6 +77,13 @@ namespace GameEngine
 
 	Scene::~Scene()
 	{
+		delete transformG;
+		delete transform;
+		delete material;
+		delete cameraObject;
+		delete camera;
+		delete shader;
+		delete gameobject;
 		m_Gameobjects.clear();
 		m_Cameras.clear();
 	}

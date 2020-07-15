@@ -7,7 +7,8 @@ namespace GameEngine
     class RendererCommand 
     {
     public:
-        RendererCommand() {}
+		RendererCommand() {}
+		virtual ~RendererCommand() {}
         virtual void excecute() = 0;
     };
 } // namespace GameEngine

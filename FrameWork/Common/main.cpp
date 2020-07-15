@@ -1,9 +1,9 @@
-#include <iostream>
 #include "IApplication.h"
 #include "MemoryManager.h"
 #include "InputManager.h"
 #include "AssetLoader.h"
 #include "GraphicsManager.h"
+
 using namespace GameEngine;
 
 namespace GameEngine
@@ -16,6 +16,8 @@ namespace GameEngine
 } // namespace GameEngine
 int main(int argc, char *argv[])
 {
+	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
+
 	for (int i = 0; i < argc; i++)
 		printf(argv[i]);
 
@@ -61,14 +63,12 @@ int main(int argc, char *argv[])
 			g_pApp->Tick();
 			printf("%d\n", i++);
 			g_pGraphicsManager->Tick();
-
-
+			
 	}
 	g_pGraphicsManager->Finalize();
 	g_pInputManager->Finalize();
 	g_pAssetLoader->Finalize();
 	g_pMemoryManager->Finalize();
 	g_pApp->Finalize();
-
 	return 0;
 }

@@ -11,6 +11,16 @@
 #include "Shader.h"
 #include "Buffer.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+#define DBG_NEW new
+#endif
+
 namespace GameEngine
 {
 
@@ -50,15 +60,10 @@ namespace GameEngine
 
         std::string name;
         MaterialType type;
-        char* buffer;
+        char *buffer;
         int size;
 
-        NMaterialData(int size){
-            buffer = new char[size+1];
-        }
-        ~NMaterialData(){
-			delete buffer;
-        }
+
     };
     class Material : public Component
     {
@@ -67,25 +72,30 @@ namespace GameEngine
         {
             m_Shader = nullptr;
         }
-        Material(Material *material) : Component(ClassID(Material))
+
+        Material(const Material &c) : Component(ClassID(Material))
         {
-            m_Shader = material->m_Shader;
-        }
-        ~Material()
-        {
-            for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+            m_Shader = c.m_Shader;
+            Clear();
+            for (size_t i = 0; i < c.m_MaterialDatas.size(); i++)
             {
-                delete( m_MaterialDatas[i]);
+                AddProperty(c.m_MaterialDatas[i].buffer, c.m_MaterialDatas[i].name, c.m_MaterialDatas[i].size, c.m_MaterialDatas[i].type);
             }
         }
 
-		void Clear() {
-			for (size_t i = 0; i < m_MaterialDatas.size(); i++)
-			{
-				delete(m_MaterialDatas[i]);
-			}
-			m_MaterialDatas.clear();
-		}
+        ~Material()
+        {
+            Clear();
+        }
+
+        void Clear()
+        {
+            for (size_t i = 0; i < m_MaterialDatas.size(); i++)
+            {
+                delete [] m_MaterialDatas[i].buffer;
+            }
+            m_MaterialDatas.clear();
+        }
 
         template <typename Type>
         void AddProperty(Type value, std::string name, int size, MaterialType type);
@@ -94,19 +104,20 @@ namespace GameEngine
 
         void setShader(Shader *shader);
 
-        std::vector<NMaterialData *> m_MaterialDatas;
+        std::vector<NMaterialData> m_MaterialDatas;
 
         Shader *m_Shader;
     };
     template <typename Type>
     inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
     {
-        NMaterialData* data = new NMaterialData(size);
-        data->name = name;
-		memcpy(data->buffer, value, size);
-        data->buffer[size] = '\0';
-        data->size = size;
-        data->type = type;
+        NMaterialData data;
+        data.name = name;
+        data.buffer = new char[size + 1];
+        memcpy(data.buffer, value, size);
+        data.buffer[size] = '\0';
+        data.size = size;
+        data.type = type;
         m_MaterialDatas.push_back(data);
     }
 } // namespace GameEngine

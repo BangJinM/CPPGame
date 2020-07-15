@@ -13,12 +13,12 @@ namespace GameEngine
 		{
 			auto data = m_MaterialDatas[i];
 
-			switch (data->type)
+			switch (data.type)
 			{
 			case MaterialType::Mat4:
 			{
-				auto property = (float *)data->buffer;
-				m_Shader->setMat4(data->name, &property[0]);
+				auto property = (float *)data.buffer;
+				m_Shader->setMat4(data.name, &property[0]);
 			}
 			default:
 				break;

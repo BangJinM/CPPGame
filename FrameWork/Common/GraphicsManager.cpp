@@ -67,9 +67,15 @@ namespace GameEngine
         for (size_t i = 0; i < m_RendererCommands.size(); i++)
         {
             m_RendererCommands[i]->excecute();
-			delete m_RendererCommands[i];
         }
-        m_RendererCommands.clear();
+		if(m_RendererCommands.size() > 0){
+			for (size_t i = 0; i < m_RendererCommands.size(); i++)
+			{
+				delete m_RendererCommands[i];
+			}
+			m_RendererCommands.clear();
+			m_RendererCommands.swap(vector<RendererCommand *>());
+		}
     }
 
     void GraphicsManager::Clear()
