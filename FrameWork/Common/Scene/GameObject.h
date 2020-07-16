@@ -44,7 +44,16 @@ namespace GameEngine
         BaseObject();
 		virtual ~BaseObject()
 		{
-
+            for (auto i = m_children.begin(); i != m_children.end(); i++)
+            {
+                delete i->second;
+            }
+            for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+            {
+                delete i->second;
+            }
+            m_compenents.clear();
+            m_children.clear();
 		}
         void setName(std::string name)
         {

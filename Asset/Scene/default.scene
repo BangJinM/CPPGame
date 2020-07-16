@@ -4,6 +4,12 @@
         "scale":[0.02, 0.02, 0.02],
         "materials":["Materials/default.gemtl"]
 	},
+    "peopleObject":	{
+        "mesh":"Scene/Shape_Cube.OBJ",
+        "scale":[0.02, 0.02, 0.02],
+        "position":[2, 2, 2],
+        "materials":["Materials/default.gemtl"]
+	},
     "cameraObject":{
         "camera":"camera",
         "position":[0.0, 0.0, -20.0]

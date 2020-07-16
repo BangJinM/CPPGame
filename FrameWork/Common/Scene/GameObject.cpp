@@ -66,10 +66,6 @@ namespace GameEngine
     {
     }
 
-	//GameObject::GameObject(const GameObject & gameObject)
-	//{
-	//}
-
 	GameObject::~GameObject()
     {
 		for (size_t i = 0; i < m_Meshs.size(); i++)

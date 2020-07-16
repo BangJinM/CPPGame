@@ -24,17 +24,16 @@ namespace GameEngine
 		gameObject = new GameObject();
 		gameObject->setName("root");
 		SceneParser::Parse("Scene/default.scene", this);
-		updateCamera(gameObject);
 	}
 
-	void Scene::updateCamera(BaseObject* gb)
+	void Scene::updateCamera(BaseObject *gb)
 	{
 		auto children = gb->getChildren();
 
 		for (auto i = children.begin(); i != children.end(); i++)
 		{
 			auto camera = i->second->getComponent<Camera>();
-			if(camera)
+			if (camera)
 				m_Cameras.push_back(camera);
 			updateCamera(i->second);
 		}
@@ -42,24 +41,25 @@ namespace GameEngine
 
 	Scene::~Scene()
 	{
-		delete gameObject;
 		m_Cameras.clear();
+		delete gameObject;
 	}
 
 	void Scene::Draw()
 	{
+		m_Cameras.clear();
+		updateCamera(gameObject);
 		GlmMat4 viewMx, projectMx;
-		if (m_Cameras.size()>0)
+		if (m_Cameras.size() > 0)
 		{
 			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
 			projectMx = m_Cameras[0]->getProjectionMatrix();
 			auto children = gameObject->getChildren();
-			for ( auto i = children.begin(); i != children.end() ; i++)
+			for (auto i = children.begin(); i != children.end(); i++)
 			{
-				GameObject* gb = (GameObject *)i->second;
+				GameObject *gb = (GameObject *)i->second;
 				gb->Draw(viewMx, projectMx);
 			}
-			
 		}
 	}
 } // namespace GameEngine

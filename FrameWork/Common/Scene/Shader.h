@@ -58,6 +58,14 @@ namespace GameEngine
             "uniform sampler2D CC_Texture3;\n"
             "//CC INCLUDES END\n\n";
         unsigned int ID = 0;
+
+        Shader(const Shader &c) 
+        {
+            ID = c.ID;
+        }
+        ~Shader(){
+            
+        }
         // constructor generates the shader on the fly
         // ------------------------------------------------------------------------
         Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = "")
@@ -236,7 +244,7 @@ namespace GameEngine
             glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
         }
         // ------------------------------------------------------------------------
-        void setMat4(const std::string &name, const float* value) const
+        void setMat4(const std::string &name, const float *value) const
         {
             glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value);
         }

@@ -28,20 +28,20 @@ namespace GameEngine
     /* data */
   public:
     Scene(/* args */);
-    
+
     ~Scene();
 
     void Draw();
 
     void initScene();
 
-    void updateCamera(BaseObject* gb);
+    void updateCamera(BaseObject *gb);
 
     std::string m_Name;
 
     std::vector<Camera *> m_Cameras;
 
-	GameObject * gameObject;
+    GameObject *gameObject;
   };
 
 } // namespace GameEngine

@@ -75,6 +75,10 @@ namespace GameEngine
         MeshData *m_MeshData;
         /*  函数  */
         Mesh(MeshData *meshData);
+        ~Mesh()
+        {
+            delete m_MeshData;
+        }
         void Draw();
 
     public:

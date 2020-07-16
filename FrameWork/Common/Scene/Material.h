@@ -75,7 +75,7 @@ namespace GameEngine
 
         Material(const Material &c) : Component(ClassID(Material))
         {
-            m_Shader = c.m_Shader;
+            m_Shader = new Shader(*c.m_Shader);
             Clear();
             for (size_t i = 0; i < c.m_MaterialDatas.size(); i++)
             {
@@ -86,6 +86,7 @@ namespace GameEngine
         ~Material()
         {
             Clear();
+			delete m_Shader;
         }
 
         void Clear()
