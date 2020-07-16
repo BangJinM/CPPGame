@@ -1,0 +1,13 @@
+{
+	"default":	{
+		"transform":	[],
+		"frag":	"Shaders/default.frag",
+		"color":	{
+			"color":	{
+				"name":	"color",
+				"type":	"Mat4",
+				"value":	[1, 1, 1]
+			}
+		}
+	}
+}

@@ -22,16 +22,14 @@ namespace GameEngine
 	{
 
 	public:
-		static GameObject *Parse(std::string modelPath, std::string materialPath)
+		static void Parse(std::string modelPath, GameObject* gameObject)
 		{
 
 			std::vector<tinyobj::shape_t> shapes;
 			std::vector<tinyobj::material_t> materials;
-			tinyobj::LoadObj(shapes, materials, modelPath.c_str(), materialPath.c_str());
+			tinyobj::LoadObj(shapes, materials, modelPath.c_str(), "");
 
-			GameObject *root = new GameObject();
-			parserMesh(shapes, materials, root);
-			return root;
+			parserMesh(shapes, materials, gameObject);
 		}
 
 		static void parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials, GameObject *parent)
@@ -94,10 +92,7 @@ namespace GameEngine
 				std::map<int, std::vector<unsigned short>> subMeshMap;
 				meshdata->indices = mesh.indices;
 				Mesh *m_Mesh = new Mesh(meshdata);
-				// m_Mesh->m_Material = shape.materialID;
-				// mesh->ma
 				parent->m_Meshs.push_back(m_Mesh);
-				//node->setName(shape.name);
 			}
 		}
 

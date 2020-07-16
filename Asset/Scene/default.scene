@@ -1,0 +1,10 @@
+{
+	"object":	{
+        "mesh":"Scene/Shape_Cube.OBJ",
+        "scale":[0.02, 0.02, 0.02],
+        "materials":["Materials/default.gemtl"]
+	},
+    "cameraObject":{
+        "position":[0.0, 0.0, -20.0]
+    }
+}

@@ -35,7 +35,7 @@ add_library(Common
     ${3dloader}
     ${CURRENT_HEADERS}
 )
-target_link_libraries(Common Glad)
+target_link_libraries(Common Glad cJson)
 
 target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad/include")
 

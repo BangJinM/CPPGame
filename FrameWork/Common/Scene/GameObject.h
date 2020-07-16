@@ -23,7 +23,7 @@ namespace GameEngine
         template <class T>
         inline T *getComponent();
 
-        void addComponent(Component *component);
+        void addComponent(Component &component);
 
         void addChild(BaseObject *child);
 
@@ -53,6 +53,9 @@ namespace GameEngine
 
         std::string getName() { return m_Name; }
 
+		std::map<std::string, BaseObject *> getChildren() {
+			return m_children;
+		}
     private:
         Component *getComponentBy(int classID);
 

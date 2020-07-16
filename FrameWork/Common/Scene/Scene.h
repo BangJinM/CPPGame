@@ -7,6 +7,16 @@
 
 #include "Scene.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+#define DBG_NEW new
+#endif
+
 namespace GameEngine
 {
   class Camera;
@@ -21,21 +31,17 @@ namespace GameEngine
     
     ~Scene();
 
-    void addChild(BaseObject *child);
-
-    void deleteChild(BaseObject *child);
-
     void Draw();
 
     void initScene();
 
-    void updateCamera();
+    void updateCamera(BaseObject* gb);
 
     std::string m_Name;
 
     std::vector<Camera *> m_Cameras;
 
-    std::vector<GameObject *> m_Gameobjects;
+	GameObject * gameObject;
   };
 
 } // namespace GameEngine

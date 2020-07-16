@@ -51,6 +51,7 @@ namespace GameEngine
 
     void GraphicsManager::Finalize()
     {
+		delete m_Scene;
     }
 
     void GraphicsManager::Tick()

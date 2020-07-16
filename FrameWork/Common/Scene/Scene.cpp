@@ -13,92 +13,47 @@
 #include "Transform.h"
 #include "MyMath.h"
 #include "OpenGLDebugger.h"
+#include "SceneParser.h"
+
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
 
 	Scene::Scene()
 	{
-		initScene();
-		updateCamera();
+		gameObject = new GameObject();
+		gameObject->setName("root");
+		SceneParser::Parse("Scene/default.scene", this);
+		updateCamera(gameObject);
 	}
-	Transform *transformG;
-	Transform *transform;
-	Material* material;
-	GameObject *cameraObject;
-	Camera *camera;
-	Shader* shader;
-	GameObject *gameobject;
-	void Scene::initScene()
+
+	void Scene::updateCamera(BaseObject* gb)
 	{
-		camera = new Camera();
+		auto children = gb->getChildren();
 
-		transform = new Transform();
-		transform->setPosition(vecterFloat3(0.0f, 0.0f, -20.f));
-
-		cameraObject = new GameObject();
-		cameraObject->addComponent(camera);
-		cameraObject->addComponent(transform);
-		m_Gameobjects.push_back(cameraObject);
-
-		gameobject = ObjParser::Parse("Scene/Shape_Cube.obj", "Materials/");
-		shader = new Shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/default.frag"));
-		OpenGLDebugger::glCheckError();
-		for (size_t i = 0; i < gameobject->m_Materials.size(); i++)
+		for (auto i = children.begin(); i != children.end(); i++)
 		{
-			gameobject->m_Materials[i]->setShader(shader);
+			auto camera = i->second->getComponent<Camera>();
+			if(camera)
+				m_Cameras.push_back(camera);
+			updateCamera(i->second);
 		}
-
-		material = new Material();
-		material->setShader(shader);
-		transformG = new Transform();
-		transformG->setScale(glm::vec3(1.f / 50, 1.f / 50, 1.f / 50));
-		m_Gameobjects.push_back(gameobject);
-		gameobject->m_Materials.push_back(material);
-		gameobject->addComponent(transformG);
-	}
-
-	void Scene::updateCamera()
-	{
-		for (size_t i = 0; i < m_Gameobjects.size(); i++)
-		{
-			auto camera = m_Gameobjects[i]->getComponent<Camera>();
-			m_Cameras.push_back(camera);
-		}
-	}
-
-	void Scene::addChild(BaseObject *child)
-	{
-	}
-
-	void Scene::deleteChild(BaseObject *child)
-	{
 	}
 
 	Scene::~Scene()
 	{
-		delete transformG;
-		delete transform;
-		delete material;
-		delete cameraObject;
-		delete camera;
-		delete shader;
-		delete gameobject;
-		m_Gameobjects.clear();
+		delete gameObject;
 		m_Cameras.clear();
 	}
 
 	void Scene::Draw()
 	{
 		GlmMat4 viewMx, projectMx;
-		if (m_Cameras[0])
+		if (m_Cameras.size()>0)
 		{
 			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
 			projectMx = m_Cameras[0]->getProjectionMatrix();
-		}
-		for (size_t i = 0; i < m_Gameobjects.size(); i++)
-		{
-			m_Gameobjects[i]->Draw(viewMx, projectMx);
+			gameObject->Draw(viewMx, projectMx);
 		}
 	}
 } // namespace GameEngine

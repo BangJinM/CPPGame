@@ -55,16 +55,12 @@ namespace GameEngine
 
         inline std::string SyncOpenAndReadTextFileToString(const char *fileName)
         {
-            auto fBegin = m_Assets.find(fileName);
-            if (fBegin != m_Assets.end())
-                return fBegin->second;
             std::string result;
             Buffer buffer = SyncOpenAndReadText(fileName);
             char *content = reinterpret_cast<char *>(buffer.m_pData);
 
             if (content)
             {
-                m_Assets.insert(std::pair<std::string, std::string>(fileName, content));
                 result = std::string(std::move(content));
             }
 
@@ -82,7 +78,6 @@ namespace GameEngine
     private:
 
         std::vector<std::string> m_strSearchPath;
-        std::map<std::string, std::string> m_Assets;
     };
 
 } // namespace GameEngine
