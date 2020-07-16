@@ -9,15 +9,15 @@ namespace GameEngine
 {
     extern GraphicsManager *g_pGraphicsManager;
 
-    void BaseObject::addComponent(Component &component)
+    void BaseObject::addComponent(Component *component)
     {
-        auto begin = m_compenents.find(component.getClassID());
+        auto begin = m_compenents.find(component->getClassID());
         if (begin != m_compenents.end())
         {
             return;
         }
-		component.setHost(this);
-        m_compenents.insert(std::pair<int, Component *>(component.getClassID(), &component));
+		component->setHost(this);
+        m_compenents.insert(std::pair<int, Component *>(component->getClassID(), component));
     }
 
     void BaseObject::addChild(BaseObject *child)
@@ -66,9 +66,9 @@ namespace GameEngine
     {
     }
 
-	GameObject::GameObject(const GameObject & gameObject)
-	{
-	}
+	//GameObject::GameObject(const GameObject & gameObject)
+	//{
+	//}
 
 	GameObject::~GameObject()
     {

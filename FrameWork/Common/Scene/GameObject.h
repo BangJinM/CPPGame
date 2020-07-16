@@ -23,7 +23,7 @@ namespace GameEngine
         template <class T>
         inline T *getComponent();
 
-        void addComponent(Component &component);
+        void addComponent(Component *component);
 
         void addChild(BaseObject *child);
 
@@ -73,7 +73,7 @@ namespace GameEngine
     {
     public:
         GameObject();
-		GameObject(const GameObject& gameObject);
+		//GameObject(const GameObject& gameObject);
 		virtual ~GameObject();
         void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 

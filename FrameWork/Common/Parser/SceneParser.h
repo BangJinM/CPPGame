@@ -16,6 +16,7 @@
 #include "MaterialParser.h"
 #include "GameObject.h"
 #include "cJSON.h"
+#include "MyMath.h"
 
 namespace GameEngine
 {
@@ -52,8 +53,6 @@ namespace GameEngine
 			{
 				cJSON *item = cJSON_GetArrayItem(root, i);
 
-				
-				
 				if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
 					parser(item, child);
 				else //值不为json对象就直接打印出键和值
@@ -69,14 +68,15 @@ namespace GameEngine
 						auto transform = child->getComponent<Transform>();
 						if (transform == nullptr)
 						{
-							child->addComponent(Transform());
+							child->addComponent(new Transform());
 							transform = child->getComponent<Transform>();
 						}
+						vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(item, 0)->valuedouble, cJSON_GetArrayItem(item, 1)->valuedouble, cJSON_GetArrayItem(item, 2)->valuedouble));
 						if (strCompare(item->string, "scale"))
-							transform->setScale(vecterFloat3(0, 0, 0));
+							transform->setScale(vec3);
 						else if (strCompare(item->string, "position"))
 						{
-							transform->setPosition(vecterFloat3(0, 0, 0));
+							transform->setPosition(vec3);
 						}
 					}
 					else if (strCompare(item->string, "materials"))
@@ -84,11 +84,20 @@ namespace GameEngine
 						int iSize = cJSON_GetArraySize(item);
 						for (size_t mID = 0; mID < iSize; mID++)
 						{
-							Material* material = new Material();
+							Material *material = new Material();
 							MaterialParser::Parse(cJSON_GetArrayItem(item, mID)->valuestring, material);
+							child->m_Materials.push_back(material);
 						}
 					}
-					
+					else if (strCompare(item->string, "camera"))
+					{
+						auto camera = child->getComponent<Camera>();
+						if (camera == nullptr)
+						{
+							child->addComponent(new Camera());
+							camera = child->getComponent<Camera>();
+						}
+					}
 				}
 			}
 			printf("\n\n\n\n\n\n\n\n");

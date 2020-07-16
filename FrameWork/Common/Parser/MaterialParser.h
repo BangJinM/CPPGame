@@ -26,12 +26,12 @@ namespace GameEngine
             std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
             auto json = cJSON_Parse(sceneStr.c_str());
 			int i = 0;
-			for (; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
-			{
-				cJSON *item = cJSON_GetArrayItem(json, i);
-				//if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
-				//	parser(item, scene->gameObject);
-			}
+			auto frag = cJSON_GetObjectItem(json, "frag");
+			auto vert = cJSON_GetObjectItem(json, "vert");
+			std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
+			std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
+			Shader* shader = new Shader(vertStr, fragStr);
+			material->setShader(shader);
 			delete json;
         }
     }; // namespace GameEngine

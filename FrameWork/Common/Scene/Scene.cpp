@@ -53,7 +53,13 @@ namespace GameEngine
 		{
 			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
 			projectMx = m_Cameras[0]->getProjectionMatrix();
-			gameObject->Draw(viewMx, projectMx);
+			auto children = gameObject->getChildren();
+			for ( auto i = children.begin(); i != children.end() ; i++)
+			{
+				GameObject* gb = (GameObject *)i->second;
+				gb->Draw(viewMx, projectMx);
+			}
+			
 		}
 	}
 } // namespace GameEngine

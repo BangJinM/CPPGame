@@ -12,15 +12,18 @@ namespace GameEngine
     class MeshRendererCommand : public RendererCommand
     {
     public:
-        MeshRendererCommand(){}
+        MeshRendererCommand(){
+			material = nullptr;
+		}
 
 		virtual ~MeshRendererCommand(){
+			if(material)
 			delete material;
 		}
 
         virtual void excecute()
 		{
-			if (material)
+			if (material && material->m_Shader)
 				material->use();
 			glBindVertexArray(m_Vao);
 			glDrawElements(m_Mode, m_Count, GL_UNSIGNED_INT, 0);

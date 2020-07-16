@@ -5,6 +5,7 @@
         "materials":["Materials/default.gemtl"]
 	},
     "cameraObject":{
+        "camera":"camera",
         "position":[0.0, 0.0, -20.0]
     }
 }
