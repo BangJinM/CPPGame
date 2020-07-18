@@ -53,25 +53,11 @@ namespace GameEngine
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 
-		glfwSetMouseButtonCallback(window, mouseInput);
-		glfwSetKeyCallback(window, keyInput);
-
 		return result;
 	}
 
 	void OpenGLApplication::Finalize()
 	{
-	}
-
-	void OpenGLApplication::mouseInput(GLFWwindow *window, int key, int action, int mods)
-	{
-	}
-
-	void OpenGLApplication::keyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
-	{
-		if (action == GLFW_PRESS)
-			if (key == GLFW_KEY_ESCAPE)
-				glfwSetWindowShouldClose(window, true);
 	}
 
 	void OpenGLApplication::calculateDeltaTime()
