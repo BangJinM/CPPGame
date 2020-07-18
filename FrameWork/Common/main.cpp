@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
 			g_pInputManager->Tick();
 			g_pAssetLoader->Tick();
 			g_pApp->Tick();
-			printf("%d\n", i++);
 			g_pGraphicsManager->Tick();
 			
 	}
