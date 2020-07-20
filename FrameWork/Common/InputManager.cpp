@@ -26,6 +26,7 @@ void GameEngine::InputManager::Finalize()
 
 void GameEngine::InputManager::Tick()
 {
+	glfwPollEvents();
 }
 
 void GameEngine::InputManager::addClickEventListener(const char key, CallBack callBack)

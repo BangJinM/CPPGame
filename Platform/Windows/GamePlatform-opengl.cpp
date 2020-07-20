@@ -69,6 +69,5 @@ namespace GameEngine
 	void OpenGLApplication::Tick()
 	{
 		this->m_bQuit = glfwWindowShouldClose(window);
-		glfwPollEvents();
 	}
 } // namespace GameEngine

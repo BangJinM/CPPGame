@@ -56,18 +56,21 @@ int main(int argc, char *argv[])
 	while (!g_pApp->IsQuit())
 	{
 
-
-			g_pMemoryManager->Tick();
-			g_pInputManager->Tick();
-			g_pAssetLoader->Tick();
-			g_pApp->Tick();
-			g_pGraphicsManager->Tick();
-			
+		g_pMemoryManager->Tick();
+		g_pInputManager->Tick();
+		g_pAssetLoader->Tick();
+		g_pApp->Tick();
+		g_pGraphicsManager->Tick();
 	}
 	g_pGraphicsManager->Finalize();
 	g_pInputManager->Finalize();
 	g_pAssetLoader->Finalize();
 	g_pMemoryManager->Finalize();
 	g_pApp->Finalize();
+
+	delete g_pGraphicsManager;
+	delete g_pInputManager;
+	delete g_pAssetLoader;
+	delete g_pMemoryManager;
 	return 0;
 }
