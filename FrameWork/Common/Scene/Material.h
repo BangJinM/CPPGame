@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 
+#include "Image.h"
 #include "Shader.h"
 #include "Buffer.h"
 
@@ -80,6 +81,7 @@ namespace GameEngine
             for (size_t i = 0; i < c.m_MaterialDatas.size(); i++)
             {
                 AddProperty(c.m_MaterialDatas[i].buffer, c.m_MaterialDatas[i].name, c.m_MaterialDatas[i].size, c.m_MaterialDatas[i].type);
+                auto property = (int *)m_MaterialDatas[i].buffer;
             }
         }
 
@@ -102,6 +104,8 @@ namespace GameEngine
         void AddProperty(Type value, std::string name, int size, MaterialType type);
 
         void use();
+
+        int getTextureID(Image* image);
 
         void setShader(Shader *shader);
 

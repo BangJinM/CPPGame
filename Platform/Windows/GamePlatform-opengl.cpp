@@ -6,7 +6,7 @@
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
-
+#include "AssetManager.h"
 namespace GameEngine
 {
 	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
@@ -15,6 +15,7 @@ namespace GameEngine
 	InputManager *g_pInputManager = static_cast<InputManager *>(new InputManager);
 	GraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
 	AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
+	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
 	IApplication *g_pApp = &g_App;
 
 	OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config) {}

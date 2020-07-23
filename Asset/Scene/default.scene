@@ -2,7 +2,7 @@
 	"object":	{
         "mesh":"Scene/Shape_Cube.OBJ",
         "scale":[0.02, 0.02, 0.02],
-        "materials":["Materials/default.gemtl"]
+        "materials":["Materials/wall.gemtl"]
 	},
     "peopleObject":	{
         "mesh":"Scene/model.obj",

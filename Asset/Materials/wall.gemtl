@@ -1,0 +1,10 @@
+{
+	"vert":	"Shaders/wall.vert",
+	"frag":	"Shaders/wall.frag",
+	"params" : {
+		"MainTextures" : {
+			"path" : "Textures/wall.jpg",
+			"type" : "texture"
+		}
+	}
+}

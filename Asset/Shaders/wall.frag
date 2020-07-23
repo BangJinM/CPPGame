@@ -5,7 +5,9 @@ precision lowp float;
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
+out vec4 outColor;
+
 void main()
 {
-    gl_FragColor = v_fragmentColor;
+    outColor = v_fragmentColor;
 }

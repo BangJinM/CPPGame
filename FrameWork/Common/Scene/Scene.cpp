@@ -2,14 +2,8 @@
 #include "Mesh.h"
 
 //һ�²���
-#include "ObjParser.h"
-#include "ObjLoader.h"
-#include "Mesh.h"
 #include "Camera.h"
 #include "GameObject.h"
-#include "Shader.h"
-#include "AssetLoader.h"
-#include "TextureParser.h"
 #include "Transform.h"
 #include "MyMath.h"
 #include "OpenGLDebugger.h"
@@ -18,8 +12,6 @@
 
 namespace GameEngine
 {
-	extern AssetLoader *g_pAssetLoader;
-
 	Scene::Scene()
 	{
 		gameObject = new GameObject();

@@ -32,6 +32,24 @@ namespace GameEngine
 			std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
 			Shader* shader = new Shader(vertStr, fragStr);
 			material->setShader(shader);
+            
+			auto paramsNode = cJSON_GetObjectItem(json, "params");
+			if (paramsNode) {
+				auto count = cJSON_GetArraySize(paramsNode);
+				for (size_t i = 0; i < count; i++)
+				{
+					cJSON *item = cJSON_GetArrayItem(paramsNode, i);
+                    std::string name = item->string;
+					std::string type = cJSON_GetObjectItem(item, "type")->valuestring;
+					if (type.compare("texture") == 0) {
+						std::string pathStr = cJSON_GetObjectItem(item, "path")->valuestring;
+                        material->AddProperty(pathStr.c_str(), name, pathStr.size(), MaterialType::Texture);
+					}
+					else if (type.compare("vec4") == 0) {
+
+					}
+				}
+			}
 			delete json;
         }
     }; // namespace GameEngine

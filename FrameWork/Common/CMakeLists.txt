@@ -22,6 +22,7 @@ SET( Common
     MemoryManager.cpp
     AssetLoader.cpp
     GraphicsManager.cpp
+    AssetManager.cpp
     main.cpp
 )
 
