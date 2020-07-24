@@ -45,6 +45,4 @@ namespace GameEngine
 		}
 		return image->second;
 	}
-
-    
 } // namespace GameEngine

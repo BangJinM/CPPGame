@@ -17,6 +17,8 @@
 namespace GameEngine
 {
 
+	
+
 	class ObjParser
 	{
 

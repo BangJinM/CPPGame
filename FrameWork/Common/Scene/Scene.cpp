@@ -45,7 +45,7 @@ namespace GameEngine
 		GlmMat4 viewMx, projectMx;
 		if (m_Cameras.size() > 0)
 		{
-			m_Cameras[0]->m_Host->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
+			//m_Cameras[0]->m_Host->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
 			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
 			projectMx = m_Cameras[0]->getProjectionMatrix();
 			auto children = gameObject->getChildren();

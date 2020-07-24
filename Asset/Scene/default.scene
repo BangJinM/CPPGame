@@ -1,20 +1,9 @@
 {
-	"object":	{
-        "mesh":"Scene/Shape_Cube.OBJ",
-        "scale":[0.02, 0.02, 0.02],
-        "materials":["Materials/wall.gemtl"]
-	},
     "peopleObject":	{
-        "mesh":"Scene/model.obj",
-        "scale":[1, 1, 1],
+        "mesh":"Scene/mayaCube.obj",
+        "scale":[2, 2, 2],
         "position":[2, 2, 2],
-        "materials":["Materials/default.gemtl"]
-	},
-    "peopleObject2":	{
-        "mesh":"Scene/nanosuit.OBJ",
-        "scale":[0.1, 0.1, 0.1],
-        "position":[0, 0, 10],
-        "materials":["Materials/default.gemtl"]
+        "materials":["Materials/wall.gemtl"]
 	},
     "cameraObject":{
         "camera":"camera",

@@ -42,6 +42,7 @@ namespace GameEngine
     {
     public:
         const char *COCOS2D_SHADER_UNIFORMS =
+            "#version 330 core\n"
             "uniform mat4 CC_PMatrix;\n"
             "uniform mat4 CC_MultiViewPMatrix[4];\n"
             "uniform mat4 CC_MVMatrix;\n"
@@ -80,6 +81,7 @@ namespace GameEngine
             {
                 if (!compileShader(&vertex, GL_VERTEX_SHADER, vShaderCode))
                 {
+					checkCompileErrors(vertex, "VERTEX");
                     return;
                 }
             }
@@ -88,12 +90,10 @@ namespace GameEngine
             {
                 if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fShaderCode))
                 {
+					checkCompileErrors(fragment, "FRAGMENT");
                     return;
                 }
             }
-
-            checkCompileErrors(vertex, "VERTEX");
-            checkCompileErrors(fragment, "FRAGMENT");
 
             unsigned int geometry;
             if (geometryCode.size() > 0)
@@ -103,10 +103,11 @@ namespace GameEngine
                 {
                     if (!compileShader(&geometry, GL_FRAGMENT_SHADER, gShaderCode))
                     {
+						checkCompileErrors(geometry, "GEOMETRY");
                         return;
                     }
                 }
-                checkCompileErrors(geometry, "GEOMETRY");
+
             }
             // shader Program
             ID = glCreateProgram();
@@ -178,6 +179,7 @@ namespace GameEngine
                 GLchar *src = (GLchar *)malloc(sizeof(GLchar) * length);
 
                 glGetShaderSource(*shader, length, nullptr, src);
+				printf(src);
                 free(src);
 
                 return false;

@@ -6,6 +6,7 @@
 
 namespace GameEngine{
     struct Image {
+        int id;
         uint32_t Width;
         uint32_t Height;
         char * data;
