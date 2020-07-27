@@ -2,7 +2,7 @@
     "peopleObject":	{
         "mesh":"Scene/mayaCube.obj",
         "scale":[2, 2, 2],
-        "position":[2, 2, 2],
+        "position":[0, 0, 0],
         "materials":["Materials/wall.gemtl"]
 	},
     "cameraObject":{

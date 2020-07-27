@@ -11,6 +11,7 @@ namespace GameEngine
 	extern AssetManager *g_pAssetManager;
 	void Material::use()
 	{
+		int textureID = 0;
 		m_Shader->use();
 		OpenGLDebugger::glCheckError();
 		for (size_t i = 0; i < m_MaterialDatas.size(); i++)
@@ -35,11 +36,12 @@ namespace GameEngine
 				if (location != -1)
 				{
 					Image* image = g_pAssetManager->getImage(property);
-					m_Shader->setInt(data.name, 0);
+					m_Shader->setInt(data.name, textureID);
 					OpenGLDebugger::glCheckError();
-					glActiveTexture(GL_TEXTURE0);
+					glActiveTexture(GL_TEXTURE0 + textureID);
 					glBindTexture(GL_TEXTURE_2D, image->id);
 					OpenGLDebugger::glCheckError();
+					textureID ++;
 				}
 				OpenGLDebugger::glCheckError();
 				break;

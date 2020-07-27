@@ -5,6 +5,10 @@
 		"MainTextures" : {
 			"path" : "Textures/wall.jpg",
 			"type" : "texture"
+		},
+		"texture2" : {
+			"path" : "Textures/glass_dif.png",
+			"type" : "texture"
 		}
 	}
 }

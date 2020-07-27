@@ -88,14 +88,14 @@ namespace GameEngine
         ~Material()
         {
             Clear();
-			delete m_Shader;
+            delete m_Shader;
         }
 
         void Clear()
         {
             for (size_t i = 0; i < m_MaterialDatas.size(); i++)
             {
-                delete [] m_MaterialDatas[i].buffer;
+                delete[] m_MaterialDatas[i].buffer;
             }
             m_MaterialDatas.clear();
         }
@@ -105,7 +105,7 @@ namespace GameEngine
 
         void use();
 
-        int getTextureID(Image* image);
+        int getTextureID(Image *image);
 
         void setShader(Shader *shader);
 
