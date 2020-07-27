@@ -3,7 +3,7 @@
 	"frag":	"Shaders/wall.frag",
 	"params" : {
 		"MainTextures" : {
-			"path" : "Textures/glass_dif.png",
+			"path" : "Textures/wall.jpg",
 			"type" : "texture"
 		}
 	}

@@ -18,46 +18,41 @@ namespace GameEngine
     public:
         static Image *Parse(const Buffer &buf)
         {
-            int width, height, nrChannels;
             unsigned char *data;
             unsigned char *picData = reinterpret_cast<unsigned char *>(buf.m_pData);
-            data = stbi_load_from_memory(picData, buf.m_szSize, &width, &height, &nrChannels, 0);
 
+            unsigned int textureID;
+            glGenTextures(1, &textureID);
+
+            int width, height, nrComponents;
+            data = stbi_load_from_memory(picData, buf.m_szSize, &width, &height, &nrComponents, 0);
             if (data)
             {
-                Image *image = new Image();
-                image->Height = height;
-                image->Width = width;
-                image->data = new char[nrChannels + 1];
-                image->data[nrChannels] = '\0';
-                memcpy(image->data, data, nrChannels);
-                image->id = getTextureID(image);
-                stbi_image_free(data);
-                return image;
-            }
-            return nullptr;
-        }
+                GLenum format;
+                if (nrComponents == 1)
+                    format = GL_RED;
+                else if (nrComponents == 3)
+                    format = GL_RGB;
+                else if (nrComponents == 4)
+                    format = GL_RGBA;
 
-        static int getTextureID(Image *image)
-        {
-            unsigned int texture;
-            glGenTextures(1, &texture);
-            glBindTexture(GL_TEXTURE_2D, texture);
-            // Ϊ��ǰ�󶨵������������û��ơ����˷�ʽ
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            if (image)
-            {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->Width, image->Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+                glBindTexture(GL_TEXTURE_2D, textureID);
+                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
                 glGenerateMipmap(GL_TEXTURE_2D);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             }
-            else
-            {
-                printf("Failed to load texture");
-            }
-            return texture;
+            Image *image = new Image();
+            image->Height = height;
+            image->Width = width;
+            image->data = (char *)data;
+			image->data += '\0';
+            image->id = textureID;
+
+            return image;
         }
     };
 
