@@ -25,8 +25,8 @@ namespace GameEngine
             result = 0;
             cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
 
-            if (GLAD_GL_VERSION_3_0)
-            {
+            // if (GLAD_GL_VERSION_3_0)
+            // {
                 // Set the depth buffer to be entirely cleared to 1.0 values.
                 glClearDepth(1.0f);
 
@@ -39,7 +39,7 @@ namespace GameEngine
                 // Enable back face culling.
                 glEnable(GL_CULL_FACE);
                 glCullFace(GL_BACK);
-            }
+            // }
 
             m_Scene = new Scene();
 

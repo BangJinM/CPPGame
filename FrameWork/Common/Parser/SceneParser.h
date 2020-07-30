@@ -63,7 +63,7 @@ namespace GameEngine
 					{
 						ObjParser::Parse(item->valuestring, child);
 					}
-					else if (strCompare(item->string, "scale") || strCompare(item->string, "position"))
+					else if (strCompare(item->string, "scale") || strCompare(item->string, "position") || strCompare(item->string, "rotation"))
 					{
 						auto transform = child->getComponent<Transform>();
 						if (transform == nullptr)
@@ -77,6 +77,9 @@ namespace GameEngine
 						else if (strCompare(item->string, "position"))
 						{
 							transform->setPosition(vec3);
+						}
+						else{
+							transform->setRotation(vec3);
 						}
 					}
 					else if (strCompare(item->string, "materials"))

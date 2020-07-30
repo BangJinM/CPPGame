@@ -14,6 +14,10 @@ enum ClassIDType
 	DefineClassID(Material, 4),
 	DefineClassID(Transform, 5),
 	DefineClassID(Camera, 6),
+	DefineClassID(PointLight, 7),
+	DefineClassID(AreaLight, 8),
+	DefineClassID(SpotLight, 9),
+	DefineClassID(DirectionalLight, 10),
 };
 
 //make sure people dont accidentally define classids in other files:
