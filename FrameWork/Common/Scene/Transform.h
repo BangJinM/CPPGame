@@ -13,7 +13,7 @@ namespace GameEngine
 
     class Transform : public Component
     {
-	public:
+    public:
         Transform();
         ~Transform() {}
 
@@ -22,7 +22,8 @@ namespace GameEngine
         void setRotation(vecterFloat3 rotation);
         void setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation);
 
-        GlmMat4 getMatrix(){ return m_Matrix;}
+        GlmMat4 getMatrix() { return m_Matrix; }
+
     private:
         GlmMat4 m_Matrix;
 

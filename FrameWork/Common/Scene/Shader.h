@@ -60,12 +60,12 @@ namespace GameEngine
             "//CC INCLUDES END\n\n";
         unsigned int ID = 0;
 
-        Shader(const Shader &c) 
+        Shader(const Shader &c)
         {
             ID = c.ID;
         }
-        ~Shader(){
-            
+        ~Shader()
+        {
         }
         // constructor generates the shader on the fly
         // ------------------------------------------------------------------------
@@ -81,7 +81,7 @@ namespace GameEngine
             {
                 if (!compileShader(&vertex, GL_VERTEX_SHADER, vShaderCode))
                 {
-					checkCompileErrors(vertex, "VERTEX");
+                    checkCompileErrors(vertex, "VERTEX");
                     return;
                 }
             }
@@ -90,7 +90,7 @@ namespace GameEngine
             {
                 if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fShaderCode))
                 {
-					checkCompileErrors(fragment, "FRAGMENT");
+                    checkCompileErrors(fragment, "FRAGMENT");
                     return;
                 }
             }
@@ -103,11 +103,10 @@ namespace GameEngine
                 {
                     if (!compileShader(&geometry, GL_FRAGMENT_SHADER, gShaderCode))
                     {
-						checkCompileErrors(geometry, "GEOMETRY");
+                        checkCompileErrors(geometry, "GEOMETRY");
                         return;
                     }
                 }
-
             }
             // shader Program
             ID = glCreateProgram();
@@ -179,7 +178,7 @@ namespace GameEngine
                 GLchar *src = (GLchar *)malloc(sizeof(GLchar) * length);
 
                 glGetShaderSource(*shader, length, nullptr, src);
-				printf(src);
+                printf(src);
                 free(src);
 
                 return false;

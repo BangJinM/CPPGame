@@ -18,10 +18,11 @@ namespace GameEngine
         virtual void Clear();
 
         void addRendererCommand(RendererCommand *command);
+
     private:
         std::vector<RendererCommand *> m_RendererCommands;
 
-        Scene* m_Scene;
+        Scene *m_Scene;
     };
 
     extern GraphicsManager *g_pGraphicsManager;

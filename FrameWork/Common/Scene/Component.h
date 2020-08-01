@@ -7,6 +7,7 @@ namespace GameEngine
     class Component
     {
         friend class BaseObject;
+
     public:
         ClassIDType getClassID()
         {
@@ -18,12 +19,13 @@ namespace GameEngine
 
         Component(ClassIDType classID) : m_ClassID(classID) {}
 
-        void setHost(BaseObject *host){
+        void setHost(BaseObject *host)
+        {
             m_Host = host;
         }
 
     public:
-        BaseObject* m_Host; //寄主
+        BaseObject *m_Host; //寄主
     };
-} 
+} // namespace GameEngine
 #endif

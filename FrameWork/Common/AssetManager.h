@@ -7,19 +7,21 @@
 #include <functional>
 #include "Image.h"
 
-namespace GameEngine{
-    class AssetManager :IRuntimeModule
+namespace GameEngine
+{
+    class AssetManager : IRuntimeModule
     {
-        public:
-            virtual int Initialize();
-            virtual void Finalize();
-            virtual void Tick();
+    public:
+        virtual int Initialize();
+        virtual void Finalize();
+        virtual void Tick();
 
-            void addImage(std::string path, Image *image);
-			Image* getImage(std::string path);
-        private:
-        std::map<std::string, Image*> m_Images;
+        void addImage(std::string path, Image *image);
+        Image *getImage(std::string path);
+
+    private:
+        std::map<std::string, Image *> m_Images;
     };
-    
-}
+
+} // namespace GameEngine
 #endif

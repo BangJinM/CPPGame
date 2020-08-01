@@ -1,10 +1,12 @@
 
 #ifndef CPPGAME_INTERFACE_IRUNTIMEMODULE_H
 #define CPPGAME_INTERFACE_IRUNTIMEMODULE_H
-namespace GameEngine{
-	class IRuntimeModule{
+namespace GameEngine
+{
+	class IRuntimeModule
+	{
 	public:
-		virtual ~IRuntimeModule() {};
+		virtual ~IRuntimeModule(){};
 		/*
 		* 这是用来初始化模块的
 		*/
@@ -18,5 +20,5 @@ namespace GameEngine{
 		*/
 		virtual void Tick() = 0;
 	};
-}
+} // namespace GameEngine
 #endif //CPPGAME_INTERFACE_IRUNTIMEMODULE_H

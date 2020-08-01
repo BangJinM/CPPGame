@@ -69,14 +69,13 @@ namespace GameEngine
 
         std::string getFileExtension(const std::string &filePath) const;
 
-		std::string GetFileName(const std::string &filePath)const;
+        std::string GetFileName(const std::string &filePath) const;
 
         void WriteFile(const std::string &file, const std::string path);
 
         void getFullPath(std::string path);
 
     private:
-
         std::vector<std::string> m_strSearchPath;
     };
 

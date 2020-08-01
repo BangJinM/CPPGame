@@ -17,13 +17,11 @@
 namespace GameEngine
 {
 
-	
-
 	class ObjParser
 	{
 
 	public:
-		static void Parse(std::string modelPath, GameObject* gameObject)
+		static void Parse(std::string modelPath, GameObject *gameObject)
 		{
 
 			std::vector<tinyobj::shape_t> shapes;

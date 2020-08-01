@@ -11,11 +11,13 @@
 #include <vector>
 #include <map>
 
-namespace tinyobj {
-    
-    typedef struct {
+namespace tinyobj
+{
+
+    typedef struct
+    {
         std::string name;
-        
+
         float ambient[3];
         float diffuse[3];
         float specular[3];
@@ -26,50 +28,54 @@ namespace tinyobj {
         float dissolve; // 1 == opaque; 0 == fully transparent
         // illumination model (see http://www.fileformat.info/format/material/)
         int illum;
-        
+
         std::string ambient_texname;
         std::string diffuse_texname;
         std::string specular_texname;
         std::string normal_texname;
         std::map<std::string, std::string> unknown_parameter;
     } material_t;
-    
-    typedef struct {
+
+    typedef struct
+    {
         std::vector<float> positions;
         std::vector<float> normals;
         std::vector<float> texcoords;
         std::vector<int> indices;
     } mesh_t;
-    
-    typedef struct {
+
+    typedef struct
+    {
         std::string name;
         int materialID;
         mesh_t mesh;
     } shape_t;
-    
-    class MaterialReader {
+
+    class MaterialReader
+    {
     public:
         MaterialReader() {}
         virtual ~MaterialReader() {}
-        
+
         virtual std::string operator()(const std::string &matId,
                                        std::vector<material_t> &materials,
                                        std::map<std::string, int> &matMap) = 0;
     };
-    
-    class MaterialFileReader : public MaterialReader {
+
+    class MaterialFileReader : public MaterialReader
+    {
     public:
         MaterialFileReader(const std::string &mtl_basepath)
-        : m_mtlBasePath(mtl_basepath) {}
+            : m_mtlBasePath(mtl_basepath) {}
         virtual ~MaterialFileReader() {}
         virtual std::string operator()(const std::string &matId,
                                        std::vector<material_t> &materials,
                                        std::map<std::string, int> &matMap);
-        
+
     private:
         std::string m_mtlBasePath;
     };
-    
+
     /// Loads .obj from a file.
     /// 'shapes' will be filled with parsed shape data
     /// The function returns error string.
@@ -78,18 +84,18 @@ namespace tinyobj {
     std::string LoadObj(std::vector<shape_t> &shapes,
                         std::vector<material_t> &materials, // [output]
                         const char *filename, const char *mtl_basepath);
-    
+
     /// Loads object from a std::istream, uses GetMtlIStreamFn to retrieve
     /// std::istream for materials.
     /// Returns empty string when loading .obj success.
     std::string LoadObj(std::vector<shape_t> &shapes,       // [output]
                         std::vector<material_t> &materials, // [output]
                         std::istream &inStream, MaterialReader &readMatFn);
-    
+
     /// Loads materials into std::map
     /// Returns an empty string if successful
     std::string LoadMtl(std::map<std::string, int> &material_map,
                         std::vector<material_t> &materials, std::istream &inStream);
-}
+} // namespace tinyobj
 
 #endif // _TINY_OBJ_LOADER_H

@@ -49,7 +49,7 @@ namespace GameEngine
             image->Height = height;
             image->Width = width;
             image->data = (char *)data;
-			image->data += '\0';
+            image->data += '\0';
             image->id = textureID;
 
             return image;

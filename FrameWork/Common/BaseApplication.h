@@ -7,8 +7,10 @@
 
 #include "IApplication.h"
 #include "GfxConfiguration.h"
-namespace GameEngine{
-    class BaseApplication : public IApplication {
+namespace GameEngine
+{
+    class BaseApplication : public IApplication
+    {
     public:
         BaseApplication(GfxConfiguration &cfg);
 
@@ -20,15 +22,18 @@ namespace GameEngine{
         virtual void Tick();
 
         virtual bool IsQuit();
-	protected:
-		virtual void OnDraw() {};
+
+    protected:
+        virtual void OnDraw(){};
+
     protected:
         // 标记是否在住循环中退�?
         static bool m_bQuit;
         GfxConfiguration m_Config;
+
     private:
         // hide the default construct to enforce a configuration
-        BaseApplication() {};
+        BaseApplication(){};
     };
-}
+} // namespace GameEngine
 #endif //MAENGINE_BASEAPPLICATION_H

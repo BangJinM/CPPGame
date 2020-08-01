@@ -24,27 +24,43 @@ namespace GameEngine
         };
 
     public:
-        Light(ClassIDType classID, LightType lightType):m_LightType(lightType), Component(classID){}
+        Light(LightType lightType) : m_LightType(lightType), Component(ClassID(Light))
+        {
+            m_Color = vecterFloat3(1, 1, 1);
+        }
+
+        Light() : m_LightType(LightType::DirectionalLight), Component(ClassID(Light))
+        {
+            m_Color = vecterFloat3(1, 1, 1);
+        }
 
     private:
-        vecterFloat3 color;
+        vecterFloat3 m_Color;
         LightType m_LightType;
     };
 
-    class PointLight :public Light{
-        PointLight():Light(ClassID(PointLight), LightType::PointLight){}
+    class PointLight : public Light
+    {
+    public:
+        PointLight() : Light(LightType::PointLight) {}
     };
 
-    class AreaLight :public Light{
-        AreaLight():Light(ClassID(PointLight), LightType::AreaLight){}
+    class AreaLight : public Light
+    {
+    public:
+        AreaLight() : Light(LightType::AreaLight) {}
     };
 
-    class SpotLight :public Light{
-        SpotLight():Light(ClassID(PointLight), LightType::SpotLight){}
+    class SpotLight : public Light
+    {
+    public:
+        SpotLight() : Light(LightType::SpotLight) {}
     };
 
-    class DirectionalLight :public Light{
-        DirectionalLight():Light(ClassID(PointLight), LightType::DirectionalLight){}
+    class DirectionalLight : public Light
+    {
+    public:
+        DirectionalLight() : Light(LightType::DirectionalLight) {}
     };
 
 } // namespace GameEngine

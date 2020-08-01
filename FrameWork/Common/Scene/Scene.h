@@ -22,6 +22,7 @@ namespace GameEngine
   class Camera;
   class GameObject;
   class BaseObject;
+  class Light;
   class Scene
   {
   private:
@@ -40,7 +41,7 @@ namespace GameEngine
     std::string m_Name;
 
     std::vector<Camera *> m_Cameras;
-
+    std::vector<Light *> m_Lights;
     GameObject *gameObject;
   };
 

@@ -15,6 +15,7 @@
 #include "ObjParser.h"
 #include "MaterialParser.h"
 #include "GameObject.h"
+#include "Light.h"
 #include "cJSON.h"
 #include "MyMath.h"
 
@@ -78,7 +79,8 @@ namespace GameEngine
 						{
 							transform->setPosition(vec3);
 						}
-						else{
+						else
+						{
 							transform->setRotation(vec3);
 						}
 					}
@@ -99,6 +101,19 @@ namespace GameEngine
 						{
 							child->addComponent(new Camera());
 							camera = child->getComponent<Camera>();
+						}
+					}
+					else if (strCompare(item->string, "light"))
+					{
+						auto light = child->getComponent<Light>();
+						if (light == nullptr)
+						{
+							int type = cJSON_GetObjectItem(item, "type")->valueint;
+							if (type == Light::LightType::DirectionalLight)
+							{
+								child->addComponent(new DirectionalLight());
+								light = child->getComponent<Light>();
+							}
 						}
 					}
 				}

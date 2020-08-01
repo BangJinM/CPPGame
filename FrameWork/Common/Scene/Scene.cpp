@@ -28,6 +28,9 @@ namespace GameEngine
 			auto camera = i->second->getComponent<Camera>();
 			if (camera)
 				m_Cameras.push_back(camera);
+			auto light = i->second->getComponent<Light>();
+			if (light)
+				m_Lights.push_back(light);
 			updateCamera(i->second);
 		}
 	}
@@ -35,12 +38,14 @@ namespace GameEngine
 	Scene::~Scene()
 	{
 		m_Cameras.clear();
+		m_Lights.clear();
 		delete gameObject;
 	}
 
 	void Scene::Draw()
 	{
 		m_Cameras.clear();
+		m_Lights.clear();
 		updateCamera(gameObject);
 		GlmMat4 viewMx, projectMx;
 		if (m_Cameras.size() > 0)

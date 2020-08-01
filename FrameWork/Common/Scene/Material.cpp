@@ -35,13 +35,13 @@ namespace GameEngine
 				location = glGetUniformLocation(m_Shader->ID, data.name.c_str());
 				if (location != -1)
 				{
-					Image* image = g_pAssetManager->getImage(property);
+					Image *image = g_pAssetManager->getImage(property);
 					m_Shader->setInt(data.name, textureID);
 					OpenGLDebugger::glCheckError();
 					glActiveTexture(GL_TEXTURE0 + textureID);
 					glBindTexture(GL_TEXTURE_2D, image->id);
 					OpenGLDebugger::glCheckError();
-					textureID ++;
+					textureID++;
 				}
 				OpenGLDebugger::glCheckError();
 				break;

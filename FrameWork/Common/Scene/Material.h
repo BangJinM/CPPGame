@@ -64,7 +64,6 @@ namespace GameEngine
         char *buffer;
         int size;
 
-
     };
     class Material : public Component
     {

@@ -6,15 +6,17 @@
 #include <map>
 #include <functional>
 
-namespace GameEngine{
-    class InputManager :IRuntimeModule
+namespace GameEngine
+{
+    class InputManager : IRuntimeModule
     {
-        public:
-            virtual int Initialize();
-            virtual void Finalize();
-            virtual void Tick();
-        private:
+    public:
+        virtual int Initialize();
+        virtual void Finalize();
+        virtual void Tick();
+
+    private:
     };
-    
-}
+
+} // namespace GameEngine
 #endif

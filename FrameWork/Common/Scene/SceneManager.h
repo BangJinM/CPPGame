@@ -16,7 +16,6 @@ namespace GameEngine
         virtual void Tick();
 
     private:
-
     };
 
 } // namespace GameEngine

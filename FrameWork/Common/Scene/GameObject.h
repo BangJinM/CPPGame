@@ -27,7 +27,7 @@ namespace GameEngine
 
         void addChild(BaseObject *child);
 
-        BaseObject * getChildByName(std::string name);
+        BaseObject *getChildByName(std::string name);
 
         void deleteChild(BaseObject *child);
 
@@ -42,8 +42,8 @@ namespace GameEngine
         }
 
         BaseObject();
-		virtual ~BaseObject()
-		{
+        virtual ~BaseObject()
+        {
             for (auto i = m_children.begin(); i != m_children.end(); i++)
             {
                 delete i->second;
@@ -54,7 +54,7 @@ namespace GameEngine
             }
             m_compenents.clear();
             m_children.clear();
-		}
+        }
         void setName(std::string name)
         {
             m_Name = name;
@@ -62,9 +62,11 @@ namespace GameEngine
 
         std::string getName() { return m_Name; }
 
-		std::map<std::string, BaseObject *> getChildren() {
-			return m_children;
-		}
+        std::map<std::string, BaseObject *> getChildren()
+        {
+            return m_children;
+        }
+
     private:
         Component *getComponentBy(int classID);
 
@@ -82,8 +84,8 @@ namespace GameEngine
     {
     public:
         GameObject();
-		//GameObject(const GameObject& gameObject);
-		virtual ~GameObject();
+        //GameObject(const GameObject& gameObject);
+        virtual ~GameObject();
         void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
         //private:

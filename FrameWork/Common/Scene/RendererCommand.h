@@ -4,11 +4,11 @@
 #include "Component.h"
 namespace GameEngine
 {
-    class RendererCommand 
+    class RendererCommand
     {
     public:
-		RendererCommand() {}
-		virtual ~RendererCommand() {}
+        RendererCommand() {}
+        virtual ~RendererCommand() {}
         virtual void excecute() = 0;
     };
 } // namespace GameEngine

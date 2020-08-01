@@ -24,7 +24,7 @@ namespace GameEngine
 	}
 	void Transform::setRotation(vecterFloat3 rotation)
 	{
-		
+
 		m_Rotation = rotation;
 		setMatrix(m_Position, m_Scale, m_Rotation);
 	}
@@ -34,6 +34,6 @@ namespace GameEngine
 		m_Matrix = glm::translate(m_Matrix, position);
 		m_Matrix = glm::scale(m_Matrix, scale);
 		glm::qua<float> q = glm::qua<float>(glm::radians(rotation)); //创建一个四元数
-		m_Matrix = glm::mat4_cast(q) * m_Matrix;	//得到一个旋转的模型矩阵
+		m_Matrix = glm::mat4_cast(q) * m_Matrix;					 //得到一个旋转的模型矩阵
 	}
 } // namespace GameEngine

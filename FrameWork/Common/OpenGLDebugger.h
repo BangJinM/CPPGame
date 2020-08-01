@@ -6,8 +6,8 @@
 
 namespace GameEngine
 {
-    class OpenGLDebugger
-    {
+	class OpenGLDebugger
+	{
 	public:
 		static GLenum glCheckError(const char *file = __FILE__, int line = __LINE__)
 		{
@@ -43,11 +43,12 @@ namespace GameEngine
 			}
 			return errorCode;
 		}
+
 	public:
 #define glCheckError() glCheckError(__FILE__, __LINE__)
-        
-// 
-    };
+
+		//
+	};
 
 } // namespace GameEngine
 #endif

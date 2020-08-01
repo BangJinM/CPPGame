@@ -9,19 +9,21 @@
 #include "OpenGLDebugger.h"
 namespace GameEngine
 {
-    class MeshRendererCommand : public RendererCommand
-    {
-    public:
-        MeshRendererCommand(){
+	class MeshRendererCommand : public RendererCommand
+	{
+	public:
+		MeshRendererCommand()
+		{
 			material = nullptr;
 		}
 
-		virtual ~MeshRendererCommand(){
-			if(material)
-			delete material;
+		virtual ~MeshRendererCommand()
+		{
+			if (material)
+				delete material;
 		}
 
-        virtual void excecute()
+		virtual void excecute()
 		{
 			if (material && material->m_Shader)
 				material->use();
@@ -30,13 +32,13 @@ namespace GameEngine
 			glBindVertexArray(0);
 			OpenGLDebugger::glCheckError();
 		}
-    public:
 
-        Material *material;
-        GLuint m_Vao;
-        GLenum m_Mode;
-        GLenum m_Yype;
-        GLsizei m_Count;
-    };
+	public:
+		Material *material;
+		GLuint m_Vao;
+		GLenum m_Mode;
+		GLenum m_Yype;
+		GLsizei m_Count;
+	};
 } // namespace GameEngine
 #endif

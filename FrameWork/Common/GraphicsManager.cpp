@@ -27,18 +27,18 @@ namespace GameEngine
 
             // if (GLAD_GL_VERSION_3_0)
             // {
-                // Set the depth buffer to be entirely cleared to 1.0 values.
-                glClearDepth(1.0f);
+            // Set the depth buffer to be entirely cleared to 1.0 values.
+            glClearDepth(1.0f);
 
-                // Enable depth testing.
-                glEnable(GL_DEPTH_TEST);
+            // Enable depth testing.
+            glEnable(GL_DEPTH_TEST);
 
-                // Set the polygon winding to front facing for the right handed system.
-                glFrontFace(GL_CW);
+            // Set the polygon winding to front facing for the right handed system.
+            glFrontFace(GL_CW);
 
-                // Enable back face culling.
-                glEnable(GL_CULL_FACE);
-                glCullFace(GL_BACK);
+            // Enable back face culling.
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
             // }
 
             m_Scene = new Scene();
@@ -51,7 +51,7 @@ namespace GameEngine
 
     void GraphicsManager::Finalize()
     {
-		delete m_Scene;
+        delete m_Scene;
     }
 
     void GraphicsManager::Tick()
@@ -69,14 +69,15 @@ namespace GameEngine
         {
             m_RendererCommands[i]->excecute();
         }
-		if(m_RendererCommands.size() > 0){
-			for (size_t i = 0; i < m_RendererCommands.size(); i++)
-			{
-				delete m_RendererCommands[i];
-			}
-			m_RendererCommands.clear();
-			m_RendererCommands.swap(vector<RendererCommand *>());
-		}
+        if (m_RendererCommands.size() > 0)
+        {
+            for (size_t i = 0; i < m_RendererCommands.size(); i++)
+            {
+                delete m_RendererCommands[i];
+            }
+            m_RendererCommands.clear();
+            m_RendererCommands.swap(vector<RendererCommand *>());
+        }
     }
 
     void GraphicsManager::Clear()

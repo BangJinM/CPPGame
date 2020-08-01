@@ -222,7 +222,7 @@ namespace GameEngine
         char ext[_MAX_EXT];
 
         _splitpath(filePath.data(), drive, dir, fname, ext);
-		std::string result = fname;
+        std::string result = fname;
         delete drive;
         delete dir;
         delete fname;

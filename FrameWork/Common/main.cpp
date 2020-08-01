@@ -14,7 +14,7 @@ namespace GameEngine
 	extern AssetLoader *g_pAssetLoader;
 	extern GraphicsManager *g_pGraphicsManager;
 	extern AssetManager *g_pAssetManager;
-	
+
 } // namespace GameEngine
 int main(int argc, char *argv[])
 {
