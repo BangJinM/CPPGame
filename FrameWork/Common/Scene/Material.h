@@ -64,18 +64,18 @@ namespace GameEngine
         char *buffer;
         int size;
 
+
     };
     class Material : public Component
     {
     public:
         Material() : Component(ClassID(Material))
         {
-            m_Shader = nullptr;
         }
 
         Material(const Material &c) : Component(ClassID(Material))
         {
-            m_Shader = new Shader(*c.m_Shader);
+            m_Shader = c.m_Shader;
             Clear();
             for (size_t i = 0; i < c.m_MaterialDatas.size(); i++)
             {
@@ -87,7 +87,6 @@ namespace GameEngine
         ~Material()
         {
             Clear();
-            delete m_Shader;
         }
 
         void Clear()
@@ -110,7 +109,7 @@ namespace GameEngine
 
         std::vector<NMaterialData> m_MaterialDatas;
 
-        Shader *m_Shader;
+        Shader m_Shader;
     };
     template <typename Type>
     inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)

@@ -12,7 +12,7 @@ namespace GameEngine
 	void Material::use()
 	{
 		int textureID = 0;
-		m_Shader->use();
+		m_Shader.use();
 		OpenGLDebugger::glCheckError();
 		for (size_t i = 0; i < m_MaterialDatas.size(); i++)
 		{
@@ -23,7 +23,7 @@ namespace GameEngine
 			case MaterialType::Mat4:
 			{
 				auto property = (float *)data.buffer;
-				m_Shader->setMat4(data.name, &property[0]);
+				m_Shader.setMat4(data.name, &property[0]);
 				OpenGLDebugger::glCheckError();
 				break;
 			}
@@ -32,11 +32,11 @@ namespace GameEngine
 				auto property = (char *)data.buffer;
 				OpenGLDebugger::glCheckError();
 				unsigned int location;
-				location = glGetUniformLocation(m_Shader->ID, data.name.c_str());
+				location = glGetUniformLocation(m_Shader.ID, data.name.c_str());
 				if (location != -1)
 				{
 					Image *image = g_pAssetManager->getImage(property);
-					m_Shader->setInt(data.name, textureID);
+					m_Shader.setInt(data.name, textureID);
 					OpenGLDebugger::glCheckError();
 					glActiveTexture(GL_TEXTURE0 + textureID);
 					glBindTexture(GL_TEXTURE_2D, image->id);
@@ -54,6 +54,6 @@ namespace GameEngine
 
 	void Material::setShader(Shader *shader)
 	{
-		m_Shader = shader;
+		m_Shader = *shader;
 	}
 } // namespace GameEngine

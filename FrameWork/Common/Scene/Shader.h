@@ -60,6 +60,8 @@ namespace GameEngine
             "//CC INCLUDES END\n\n";
         unsigned int ID = 0;
 
+		Shader() {}
+
         Shader(const Shader &c)
         {
             ID = c.ID;

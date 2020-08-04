@@ -25,7 +25,7 @@ namespace GameEngine
 
 		virtual void excecute()
 		{
-			if (material && material->m_Shader)
+			if (material && material->m_Shader.ID > 0)
 				material->use();
 			glBindVertexArray(m_Vao);
 			glDrawElements(m_Mode, m_Count, GL_UNSIGNED_INT, 0);
