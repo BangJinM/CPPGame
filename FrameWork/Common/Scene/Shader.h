@@ -38,6 +38,14 @@ namespace GameEngine
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
+
+
+    struct Pass{
+        std::string vs;
+        std::string fs;
+        
+    };
+
     class Shader
     {
     public:

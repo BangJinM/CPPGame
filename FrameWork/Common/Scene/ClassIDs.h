@@ -11,7 +11,6 @@ enum ClassIDType
 	DefineClassID(RendererCommand, 1),
 	DefineClassID(MeshRendererCommand, 2),
 	DefineClassID(MeshDatas, 3),
-	DefineClassID(Material, 4),
 	DefineClassID(Transform, 5),
 	DefineClassID(Camera, 6),
 	DefineClassID(Light, 7),

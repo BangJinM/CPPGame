@@ -7,14 +7,15 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Transform.h"
+#include "Object.h"
 
 namespace GameEngine
 {
-    class BaseObject;
+    class GameObject;
     class MeshDatas;
     class Material;
 
-    class BaseObject
+    class GameObject :public Object
     {
 
         friend class Component;
@@ -25,44 +26,35 @@ namespace GameEngine
 
         void addComponent(Component *component);
 
-        void addChild(BaseObject *child);
+        void addChild(GameObject *child);
 
-        BaseObject *getChildByName(std::string name);
+        GameObject *getChildByName(std::string name);
 
-        void deleteChild(BaseObject *child);
+        void deleteChild(GameObject *child);
 
-        void setParent(BaseObject *parent)
+        void setParent(GameObject *parent)
         {
             m_Parent = parent;
         }
 
-        BaseObject *getParent()
+        GameObject *getParent()
         {
             return m_Parent;
         }
 
-        BaseObject();
-        virtual ~BaseObject()
-        {
-            for (auto i = m_children.begin(); i != m_children.end(); i++)
-            {
-                delete i->second;
-            }
-            for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
-            {
-                delete i->second;
-            }
-            m_compenents.clear();
-            m_children.clear();
-        }
+        GameObject();
+        virtual ~GameObject();
+
         void setName(std::string name)
         {
             m_Name = name;
         }
 
-        std::string getName() { return m_Name; }
+        std::string getName() {
+            return m_Name;
+        }
 
-        std::map<std::string, BaseObject *> getChildren()
+        std::map<std::string, GameObject *> getChildren()
         {
             return m_children;
         }
@@ -73,19 +65,12 @@ namespace GameEngine
     private:
         std::map<int, Component *> m_compenents;
 
-        BaseObject *m_Parent;
+        GameObject *m_Parent;
 
-        std::map<std::string, BaseObject *> m_children;
+        std::map<std::string, GameObject *> m_children;
 
         std::string m_Name;
-    };
-
-    class GameObject : public BaseObject
-    {
     public:
-        GameObject();
-        //GameObject(const GameObject& gameObject);
-        virtual ~GameObject();
         void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
         //private:
@@ -95,7 +80,7 @@ namespace GameEngine
     };
 
     template <class T>
-    inline T *BaseObject::getComponent()
+    inline T *GameObject::getComponent()
     {
         T compenent = T();
         Component *t = dynamic_cast<Component *>(&compenent);

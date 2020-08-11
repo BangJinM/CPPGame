@@ -2,7 +2,7 @@
 #define CPPGAME_Common_Scene_Material_H
 
 #include "MyMath.h"
-#include "Component.h"
+#include "Object.h"
 
 #include <map>
 #include <vector>
@@ -66,14 +66,14 @@ namespace GameEngine
 
 
     };
-    class Material : public Component
+    class Material : public Object
     {
     public:
-        Material() : Component(ClassID(Material))
+        Material() 
         {
         }
 
-        Material(const Material &c) : Component(ClassID(Material))
+        Material(const Material &c)
         {
             m_Shader = c.m_Shader;
             Clear();

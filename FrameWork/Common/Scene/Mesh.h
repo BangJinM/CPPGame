@@ -5,7 +5,6 @@
 #include "Component.h"
 #include <glad/glad.h>
 #include <vector>
-#include "Material.h"
 
 namespace GameEngine
 {

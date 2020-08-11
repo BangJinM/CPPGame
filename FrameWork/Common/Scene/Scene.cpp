@@ -19,7 +19,7 @@ namespace GameEngine
 		SceneParser::Parse("Scene/default.scene", this);
 	}
 
-	void Scene::updateCamera(BaseObject *gb)
+	void Scene::updateCamera(GameObject *gb)
 	{
 		auto children = gb->getChildren();
 

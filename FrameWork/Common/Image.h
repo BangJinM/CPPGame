@@ -3,11 +3,12 @@
 
 #include <cstdint>
 #include "MyMath.h"
-
+#include "Object.h"
 namespace GameEngine
 {
-    struct Image
+    class Image :public Object
     {
+        public:
         int id;
         uint32_t Width;
         uint32_t Height;

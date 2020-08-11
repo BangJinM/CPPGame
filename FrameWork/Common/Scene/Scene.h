@@ -21,7 +21,7 @@ namespace GameEngine
 {
   class Camera;
   class GameObject;
-  class BaseObject;
+  class GameObject;
   class Light;
   class Scene
   {
@@ -36,7 +36,7 @@ namespace GameEngine
 
     void initScene();
 
-    void updateCamera(BaseObject *gb);
+    void updateCamera(GameObject *gb);
 
     std::string m_Name;
 

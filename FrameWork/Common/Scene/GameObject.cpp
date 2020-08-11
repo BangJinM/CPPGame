@@ -9,7 +9,7 @@ namespace GameEngine
 {
     extern GraphicsManager *g_pGraphicsManager;
 
-    void BaseObject::addComponent(Component *component)
+    void GameObject::addComponent(Component *component)
     {
         auto begin = m_compenents.find(component->getClassID());
         if (begin != m_compenents.end())
@@ -20,17 +20,17 @@ namespace GameEngine
         m_compenents.insert(std::pair<int, Component *>(component->getClassID(), component));
     }
 
-    void BaseObject::addChild(BaseObject *child)
+    void GameObject::addChild(GameObject *child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
         {
             return;
         }
-        m_children.insert(std::pair<std::string, BaseObject *>(child->getName(), child));
+        m_children.insert(std::pair<std::string, GameObject *>(child->getName(), child));
     }
 
-    BaseObject *BaseObject::getChildByName(std::string name)
+    GameObject *GameObject::getChildByName(std::string name)
     {
         auto begin = m_children.find(name);
         if (begin != m_children.end())
@@ -40,7 +40,7 @@ namespace GameEngine
         return nullptr;
     }
 
-    void BaseObject::deleteChild(BaseObject *child)
+    void GameObject::deleteChild(GameObject *child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
@@ -49,11 +49,11 @@ namespace GameEngine
         }
     }
 
-    BaseObject::BaseObject()
+    GameObject::GameObject()
     {
     }
 
-    Component *BaseObject::getComponentBy(int classID)
+    Component *GameObject::getComponentBy(int classID)
     {
         auto itor = m_compenents.find(classID);
         if (itor != m_compenents.end())
@@ -62,12 +62,17 @@ namespace GameEngine
         }
         return nullptr;
     }
-    GameObject::GameObject()
-    {
-    }
 
     GameObject::~GameObject()
     {
+        for (auto i = m_children.begin(); i != m_children.end(); i++)
+        {
+            delete i->second;
+        }
+        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+        {
+            delete i->second;
+        }
         for (size_t i = 0; i < m_Meshs.size(); i++)
         {
             delete m_Meshs[i];
@@ -78,6 +83,8 @@ namespace GameEngine
         }
         m_Meshs.clear();
         m_Materials.clear();
+        m_compenents.clear();
+        m_children.clear();
     }
 
     void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)
