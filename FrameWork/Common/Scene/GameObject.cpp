@@ -49,6 +49,16 @@ namespace GameEngine
         }
     }
 
+    void GameObject::setParent(GameObject * parent)
+    {
+        m_Parent = parent;
+    }
+
+    GameObject * GameObject::getParent()
+    {
+        return m_Parent;
+    }
+
     GameObject::GameObject()
     {
     }
@@ -85,6 +95,11 @@ namespace GameEngine
         m_Materials.clear();
         m_compenents.clear();
         m_children.clear();
+    }
+
+    void GameObject::setName(std::string name)
+    {
+        m_Name = name;
     }
 
     void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)

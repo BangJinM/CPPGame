@@ -24,8 +24,16 @@ namespace GameEngine
             m_Host = host;
         }
 
+    protected:
+        virtual void Start() { }
+        virtual void Update() { }
+        virtual void LateUpdate() { }
+        virtual void OnEnable(bool enable) {    m_Enable = enable; }
+
     public:
         GameObject *m_Host; //寄主
+        bool m_Enable = true;
+        bool m_Started = false;
     };
 } // namespace GameEngine
 #endif

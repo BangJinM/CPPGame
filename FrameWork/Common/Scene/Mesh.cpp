@@ -2,15 +2,17 @@
 #include "OpenGLDebugger.h"
 namespace GameEngine
 {
-	
+
 	Mesh::Mesh(MeshData *meshData)
 	{
 		m_MeshData = meshData;
 		setupMesh();
 	}
+	
 	void Mesh::Draw()
 	{
 	}
+
 	void Mesh::setupMesh()
 	{
 		// create buffers/arrays

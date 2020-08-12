@@ -1,10 +1,9 @@
 #ifndef GameEngine_Common_Scene_Mesh_H
 #define GameEngine_Common_Scene_Mesh_H
 
-#include "ClassIDs.h"
-#include "Component.h"
 #include <glad/glad.h>
 #include <vector>
+#include "Object.h"
 
 namespace GameEngine
 {
@@ -66,8 +65,7 @@ namespace GameEngine
         }
     };
 
-    //https://learnopengl-cn.github.io/03%20Model%20Loading/02%20Mesh
-    class Mesh
+    class Mesh : public Object
     {
     public:
         /*  网格数据  */

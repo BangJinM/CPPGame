@@ -11,13 +11,10 @@
 
 namespace GameEngine
 {
-    class GameObject;
-    class MeshDatas;
     class Material;
 
     class GameObject :public Object
     {
-
         friend class Component;
 
     public:
@@ -25,30 +22,20 @@ namespace GameEngine
         inline T *getComponent();
 
         void addComponent(Component *component);
-
+        
         void addChild(GameObject *child);
+        void deleteChild(GameObject *child);
+        void setParent(GameObject *parent);
+        void setName(std::string name);
+        void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
+
+        Component *getComponentBy(int classID);
 
         GameObject *getChildByName(std::string name);
-
-        void deleteChild(GameObject *child);
-
-        void setParent(GameObject *parent)
-        {
-            m_Parent = parent;
-        }
-
-        GameObject *getParent()
-        {
-            return m_Parent;
-        }
+        GameObject *getParent();
 
         GameObject();
         virtual ~GameObject();
-
-        void setName(std::string name)
-        {
-            m_Name = name;
-        }
 
         std::string getName() {
             return m_Name;
@@ -60,19 +47,11 @@ namespace GameEngine
         }
 
     private:
-        Component *getComponentBy(int classID);
-
-    private:
         std::map<int, Component *> m_compenents;
-
         GameObject *m_Parent;
-
         std::map<std::string, GameObject *> m_children;
-
         std::string m_Name;
     public:
-        void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
-
         //private:
         bool m_isVisual = true;
         std::vector<Mesh *> m_Meshs;
