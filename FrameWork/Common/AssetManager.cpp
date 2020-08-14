@@ -5,6 +5,7 @@
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
+	static std::map<std::string, std::shared_ptr<Object>> g_cache;
 	int AssetManager::Initialize()
 	{
 		return 0;
@@ -12,40 +13,51 @@ namespace GameEngine
 
 	void AssetManager::Finalize()
 	{
-		for (auto iter = m_Images.begin(); iter != m_Images.end(); iter++)
-		{
-			delete iter->second;
-		}
-		m_Images.clear();
+		g_cache.clear();
 	}
 
 	void AssetManager::Tick()
 	{
 	}
 
-	void AssetManager::addImage(std::string path, Image *image)
+	std::shared_ptr<GameObject> AssetManager::LoadGameObject(const std::string & path)
 	{
-		if (m_Images.find(path) != m_Images.end())
-		{
-			return;
-		}
-		m_Images.insert(std::pair<std::string, Image *>(path, image));
+		std::shared_ptr<GameObject> obj;
+		// if (g_pAssetLoader->FileExists(path.c_str()))
+		// {
+
+		// 	obj = ReadGameObject(ms, std::shared_ptr<GameObject>());
+		// }
+		return obj;
 	}
 
-	Image *AssetManager::getImage(std::string path)
+	std::shared_ptr<Mesh> AssetManager::LoadMesh(const std::string & path)
 	{
-		auto image = m_Images.find(path);
-		if (image == m_Images.end())
+		if (g_cache.find(path) != g_cache.end())
 		{
-			Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
-			if (buffer.m_szSize > 0)
-			{
-				Image *image = TextureParser::Parse(buffer);
-				addImage(path, image);
-				return getImage(path);
-			}
-			return nullptr;
+			return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
 		}
-		return image->second;
+
+		std::shared_ptr<Mesh> mesh;// = Mesh::LoadFromFile(path.c_str());
+
+		//g_cache.Add(path, mesh);
+		return mesh;
 	}
+
+	std::shared_ptr<Image> AssetManager::LoadTexture(const std::string & path)
+	{
+		std::shared_ptr<Image> image;
+		if (g_cache.find(path) != g_cache.end())
+		{
+			return std::dynamic_pointer_cast<Image>(g_cache[path]);
+		}
+		Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
+		if (buffer.m_szSize > 0)
+		{
+			image = TextureParser::Parse(buffer);
+			g_cache[path] = image;
+		}
+		return image;
+	}
+
 } // namespace GameEngine

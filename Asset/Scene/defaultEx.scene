@@ -1,0 +1,39 @@
+{
+
+    "GameObject":	{
+        "name":"peopleObject",
+        "fileID": 1,
+        "m_Component":[3, 4]
+	},
+    "GameObject":{
+        "name":"cameraObject",
+        "fileID": 2,
+        "m_Component":[4,6]
+    },
+    "Transform":{
+        "m_GameObject":1,
+        "fileID":3,
+        "m_GameObject":1,
+        "scale":[2, 2, 2],
+        "position":[0, 0, 0],
+        "rotation":[30.0, 30.0, 0.0]
+    },
+    "Transform":{
+        "m_GameObject":2,
+        "fileID":4,
+        "m_GameObject":1,
+        "scale":[2, 2, 2],
+        "position":[0, 0, 0],
+        "rotation":[30.0, 30.0, 0.0]
+    },
+    "MeshRenderer":{
+        "mesh":"Scene/mayaCube.obj",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":1,
+        "fileID":5
+    },
+    "Camera":{
+        "m_GameObject":2,
+        "fileID":6
+    }
+}

@@ -62,7 +62,7 @@ namespace GameEngine
 					printf("%s\n", cJSON_Print(item));
 					if (strCompare(item->string, "mesh"))
 					{
-						ObjParser::Parse(item->valuestring, child);
+						child->m_Meshs= ObjParser::Parse(item->valuestring);
 					}
 					else if (strCompare(item->string, "scale") || strCompare(item->string, "position") || strCompare(item->string, "rotation"))
 					{

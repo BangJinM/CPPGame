@@ -22,7 +22,7 @@ namespace GameEngine
         inline T *getComponent();
 
         void addComponent(Component *component);
-        
+
         void addChild(GameObject *child);
         void deleteChild(GameObject *child);
         void setParent(GameObject *parent);
@@ -54,7 +54,7 @@ namespace GameEngine
     public:
         //private:
         bool m_isVisual = true;
-        std::vector<Mesh *> m_Meshs;
+        std::vector<std::shared_ptr<Mesh>> m_Meshs;
         std::vector<Material *> m_Materials;
     };
 

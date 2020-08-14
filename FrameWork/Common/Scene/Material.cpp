@@ -35,7 +35,7 @@ namespace GameEngine
 				location = glGetUniformLocation(m_Shader.ID, data.name.c_str());
 				if (location != -1)
 				{
-					Image *image = g_pAssetManager->getImage(property);
+					std::shared_ptr<Image> image = g_pAssetManager->LoadTexture(property);
 					m_Shader.setInt(data.name, textureID);
 					OpenGLDebugger::glCheckError();
 					glActiveTexture(GL_TEXTURE0 + textureID);

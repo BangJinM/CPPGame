@@ -21,11 +21,5 @@
     "cameraObject":{
         "camera":"camera",
         "position":[0.0, 3.0, -20.0]
-    },
-    "cameraObject":{
-        "light":{
-            "type":4
-        },
-        "position":[0.0, 3.0, -20.0]
     }
 }

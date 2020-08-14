@@ -58,6 +58,7 @@ namespace GameEngine
         MeshData()
             : vertexSizeInFloat(0), numIndex(0), attribCount(0)
         {
+			resetData();
         }
         ~MeshData()
         {
@@ -69,14 +70,27 @@ namespace GameEngine
     {
     public:
         /*  网格数据  */
-        MeshData *m_MeshData;
+        typedef std::vector<unsigned short> IndexArray;
+        std::vector<float> vertex;
+        std::vector<int> indices;
+        int vertexSizeInFloat;
+        int numIndex;
+        std::vector<MeshVertexAttrib> attribs;
+        int attribCount;
         /*  函数  */
-        Mesh(MeshData *meshData);
+		Mesh(): vertexSizeInFloat(0), numIndex(0), attribCount(0) {
+		}
+
         ~Mesh()
         {
-            delete m_MeshData;
         }
+
+
         void Draw();
+
+        void setMeshData(){
+            setupMesh();
+        }
 
     public:
         /*  渲染数据  */

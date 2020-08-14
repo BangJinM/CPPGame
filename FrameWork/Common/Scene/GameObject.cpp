@@ -83,10 +83,6 @@ namespace GameEngine
         {
             delete i->second;
         }
-        for (size_t i = 0; i < m_Meshs.size(); i++)
-        {
-            delete m_Meshs[i];
-        }
         for (size_t i = 0; i < m_Materials.size(); i++)
         {
             delete m_Materials[i];
@@ -117,7 +113,7 @@ namespace GameEngine
             }
             renderer->m_Vao = m_Meshs[i]->VAO;
             renderer->m_Mode = GL_TRIANGLES;
-            renderer->m_Count = m_Meshs[i]->m_MeshData->indices.size();
+            renderer->m_Count = m_Meshs[i]->indices.size();
             renderer->m_Yype = GL_UNSIGNED_INT;
 
             g_pGraphicsManager->addRendererCommand(renderer);

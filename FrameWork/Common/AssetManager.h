@@ -5,7 +5,12 @@
 #include <list>
 #include <map>
 #include <functional>
+#include<memory>
+
 #include "Image.h"
+#include "GameObject.h"
+#include "Material.h"
+#include "Mesh.h"
 
 namespace GameEngine
 {
@@ -16,11 +21,9 @@ namespace GameEngine
         virtual void Finalize();
         virtual void Tick();
 
-        void addImage(std::string path, Image *image);
-        Image *getImage(std::string path);
-
-    private:
-        std::map<std::string, Image *> m_Images;
+		static std::shared_ptr<GameObject> LoadGameObject(const std::string& path);
+		static std::shared_ptr<Mesh> LoadMesh(const std::string& path);
+		static std::shared_ptr<Image> LoadTexture(const std::string& path);
     };
 
 } // namespace GameEngine
