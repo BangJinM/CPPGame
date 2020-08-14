@@ -18,6 +18,7 @@
 #include "Light.h"
 #include "cJSON.h"
 #include "MyMath.h"
+#include "AssetManager.h"
 
 namespace GameEngine
 {
@@ -62,7 +63,7 @@ namespace GameEngine
 					printf("%s\n", cJSON_Print(item));
 					if (strCompare(item->string, "mesh"))
 					{
-						child->m_Mesh= ObjParser::Parse(item->valuestring);
+						child->m_Mesh= AssetManager::LoadMesh(item->valuestring);
 					}
 					else if (strCompare(item->string, "scale") || strCompare(item->string, "position") || strCompare(item->string, "rotation"))
 					{
@@ -89,9 +90,7 @@ namespace GameEngine
 						int iSize = cJSON_GetArraySize(item);
 						for (size_t mID = 0; mID < iSize; mID++)
 						{
-							Material *material = new Material();
-							MaterialParser::Parse(cJSON_GetArrayItem(item, mID)->valuestring, material);
-							child->m_Materials.push_back(material);
+							child->m_Materials.push_back(AssetManager::LoadMaterial(cJSON_GetArrayItem(item, mID)->valuestring));
 						}
 					}
 					else if (strCompare(item->string, "camera"))

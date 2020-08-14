@@ -19,8 +19,6 @@ namespace GameEngine
 
 		virtual ~MeshRendererCommand()
 		{
-			if (material)
-				delete material;
 		}
 
 		virtual void excecute()
@@ -34,7 +32,7 @@ namespace GameEngine
 		}
 
 	public:
-		Material *material;
+		std::shared_ptr<Material> material;
 		GLuint m_Vao;
 		GLenum m_Mode;
 		GLenum m_Yype;

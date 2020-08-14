@@ -21,7 +21,7 @@ namespace GameEngine
 	{
 
 	public:
-		static std::shared_ptr<Mesh> Parse(std::string modelPath)
+		static std::shared_ptr<Mesh> Parse(const std::string modelPath)
 		{
 			std::vector<tinyobj::shape_t> shapes;
 			std::vector<tinyobj::material_t> materials;
@@ -32,9 +32,11 @@ namespace GameEngine
 
 		static std::shared_ptr<Mesh> parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
 		{
-			std::shared_ptr<Mesh> m_mesh = std::make_shared<Mesh>();
+			std::shared_ptr<Mesh> m_mesh;
 			for (auto &shape : shapes)
 			{
+				if(!m_mesh)
+					m_mesh = std::make_shared<Mesh>();
 				MeshData meshData = MeshData();
 				auto mesh = shape.mesh;
 				MeshVertexAttrib attrib;

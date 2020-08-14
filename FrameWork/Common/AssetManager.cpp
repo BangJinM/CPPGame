@@ -2,6 +2,9 @@
 #include <algorithm>
 #include "AssetLoader.h"
 #include "TextureParser.h"
+#include "ObjParser.h"
+#include "Material.h"
+#include "MaterialParser.h"
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
@@ -20,7 +23,7 @@ namespace GameEngine
 	{
 	}
 
-	std::shared_ptr<GameObject> AssetManager::LoadGameObject(const std::string & path)
+	std::shared_ptr<GameObject> AssetManager::LoadGameObject(const std::string &path)
 	{
 		std::shared_ptr<GameObject> obj;
 		// if (g_pAssetLoader->FileExists(path.c_str()))
@@ -31,20 +34,33 @@ namespace GameEngine
 		return obj;
 	}
 
-	std::shared_ptr<Mesh> AssetManager::LoadMesh(const std::string & path)
+	std::shared_ptr<Material> AssetManager::LoadMaterial(const std::string &path)
+	{
+		std::shared_ptr<Material> obj;
+		if (g_cache.find(path) != g_cache.end())
+		{
+			return std::dynamic_pointer_cast<Material>(g_cache[path]);
+		}
+		obj = MaterialParser::Parse(path);
+		if (obj)
+			g_cache[path] = obj;
+		return obj;
+	}
+
+	std::shared_ptr<Mesh> AssetManager::LoadMesh(const std::string &path)
 	{
 		if (g_cache.find(path) != g_cache.end())
 		{
 			return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
 		}
 
-		std::shared_ptr<Mesh> mesh;// = Mesh::LoadFromFile(path.c_str());
-
-		//g_cache.Add(path, mesh);
+		std::shared_ptr<Mesh> mesh = ObjParser::Parse(path);
+		if (mesh)
+			g_cache[path] = mesh;
 		return mesh;
 	}
 
-	std::shared_ptr<Image> AssetManager::LoadTexture(const std::string & path)
+	std::shared_ptr<Image> AssetManager::LoadTexture(const std::string &path)
 	{
 		std::shared_ptr<Image> image;
 		if (g_cache.find(path) != g_cache.end())

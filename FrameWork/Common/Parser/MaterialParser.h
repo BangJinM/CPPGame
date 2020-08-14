@@ -21,8 +21,9 @@ namespace GameEngine
 	{
 
 	public:
-		static void Parse(std::string scenePath, Material *material)
+		static std::shared_ptr<Material> Parse(const std::string scenePath)
 		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
 			std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 			auto json = cJSON_Parse(sceneStr.c_str());
 			int i = 0;
@@ -53,6 +54,7 @@ namespace GameEngine
 				}
 			}
 			delete json;
+			return material;
 		}
 	}; // namespace GameEngine
 

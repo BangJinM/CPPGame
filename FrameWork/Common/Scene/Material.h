@@ -63,27 +63,37 @@ namespace GameEngine
         MaterialType type;
         char *buffer;
         int size;
-
-
     };
     class Material : public Object
     {
     public:
-        Material() 
+        static std::shared_ptr<Material> createMaterial()
+        {
+            return std::make_shared<Material>();
+        }
+        static std::shared_ptr<Material> createMaterial(std::shared_ptr<Material> material1)
+        {
+            std::shared_ptr<Material> material = Material::createMaterial();
+            material->setMaterial(material1);
+            return material;
+        }
+
+        Material()
         {
         }
 
-        Material(const Material &c)
+    private:
+        void setMaterial(std::shared_ptr<Material> material)
         {
-            m_Shader = c.m_Shader;
+            m_Shader = material->m_Shader;
             Clear();
-            for (size_t i = 0; i < c.m_MaterialDatas.size(); i++)
+            for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
             {
-                AddProperty(c.m_MaterialDatas[i].buffer, c.m_MaterialDatas[i].name, c.m_MaterialDatas[i].size, c.m_MaterialDatas[i].type);
-                auto property = (int *)m_MaterialDatas[i].buffer;
+                AddProperty(material->m_MaterialDatas[i].buffer, material->m_MaterialDatas[i].name, material->m_MaterialDatas[i].size, material->m_MaterialDatas[i].type);
             }
         }
 
+    public:
         ~Material()
         {
             Clear();
@@ -111,6 +121,7 @@ namespace GameEngine
 
         Shader m_Shader;
     };
+
     template <typename Type>
     inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
     {

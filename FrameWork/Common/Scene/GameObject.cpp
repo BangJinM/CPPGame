@@ -83,11 +83,6 @@ namespace GameEngine
         {
             delete i->second;
         }
-        for (size_t i = 0; i < m_Materials.size(); i++)
-        {
-            delete m_Materials[i];
-        }
-        m_Materials.clear();
         m_compenents.clear();
         m_children.clear();
     }
@@ -106,7 +101,7 @@ namespace GameEngine
                 MeshRendererCommand *renderer = new MeshRendererCommand();
                 if (m_Materials.size() > i && m_Materials[i])
                 {
-                    renderer->material = new Material(*m_Materials[i]);
+                    renderer->material = Material::createMaterial(m_Materials[i]);
                     renderer->material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
                     renderer->material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
                     renderer->material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);

@@ -55,7 +55,7 @@ namespace GameEngine
         //private:
         bool m_isVisual = true;
         std::shared_ptr<Mesh> m_Mesh;
-        std::vector<Material *> m_Materials;
+        std::vector<std::shared_ptr<Material>> m_Materials;
     };
 
     template <class T>
