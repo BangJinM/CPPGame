@@ -49,12 +49,12 @@ namespace GameEngine
         }
     }
 
-    void GameObject::setParent(GameObject * parent)
+    void GameObject::setParent(GameObject *parent)
     {
         m_Parent = parent;
     }
 
-    GameObject * GameObject::getParent()
+    GameObject *GameObject::getParent()
     {
         return m_Parent;
     }
@@ -87,7 +87,6 @@ namespace GameEngine
         {
             delete m_Materials[i];
         }
-        m_Meshs.clear();
         m_Materials.clear();
         m_compenents.clear();
         m_children.clear();
@@ -101,22 +100,23 @@ namespace GameEngine
     void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)
     {
         auto modelMat = getComponent<Transform>()->getMatrix();
-        for (size_t i = 0; i < m_Meshs.size(); i++)
-        {
-            MeshRendererCommand *renderer = new MeshRendererCommand();
-            if (m_Materials.size() > i && m_Materials[i])
+        if (m_Mesh)
+            for (size_t i = 0; i < m_Mesh->m_MeshDatas.size(); i++)
             {
-                renderer->material = new Material(*m_Materials[i]);
-                renderer->material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
-                renderer->material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
-                renderer->material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
-            }
-            renderer->m_Vao = m_Meshs[i]->VAO;
-            renderer->m_Mode = GL_TRIANGLES;
-            renderer->m_Count = m_Meshs[i]->indices.size();
-            renderer->m_Yype = GL_UNSIGNED_INT;
+                MeshRendererCommand *renderer = new MeshRendererCommand();
+                if (m_Materials.size() > i && m_Materials[i])
+                {
+                    renderer->material = new Material(*m_Materials[i]);
+                    renderer->material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
+                    renderer->material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
+                    renderer->material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
+                }
+                renderer->m_Vao = m_Mesh->m_MeshDatas[i].VAO;
+                renderer->m_Mode = GL_TRIANGLES;
+                renderer->m_Count = m_Mesh->m_MeshDatas[i].indices.size();
+                renderer->m_Yype = GL_UNSIGNED_INT;
 
-            g_pGraphicsManager->addRendererCommand(renderer);
-        }
+                g_pGraphicsManager->addRendererCommand(renderer);
+            }
     }
 } // namespace GameEngine

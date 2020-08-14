@@ -2,11 +2,8 @@
 #include "OpenGLDebugger.h"
 namespace GameEngine
 {
-	void Mesh::Draw()
-	{
-	}
 
-	void Mesh::setupMesh()
+	void MeshData::setupMesh()
 	{
 		// create buffers/arrays
 		glGenVertexArrays(1, &VAO);

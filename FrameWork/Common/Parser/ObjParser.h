@@ -21,7 +21,7 @@ namespace GameEngine
 	{
 
 	public:
-		static std::vector<std::shared_ptr<Mesh>> Parse(std::string modelPath)
+		static std::shared_ptr<Mesh> Parse(std::string modelPath)
 		{
 			std::vector<tinyobj::shape_t> shapes;
 			std::vector<tinyobj::material_t> materials;
@@ -30,12 +30,12 @@ namespace GameEngine
 			return parserMesh(shapes, materials);
 		}
 
-		static std::vector<std::shared_ptr<Mesh>>  parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
+		static std::shared_ptr<Mesh> parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
 		{
-			std::vector<std::shared_ptr<Mesh>> meshs;
+			std::shared_ptr<Mesh> m_mesh = std::make_shared<Mesh>();
 			for (auto &shape : shapes)
 			{
-				std::shared_ptr<Mesh> m_Mesh = std::make_shared<Mesh>();
+				MeshData meshData = MeshData();
 				auto mesh = shape.mesh;
 				MeshVertexAttrib attrib;
 				attrib.size = 3;
@@ -45,8 +45,8 @@ namespace GameEngine
 				{
 					attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_POSITION;
 					attrib.attribSizeBytes = attrib.size * sizeof(float);
-					m_Mesh->attribs.push_back(attrib);
-					m_Mesh->vertexSizeInFloat += 3;
+					meshData.attribs.push_back(attrib);
+					meshData.vertexSizeInFloat += 3;
 				}
 				bool hasnormal = false, hastex = false;
 				if (mesh.normals.size())
@@ -54,8 +54,8 @@ namespace GameEngine
 					hasnormal = true;
 					attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_NORMAL;
 					attrib.attribSizeBytes = attrib.size * sizeof(float);
-					m_Mesh->attribs.push_back(attrib);
-					m_Mesh->vertexSizeInFloat += 3;
+					meshData.attribs.push_back(attrib);
+					meshData.vertexSizeInFloat += 3;
 				}
 				if (mesh.texcoords.size())
 				{
@@ -63,36 +63,36 @@ namespace GameEngine
 					attrib.size = 2;
 					attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_TEX_COORD;
 					attrib.attribSizeBytes = attrib.size * sizeof(float);
-					m_Mesh->attribs.push_back(attrib);
-					m_Mesh->vertexSizeInFloat += 2;
+					meshData.attribs.push_back(attrib);
+					meshData.vertexSizeInFloat += 2;
 				}
 
 				auto vertexNum = mesh.positions.size() / 3;
 				for (unsigned int k = 0; k < vertexNum; ++k)
 				{
-					m_Mesh->vertex.push_back(mesh.positions[k * 3]);
-					m_Mesh->vertex.push_back(mesh.positions[k * 3 + 1]);
-					m_Mesh->vertex.push_back(mesh.positions[k * 3 + 2]);
+					meshData.vertex.push_back(mesh.positions[k * 3]);
+					meshData.vertex.push_back(mesh.positions[k * 3 + 1]);
+					meshData.vertex.push_back(mesh.positions[k * 3 + 2]);
 
 					if (hasnormal)
 					{
-						m_Mesh->vertex.push_back(mesh.normals[k * 3]);
-						m_Mesh->vertex.push_back(mesh.normals[k * 3 + 1]);
-						m_Mesh->vertex.push_back(mesh.normals[k * 3 + 2]);
+						meshData.vertex.push_back(mesh.normals[k * 3]);
+						meshData.vertex.push_back(mesh.normals[k * 3 + 1]);
+						meshData.vertex.push_back(mesh.normals[k * 3 + 2]);
 					}
 
 					if (hastex)
 					{
-						m_Mesh->vertex.push_back(mesh.texcoords[k * 2]);
-						m_Mesh->vertex.push_back(mesh.texcoords[k * 2 + 1]);
+						meshData.vertex.push_back(mesh.texcoords[k * 2]);
+						meshData.vertex.push_back(mesh.texcoords[k * 2 + 1]);
 					}
 				}
 
-				m_Mesh->indices = mesh.indices;
-				m_Mesh->setupMesh();
-				meshs.push_back(m_Mesh);
+				meshData.indices = mesh.indices;
+				meshData.setupMesh();
+				m_mesh->pushMeshData(meshData);
 			}
-			return meshs;
+			return m_mesh;
 		}
 
 	}; // namespace GameEngine

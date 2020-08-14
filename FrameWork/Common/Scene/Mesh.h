@@ -28,7 +28,8 @@ namespace GameEngine
         int numIndex;
         std::vector<MeshVertexAttrib> attribs;
         int attribCount;
-
+        /*  渲染数据  */
+        unsigned int VAO, VBO, EBO;
     public:
         /**
      * Get per vertex size
@@ -64,39 +65,20 @@ namespace GameEngine
         {
             resetData();
         }
+        void setupMesh();
     };
 
     class Mesh : public Object
     {
     public:
-        /*  网格数据  */
-        typedef std::vector<unsigned short> IndexArray;
-        std::vector<float> vertex;
-        std::vector<int> indices;
-        int vertexSizeInFloat;
-        int numIndex;
-        std::vector<MeshVertexAttrib> attribs;
-        int attribCount;
-        /*  函数  */
-		Mesh(): vertexSizeInFloat(0), numIndex(0), attribCount(0) {
-		}
 
-        ~Mesh()
-        {
-        }
-
-
-        void Draw();
-
-        void setMeshData(){
-            setupMesh();
+        void pushMeshData(MeshData& meshData){
+            m_MeshDatas.push_back(meshData);
         }
 
     public:
         /*  渲染数据  */
-        unsigned int VAO, VBO, EBO;
-        /*  函数  */
-        void setupMesh();
+        std::vector<MeshData> m_MeshDatas;
     };
 
 } // namespace GameEngine
