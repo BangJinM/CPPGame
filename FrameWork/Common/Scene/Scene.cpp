@@ -14,12 +14,12 @@ namespace GameEngine
 {
 	Scene::Scene()
 	{
-		gameObject = new GameObject();
+		gameObject = std::make_shared<GameObject>();
 		gameObject->setName("root");
 		SceneParser::Parse("Scene/default.scene", this);
 	}
 
-	void Scene::updateCamera(GameObject *gb)
+	void Scene::updateCamera(std::shared_ptr< GameObject> gb)
 	{
 		auto children = gb->getChildren();
 
@@ -39,7 +39,6 @@ namespace GameEngine
 	{
 		m_Cameras.clear();
 		m_Lights.clear();
-		delete gameObject;
 	}
 
 	void Scene::Draw()
@@ -56,8 +55,7 @@ namespace GameEngine
 			auto children = gameObject->getChildren();
 			for (auto i = children.begin(); i != children.end(); i++)
 			{
-				GameObject *gb = (GameObject *)i->second;
-				gb->Draw(viewMx, projectMx);
+				i->second->Draw(viewMx, projectMx);
 			}
 		}
 	}

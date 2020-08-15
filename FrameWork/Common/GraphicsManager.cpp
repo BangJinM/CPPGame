@@ -41,7 +41,7 @@ namespace GameEngine
             glCullFace(GL_BACK);
             // }
 
-            m_Scene = new Scene();
+            m_Scene = std::make_shared<Scene>();
 
             result = 1;
         }
@@ -51,7 +51,6 @@ namespace GameEngine
 
     void GraphicsManager::Finalize()
     {
-        delete m_Scene;
     }
 
     void GraphicsManager::Tick()
@@ -71,19 +70,14 @@ namespace GameEngine
         }
         if (m_RendererCommands.size() > 0)
         {
-            for (size_t i = 0; i < m_RendererCommands.size(); i++)
-            {
-                delete m_RendererCommands[i];
-            }
             m_RendererCommands.clear();
-            m_RendererCommands.swap(vector<RendererCommand *>());
         }
     }
 
     void GraphicsManager::Clear()
     {
     }
-    void GraphicsManager::addRendererCommand(RendererCommand *command)
+    void GraphicsManager::addRendererCommand(std::shared_ptr<RendererCommand> command)
     {
         m_RendererCommands.push_back(command);
     }

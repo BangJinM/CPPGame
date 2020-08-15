@@ -2,6 +2,7 @@
 #define GameEngine_Common_Scene_Component_H
 
 #include "ClassIDs.h"
+#include <memory>
 namespace GameEngine
 {
     class Component
@@ -19,19 +20,19 @@ namespace GameEngine
 
         Component(ClassIDType classID) : m_ClassID(classID) {}
 
-        void setHost(GameObject *host)
+        void setHost(std::shared_ptr<GameObject> host)
         {
             m_Host = host;
         }
 
     protected:
-        virtual void Start() { }
-        virtual void Update() { }
-        virtual void LateUpdate() { }
-        virtual void OnEnable(bool enable) {    m_Enable = enable; }
+        virtual void Start() {}
+        virtual void Update() {}
+        virtual void LateUpdate() {}
+        virtual void OnEnable(bool enable) { m_Enable = enable; }
 
     public:
-        GameObject *m_Host; //寄主
+        std::shared_ptr<GameObject> m_Host; //寄主
         bool m_Enable = true;
         bool m_Started = false;
     };

@@ -9,28 +9,17 @@ namespace GameEngine
 {
     extern GraphicsManager *g_pGraphicsManager;
 
-    void GameObject::addComponent(Component *component)
-    {
-        auto begin = m_compenents.find(component->getClassID());
-        if (begin != m_compenents.end())
-        {
-            return;
-        }
-        component->setHost(this);
-        m_compenents.insert(std::pair<int, Component *>(component->getClassID(), component));
-    }
-
-    void GameObject::addChild(GameObject *child)
+    void GameObject::addChild(std::shared_ptr<GameObject> child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
         {
             return;
         }
-        m_children.insert(std::pair<std::string, GameObject *>(child->getName(), child));
+        m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
     }
 
-    GameObject *GameObject::getChildByName(std::string name)
+    std::shared_ptr<GameObject> GameObject::getChildByName(std::string name)
     {
         auto begin = m_children.find(name);
         if (begin != m_children.end())
@@ -40,7 +29,7 @@ namespace GameEngine
         return nullptr;
     }
 
-    void GameObject::deleteChild(GameObject *child)
+    void GameObject::deleteChild(std::shared_ptr<GameObject> child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
@@ -49,12 +38,12 @@ namespace GameEngine
         }
     }
 
-    void GameObject::setParent(GameObject *parent)
+    void GameObject::setParent(std::shared_ptr<GameObject> parent)
     {
         m_Parent = parent;
     }
 
-    GameObject *GameObject::getParent()
+    std::shared_ptr<GameObject> GameObject::getParent()
     {
         return m_Parent;
     }
@@ -63,26 +52,8 @@ namespace GameEngine
     {
     }
 
-    Component *GameObject::getComponentBy(int classID)
-    {
-        auto itor = m_compenents.find(classID);
-        if (itor != m_compenents.end())
-        {
-            return itor->second;
-        }
-        return nullptr;
-    }
-
     GameObject::~GameObject()
     {
-        for (auto i = m_children.begin(); i != m_children.end(); i++)
-        {
-            delete i->second;
-        }
-        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
-        {
-            delete i->second;
-        }
         m_compenents.clear();
         m_children.clear();
     }
@@ -98,7 +69,7 @@ namespace GameEngine
         if (m_Mesh)
             for (size_t i = 0; i < m_Mesh->m_MeshDatas.size(); i++)
             {
-                MeshRendererCommand *renderer = new MeshRendererCommand();
+                std::shared_ptr<MeshRendererCommand> renderer = std::shared_ptr<MeshRendererCommand>( new MeshRendererCommand());
                 if (m_Materials.size() > i && m_Materials[i])
                 {
                     renderer->material = Material::createMaterial(m_Materials[i]);

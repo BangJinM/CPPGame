@@ -46,10 +46,10 @@ namespace GameEngine
 			return str.compare(str2) == 0;
 		}
 
-		static void parser(cJSON *root, GameObject *gb) //以递归的方式打印json的最内层键值对
+		static void parser(cJSON *root, std::shared_ptr< GameObject > gb) //以递归的方式打印json的最内层键值对
 		{
 			int i = 0;
-			GameObject *child = new GameObject();
+			std::shared_ptr< GameObject > child = std::make_shared<GameObject>();
 			child->setName(root->string);
 			for (; i < cJSON_GetArraySize(root); i++) //遍历最外层json键值对
 			{

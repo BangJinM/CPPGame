@@ -36,13 +36,13 @@ namespace GameEngine
 
     void initScene();
 
-    void updateCamera(GameObject *gb);
+    void updateCamera(std::shared_ptr< GameObject> gb);
 
     std::string m_Name;
 
-    std::vector<Camera *> m_Cameras;
-    std::vector<Light *> m_Lights;
-    GameObject *gameObject;
+    std::vector<std::shared_ptr< Camera>> m_Cameras;
+    std::vector< std::shared_ptr<Light >> m_Lights;
+	std::shared_ptr<GameObject> gameObject;
   };
 
 } // namespace GameEngine

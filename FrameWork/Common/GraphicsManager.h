@@ -17,12 +17,12 @@ namespace GameEngine
         virtual void Draw();
         virtual void Clear();
 
-        void addRendererCommand(RendererCommand *command);
+        void addRendererCommand(std::shared_ptr<RendererCommand> command);
 
     private:
-        std::vector<RendererCommand *> m_RendererCommands;
+        std::vector<std::shared_ptr<RendererCommand>> m_RendererCommands;
 
-        Scene *m_Scene;
+        std::shared_ptr<Scene> m_Scene;
     };
 
     extern GraphicsManager *g_pGraphicsManager;

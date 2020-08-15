@@ -13,44 +13,47 @@ namespace GameEngine
 {
     class Material;
 
-    class GameObject :public Object
+    class GameObject : public Object
     {
         friend class Component;
 
     public:
         template <class T>
-        inline T *getComponent();
+        std::shared_ptr<T> getComponent();
+        template <class T>
+        std::shared_ptr<T> addComponent(std::shared_ptr<T> component);
+        template <class T>
+        std::shared_ptr<T> addComponent(T *component);
 
-        void addComponent(Component *component);
+        void addChild(std::shared_ptr<GameObject> child);
+        void deleteChild(std::shared_ptr<GameObject> child);
 
-        void addChild(GameObject *child);
-        void deleteChild(GameObject *child);
-        void setParent(GameObject *parent);
         void setName(std::string name);
         void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
-        Component *getComponentBy(int classID);
-
-        GameObject *getChildByName(std::string name);
-        GameObject *getParent();
+        std::shared_ptr<GameObject> getChildByName(std::string name);
+        std::shared_ptr<GameObject> getParent();
+        void setParent(std::shared_ptr<GameObject> parent);
 
         GameObject();
         virtual ~GameObject();
 
-        std::string getName() {
+        std::string getName()
+        {
             return m_Name;
         }
 
-        std::map<std::string, GameObject *> getChildren()
+        std::map<std::string, std::shared_ptr<GameObject>> getChildren()
         {
             return m_children;
         }
 
     private:
-        std::map<int, Component *> m_compenents;
-        GameObject *m_Parent;
-        std::map<std::string, GameObject *> m_children;
+        std::vector<std::shared_ptr<Component>> m_compenents;
+        std::shared_ptr<GameObject> m_Parent;
+        std::map<std::string, std::shared_ptr<GameObject>> m_children;
         std::string m_Name;
+
     public:
         //private:
         bool m_isVisual = true;
@@ -59,19 +62,37 @@ namespace GameEngine
     };
 
     template <class T>
-    inline T *GameObject::getComponent()
+    inline std::shared_ptr<T> GameObject::getComponent()
     {
-        T compenent = T();
-        Component *t = dynamic_cast<Component *>(&compenent);
-        if (t)
+        for (int i = 0; i < m_compenents.size(); ++i)
         {
-            auto itor = m_compenents.find(compenent.getClassID());
-            if (itor != m_compenents.end())
+            auto &com = m_compenents[i];
+            auto t = std::dynamic_pointer_cast<T>(com);
+            if (t)
             {
-                return static_cast<T *>(itor->second);
+                return t;
             }
         }
-        return nullptr;
+        return std::shared_ptr<T>();
     }
+    template <class T>
+    inline std::shared_ptr<T> GameObject::addComponent(std::shared_ptr<T> component)
+    {
+        if (component)
+        {
+            m_compenents.push_back(component);
+            component->setHost(std::shared_ptr<GameObject>(this));
+        }
+        return component;
+    }
+
+    template <class T>
+    inline std::shared_ptr<T> GameObject::addComponent(T *component)
+    {
+        std::shared_ptr<T> t = std::shared_ptr<T>(component);
+        auto com = addComponent(t);
+        return com;
+    }
+
 } // namespace GameEngine
 #endif
