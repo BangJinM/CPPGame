@@ -9,7 +9,14 @@ namespace GameEngine
 {
     extern GraphicsManager *g_pGraphicsManager;
 
-    void GameObject::addChild(std::shared_ptr<GameObject> child)
+	std::shared_ptr<GameObject> GameObject::createGameObject()
+	{
+		auto obj = std::make_shared<GameObject>();
+		obj->m_ThisObject = obj;
+		return obj;
+	}
+
+	void GameObject::addChild(std::shared_ptr<GameObject> child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
@@ -55,7 +62,7 @@ namespace GameEngine
     GameObject::~GameObject()
     {
         m_compenents.clear();
-        m_children.clear();
+		m_children.clear();
     }
 
     void GameObject::setName(std::string name)

@@ -15,7 +15,6 @@ namespace GameEngine
     {
     public:
         Transform();
-        ~Transform() {}
 
         void setPosition(vecterFloat3 position);
         void setScale(vecterFloat3 scale);

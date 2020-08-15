@@ -18,11 +18,21 @@ namespace GameEngine
         }
         ClassIDType m_ClassID = ClassIDType::CLASS_Undefined;
 
+        virtual ~Component()
+        {
+        }
         Component(ClassIDType classID) : m_ClassID(classID) {}
 
-        void setHost(std::shared_ptr<GameObject> host)
+        void setParent(std::shared_ptr<GameObject>& host)
         {
-            m_Host = host;
+            if (m_Parent.lock() != host)
+            {
+                m_Parent = host;
+            }
+        }
+        
+        std::shared_ptr<GameObject> getParent(){
+            return m_Parent.lock();
         }
 
     protected:
@@ -32,7 +42,7 @@ namespace GameEngine
         virtual void OnEnable(bool enable) { m_Enable = enable; }
 
     public:
-        std::shared_ptr<GameObject> m_Host; //寄主
+        std::weak_ptr<GameObject> m_Parent; //寄主
         bool m_Enable = true;
         bool m_Started = false;
     };

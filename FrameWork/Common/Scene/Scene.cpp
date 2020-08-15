@@ -14,12 +14,12 @@ namespace GameEngine
 {
 	Scene::Scene()
 	{
-		gameObject = std::make_shared<GameObject>();
+		gameObject = GameObject::createGameObject();
 		gameObject->setName("root");
 		SceneParser::Parse("Scene/default.scene", this);
 	}
 
-	void Scene::updateCamera(std::shared_ptr< GameObject> gb)
+	void Scene::updateCamera(std::shared_ptr<GameObject> gb)
 	{
 		auto children = gb->getChildren();
 
@@ -49,8 +49,8 @@ namespace GameEngine
 		GlmMat4 viewMx, projectMx;
 		if (m_Cameras.size() > 0)
 		{
-			//m_Cameras[0]->m_Host->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
-			viewMx = m_Cameras[0]->m_Host->getComponent<Transform>()->getMatrix();
+			//m_Cameras[0]->m_Parent->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
+			viewMx = m_Cameras[0]->getParent()->getComponent<Transform>()->getMatrix();
 			projectMx = m_Cameras[0]->getProjectionMatrix();
 			auto children = gameObject->getChildren();
 			for (auto i = children.begin(); i != children.end(); i++)

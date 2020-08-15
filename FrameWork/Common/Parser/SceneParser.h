@@ -49,7 +49,7 @@ namespace GameEngine
 		static void parser(cJSON *root, std::shared_ptr< GameObject > gb) //以递归的方式打印json的最内层键值对
 		{
 			int i = 0;
-			std::shared_ptr< GameObject > child = std::make_shared<GameObject>();
+			std::shared_ptr< GameObject > child = GameObject::createGameObject();
 			child->setName(root->string);
 			for (; i < cJSON_GetArraySize(root); i++) //遍历最外层json键值对
 			{
