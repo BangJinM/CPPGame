@@ -113,9 +113,7 @@ namespace GameEngine
 
         void use();
 
-        int getTextureID(Image *image);
-
-        void setShader(Shader *shader);
+        void setShader(Shader& shader);
 
         std::vector<NMaterialData> m_MaterialDatas;
 

@@ -52,8 +52,8 @@ namespace GameEngine
 		}
 	}
 
-	void Material::setShader(Shader *shader)
+	void Material::setShader(Shader& shader)
 	{
-		m_Shader = *shader;
+		m_Shader = shader;
 	}
 } // namespace GameEngine
