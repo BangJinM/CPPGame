@@ -2,10 +2,12 @@ SET( Scene
     Scene/GameObject.cpp
     Scene/Mesh.cpp
     Scene/Scene.cpp
-    Scene/MeshRendererCommand.cpp
     Scene/Transform.cpp
     Scene/Camera.cpp
     Scene/Material.cpp
+    Scene/Renderer.cpp
+    Scene/MeshRenderer.cpp
+    Scene/SceneManager.cpp
 )
 
 #SET( Parser

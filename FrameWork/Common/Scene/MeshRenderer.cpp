@@ -1,5 +1,14 @@
 #include "MeshRenderer.h"
 
-GameEngine::MeshRenderer::MeshRenderer()
+namespace GameEngine
 {
-}
+
+    MeshRenderer::MeshRenderer()
+    {
+    }
+
+    void MeshRenderer::Draw()
+    {
+
+    }
+} // namespace GameEngine

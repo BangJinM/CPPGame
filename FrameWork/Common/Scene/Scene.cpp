@@ -16,47 +16,47 @@ namespace GameEngine
 	{
 		gameObject = GameObject::createGameObject();
 		gameObject->setName("root");
-		SceneParser::Parse("Scene/default.scene", this);
+		SceneParser::Parse("Scene/defaultEx.scene", this);
 	}
 
 	void Scene::updateCamera(std::shared_ptr<GameObject> gb)
 	{
-		auto children = gb->getChildren();
+		// auto children = gb->getChildren();
 
-		for (auto i = children.begin(); i != children.end(); i++)
-		{
-			auto camera = i->second->getComponent<Camera>();
-			if (camera)
-				m_Cameras.push_back(camera);
-			auto light = i->second->getComponent<Light>();
-			if (light)
-				m_Lights.push_back(light);
-			updateCamera(i->second);
-		}
+		// for (auto i = children.begin(); i != children.end(); i++)
+		// {
+		// 	auto camera = i->second->getComponent<Camera>();
+		// 	if (camera)
+		// 		m_Cameras.push_back(camera);
+		// 	auto light = i->second->getComponent<Light>();
+		// 	if (light)
+		// 		m_Lights.push_back(light);
+		// 	updateCamera(i->second);
+		// }
 	}
 
 	Scene::~Scene()
 	{
-		m_Cameras.clear();
-		m_Lights.clear();
+		// m_Cameras.clear();
+		// m_Lights.clear();
 	}
 
-	void Scene::Draw()
+	void Scene::Update()
 	{
-		m_Cameras.clear();
-		m_Lights.clear();
-		updateCamera(gameObject);
-		GlmMat4 viewMx, projectMx;
-		if (m_Cameras.size() > 0)
+		// m_Cameras.clear();
+		// m_Lights.clear();
+		// updateCamera(gameObject);
+		// GlmMat4 viewMx, projectMx;
+		// if (m_Cameras.size() > 0)
+		// {
+		//m_Cameras[0]->m_Parent->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
+		// viewMx = m_Cameras[0]->getParent()->getComponent<Transform>()->getMatrix();
+		// projectMx = m_Cameras[0]->getProjectionMatrix();
+		auto children = gameObject->getChildren();
+		for (auto i = children.begin(); i != children.end(); i++)
 		{
-			//m_Cameras[0]->m_Parent->getComponent<Transform>()->setRotation(vecterFloat3( 0, glfwGetTime() * 5, 0));
-			viewMx = m_Cameras[0]->getParent()->getComponent<Transform>()->getMatrix();
-			projectMx = m_Cameras[0]->getProjectionMatrix();
-			auto children = gameObject->getChildren();
-			for (auto i = children.begin(); i != children.end(); i++)
-			{
-				i->second->Draw(viewMx, projectMx);
-			}
+			i->second->Update();
 		}
+		// }
 	}
 } // namespace GameEngine

@@ -9,6 +9,7 @@
 
 #include "Component.h"
 #include "Transform.h"
+#include "Renderer.h"
 namespace GameEngine
 {
     class Camera : public Component
@@ -23,6 +24,8 @@ namespace GameEngine
         Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000, glm::float32 width = 960, glm::float32 height = 540, glm::float32 fieldofView = 45);
         glm::mat4 getProjectionMatrix();
 
+
+		void Render(std::list<std::shared_ptr<Renderer>> renderers);
     private:
         //			y
         //			|
@@ -42,6 +45,7 @@ namespace GameEngine
         glm::float32 m_ScreenHeight; //屏幕高度
 
         glm::mat4 m_ProjectionMatrix4;
+
     };
 } // namespace GameEngine
 #endif //SRC_RENDERER_CAMERA_H

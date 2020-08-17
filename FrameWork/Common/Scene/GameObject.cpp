@@ -1,13 +1,13 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "glad/glad.h"
-#include "MeshRendererCommand.h"
+#include "MeshRenderer.h"
 #include "GraphicsManager.h"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace GameEngine
 {
-    extern GraphicsManager *g_pGraphicsManager;
+
 
 	std::shared_ptr<GameObject> GameObject::createGameObject()
 	{
@@ -70,26 +70,15 @@ namespace GameEngine
         m_Name = name;
     }
 
-    void GameObject::Draw(GlmMat4 viewMat, GlmMat4 projectMat)
-    {
-        auto modelMat = getComponent<Transform>()->getMatrix();
-        if (m_Mesh)
-            for (size_t i = 0; i < m_Mesh->m_MeshDatas.size(); i++)
-            {
-                std::shared_ptr<MeshRendererCommand> renderer = std::shared_ptr<MeshRendererCommand>( new MeshRendererCommand());
-                if (m_Materials.size() > i && m_Materials[i])
-                {
-                    renderer->material = Material::createMaterial(m_Materials[i]);
-                    renderer->material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
-                    renderer->material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
-                    renderer->material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
-                }
-                renderer->m_Vao = m_Mesh->m_MeshDatas[i].VAO;
-                renderer->m_Mode = GL_TRIANGLES;
-                renderer->m_Count = m_Mesh->m_MeshDatas[i].indices.size();
-                renderer->m_Yype = GL_UNSIGNED_INT;
-
-                g_pGraphicsManager->addRendererCommand(renderer);
-            }
+    void GameObject::Update(){
+        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+        {
+			(*i)->Update();
+        }
+        for (auto i = m_children.begin(); i != m_children.end(); i++)
+        {
+			i->second->Update();
+        }
     }
+
 } // namespace GameEngine

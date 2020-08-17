@@ -3,9 +3,10 @@
 
 #include "ClassIDs.h"
 #include <memory>
+#include "Object.h"
 namespace GameEngine
 {
-    class Component
+    class Component:public Object
     {
         friend class GameObject;
 
@@ -35,7 +36,7 @@ namespace GameEngine
             return m_Parent.lock();
         }
 
-    protected:
+    public:
         virtual void Start() {}
         virtual void Update() {}
         virtual void LateUpdate() {}

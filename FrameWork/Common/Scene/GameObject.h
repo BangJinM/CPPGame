@@ -30,13 +30,13 @@ namespace GameEngine
         void deleteChild(std::shared_ptr<GameObject> child);
 
         void setName(std::string name);
-        void Draw(GlmMat4 viewMat, GlmMat4 projectMat);
 
         std::shared_ptr<GameObject> getChildByName(std::string name);
         std::shared_ptr<GameObject> getParent();
         void setParent(std::shared_ptr<GameObject> parent);
 
         GameObject();
+        void Update();
         virtual ~GameObject();
 
         std::string getName()

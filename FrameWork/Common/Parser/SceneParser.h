@@ -18,6 +18,7 @@
 #include "Light.h"
 #include "cJSON.h"
 #include "MyMath.h"
+#include "MeshRenderer.h"
 #include "AssetManager.h"
 
 namespace GameEngine
@@ -40,86 +41,92 @@ namespace GameEngine
 			}
 			delete json;
 		}
+		static std::shared_ptr<Object> compareGameObject(cJSON *root)
+		{
+			std::shared_ptr<GameObject> gameobject = std::make_shared<GameObject>();
+			auto paramsNode = cJSON_GetObjectItem(root, "name");
+			if (paramsNode)
+			{
+				gameobject->setName(paramsNode->string);
+			}
+			return gameobject;
+		}
+
+		static std::shared_ptr<Object> compareTransform(cJSON *root)
+		{
+			std::shared_ptr<Transform> gameobject = std::make_shared<Transform>();
+			auto paramsNode = cJSON_GetObjectItem(root, "scale");
+			if (paramsNode)
+			{
+				vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
+				gameobject->setScale(vec3);
+			}
+			paramsNode = cJSON_GetObjectItem(root, "position");
+			if (paramsNode)
+			{
+				vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
+				gameobject->setPosition(vec3);
+			}
+			paramsNode = cJSON_GetObjectItem(root, "rotation");
+			if (paramsNode)
+			{
+				vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
+				gameobject->setPosition(vec3);
+			}
+			return gameobject;
+		}
+
+		static std::shared_ptr<Object> compareCamera(cJSON *root)
+		{
+			std::shared_ptr<Camera> gameobject = std::make_shared<Camera>();
+			return gameobject;
+		}
+
+		static std::shared_ptr<Object> compareMeshRenderer(cJSON *root)
+		{
+			std::shared_ptr<MeshRenderer> gameobject = std::make_shared<MeshRenderer>();
+			return gameobject;
+		}
+
 		static bool strCompare(const char *str1, const char *str2)
 		{
+
 			std::string str = str1;
 			return str.compare(str2) == 0;
 		}
 
-		static void parser(cJSON *root, std::shared_ptr< GameObject > gb) //以递归的方式打印json的最内层键值对
+		static std::shared_ptr<Object> parser(cJSON *root, std::shared_ptr<GameObject> gb) //以递归的方式打印json的最内层键值对
 		{
-			int i = 0;
-			std::shared_ptr< GameObject > child = GameObject::createGameObject();
-			child->setName(root->string);
-			for (; i < cJSON_GetArraySize(root); i++) //遍历最外层json键值对
+			static const struct
 			{
-				cJSON *item = cJSON_GetArrayItem(root, i);
-
-				if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
-					parser(item, child);
-				else //值不为json对象就直接打印出键和值
+				const char * name;
+				std::function<std::shared_ptr<Object>(cJSON *root)> func;
+			} attribute_locations[] =
 				{
-					printf("%s->", item->string);
-					printf("%s\n", cJSON_Print(item));
-					if (strCompare(item->string, "mesh"))
-					{
-						child->m_Mesh= AssetManager::LoadMesh(item->valuestring);
-					}
-					else if (strCompare(item->string, "scale") || strCompare(item->string, "position") || strCompare(item->string, "rotation"))
-					{
-						auto transform = child->getComponent<Transform>();
-						if (transform == nullptr)
-						{
-							child->addComponent(new Transform());
-							transform = child->getComponent<Transform>();
-						}
-						vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(item, 0)->valuedouble, cJSON_GetArrayItem(item, 1)->valuedouble, cJSON_GetArrayItem(item, 2)->valuedouble));
-						if (strCompare(item->string, "scale"))
-							transform->setScale(vec3);
-						else if (strCompare(item->string, "position"))
-						{
-							transform->setPosition(vec3);
-						}
-						else
-						{
-							transform->setRotation(vec3);
-						}
-					}
-					else if (strCompare(item->string, "materials"))
-					{
-						int iSize = cJSON_GetArraySize(item);
-						for (size_t mID = 0; mID < iSize; mID++)
-						{
-							child->m_Materials.push_back(AssetManager::LoadMaterial(cJSON_GetArrayItem(item, mID)->valuestring));
-						}
-					}
-					else if (strCompare(item->string, "camera"))
-					{
-						auto camera = child->getComponent<Camera>();
-						if (camera == nullptr)
-						{
-							child->addComponent(new Camera());
-							camera = child->getComponent<Camera>();
-						}
-					}
-					else if (strCompare(item->string, "light"))
-					{
-						auto light = child->getComponent<Light>();
-						if (light == nullptr)
-						{
-							int type = cJSON_GetObjectItem(item, "type")->valueint;
-							if (type == Light::LightType::DirectionalLight)
-							{
-								child->addComponent(new DirectionalLight());
-								light = child->getComponent<Light>();
-							}
-						}
-					}
+					{"GameObject", compareGameObject},
+					{"Transform", compareTransform},
+					{"MeshRenderer", compareMeshRenderer},
+					{"Camera", compareCamera}};
+			const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
+			int i = 0;
+			std::shared_ptr<Object> object;
+			auto type = root->string;
+
+			for (size_t i = 0; i < size; i++)
+			{
+				if(strCompare(type, attribute_locations[i].name)){
+					object = attribute_locations[i].func(root);
 				}
 			}
-			printf("\n\n\n\n\n\n\n\n");
-			gb->addChild(child);
+
+			auto paramsNode = cJSON_GetObjectItem(root, "fileID");
+			if (paramsNode && object)
+			{
+				object->SetFileID(paramsNode->valueint);
+			}
+			return object;
 		}
+
 	}; // namespace GameEngine
 
 } // namespace GameEngine

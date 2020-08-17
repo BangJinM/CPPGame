@@ -2,6 +2,9 @@
 #define GameEngine_Common_Scene_SceneManager_H
 
 #include "IRuntimeModule.h"
+#include <list>
+#include "Camera.h"
+#include "Renderer.h"
 namespace GameEngine
 {
 
@@ -15,7 +18,18 @@ namespace GameEngine
 
         virtual void Tick();
 
+        void RenderAll();
+        void AddCamera(std::shared_ptr<Camera> renderer);
+        void RemoveCamera();
+
+        void PrepareAll();
+        void AddRenderer(std::shared_ptr<Renderer> renderer);
+        void RemoveRenderer();
+        std::list<std::shared_ptr<Renderer>> GetRenderer() { return m_renderers; }
+
     private:
+        std::list<std::shared_ptr<Camera>> m_Cameras;
+        std::list<std::shared_ptr<Renderer>> m_renderers;
     };
 
 } // namespace GameEngine

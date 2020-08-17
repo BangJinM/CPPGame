@@ -4,16 +4,23 @@
 #include "MyMath.h"
 #include <list>
 #include "Component.h"
-
+#include "Material.h"
+#include "Mesh.h"
 namespace GameEngine
 {
     class Renderer : public Component
     {
     public:
-        static void Draw();
+
+
+        void Prepare();
         Renderer();
-    private:
-        static std::list<Renderer*> m_renderers;
+        std::shared_ptr<Mesh> getMesh(){return std::shared_ptr<Mesh>();}
+        std::vector<std::shared_ptr<Material>> getMaterials(){return m_Materials;}
+
+    protected:
+
+        std::vector<std::shared_ptr<Material>> m_Materials;
     };
 } // namespace GameEngine
 #endif

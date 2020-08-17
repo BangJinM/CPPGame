@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include "Scene.h"
 #include <GLFW/glfw3.h>
+#include "Camera.h"
 
 using namespace std;
 
@@ -57,27 +58,16 @@ namespace GameEngine
     {
         auto window = glfwGetCurrentContext();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        m_Scene->Draw();
-        Draw();
+        m_Scene->Update();
+        //Camera::RenderAll();
         glfwSwapBuffers(window);
     }
 
-    void GraphicsManager::Draw()
-    {
-        for (size_t i = 0; i < m_RendererCommands.size(); i++)
-        {
-            m_RendererCommands[i]->excecute();
-        }
-        if (m_RendererCommands.size() > 0)
-        {
-            m_RendererCommands.clear();
-        }
-    }
 
     void GraphicsManager::Clear()
     {
     }
-    void GraphicsManager::addRendererCommand(std::shared_ptr<RendererCommand> command)
+    void GraphicsManager::addRendererCommand(std::shared_ptr<Renderer> command)
     {
         m_RendererCommands.push_back(command);
     }

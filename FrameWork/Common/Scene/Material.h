@@ -78,6 +78,8 @@ namespace GameEngine
             return material;
         }
 
+        void Use();
+
         Material()
         {
         }
@@ -111,9 +113,9 @@ namespace GameEngine
         template <typename Type>
         void AddProperty(Type value, std::string name, int size, MaterialType type);
 
-        void use();
+        void Prepare();
 
-        void setShader(Shader& shader);
+        void setShader(Shader &shader);
 
         std::vector<NMaterialData> m_MaterialDatas;
 

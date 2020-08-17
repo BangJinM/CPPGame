@@ -1,7 +1,7 @@
 #pragma once
 #include "IRuntimeModule.h"
 #include <vector>
-#include "RendererCommand.h"
+#include "Renderer.h"
 namespace GameEngine
 {
     class Scene;
@@ -14,13 +14,12 @@ namespace GameEngine
         virtual void Finalize();
 
         virtual void Tick();
-        virtual void Draw();
         virtual void Clear();
 
-        void addRendererCommand(std::shared_ptr<RendererCommand> command);
+        void addRendererCommand(std::shared_ptr<Renderer> command);
 
     private:
-        std::vector<std::shared_ptr<RendererCommand>> m_RendererCommands;
+        std::vector<std::shared_ptr<Renderer>> m_RendererCommands;
 
         std::shared_ptr<Scene> m_Scene;
     };

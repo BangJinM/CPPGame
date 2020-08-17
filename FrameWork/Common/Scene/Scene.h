@@ -32,17 +32,17 @@ namespace GameEngine
 
     ~Scene();
 
-    void Draw();
-
     void initScene();
+
+    void Update();
 
     void updateCamera(std::shared_ptr< GameObject> gb);
 
     std::string m_Name;
 
-    std::vector<std::shared_ptr< Camera>> m_Cameras;
-    std::vector< std::shared_ptr<Light >> m_Lights;
-	std::shared_ptr<GameObject> gameObject;
+    //std::vector<std::shared_ptr< Camera>> m_Cameras;
+    //std::vector< std::shared_ptr<Light >> m_Lights;
+	  std::shared_ptr<GameObject> gameObject;
   };
 
 } // namespace GameEngine

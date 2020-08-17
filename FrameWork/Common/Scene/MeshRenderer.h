@@ -10,8 +10,11 @@ namespace GameEngine
     {
     public:
         MeshRenderer();
+        void Draw();
+        std::shared_ptr<Mesh> getMesh(){return m_Mesh;}
+
     private:
-        std::shared_ptr<Mesh> m_mesh;
+        std::shared_ptr<Mesh> m_Mesh;
     };
 } // namespace GameEngine
 #endif

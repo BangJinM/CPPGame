@@ -9,7 +9,12 @@
 namespace GameEngine
 {
 	extern AssetManager *g_pAssetManager;
-	void Material::use()
+
+	void Material::Use(){
+		m_Shader.use();
+	}
+
+	void Material::Prepare()
 	{
 		int textureID = 0;
 		m_Shader.use();
