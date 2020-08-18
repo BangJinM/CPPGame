@@ -7,7 +7,6 @@ SET( Scene
     Scene/Material.cpp
     Scene/Renderer.cpp
     Scene/MeshRenderer.cpp
-    Scene/SceneManager.cpp
 )
 
 #SET( Parser
