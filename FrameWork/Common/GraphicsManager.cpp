@@ -59,7 +59,7 @@ namespace GameEngine
         auto window = glfwGetCurrentContext();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         m_Scene->Update();
-        //Camera::RenderAll();
+		m_Scene->RenderAll();
         glfwSwapBuffers(window);
     }
 

@@ -24,7 +24,7 @@ namespace GameEngine
         }
         Component(ClassIDType classID) : m_ClassID(classID) {}
 
-        void setParent(std::shared_ptr<GameObject>& host)
+        void setParent(std::shared_ptr<GameObject> host)
         {
             if (m_Parent.lock() != host)
             {

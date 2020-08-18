@@ -13,22 +13,17 @@
     "Transform":{
         "m_GameObject":1,
         "fileID":3,
-        "m_GameObject":1,
-        "scale":[2, 2, 2],
-        "position":[0, 0, 0],
-        "rotation":[30.0, 30.0, 0.0]
+        "scale":[0.1, 0.1, 0.1],
+        "position":[0, 0, 10]
     },
     "Transform":{
         "m_GameObject":2,
         "fileID":4,
-        "m_GameObject":1,
-        "scale":[2, 2, 2],
-        "position":[0, 0, 0],
-        "rotation":[30.0, 30.0, 0.0]
+        "position":[0.0, 0.0, -20.0]
     },
     "MeshRenderer":{
-        "mesh":"Scene/mayaCube.obj",
-        "m_Materials":["Materials/wall.gemtl"],
+        "m_Mesh":"Scene/nanosuit.OBJ",
+        "m_Materials":["Materials/default.gemtl"],
         "m_GameObject":1,
         "fileID":5
     },

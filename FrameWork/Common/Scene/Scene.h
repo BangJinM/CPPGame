@@ -4,25 +4,13 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-
-#include "Scene.h"
-
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#else
-#define DBG_NEW new
-#endif
-
+#include <list>
 namespace GameEngine
 {
   class Camera;
   class GameObject;
-  class GameObject;
-  class Light;
+  class Renderer;
+
   class Scene
   {
   private:
@@ -32,17 +20,29 @@ namespace GameEngine
 
     ~Scene();
 
-    void initScene();
-
     void Update();
 
-    void updateCamera(std::shared_ptr< GameObject> gb);
+    void UpdateCamera(std::shared_ptr<GameObject> gb);
+
+    void AddGameObject(std::shared_ptr<GameObject> gameobject);
+    void AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent);
+    std::shared_ptr<GameObject> GetRootGameObject();
 
     std::string m_Name;
 
-    //std::vector<std::shared_ptr< Camera>> m_Cameras;
-    //std::vector< std::shared_ptr<Light >> m_Lights;
-	  std::shared_ptr<GameObject> gameObject;
+    void RenderAll();
+    void AddCamera(std::shared_ptr<Camera> camera);
+    void RemoveCamera();
+
+    void PrepareAll();
+    void AddRenderer(std::shared_ptr<Renderer> renderer);
+    void RemoveRenderer();
+	std::shared_ptr<GameObject> GetObject(std::shared_ptr<GameObject> parent, int sid);
+    std::list<std::shared_ptr<Renderer>> GetRenderer() { return m_Renderers; }
+
+    std::list<std::shared_ptr<Camera>> m_Cameras;
+    std::list<std::shared_ptr<Renderer>> m_Renderers;
+    std::shared_ptr<GameObject> m_Root;
   };
 
 } // namespace GameEngine

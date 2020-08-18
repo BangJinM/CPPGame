@@ -22,6 +22,7 @@ void GameEngine::InputManager::keyInput(GLFWwindow *window, int key, int scancod
 
 void GameEngine::InputManager::Finalize()
 {
+	
 }
 
 void GameEngine::InputManager::Tick()

@@ -12,7 +12,7 @@ namespace GameEngine
         MeshRenderer();
         void Draw();
         std::shared_ptr<Mesh> getMesh(){return m_Mesh;}
-
+        void SetMesh(std::shared_ptr<Mesh> mesh){ m_Mesh = mesh;}
     private:
         std::shared_ptr<Mesh> m_Mesh;
     };

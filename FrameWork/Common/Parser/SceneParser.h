@@ -24,6 +24,7 @@
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
+	extern AssetManager *g_pAssetManager;
 	class SceneParser
 	{
 
@@ -33,21 +34,24 @@ namespace GameEngine
 			std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 			auto json = cJSON_Parse(sceneStr.c_str());
 			int i = 0;
+			std::map<int, std::shared_ptr<Object>> list;
 			for (; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
 			{
 				cJSON *item = cJSON_GetArrayItem(json, i);
 				if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
-					parser(item, scene->gameObject);
+					parser(item, list);
 			}
+			formatScene(list, scene);
+			list.clear();
 			delete json;
 		}
 		static std::shared_ptr<Object> compareGameObject(cJSON *root)
 		{
-			std::shared_ptr<GameObject> gameobject = std::make_shared<GameObject>();
+			std::shared_ptr<GameObject> gameobject = GameObject::createGameObject();
 			auto paramsNode = cJSON_GetObjectItem(root, "name");
 			if (paramsNode)
 			{
-				gameobject->setName(paramsNode->string);
+				gameobject->setName(paramsNode->valuestring);
 			}
 			return gameobject;
 		}
@@ -84,8 +88,23 @@ namespace GameEngine
 
 		static std::shared_ptr<Object> compareMeshRenderer(cJSON *root)
 		{
-			std::shared_ptr<MeshRenderer> gameobject = std::make_shared<MeshRenderer>();
-			return gameobject;
+			std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+			auto paramsNode = cJSON_GetObjectItem(root, "m_Materials");
+			if (paramsNode)
+			{
+				auto count = cJSON_GetArraySize(paramsNode);
+				for (size_t i = 0; i < count; i++)
+				{
+					cJSON *item = cJSON_GetArrayItem(paramsNode, i);
+					meshRenderer->AddMaterial(g_pAssetManager->LoadMaterial(item->valuestring));
+				}
+			}
+			paramsNode = cJSON_GetObjectItem(root, "m_Mesh");
+			if (paramsNode)
+			{
+				meshRenderer->SetMesh(g_pAssetManager->LoadMesh(paramsNode->valuestring));
+			}
+			return meshRenderer;
 		}
 
 		static bool strCompare(const char *str1, const char *str2)
@@ -95,11 +114,11 @@ namespace GameEngine
 			return str.compare(str2) == 0;
 		}
 
-		static std::shared_ptr<Object> parser(cJSON *root, std::shared_ptr<GameObject> gb) //以递归的方式打印json的最内层键值对
+		static void parser(cJSON *root, std::map<int, std::shared_ptr<Object>> &list) //以递归的方式打印json的最内层键值对
 		{
 			static const struct
 			{
-				const char * name;
+				const char *name;
 				std::function<std::shared_ptr<Object>(cJSON *root)> func;
 			} attribute_locations[] =
 				{
@@ -111,11 +130,12 @@ namespace GameEngine
 			int i = 0;
 			std::shared_ptr<Object> object;
 			auto type = root->string;
-
 			for (size_t i = 0; i < size; i++)
 			{
-				if(strCompare(type, attribute_locations[i].name)){
+				if (strCompare(type, attribute_locations[i].name))
+				{
 					object = attribute_locations[i].func(root);
+					break;
 				}
 			}
 
@@ -124,7 +144,48 @@ namespace GameEngine
 			{
 				object->SetFileID(paramsNode->valueint);
 			}
-			return object;
+			paramsNode = cJSON_GetObjectItem(root, "m_GameObject");
+			if (paramsNode && object)
+			{
+				object->SetParentFileID(paramsNode->valueint);
+			}
+			list.insert(std::pair<int, std::shared_ptr<Object>>(object->GetFileID(), object));
+		}
+
+		static void formatScene(std::map<int, std::shared_ptr<Object>> &list, Scene* scene)
+		{
+			std::shared_ptr<GameObject> gameobject = GameObject::createGameObject();
+			for (auto i = list.begin(); i != list.end(); i++)
+			{
+				auto tempObject = std::dynamic_pointer_cast<GameObject>(i->second);
+				if (tempObject)
+				{
+					if (tempObject->GetParentFileID() > 0)
+					{
+						auto parentOject = std::dynamic_pointer_cast<GameObject>(list.find(tempObject->GetParentFileID())->second);
+						parentOject->addChild(tempObject);
+					}
+					else
+					{
+						gameobject->addChild(tempObject);
+					}
+				}
+				else
+				{
+					auto tempComponent = std::dynamic_pointer_cast<Component>(i->second);
+					auto fatherID = tempComponent->GetParentFileID();
+					if (fatherID > 0)
+					{
+						auto parentTemp = std::dynamic_pointer_cast<GameObject>(list.find(fatherID)->second);
+						parentTemp->addComponent(tempComponent);
+					}
+				}
+			}
+			auto children = gameobject->getChildren();
+			for (auto i = children.begin(); i != children.end(); i++)
+			{
+				scene->AddGameObject(i->second);
+			}
 		}
 
 	}; // namespace GameEngine

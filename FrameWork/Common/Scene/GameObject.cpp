@@ -23,6 +23,7 @@ namespace GameEngine
         {
             return;
         }
+		child->setParent(m_ThisObject.lock());
         m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
     }
 
