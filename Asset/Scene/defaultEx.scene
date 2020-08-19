@@ -13,7 +13,7 @@
     "Transform":{
         "m_GameObject":1,
         "fileID":3,
-        "scale":[0.1, 0.1, 0.1],
+        "scale":[1, 1, 1],
         "position":[0, 0, 10]
     },
     "Transform":{
@@ -22,8 +22,8 @@
         "position":[0.0, 0.0, -20.0]
     },
     "MeshRenderer":{
-        "m_Mesh":"Scene/nanosuit.OBJ",
-        "m_Materials":["Materials/default.gemtl"],
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
         "m_GameObject":1,
         "fileID":5
     },

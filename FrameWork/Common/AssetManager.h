@@ -25,6 +25,11 @@ namespace GameEngine
         static std::shared_ptr<Mesh> LoadMesh(const std::string &path);
         static std::shared_ptr<Image> LoadTexture(const std::string &path);
         static std::shared_ptr<Material> LoadMaterial(const std::string &path);
+
+        static std::shared_ptr<Image> GetTexture(const std::string &path);
+		static void AddTexture(const std::string &path, std::shared_ptr<Image> image);
+
+        static std::shared_ptr<Image> getWhiteTexture();
     };
 
 } // namespace GameEngine

@@ -5,9 +5,12 @@
 #include "ObjParser.h"
 #include "Material.h"
 #include "MaterialParser.h"
+#include <mutex>
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
+	extern AssetManager *g_pAssetManager;
+
 	static std::map<std::string, std::shared_ptr<Object>> g_cache;
 	int AssetManager::Initialize()
 	{
@@ -75,5 +78,42 @@ namespace GameEngine
 		}
 		return image;
 	}
+	std::shared_ptr<Image> AssetManager::GetTexture(const std::string &path)
+	{
+		std::shared_ptr<Image> image;
+		if (g_cache.find(path) != g_cache.end())
+		{
+			return std::dynamic_pointer_cast<Image>(g_cache[path]);
+		}
+		return image;
+	}
 
+	void AssetManager::AddTexture(const std::string &path, std::shared_ptr<Image> image)
+	{
+		if (g_cache.find(path) != g_cache.end() || !image)
+		{
+			return;
+		}
+		g_cache[path] = image;
+	}
+	const int size = 4;
+	std::shared_ptr<Image> AssetManager::getWhiteTexture()
+	{
+
+		const std::string path = "default/white.png";
+		auto image = g_pAssetManager->GetTexture(path);
+		if (image)
+			return image;
+		uint8_t *pixels = reinterpret_cast<uint8_t *>(malloc(size * size * 4));
+		for (int i = 0; i < size * size; ++i)
+		{
+			pixels[i * 4 + 0] = 255;
+			pixels[i * 4 + 1] = 255;
+			pixels[i * 4 + 2] = 255;
+			pixels[i * 4 + 3] = 255;
+		}
+		image = TextureParser::bindTexture(GL_RGBA, size, size, pixels);
+		g_pAssetManager->AddTexture(path, image);
+		return image;
+	}
 } // namespace GameEngine

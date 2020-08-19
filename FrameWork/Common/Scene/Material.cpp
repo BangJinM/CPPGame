@@ -10,7 +10,8 @@ namespace GameEngine
 {
 	extern AssetManager *g_pAssetManager;
 
-	void Material::Use(){
+	void Material::Use()
+	{
 		m_Shader.use();
 	}
 
@@ -40,7 +41,10 @@ namespace GameEngine
 				location = glGetUniformLocation(m_Shader.ID, data.name.c_str());
 				if (location != -1)
 				{
+					OpenGLDebugger::glCheckError();
 					std::shared_ptr<Image> image = g_pAssetManager->LoadTexture(property);
+					if (!image)
+						image = g_pAssetManager->getWhiteTexture();
 					m_Shader.setInt(data.name, textureID);
 					OpenGLDebugger::glCheckError();
 					glActiveTexture(GL_TEXTURE0 + textureID);
@@ -57,7 +61,7 @@ namespace GameEngine
 		}
 	}
 
-	void Material::setShader(Shader& shader)
+	void Material::setShader(Shader &shader)
 	{
 		m_Shader = shader;
 	}

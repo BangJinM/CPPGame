@@ -4,15 +4,16 @@
 #include <cstdint>
 #include "MyMath.h"
 #include "Object.h"
+
 namespace GameEngine
 {
-    class Image :public Object
+    class Image : public Object
     {
-        public:
+    public:
         int id;
         uint32_t Width;
         uint32_t Height;
-        char *data;
+        unsigned char *data;
         size_t data_size;
     };
 } // namespace GameEngine
