@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "stb_image.h"
-#include "Image.h"
+#include "Texture.h"
 #include "AssetLoader.h"
 
 #include "glad/glad_wgl.h"
@@ -17,7 +17,7 @@ namespace GameEngine
     class TextureParser
     {
     public:
-        static std::shared_ptr<Image> Parse(const Buffer &buf)
+        static std::shared_ptr<Texture> Parse(const Buffer &buf)
         {
             unsigned char *data;
             unsigned char *picData = reinterpret_cast<unsigned char *>(buf.m_pData);
@@ -36,9 +36,9 @@ namespace GameEngine
                 return bindTexture(format, width, height, data);
             }
 
-            return std::shared_ptr<Image>();
+            return std::shared_ptr<Texture>();
         }
-        static std::shared_ptr<Image> bindTexture(int format, int width, int height, unsigned char *data)
+        static std::shared_ptr<Texture> bindTexture(int format, int width, int height, unsigned char *data)
         {
 			data += '\0';
             OpenGLDebugger::glCheckError();
@@ -55,7 +55,7 @@ namespace GameEngine
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             OpenGLDebugger::glCheckError();
-            std::shared_ptr<Image> image = std::make_shared<Image>();
+            std::shared_ptr<Texture> image = std::make_shared<Texture>();
             image->Height = height;
             image->Width = width;
             image->data = data;

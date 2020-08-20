@@ -46,7 +46,7 @@ namespace GameEngine
 					if (type.compare("texture") == 0)
 					{
 						std::string pathStr = cJSON_GetObjectItem(item, "path")->valuestring;
-						material->AddProperty(pathStr.c_str(), name, pathStr.size(), MaterialType::Texture);
+						material->AddProperty(pathStr.c_str(), name, pathStr.size(), MaterialType::T_Texture);
 					}
 					else if (type.compare("vec4") == 0)
 					{

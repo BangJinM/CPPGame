@@ -7,7 +7,7 @@ namespace GameEngine
     {
     }
 
-    void MeshRenderer::Draw()
+    void MeshRenderer::Render()
     {
 
     }

@@ -8,9 +8,10 @@
 #include <vector>
 #include <string>
 
-#include "Image.h"
+#include "Texture.h"
 #include "Shader.h"
 #include "Buffer.h"
+#include "MyMath.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -25,35 +26,41 @@
 namespace GameEngine
 {
 
-    struct NTextureData
+    struct ViewUniforms
     {
-        enum class Usage
-        {
-            Unknown = 0,
-            None = 1,
-            Diffuse = 2,
-            Emissive = 3,
-            Ambient = 4,
-            Specular = 5,
-            Shininess = 6,
-            Normal = 7,
-            Bump = 8,
-            Transparency = 9,
-            Reflection = 10
-        };
-        std::string id;
-        std::string filename;
-        Usage type;
-        GLenum wrapS;
-        GLenum wrapT;
+        static constexpr const char *VIEW_MATRIX = "u_view_matrix";
+        static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
+        static constexpr const char *CAMERA_POS = "u_camera_pos";
+        static constexpr const char *TIME = "u_time";
+
+        GlmMat4 view_matrix;
+        GlmMat4 projection_matrix;
+        vecterFloat4 camera_pos;
+        vecterFloat4 time;
+    };
+
+    // per renderer uniforms, set by renderer
+    struct RendererUniforms
+    {
+        static constexpr const char *MODEL_MATRIX = "u_model_matrix";
+        static constexpr const char *BOUNDS_MATRIX = "u_bounds_matrix";
+        static constexpr const char *BOUNDS_COLOR = "u_bounds_color";
+        static constexpr const char *LIGHTMAP_SCALE_OFFSET = "u_lightmap_scale_offset";
+        static constexpr const char *LIGHTMAP_INDEX = "u_lightmap_index";
+
+        GlmMat4 model_matrix;
+        // GlmMat4 bounds_matrix;
+        //Color bounds_color;
+        // vecterFloat4 lightmap_scale_offset;
+        // vecterFloat4 lightmap_index; // in x
     };
 
     enum MaterialType
     {
-        Unknown = -1,
-        Texture,
-        Float,
-        Mat4,
+        T_Unknown = -1,
+        T_Texture,
+        T_Float,
+        T_Mat4,
     };
 
     struct NMaterialData

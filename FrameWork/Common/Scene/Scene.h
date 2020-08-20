@@ -37,12 +37,14 @@ namespace GameEngine
     void PrepareAll();
     void AddRenderer(std::shared_ptr<Renderer> renderer);
     void RemoveRenderer();
-	std::shared_ptr<GameObject> GetObject(std::shared_ptr<GameObject> parent, int sid);
+    std::shared_ptr<GameObject> GetObject(std::shared_ptr<GameObject> parent, int sid);
     std::list<std::shared_ptr<Renderer>> GetRenderer() { return m_Renderers; }
 
     std::list<std::shared_ptr<Camera>> m_Cameras;
     std::list<std::shared_ptr<Renderer>> m_Renderers;
     std::shared_ptr<GameObject> m_Root;
+
+    std::shared_ptr<GameObject> m_Canvas;
   };
 
 } // namespace GameEngine

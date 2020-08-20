@@ -35,9 +35,9 @@ namespace GameEngine
 					if (mi < materials.size())
 						materialID = mi;
 					auto material = Material::createMaterial(materials[materialID]);
-					material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::Mat4);
-					material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::Mat4);
-					material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::Mat4);
+					material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
+					material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
+					material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
 					material->Prepare();
 					if (mesh && mi <= mesh->m_MeshDatas.size())
 					{

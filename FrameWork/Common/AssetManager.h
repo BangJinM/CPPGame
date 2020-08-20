@@ -7,7 +7,7 @@
 #include <functional>
 #include <memory>
 
-#include "Image.h"
+#include "Texture.h"
 #include "GameObject.h"
 #include "Material.h"
 #include "Mesh.h"
@@ -23,13 +23,13 @@ namespace GameEngine
 
         static std::shared_ptr<GameObject> LoadGameObject(const std::string &path);
         static std::shared_ptr<Mesh> LoadMesh(const std::string &path);
-        static std::shared_ptr<Image> LoadTexture(const std::string &path);
+        static std::shared_ptr<Texture> LoadTexture(const std::string &path);
         static std::shared_ptr<Material> LoadMaterial(const std::string &path);
 
-        static std::shared_ptr<Image> GetTexture(const std::string &path);
-		static void AddTexture(const std::string &path, std::shared_ptr<Image> image);
+        static std::shared_ptr<Texture> GetTexture(const std::string &path);
+		static void AddTexture(const std::string &path, std::shared_ptr<Texture> image);
 
-        static std::shared_ptr<Image> getWhiteTexture();
+        static std::shared_ptr<Texture> getWhiteTexture();
     };
 
 } // namespace GameEngine

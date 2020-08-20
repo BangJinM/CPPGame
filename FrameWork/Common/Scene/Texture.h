@@ -7,7 +7,7 @@
 
 namespace GameEngine
 {
-    class Image : public Object
+    class Texture : public Object
     {
     public:
         int id;

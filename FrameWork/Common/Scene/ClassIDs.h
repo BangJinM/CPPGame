@@ -14,6 +14,7 @@ enum ClassIDType
 	DefineClassID(Transform, 5),
 	DefineClassID(Camera, 6),
 	DefineClassID(Light, 7),
+	DefineClassID(CanvasRenderer, 8),
 };
 
 //make sure people dont accidentally define classids in other files:

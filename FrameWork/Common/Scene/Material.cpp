@@ -26,14 +26,14 @@ namespace GameEngine
 
 			switch (data.type)
 			{
-			case MaterialType::Mat4:
+			case MaterialType::T_Mat4:
 			{
 				auto property = (float *)data.buffer;
 				m_Shader.setMat4(data.name, &property[0]);
 				OpenGLDebugger::glCheckError();
 				break;
 			}
-			case MaterialType::Texture:
+			case MaterialType::T_Texture:
 			{
 				auto property = (char *)data.buffer;
 				OpenGLDebugger::glCheckError();
@@ -42,7 +42,7 @@ namespace GameEngine
 				if (location != -1)
 				{
 					OpenGLDebugger::glCheckError();
-					std::shared_ptr<Image> image = g_pAssetManager->LoadTexture(property);
+					std::shared_ptr<Texture> image = g_pAssetManager->LoadTexture(property);
 					if (!image)
 						image = g_pAssetManager->getWhiteTexture();
 					m_Shader.setInt(data.name, textureID);

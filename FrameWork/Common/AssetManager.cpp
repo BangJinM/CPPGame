@@ -63,12 +63,12 @@ namespace GameEngine
 		return mesh;
 	}
 
-	std::shared_ptr<Image> AssetManager::LoadTexture(const std::string &path)
+	std::shared_ptr<Texture> AssetManager::LoadTexture(const std::string &path)
 	{
-		std::shared_ptr<Image> image;
+		std::shared_ptr<Texture> image;
 		if (g_cache.find(path) != g_cache.end())
 		{
-			return std::dynamic_pointer_cast<Image>(g_cache[path]);
+			return std::dynamic_pointer_cast<Texture>(g_cache[path]);
 		}
 		Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
 		if (buffer.m_szSize > 0)
@@ -78,17 +78,17 @@ namespace GameEngine
 		}
 		return image;
 	}
-	std::shared_ptr<Image> AssetManager::GetTexture(const std::string &path)
+	std::shared_ptr<Texture> AssetManager::GetTexture(const std::string &path)
 	{
-		std::shared_ptr<Image> image;
+		std::shared_ptr<Texture> image;
 		if (g_cache.find(path) != g_cache.end())
 		{
-			return std::dynamic_pointer_cast<Image>(g_cache[path]);
+			return std::dynamic_pointer_cast<Texture>(g_cache[path]);
 		}
 		return image;
 	}
 
-	void AssetManager::AddTexture(const std::string &path, std::shared_ptr<Image> image)
+	void AssetManager::AddTexture(const std::string &path, std::shared_ptr<Texture> image)
 	{
 		if (g_cache.find(path) != g_cache.end() || !image)
 		{
@@ -97,7 +97,7 @@ namespace GameEngine
 		g_cache[path] = image;
 	}
 	const int size = 4;
-	std::shared_ptr<Image> AssetManager::getWhiteTexture()
+	std::shared_ptr<Texture> AssetManager::getWhiteTexture()
 	{
 
 		const std::string path = "default/white.png";
