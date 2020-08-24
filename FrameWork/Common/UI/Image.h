@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Widget.h"
+#include "Texture.h"
 #include "MyMath.h"
 namespace GameEngine
 {
-    class Texture;
     class Image : public Widget
     {
     private:

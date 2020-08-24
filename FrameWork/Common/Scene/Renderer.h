@@ -1,26 +1,29 @@
 #ifndef GameEngine_Common_Scene_Renderer_H
 #define GameEngine_Common_Scene_Renderer_H
 
-#include "MyMath.h"
 #include <list>
+#include <vector>
+
+#include "MyMath.h"
 #include "Component.h"
-#include "Material.h"
-#include "Mesh.h"
+
 namespace GameEngine
 {
+    class Camera;
+    class Material;
+    class Mesh;
     class Renderer : public Component
     {
     public:
         void Prepare();
         Renderer();
-        std::shared_ptr<Mesh> getMesh() { return std::shared_ptr<Mesh>(); }
-        std::vector<std::shared_ptr<Material>> getMaterials() { return m_Materials; }
-        void AddMaterial(std::shared_ptr<Material> material) { m_Materials.push_back(material); }
-        virtual void Render() {}
+		std::shared_ptr<Mesh> getMesh();// { return std::shared_ptr<Mesh>(); }
+		std::vector<std::shared_ptr<Material>> getMaterials();// { return m_Materials; }
+		void AddMaterial(std::shared_ptr<Material> material);// { m_Materials.push_back(material); }
+		virtual void Render(std::shared_ptr<Camera> camera);// {}
 
     protected:
         std::vector<std::shared_ptr<Material>> m_Materials;
-        RendererUniforms m_RendererUniforms;
     };
 } // namespace GameEngine
 #endif
