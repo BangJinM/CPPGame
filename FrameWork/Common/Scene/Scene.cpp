@@ -12,14 +12,17 @@
 #include "SceneParser.h"
 #include "glfw/glfw3.h"
 
-
 namespace GameEngine
 {
 	Scene::Scene()
 	{
 		m_Root = GameObject::createGameObject();
 		m_Root->setName("root");
-		SceneParser::Parse("Scene/defaultEx.scene", this);
+	}
+
+	void Scene::LoadSceneByPath(std::string path)
+	{//
+		SceneParser::Parse(path, this);
 	}
 
 	void Scene::UpdateCamera(std::shared_ptr<GameObject> gb)
@@ -36,8 +39,6 @@ namespace GameEngine
 			UpdateCamera(i->second);
 		}
 	}
-
-
 
 	void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject)
 	{

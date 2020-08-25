@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include <GLFW/glfw3.h>
 #include "Camera.h"
-
+#include "SceneManager.h"
 using namespace std;
 
 namespace GameEngine
@@ -42,8 +42,10 @@ namespace GameEngine
             glCullFace(GL_BACK);
             // }
 
+            std::shared_ptr<Scene> m_Scene;
             m_Scene = std::make_shared<Scene>();
-
+            m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
+            SceneManager::GetInstance()->SetNextScene(m_Scene);
             result = 1;
         }
 
@@ -58,11 +60,11 @@ namespace GameEngine
     {
         auto window = glfwGetCurrentContext();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        m_Scene->Update();
-		m_Scene->RenderAll();
+        SceneManager::GetInstance()->ChangeScene();
+        SceneManager::GetInstance()->GetScene()->Update();
+        SceneManager::GetInstance()->GetScene()->RenderAll();
         glfwSwapBuffers(window);
     }
-
 
     void GraphicsManager::Clear()
     {

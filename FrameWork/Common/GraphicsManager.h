@@ -20,8 +20,6 @@ namespace GameEngine
 
     private:
         std::vector<std::shared_ptr<Renderer>> m_RendererCommands;
-
-        std::shared_ptr<Scene> m_Scene;
     };
 
     extern GraphicsManager *g_pGraphicsManager;
