@@ -21,7 +21,7 @@ namespace GameEngine
 		std::vector<std::shared_ptr<Material>> getMaterials();// { return m_Materials; }
 		void AddMaterial(std::shared_ptr<Material> material);// { m_Materials.push_back(material); }
 		virtual void Render(std::shared_ptr<Camera> camera);// {}
-
+        virtual void Update();
     protected:
         std::vector<std::shared_ptr<Material>> m_Materials;
     };

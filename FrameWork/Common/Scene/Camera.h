@@ -26,6 +26,7 @@ namespace GameEngine
 
 
 		void Render(std::list<std::shared_ptr<Renderer>> renderers);
+        virtual void Update();
     private:
         //			y
         //			|

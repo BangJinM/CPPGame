@@ -1,9 +1,8 @@
 #include "Camera.h"
-#include "GameObject.h"
-#include "GraphicsManager.h"
-#include "OpenGLDebugger.h"
-#include "Mesh.h"
 #include "MeshRenderer.h"
+#include "GameObject.h"
+#include "SceneManager.h"
+#include "Scene.h"
 namespace GameEngine
 {
 	Camera::Camera(glm::float32 near, glm::float32 far, glm::float32 width, glm::float32 height, glm::float32 fieldofView)
@@ -25,6 +24,15 @@ namespace GameEngine
 		{
 			(*i)->Render(getParent()->getComponent<Camera>());
 		}
+	}
+
+	void Camera::Update()
+	{
+		auto camera = getParent()->getComponent<Camera>();
+		if (!camera)
+			return;
+		auto scene = SceneManager::GetInstance()->GetScene();
+		scene->AddCamera(std::dynamic_pointer_cast<Camera>(camera));
 	}
 
 } // namespace GameEngine

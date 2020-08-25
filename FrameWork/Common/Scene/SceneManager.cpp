@@ -22,6 +22,7 @@ namespace GameEngine
 		if (!nextScene)
 			return;
 		curScene = nextScene;
+		nextScene = nullptr;
 	}
 
 	std::shared_ptr<Scene> SceneManager::GetScene()

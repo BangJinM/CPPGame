@@ -1,5 +1,8 @@
 #include "Renderer.h"
 #include "Material.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "GameObject.h"
 namespace GameEngine
 {
     void Renderer::Prepare()
@@ -32,8 +35,18 @@ namespace GameEngine
     {
         m_Materials.push_back(material);
     }
-    
+
     void Renderer::Render(std::shared_ptr<Camera> camera)
     {
     }
+
+    void Renderer::Update()
+    {
+		auto renderer = getParent()->getComponent<Renderer>();
+		if (!renderer)
+			return;
+        auto scene = SceneManager::GetInstance()->GetScene();
+        scene->AddRenderer( std::dynamic_pointer_cast<Renderer>(renderer) );
+    }
+
 } // namespace GameEngine

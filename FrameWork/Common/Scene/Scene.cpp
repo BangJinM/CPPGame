@@ -21,7 +21,7 @@ namespace GameEngine
 	}
 
 	void Scene::LoadSceneByPath(std::string path)
-	{//
+	{ //
 		SceneParser::Parse(path, this);
 	}
 
@@ -43,7 +43,7 @@ namespace GameEngine
 	void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject)
 	{
 		GetRootGameObject()->addChild(gameobject);
-		UpdateCamera(gameobject);
+		//UpdateCamera(gameobject);
 	}
 
 	void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent)
@@ -82,6 +82,7 @@ namespace GameEngine
 
 	void Scene::AddCamera(std::shared_ptr<Camera> camera)
 	{
+		m_Cameras.push_back(camera);
 	}
 
 	void Scene::PrepareAll()
