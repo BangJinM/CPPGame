@@ -59,7 +59,7 @@ namespace GameEngine
         //private:
         bool m_isVisual = true;
         std::shared_ptr<Mesh> m_Mesh;
-		std::weak_ptr<GameObject> m_ThisObject;
+		std::weak_ptr<GameObject> m_GameObject;
         std::vector<std::shared_ptr<Material>> m_Materials;
     };
 
@@ -82,8 +82,8 @@ namespace GameEngine
     {
         if (component)
         {
+            component->InitComponent(m_GameObject.lock());
             m_compenents.push_back(component);
-			component->m_Parent = this->m_ThisObject.lock();
 			return component;
         }
 		return std::shared_ptr<T>();

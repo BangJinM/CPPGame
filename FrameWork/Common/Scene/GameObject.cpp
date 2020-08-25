@@ -12,7 +12,7 @@ namespace GameEngine
 	std::shared_ptr<GameObject> GameObject::createGameObject()
 	{
 		auto obj = std::make_shared<GameObject>();
-		obj->m_ThisObject = obj;
+		obj->m_GameObject = obj;
 		return obj;
 	}
 
@@ -23,7 +23,7 @@ namespace GameEngine
         {
             return;
         }
-		child->setParent(m_ThisObject.lock());
+		child->setParent(m_GameObject.lock());
         m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
     }
 

@@ -9,12 +9,13 @@ namespace GameEngine
     {
     private:
         /* data */
-        std::vector< std::shared_ptr<Widget>> m_Widgets;
+        std::vector<std::shared_ptr<Widget>> m_Widgets;
+
     public:
         CanvasRenderer(/* args */);
         ~CanvasRenderer();
 
-        void setWidget(std::shared_ptr<Widget> widget);
+        void addWidget(std::shared_ptr<Widget> widget);
         void getWidget();
     };
 } // namespace GameEngine

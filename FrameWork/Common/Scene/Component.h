@@ -4,9 +4,10 @@
 #include "ClassIDs.h"
 #include <memory>
 #include "Object.h"
+#include "ClassIDs.h"
 namespace GameEngine
 {
-    class Component:public Object
+    class Component : public Object
     {
         friend class GameObject;
 
@@ -31,8 +32,9 @@ namespace GameEngine
                 m_Parent = host;
             }
         }
-        
-        std::shared_ptr<GameObject> getParent(){
+
+        std::shared_ptr<GameObject> getParent()
+        {
             return m_Parent.lock();
         }
 
@@ -41,9 +43,14 @@ namespace GameEngine
         virtual void Update() {}
         virtual void LateUpdate() {}
         virtual void OnEnable(bool enable) { m_Enable = enable; }
+        virtual void InitComponent(std::shared_ptr<GameObject> host) {
+            setParent(host);
+		}
 
     public:
-        std::weak_ptr<GameObject> m_Parent; //寄主
+        std::weak_ptr<GameObject> m_Parent;   //寄主
+        std::weak_ptr<Component> m_Component; //自己
+
         bool m_Enable = true;
         bool m_Started = false;
     };

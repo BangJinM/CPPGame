@@ -11,6 +11,7 @@ namespace GameEngine
         int m_Font_Size;
         std::string m_Text;
         vecterFloat2 m_Content_Size;
+
     public:
         Label(/* args */);
         ~Label();

@@ -9,6 +9,14 @@ SET( Scene
     Scene/MeshRenderer.cpp
 )
 
+SET( UI
+    UI/Button.cpp
+    UI/CanvasRenderer.cpp
+    UI/Image.cpp
+    UI/Label.cpp
+    UI/Widget.cpp
+)
+
 #SET( Parser
 #)
 
@@ -33,6 +41,7 @@ source_group(include FILES ${CURRENT_HEADERS})
 add_library(Common
     ${Common}    
     ${Scene}
+    ${UI}
     #${Parser}
     ${3dloader}
     ${CURRENT_HEADERS}
@@ -44,5 +53,6 @@ target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad
 SOURCE_GROUP( src\\Parser FILES ${Parser})
 SOURCE_GROUP( src\\3dloader FILES ${3dloader})
 SOURCE_GROUP( src\\Scene FILES ${Scene})
+SOURCE_GROUP( src\\UI FILES ${UI})
 SOURCE_GROUP( src FILES ${Common})
 

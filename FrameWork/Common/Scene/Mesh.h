@@ -21,7 +21,6 @@ namespace GameEngine
 
     struct MeshData
     {
-        typedef std::vector<unsigned short> IndexArray;
         std::vector<float> vertex;
         std::vector<int> indices;
         int vertexSizeInFloat;
