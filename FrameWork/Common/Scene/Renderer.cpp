@@ -44,12 +44,12 @@ namespace GameEngine
     {
         if (m_Started)
             return;
-        Component::Start();
         auto renderer = getParent()->getComponent<Renderer>();
         if (!renderer)
             return;
         auto scene = SceneManager::GetInstance()->GetScene();
         scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
+        Component::Start();
     }
 
 } // namespace GameEngine

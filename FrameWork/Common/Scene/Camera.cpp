@@ -30,12 +30,12 @@ namespace GameEngine
 	{
 		if (m_Started)
 			return;
-		Component::Start();
 		auto camera = getParent()->getComponent<Camera>();
 		if (!camera)
 			return;
 		auto scene = SceneManager::GetInstance()->GetScene();
 		scene->AddCamera(std::dynamic_pointer_cast<Camera>(camera));
+		Component::Start();
 	}
 
 } // namespace GameEngine

@@ -24,11 +24,11 @@ namespace GameEngine
 	{
 		if (m_Started)
 			return;
-		Component::Start();
 		auto canvasRenderer = getParent()->getComponent<CanvasRenderer>();
 		if (!canvasRenderer)
 			return;
 		auto scene = SceneManager::GetInstance()->GetScene();
 		scene->SetCanvasRenderer(canvasRenderer);
+		Component::Start();
 	}
 } // namespace GameEngine

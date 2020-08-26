@@ -97,11 +97,11 @@ namespace GameEngine
 	{
 		if (m_Started)
 			return;
-		Component::Start();
 		auto camera = getParent()->getComponent<Widget>();
 		if (!camera)
 			return;
 		auto scene = SceneManager::GetInstance()->GetScene();
 		auto canvas = scene->GetCanvasRenderer();
+		Component::Start();
 	}
 } // namespace GameEngine
