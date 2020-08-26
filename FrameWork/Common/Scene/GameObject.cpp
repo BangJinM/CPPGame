@@ -8,22 +8,21 @@
 namespace GameEngine
 {
 
+    std::shared_ptr<GameObject> GameObject::createGameObject()
+    {
+        auto obj = std::make_shared<GameObject>();
+        obj->m_GameObject = obj;
+        return obj;
+    }
 
-	std::shared_ptr<GameObject> GameObject::createGameObject()
-	{
-		auto obj = std::make_shared<GameObject>();
-		obj->m_GameObject = obj;
-		return obj;
-	}
-
-	void GameObject::addChild(std::shared_ptr<GameObject> child)
+    void GameObject::addChild(std::shared_ptr<GameObject> child)
     {
         auto begin = m_children.find(child->getName());
         if (begin != m_children.end())
         {
             return;
         }
-		child->setParent(m_GameObject.lock());
+        child->setParent(m_GameObject.lock());
         m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
     }
 
@@ -63,7 +62,7 @@ namespace GameEngine
     GameObject::~GameObject()
     {
         m_compenents.clear();
-		m_children.clear();
+        m_children.clear();
     }
 
     void GameObject::setName(std::string name)
@@ -71,14 +70,17 @@ namespace GameEngine
         m_Name = name;
     }
 
-    void GameObject::Update(){
-        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
-        {
-			(*i)->Update();
-        }
+    void GameObject::Update()
+    {
         for (auto i = m_children.begin(); i != m_children.end(); i++)
         {
-			i->second->Update();
+            i->second->Update();
+        }
+        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+        {
+            if (!(*i)->m_Started)
+                (*i)->Start();
+            (*i)->Update();
         }
     }
 

@@ -35,8 +35,9 @@ namespace GameEngine
         std::shared_ptr<GameObject> getParent();
         void setParent(std::shared_ptr<GameObject> parent);
 
-        GameObject();
         void Update();
+
+        GameObject();
         virtual ~GameObject();
 
         std::string getName()

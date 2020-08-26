@@ -1,6 +1,9 @@
 #include "Widget.h"
 #include "MyMath.h"
 #include "Shader.h"
+#include "Scene.h"
+#include "SceneManager.h"
+#include "GameObject.h"
 namespace GameEngine
 {
 	Widget::Widget() : Component(ClassID(Undefined))
@@ -88,5 +91,17 @@ namespace GameEngine
 	{
 		setDefaultData();
 		m_MeshData = getDefaultData();
+	}
+
+	void Widget::Start()
+	{
+		if (m_Started)
+			return;
+		Component::Start();
+		auto camera = getParent()->getComponent<Widget>();
+		if (!camera)
+			return;
+		auto scene = SceneManager::GetInstance()->GetScene();
+		auto canvas = scene->GetCanvasRenderer();
 	}
 } // namespace GameEngine

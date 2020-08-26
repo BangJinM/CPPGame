@@ -1,4 +1,7 @@
 #include "CanvasRenderer.h"
+#include "SceneManager.h"
+#include "GameObject.h"
+#include "Scene.h"
 namespace GameEngine
 {
 	CanvasRenderer::CanvasRenderer()
@@ -15,5 +18,17 @@ namespace GameEngine
 
 	void CanvasRenderer::getWidget()
 	{
+	}
+
+	void CanvasRenderer::Start()
+	{
+		if (m_Started)
+			return;
+		Component::Start();
+		auto canvasRenderer = getParent()->getComponent<CanvasRenderer>();
+		if (!canvasRenderer)
+			return;
+		auto scene = SceneManager::GetInstance()->GetScene();
+		scene->SetCanvasRenderer(canvasRenderer);
 	}
 } // namespace GameEngine

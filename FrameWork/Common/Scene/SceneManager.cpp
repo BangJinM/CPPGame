@@ -41,4 +41,12 @@ namespace GameEngine
 		curScene = std::make_shared<Scene>();
 		nextScene = nullptr;
 	}
+
+	void SceneManager::Update()
+	{
+		if (!curScene)
+			curScene = std::make_shared<Scene>();
+		curScene->Update();
+		curScene->RenderAll();
+	}
 } // namespace GameEngine

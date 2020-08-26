@@ -61,8 +61,7 @@ namespace GameEngine
         auto window = glfwGetCurrentContext();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         SceneManager::GetInstance()->ChangeScene();
-        SceneManager::GetInstance()->GetScene()->Update();
-        SceneManager::GetInstance()->GetScene()->RenderAll();
+        SceneManager::GetInstance()->Update();
         glfwSwapBuffers(window);
     }
 

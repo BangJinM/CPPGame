@@ -40,8 +40,11 @@ namespace GameEngine
     {
     }
 
-    void Renderer::Update()
+    void Renderer::Start()
     {
+        if (m_Started)
+            return;
+        Component::Start();
         auto renderer = getParent()->getComponent<Renderer>();
         if (!renderer)
             return;

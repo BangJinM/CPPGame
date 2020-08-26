@@ -22,6 +22,7 @@ namespace GameEngine
     public:
         void SetNextScene(std::shared_ptr<Scene> scene);
         void ChangeScene();
+        void Update();
         std::shared_ptr<Scene> GetScene();
         ~SceneManager();
     };

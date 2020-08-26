@@ -83,6 +83,16 @@ namespace GameEngine
 	void Scene::RemoveRenderer()
 	{
 	}
+	std::shared_ptr<CanvasRenderer> Scene::GetCanvasRenderer()
+	{
+		return m_Canvas;
+	}
+
+	void Scene::SetCanvasRenderer(std::shared_ptr<CanvasRenderer> canvas)
+	{
+		m_Canvas = canvas;
+	}
+
 	std::shared_ptr<GameObject> Scene::GetObject(std::shared_ptr<GameObject> parent, int sid)
 	{
 		std::map<std::string, std::shared_ptr<GameObject>> children;

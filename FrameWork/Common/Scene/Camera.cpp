@@ -26,8 +26,11 @@ namespace GameEngine
 		}
 	}
 
-	void Camera::Update()
+	void Camera::Start()
 	{
+		if (m_Started)
+			return;
+		Component::Start();
 		auto camera = getParent()->getComponent<Camera>();
 		if (!camera)
 			return;

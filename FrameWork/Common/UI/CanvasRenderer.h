@@ -15,6 +15,7 @@ namespace GameEngine
         CanvasRenderer(/* args */);
         ~CanvasRenderer();
 
+        virtual void Start();
         void addWidget(std::shared_ptr<Widget> widget);
         void getWidget();
     };

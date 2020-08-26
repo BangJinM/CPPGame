@@ -39,7 +39,12 @@ namespace GameEngine
         }
 
     public:
-        virtual void Start() {}
+        virtual void Start()
+        {
+            if (m_Started)
+                return;
+            m_Started = true;
+        }
         virtual void Update() {}
         virtual void LateUpdate() {}
         virtual void OnEnable(bool enable) { m_Enable = enable; }
