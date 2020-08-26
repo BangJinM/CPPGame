@@ -4,10 +4,13 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "AssetManager.h"
+#include "CanvasRenderer.h"
 namespace GameEngine
 {
-	Widget::Widget() : Component(ClassID(Undefined))
+	Widget::Widget() : Component(ClassID(Widget))
 	{
+		setDefaultData();
 	}
 
 	Widget::~Widget()
@@ -23,7 +26,7 @@ namespace GameEngine
 	{
 	}
 
-	MeshData &Widget::getDefaultData()
+	MeshData Widget::getDefaultData()
 	{
 		MeshData meshData;
 		meshData.indices = {
@@ -40,10 +43,10 @@ namespace GameEngine
 		meshData.attribs.push_back(attrib);
 		meshData.vertexSizeInFloat += 3;
 
-		attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_COLOR;
-		attrib.attribSizeBytes = attrib.size * sizeof(float);
-		meshData.attribs.push_back(attrib);
-		meshData.vertexSizeInFloat += 3;
+		// attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_COLOR;
+		// attrib.attribSizeBytes = attrib.size * sizeof(float);
+		// meshData.attribs.push_back(attrib);
+		// meshData.vertexSizeInFloat += 3;
 
 		attrib.size = 2;
 		attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_TEX_COORD;
@@ -58,9 +61,9 @@ namespace GameEngine
 			meshData.vertex.push_back(position[i][1]);
 			meshData.vertex.push_back(position[i][2]);
 
-			meshData.vertex.push_back(color[i][0]);
-			meshData.vertex.push_back(color[i][1]);
-			meshData.vertex.push_back(color[i][2]);
+			// meshData.vertex.push_back(color[i][0]);
+			// meshData.vertex.push_back(color[i][1]);
+			// meshData.vertex.push_back(color[i][2]);
 
 			meshData.vertex.push_back(textcoord[i][0]);
 			meshData.vertex.push_back(textcoord[i][1]);
@@ -76,10 +79,10 @@ namespace GameEngine
 		position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
 		position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
 
-		color[0] = vecterFloat3(1.0f, 0.0f, 0.0f);
-		color[1] = vecterFloat3(0.0f, 1.0f, 0.0f);
-		color[2] = vecterFloat3(0.0f, 0.0f, 1.0f);
-		color[3] = vecterFloat3(1.0f, 1.0f, 0.0f);
+		// color[0] = vecterFloat3(1.0f, 0.0f, 0.0f);
+		// color[1] = vecterFloat3(0.0f, 1.0f, 0.0f);
+		// color[2] = vecterFloat3(0.0f, 0.0f, 1.0f);
+		// color[3] = vecterFloat3(1.0f, 1.0f, 0.0f);
 
 		textcoord[0] = vecterFloat2(1.0f, 1.0f);
 		textcoord[1] = vecterFloat2(1.0f, 0.0f);
@@ -89,7 +92,6 @@ namespace GameEngine
 
 	void Widget::setDefaultMesh()
 	{
-		setDefaultData();
 		m_MeshData = getDefaultData();
 	}
 
@@ -97,11 +99,25 @@ namespace GameEngine
 	{
 		if (m_Started)
 			return;
-		auto camera = getParent()->getComponent<Widget>();
-		if (!camera)
+		auto widget = getParent()->getComponent<Widget>();
+		if (!widget)
 			return;
 		auto scene = SceneManager::GetInstance()->GetScene();
 		auto canvas = scene->GetCanvasRenderer();
+		if (!canvas)
+			return;
+		setDefaultMesh();
+		canvas->addWidget(widget);
 		Component::Start();
+	}
+
+	std::shared_ptr<Material> Widget::GetMaterial()
+	{
+		return m_Material;
+	}
+
+	MeshData Widget::GetMeshData()
+	{
+		return m_MeshData;
 	}
 } // namespace GameEngine

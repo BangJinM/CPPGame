@@ -2,10 +2,15 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "Widget.h"
+
 namespace GameEngine
 {
 	CanvasRenderer::CanvasRenderer()
 	{
+		m_Mesh = std::make_shared<Mesh>();
 	}
 
 	CanvasRenderer::~CanvasRenderer()
@@ -14,9 +19,18 @@ namespace GameEngine
 
 	void CanvasRenderer::addWidget(std::shared_ptr<Widget> widget)
 	{
+		m_Widgets.push_back(widget);
+		auto material = widget->GetMaterial();
+		auto meshData = widget->GetMeshData();
+		m_Materials.push_back(material);
+		m_Mesh->m_MeshDatas.push_back(meshData);
 	}
 
 	void CanvasRenderer::getWidget()
+	{
+	}
+
+	void CanvasRenderer::Update()
 	{
 	}
 
@@ -29,6 +43,6 @@ namespace GameEngine
 			return;
 		auto scene = SceneManager::GetInstance()->GetScene();
 		scene->SetCanvasRenderer(canvasRenderer);
-		Component::Start();
+		Renderer::Start();
 	}
 } // namespace GameEngine

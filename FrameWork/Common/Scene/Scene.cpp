@@ -10,6 +10,7 @@
 #include "MyMath.h"
 #include "OpenGLDebugger.h"
 #include "SceneParser.h"
+#include "UI/CanvasRenderer.h"
 #include "glfw/glfw3.h"
 
 namespace GameEngine
@@ -18,6 +19,11 @@ namespace GameEngine
 	{
 		m_Root = GameObject::createGameObject();
 		m_Root->setName("root");
+
+		auto canvas = GameObject::createGameObject();
+		canvas->setName("Canvas");
+		m_Root->addChild(canvas);
+		canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
 	}
 
 	void Scene::LoadSceneByPath(std::string path)

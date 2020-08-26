@@ -15,7 +15,7 @@ namespace GameEngine
         void SetMesh(std::shared_ptr<Mesh> mesh) { m_Mesh = mesh; }
         virtual void Render(std::shared_ptr<Camera> camera);
 
-    private:
+    protected:
         std::shared_ptr<Mesh> m_Mesh;
     };
 } // namespace GameEngine

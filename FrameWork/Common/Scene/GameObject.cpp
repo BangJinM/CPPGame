@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "MeshRenderer.h"
 #include "GraphicsManager.h"
+#include "Transform.h"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace GameEngine
@@ -12,6 +13,9 @@ namespace GameEngine
     {
         auto obj = std::make_shared<GameObject>();
         obj->m_GameObject = obj;
+
+        obj->addComponent<Transform>(std::make_shared<Transform>());
+
         return obj;
     }
 
@@ -72,15 +76,15 @@ namespace GameEngine
 
     void GameObject::Update()
     {
-        for (auto i = m_children.begin(); i != m_children.end(); i++)
-        {
-            i->second->Update();
-        }
         for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
         {
             if (!(*i)->m_Started)
                 (*i)->Start();
             (*i)->Update();
+        }
+        for (auto i = m_children.begin(); i != m_children.end(); i++)
+        {
+            i->second->Update();
         }
     }
 

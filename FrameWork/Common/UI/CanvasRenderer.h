@@ -4,7 +4,7 @@
 
 namespace GameEngine
 {
-    class Widget;
+	class Widget;
     class CanvasRenderer : public MeshRenderer
     {
     private:
@@ -16,6 +16,7 @@ namespace GameEngine
         ~CanvasRenderer();
 
         virtual void Start();
+        virtual void Update();
         void addWidget(std::shared_ptr<Widget> widget);
         void getWidget();
     };

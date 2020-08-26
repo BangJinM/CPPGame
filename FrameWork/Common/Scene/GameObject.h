@@ -24,6 +24,8 @@ namespace GameEngine
         template <class T>
         std::shared_ptr<T> addComponent(std::shared_ptr<T> component);
         template <class T>
+        void removeComponent(std::shared_ptr<T> component);
+        template <class T>
         std::shared_ptr<T> addComponent(T *component);
 
         void addChild(std::shared_ptr<GameObject> child);
@@ -78,12 +80,26 @@ namespace GameEngine
         }
         return std::shared_ptr<T>();
     }
+
+    template <class T>
+    inline void GameObject::removeComponent(std::shared_ptr<T> component)
+    {
+        for (int i = 0; i < m_compenents.size(); ++i)
+        {
+            auto &com = m_compenents[i];
+            if (component->getClassID() == com->getClassID())
+            {
+                m_compenents.erase(m_compenents.begin() + i);
+            }
+        }
+    }
     template <class T>
     inline std::shared_ptr<T> GameObject::addComponent(std::shared_ptr<T> component)
     {
         if (component)
         {
             component->InitComponent(m_GameObject.lock());
+            removeComponent<T>(component);
             m_compenents.push_back(component);
             return component;
         }

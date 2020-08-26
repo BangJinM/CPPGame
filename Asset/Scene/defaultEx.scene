@@ -30,5 +30,15 @@
     "Camera":{
         "m_GameObject":2,
         "fileID":6
+    },
+    "GameObject":{
+        "name":"UI",
+        "fileID": 7,
+        "m_Component":[8]
+    },
+    "Image":{
+        "m_GameObject":7,
+		"Texture" : "Textures/glass_dif.png",
+        "fileID":8
     }
 }

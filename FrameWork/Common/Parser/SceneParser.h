@@ -20,6 +20,7 @@
 #include "MyMath.h"
 #include "MeshRenderer.h"
 #include "AssetManager.h"
+#include "UI/Image.h"
 
 namespace GameEngine
 {
@@ -107,6 +108,17 @@ namespace GameEngine
 			return meshRenderer;
 		}
 
+		static std::shared_ptr<Object> compareImage(cJSON *root)
+		{
+			std::shared_ptr<Image> meshRenderer = std::make_shared<Image>();
+			auto paramsNode = cJSON_GetObjectItem(root, "Texture");
+			if (paramsNode)
+			{
+				meshRenderer->setTexture(g_pAssetManager->LoadTexture(paramsNode->valuestring));
+			}
+			return meshRenderer;
+		}
+
 		static bool strCompare(const char *str1, const char *str2)
 		{
 
@@ -125,6 +137,7 @@ namespace GameEngine
 					{"GameObject", compareGameObject},
 					{"Transform", compareTransform},
 					{"MeshRenderer", compareMeshRenderer},
+					{"Image", compareImage},
 					{"Camera", compareCamera}};
 			const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
 			int i = 0;
@@ -152,7 +165,7 @@ namespace GameEngine
 			list.insert(std::pair<int, std::shared_ptr<Object>>(object->GetFileID(), object));
 		}
 
-		static void formatScene(std::map<int, std::shared_ptr<Object>> &list, Scene* scene)
+		static void formatScene(std::map<int, std::shared_ptr<Object>> &list, Scene *scene)
 		{
 			std::shared_ptr<GameObject> gameobject = GameObject::createGameObject();
 			for (auto i = list.begin(); i != list.end(); i++)
