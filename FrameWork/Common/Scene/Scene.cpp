@@ -25,25 +25,9 @@ namespace GameEngine
 		SceneParser::Parse(path, this);
 	}
 
-	void Scene::UpdateCamera(std::shared_ptr<GameObject> gb)
-	{
-		auto children = gb->getChildren();
-		auto camera = gb->getComponent<Camera>();
-		if (camera)
-			m_Cameras.push_back(camera);
-		auto render = gb->getComponent<MeshRenderer>();
-		if (render)
-			m_Renderers.push_back(render);
-		for (auto i = children.begin(); i != children.end(); i++)
-		{
-			UpdateCamera(i->second);
-		}
-	}
-
 	void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject)
 	{
 		GetRootGameObject()->addChild(gameobject);
-		//UpdateCamera(gameobject);
 	}
 
 	void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent)

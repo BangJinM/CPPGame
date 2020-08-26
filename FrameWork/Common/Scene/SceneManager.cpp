@@ -36,7 +36,8 @@ namespace GameEngine
 	{
 	}
 
-	SceneManager::SceneManager(){
+	SceneManager::SceneManager()
+	{
 		curScene = std::make_shared<Scene>();
 		nextScene = nullptr;
 	}

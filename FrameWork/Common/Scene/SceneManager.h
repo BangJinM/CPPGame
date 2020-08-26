@@ -12,7 +12,7 @@ namespace GameEngine
         static std::shared_ptr<SceneManager> m_SceneManager;
 
     public:
-		static std::shared_ptr<SceneManager> GetInstance();
+        static std::shared_ptr<SceneManager> GetInstance();
 
     private:
         SceneManager(/* args */);

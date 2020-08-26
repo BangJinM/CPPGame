@@ -24,8 +24,6 @@ namespace GameEngine
 
     void LoadSceneByPath(std::string path);
 
-    void UpdateCamera(std::shared_ptr<GameObject> gb);
-
     void AddGameObject(std::shared_ptr<GameObject> gameobject);
     void AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent);
     std::shared_ptr<GameObject> GetRootGameObject();

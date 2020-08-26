@@ -18,7 +18,7 @@ namespace GameEngine
         friend class Component;
 
     public:
-		static std::shared_ptr<GameObject> createGameObject();
+        static std::shared_ptr<GameObject> createGameObject();
         template <class T>
         std::shared_ptr<T> getComponent();
         template <class T>
@@ -59,7 +59,7 @@ namespace GameEngine
         //private:
         bool m_isVisual = true;
         std::shared_ptr<Mesh> m_Mesh;
-		std::weak_ptr<GameObject> m_GameObject;
+        std::weak_ptr<GameObject> m_GameObject;
         std::vector<std::shared_ptr<Material>> m_Materials;
     };
 
@@ -84,9 +84,9 @@ namespace GameEngine
         {
             component->InitComponent(m_GameObject.lock());
             m_compenents.push_back(component);
-			return component;
+            return component;
         }
-		return std::shared_ptr<T>();
+        return std::shared_ptr<T>();
     }
 
     template <class T>

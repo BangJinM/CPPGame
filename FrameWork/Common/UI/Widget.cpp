@@ -20,7 +20,7 @@ namespace GameEngine
 	{
 	}
 
-	MeshData& Widget::getDefaultData()
+	MeshData &Widget::getDefaultData()
 	{
 		MeshData meshData;
 		meshData.indices = {

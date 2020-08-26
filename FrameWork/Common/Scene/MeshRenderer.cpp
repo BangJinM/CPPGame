@@ -12,8 +12,8 @@ namespace GameEngine
 
     void MeshRenderer::Render(std::shared_ptr<Camera> camera)
     {
-		auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
-		auto projectMat = camera->getProjectionMatrix();
+        auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
+        auto projectMat = camera->getProjectionMatrix();
 
         std::shared_ptr<GameObject> parent = getParent();
         auto modelMat = parent->getComponent<Transform>()->getMatrix();

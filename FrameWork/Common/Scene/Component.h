@@ -43,9 +43,10 @@ namespace GameEngine
         virtual void Update() {}
         virtual void LateUpdate() {}
         virtual void OnEnable(bool enable) { m_Enable = enable; }
-        virtual void InitComponent(std::shared_ptr<GameObject> host) {
+        virtual void InitComponent(std::shared_ptr<GameObject> host)
+        {
             setParent(host);
-		}
+        }
 
     public:
         std::weak_ptr<GameObject> m_Parent;   //寄主

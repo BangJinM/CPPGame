@@ -42,11 +42,11 @@ namespace GameEngine
 
     void Renderer::Update()
     {
-		auto renderer = getParent()->getComponent<Renderer>();
-		if (!renderer)
-			return;
+        auto renderer = getParent()->getComponent<Renderer>();
+        if (!renderer)
+            return;
         auto scene = SceneManager::GetInstance()->GetScene();
-        scene->AddRenderer( std::dynamic_pointer_cast<Renderer>(renderer) );
+        scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
     }
 
 } // namespace GameEngine
