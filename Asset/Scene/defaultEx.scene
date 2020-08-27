@@ -40,5 +40,11 @@
         "m_GameObject":7,
 		"Texture" : "Textures/glass_dif.png",
         "fileID":8
+    },
+    "Transform":{
+        "m_GameObject":7,
+        "fileID":9,
+        "scale":[0.5, 0.5, 0.5],
+        "position":[10.0, 1.0, 0]
     }
 }

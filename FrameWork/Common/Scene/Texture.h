@@ -11,6 +11,7 @@ namespace GameEngine
     {
     public:
         int id;
+        std::string Path;
         uint32_t Width;
         uint32_t Height;
         unsigned char *data;

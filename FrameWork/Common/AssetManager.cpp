@@ -74,6 +74,7 @@ namespace GameEngine
 		if (buffer.m_szSize > 0)
 		{
 			image = TextureParser::Parse(buffer);
+			image->Path = path;
 			g_cache[path] = image;
 		}
 		return image;

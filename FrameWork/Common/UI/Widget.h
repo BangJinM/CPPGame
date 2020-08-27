@@ -23,7 +23,6 @@ namespace GameEngine
         vecterFloat2 textcoord[4];
 
         MeshData getDefaultData();
-        void setDefaultData();
 
     public:
         Widget(/* args */);
@@ -38,6 +37,7 @@ namespace GameEngine
         std::shared_ptr<CanvasRenderer> getCanvasRenderer();
         void setCanvasRenderer(std::shared_ptr<CanvasRenderer> canvasRenderer);
 
-        void setDefaultMesh();
+        void initDefaultMesh();
+        void initMaterial();
     };
 } // namespace GameEngine

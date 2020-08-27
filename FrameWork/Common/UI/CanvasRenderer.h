@@ -17,6 +17,7 @@ namespace GameEngine
 
         virtual void Start();
         virtual void Update();
+        virtual void Render(std::shared_ptr<Camera> camera);
         void addWidget(std::shared_ptr<Widget> widget);
         void getWidget();
     };

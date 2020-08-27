@@ -14,7 +14,7 @@ namespace GameEngine
     public:
         Image(/* args */);
         ~Image();
-
+        virtual void Start();
         void setTexture(std::shared_ptr<Texture> texture);
     };
 } // namespace GameEngine

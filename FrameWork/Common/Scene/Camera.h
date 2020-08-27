@@ -24,7 +24,6 @@ namespace GameEngine
         Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000, glm::float32 width = 960, glm::float32 height = 540, glm::float32 fieldofView = 45);
         glm::mat4 getProjectionMatrix();
 
-
 		void Render(std::list<std::shared_ptr<Renderer>> renderers);
         virtual void Start();
     private:

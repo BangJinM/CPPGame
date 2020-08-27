@@ -1,0 +1,4 @@
+{
+	"vert":	"Shaders/defaultUI.vert",
+	"frag":	"Shaders/defaultUI.frag"
+}

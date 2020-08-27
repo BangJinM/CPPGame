@@ -10,7 +10,6 @@ namespace GameEngine
 {
 	Widget::Widget() : Component(ClassID(Widget))
 	{
-		setDefaultData();
 	}
 
 	Widget::~Widget()
@@ -28,6 +27,21 @@ namespace GameEngine
 
 	MeshData Widget::getDefaultData()
 	{
+		position[0] = vecterFloat3(0.5f, 0.5f, 0.0f);
+		position[1] = vecterFloat3(0.5f, -0.5f, 0.0f);
+		position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
+		position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
+
+		// color[0] = vecterFloat3(1.0f, 0.0f, 0.0f);
+		// color[1] = vecterFloat3(0.0f, 1.0f, 0.0f);
+		// color[2] = vecterFloat3(0.0f, 0.0f, 1.0f);
+		// color[3] = vecterFloat3(1.0f, 1.0f, 0.0f);
+
+		textcoord[0] = vecterFloat2(1.0f, 1.0f);
+		textcoord[1] = vecterFloat2(1.0f, 0.0f);
+		textcoord[2] = vecterFloat2(0.0f, 0.0f);
+		textcoord[3] = vecterFloat2(0.0f, 1.0f);
+
 		MeshData meshData;
 		meshData.indices = {
 			0, 1, 3, // first triangle
@@ -72,27 +86,14 @@ namespace GameEngine
 		return meshData;
 	}
 
-	void Widget::setDefaultData()
-	{
-		position[0] = vecterFloat3(0.5f, 0.5f, 0.0f);
-		position[1] = vecterFloat3(0.5f, -0.5f, 0.0f);
-		position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
-		position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
-
-		// color[0] = vecterFloat3(1.0f, 0.0f, 0.0f);
-		// color[1] = vecterFloat3(0.0f, 1.0f, 0.0f);
-		// color[2] = vecterFloat3(0.0f, 0.0f, 1.0f);
-		// color[3] = vecterFloat3(1.0f, 1.0f, 0.0f);
-
-		textcoord[0] = vecterFloat2(1.0f, 1.0f);
-		textcoord[1] = vecterFloat2(1.0f, 0.0f);
-		textcoord[2] = vecterFloat2(0.0f, 0.0f);
-		textcoord[3] = vecterFloat2(0.0f, 1.0f);
-	}
-
-	void Widget::setDefaultMesh()
+	void Widget::initDefaultMesh()
 	{
 		m_MeshData = getDefaultData();
+	}
+
+	void Widget::initMaterial()
+	{
+		m_Material = Material::createMaterial( AssetManager::LoadMaterial("Materials/defaultUI.gemtl"));
 	}
 
 	void Widget::Start()
@@ -106,7 +107,8 @@ namespace GameEngine
 		auto canvas = scene->GetCanvasRenderer();
 		if (!canvas)
 			return;
-		setDefaultMesh();
+		initDefaultMesh();
+		initMaterial();
 		canvas->addWidget(widget);
 		Component::Start();
 	}
