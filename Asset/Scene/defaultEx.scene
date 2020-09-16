@@ -44,7 +44,8 @@
     "Transform":{
         "m_GameObject":7,
         "fileID":9,
-        "scale":[0.5, 0.5, 0.5],
-        "position":[10.0, 1.0, 0]
+        "rotation":[50, 50, 0],
+        "scale":[0.5, 0.5, 0],
+        "position":[0.0, 0.0, 0]
     }
 }

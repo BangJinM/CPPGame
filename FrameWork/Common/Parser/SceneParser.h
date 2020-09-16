@@ -76,7 +76,7 @@ namespace GameEngine
 			if (paramsNode)
 			{
 				vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
-				gameobject->setPosition(vec3);
+				gameobject->setRotation(vec3);
 			}
 			return gameobject;
 		}
