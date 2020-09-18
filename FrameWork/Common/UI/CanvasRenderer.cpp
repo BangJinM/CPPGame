@@ -47,7 +47,7 @@ namespace GameEngine
 	void CanvasRenderer::Render(std::shared_ptr<Camera> camera)
 	{
 		auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
-		auto projectMat = camera->getProjectionMatrix();
+		auto projectMat = camera->getProjectionMatrixOrthographic();
 
 		for (auto widgetPtr = m_Widgets.begin(); widgetPtr != m_Widgets.end(); widgetPtr++)
 		{
@@ -59,15 +59,6 @@ namespace GameEngine
 			auto materials = widget->GetMaterial();
 
 			auto material = Material::createMaterial(materials);
-			auto matArray = glm::value_ptr(modelMat);
-			float initArray[4][4];
-			for (size_t i = 0; i < 4; i++)
-			{
-				for (size_t j = 0; j < 4; j++)
-				{
-					initArray[i][j] = matArray[i * 4 + j];
-				}
-			}
 
 			material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
 			material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
@@ -78,7 +69,6 @@ namespace GameEngine
 			glBindVertexArray(meshdata.VAO);
 			glDrawElements(GL_TRIANGLES, meshdata.indices.size(), GL_UNSIGNED_INT, 0);
 			glBindVertexArray(0);
-			
 		}
 	}
 } // namespace GameEngine

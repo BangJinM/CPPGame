@@ -32,11 +32,6 @@ namespace GameEngine
 		position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
 		position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
 
-		// color[0] = vecterFloat3(1.0f, 0.0f, 0.0f);
-		// color[1] = vecterFloat3(0.0f, 1.0f, 0.0f);
-		// color[2] = vecterFloat3(0.0f, 0.0f, 1.0f);
-		// color[3] = vecterFloat3(1.0f, 1.0f, 0.0f);
-
 		textcoord[0] = vecterFloat2(1.0f, 1.0f);
 		textcoord[1] = vecterFloat2(1.0f, 0.0f);
 		textcoord[2] = vecterFloat2(0.0f, 0.0f);
@@ -44,8 +39,8 @@ namespace GameEngine
 
 		MeshData meshData;
 		meshData.indices = {
-			0, 1, 3, // first triangle
-			1, 2, 3	 // second triangle
+			0, 1, 2, // first triangle
+			0, 2, 3	 // second triangle
 		};
 
 		MeshVertexAttrib attrib;

@@ -35,8 +35,8 @@ namespace GameEngine
             glEnable(GL_DEPTH_TEST);
 
             // Set the polygon winding to front facing for the right handed system.
-            glFrontFace(GL_CW);
-
+            // glFrontFace(GL_CW);
+// 
             // Enable back face culling.
             glEnable(GL_CULL_FACE);
             glCullFace(GL_BACK);
