@@ -28,6 +28,7 @@ include_directories("${PROJECT_SOURCE_DIR}/Platform/${MYGE_TARGET_PLATFORM}")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/glm")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/glad/include")
 include_directories("${PROJECT_SOURCE_DIR}/External/src/cJSON")
+include_directories("${PROJECT_SOURCE_DIR}/External/src/freetype/include")
 
 add_library( cJson
     ${PROJECT_SOURCE_DIR}/External/src/cJson/cJson.c

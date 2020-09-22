@@ -7,6 +7,8 @@ find_library(GLEW glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
 target_link_libraries(Windows ${GLEW})
 
 
+
+
 #find_package(OpenGL REQUIRED)
 
 #add_library(WindowsApplication WindowsApplication.cpp)
