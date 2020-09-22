@@ -16,6 +16,16 @@
 #include FT_FREETYPE_H
 // GL includes
 #include "Shader.h"
+#include "MemoryManager.h"
+#include "AssetLoader.h"
+#include "OpenGLDebugger.h"
+
+namespace GameEngine
+{
+    GameEngine::MemoryManager *g_pMemoryManager = new GameEngine::MemoryManager();
+    GameEngine::AssetLoader *g_pAssetLoader = static_cast<GameEngine::AssetLoader *>(new GameEngine::AssetLoader);
+} // namespace GameEngine
+using namespace GameEngine;
 
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -37,6 +47,8 @@ void RenderText(GameEngine::Shader &shader, std::string text, GLfloat x, GLfloat
 // The MAIN function, from here we start our application and run the Game loop
 int main()
 {
+    g_pMemoryManager->Initialize();
+    g_pAssetLoader->Initialize();
     // Init GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -65,10 +77,10 @@ int main()
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST);
+
 
     // Compile and setup the shader
-	GameEngine::Shader shader("shaders/text.vs", "shaders/text.frag");
+	GameEngine::Shader shader(g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/text.vert"), g_pAssetLoader->SyncOpenAndReadTextFileToString("Shaders/text.frag"));
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(WIDTH), 0.0f, static_cast<GLfloat>(HEIGHT));
     shader.use();
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -81,9 +93,11 @@ int main()
 
     // Load font as face
     FT_Face face;
-    if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
+	Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary("Fonts/arial.ttf");
+	if (FT_New_Memory_Face(ft, buffer.m_pData, buffer.m_szSize, 0, &face)) {
         std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-
+	}
+	
     // Set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, 48);
 
