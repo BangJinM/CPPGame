@@ -6,19 +6,29 @@
 #include "Material.h"
 #include "MaterialParser.h"
 #include <mutex>
+
+#include "UI/Font.h"
 namespace GameEngine
 {
 	extern AssetLoader *g_pAssetLoader;
 	extern AssetManager *g_pAssetManager;
 
 	static std::map<std::string, std::shared_ptr<Object>> g_cache;
+	static FT_Library ft;
+
 	int AssetManager::Initialize()
 	{
+		if (FT_Init_FreeType(&ft))
+		{
+			std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+			return 1;
+		}
 		return 0;
 	}
 
 	void AssetManager::Finalize()
 	{
+		FT_Done_FreeType(ft);
 		g_cache.clear();
 	}
 
@@ -78,6 +88,30 @@ namespace GameEngine
 			g_cache[path] = image;
 		}
 		return image;
+	}
+	std::shared_ptr<Font> AssetManager::GetFont(const std::string &path)
+	{
+		std::shared_ptr<Font> font;
+		if (g_cache.find(path) != g_cache.end())
+		{
+			return std::dynamic_pointer_cast<Font>(g_cache[path]);
+		}
+		Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
+		if (buffer.m_szSize > 0)
+		{
+			FT_Face face;
+			if (FT_New_Memory_Face(ft, buffer.m_pData, buffer.m_szSize, 0, &face))
+			{
+				std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+			}
+			
+			font = std::shared_ptr<Font>(new Font());
+			font->setFace(face);
+			font->setPath(path);
+
+			g_cache[path] = font;
+		}
+		return font;
 	}
 	std::shared_ptr<Texture> AssetManager::GetTexture(const std::string &path)
 	{
