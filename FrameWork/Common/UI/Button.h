@@ -1,15 +1,16 @@
 #pragma once
 
+#include "Config.h"
 #include "Widget.h"
 
-namespace GameEngine
+GameEngineBegin 
+
+class Button : public Widget
 {
-    class Button : public Widget
-    {
-    private:
-        /* data */
-    public:
-        Button(/* args */);
-        ~Button();
-    };
-} // namespace GameEngine
+private:
+    /* data */
+public:
+    Button(/* args */);
+    ~Button();
+};
+GameEngineEnd

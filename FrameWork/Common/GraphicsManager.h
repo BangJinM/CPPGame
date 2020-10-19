@@ -1,26 +1,30 @@
 #pragma once
-#include "IRuntimeModule.h"
+
 #include <vector>
+
+#include "Config.h"
 #include "Renderer.h"
-namespace GameEngine
+#include "IRuntimeModule.h"
+
+GameEngineBegin
+
+class Scene;
+class GraphicsManager : public IRuntimeModule
 {
-    class Scene;
-    class GraphicsManager : public IRuntimeModule
-    {
-    public:
-        virtual ~GraphicsManager() {}
+public:
+    virtual ~GraphicsManager() {}
 
-        virtual int Initialize();
-        virtual void Finalize();
+    virtual int Initialize();
+    virtual void Finalize();
 
-        virtual void Tick();
-        virtual void Clear();
+    virtual void Tick();
+    virtual void Clear();
 
-        void addRendererCommand(std::shared_ptr<Renderer> command);
+    void addRendererCommand(std::shared_ptr<Renderer> command);
 
-    private:
-        std::vector<std::shared_ptr<Renderer>> m_RendererCommands;
-    };
+private:
+    std::vector<std::shared_ptr<Renderer>> m_RendererCommands;
+};
 
-    extern GraphicsManager *g_pGraphicsManager;
-} // namespace GameEngine
+extern GraphicsManager *g_pGraphicsManager;
+GameEngineEnd

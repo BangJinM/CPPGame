@@ -1,7 +1,6 @@
 #include "Font.h"
 
-namespace GameEngine
-{
+GameEngineBegin
 
 	// Font::Font()
 	// {
@@ -24,4 +23,4 @@ namespace GameEngine
 	// {
 	// 	return FT_Library();
 	// }
-} // namespace GameEngine
+GameEngineEnd

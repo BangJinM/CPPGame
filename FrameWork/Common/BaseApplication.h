@@ -4,35 +4,36 @@
 
 #pragma once
 
+#include "Config.h"
 #include "IApplication.h"
 #include "GfxConfiguration.h"
-namespace GameEngine
+
+GameEngineBegin 
+
+class BaseApplication : public IApplication
 {
-    class BaseApplication : public IApplication
-    {
-    public:
-        BaseApplication(GfxConfiguration &cfg);
+public:
+    BaseApplication(GfxConfiguration &cfg);
 
-        virtual int Initialize();
+    virtual int Initialize();
 
-        virtual void Finalize();
+    virtual void Finalize();
 
-        // One cycle of the main loop
-        virtual void Tick();
+    // One cycle of the main loop
+    virtual void Tick();
 
-        virtual bool IsQuit();
+    virtual bool IsQuit();
 
-    protected:
-        virtual void OnDraw(){};
+protected:
+    virtual void OnDraw(){};
 
-    protected:
-        // 标记是否在住循环中退�?
-        static bool m_bQuit;
-        GfxConfiguration m_Config;
+protected:
+    // 标记是否在住循环中退�?
+    static bool m_bQuit;
+    GfxConfiguration m_Config;
 
-    private:
-        // hide the default construct to enforce a configuration
-        BaseApplication(){};
-    };
-} // namespace GameEngine
-
+private:
+    // hide the default construct to enforce a configuration
+    BaseApplication(){};
+};
+GameEngineEnd

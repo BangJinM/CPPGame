@@ -9,44 +9,46 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Renderer.h"
-namespace GameEngine
+#include "Config.h"
+
+GameEngineBegin 
+
+class Camera : public Component
 {
-    class Camera : public Component
+    enum CameraType
     {
-        enum CameraType
-        {
-            Perspective = 0, //透视投影
-            Orthographic = 1 //正交投影
-        };
-
-    public:
-        Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000, glm::float32 width = 960, glm::float32 height = 540, glm::float32 fieldofView = 45);
-        glm::mat4 getProjectionMatrix();
-
-        void Render(std::list<std::shared_ptr<Renderer>> renderers);
-        virtual void Start();
-
-		glm::mat4 getProjectionMatrixOrthographic();
-
-    private:
-        //			y
-        //			|
-        //			|
-        //			|
-        //			----------->x
-        //		   /
-        //		  /
-        //		 /
-        //		z
-
-        glm::float32 m_Near;        //近摄像机平面距离
-        glm::float32 m_Far;         //远摄像机平面距离
-        glm::float32 m_FieldofView; //摄像机夹角
-
-        glm::float32 m_ScreenWidth;  //屏幕宽度
-        glm::float32 m_ScreenHeight; //屏幕高度
-
-        glm::mat4 m_ProjectionMatrix4_Perspective;
-        glm::mat4 m_ProjectionMatrix4_Orthographic;
+        Perspective = 0, //透视投影
+        Orthographic = 1 //正交投影
     };
-} // namespace GameEngine
+
+public:
+    Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000, glm::float32 width = 960, glm::float32 height = 540, glm::float32 fieldofView = 45);
+    glm::mat4 getProjectionMatrix();
+
+    void Render(std::list<std::shared_ptr<Renderer>> renderers);
+    virtual void Start();
+
+    glm::mat4 getProjectionMatrixOrthographic();
+
+private:
+    //			y
+    //			|
+    //			|
+    //			|
+    //			----------->x
+    //		   /
+    //		  /
+    //		 /
+    //		z
+
+    glm::float32 m_Near;        //近摄像机平面距离
+    glm::float32 m_Far;         //远摄像机平面距离
+    glm::float32 m_FieldofView; //摄像机夹角
+
+    glm::float32 m_ScreenWidth;  //屏幕宽度
+    glm::float32 m_ScreenHeight; //屏幕高度
+
+    glm::mat4 m_ProjectionMatrix4_Perspective;
+    glm::mat4 m_ProjectionMatrix4_Orthographic;
+};
+GameEngineEnd

@@ -3,30 +3,30 @@
 #include <string>
 
 #include "Object.h"
+#include "Config.h"
 #include "Texture.h"
 
 // #include <ft2build.h>
 // #include FT_FREETYPE_H
 
+GameEngineBegin 
 
-namespace GameEngine
+struct FontInfo
 {
-	struct FontInfo
-	{
-		char32_t c;
-		int size;
-		int width;
-		int height;
-		int bearing_x;
-		int bearing_y;
-		int advance_x;
-		int advance_y;
-		unsigned int glyph_index;
-	};
+	char32_t c;
+	int size;
+	int width;
+	int height;
+	int bearing_x;
+	int bearing_y;
+	int advance_x;
+	int advance_y;
+	unsigned int glyph_index;
+};
 
-	class Font : public Object
-	{
-	private:
+class Font : public Object
+{
+private:
 	// 	std::string m_Path;
 	// 	FT_Face m_Face;
 
@@ -40,6 +40,6 @@ namespace GameEngine
 	// 	void getText();
 
 	// 	static FT_Library GetFontTypeLib();
-	};
+};
 
-} // namespace GameEngine
+GameEngineEnd

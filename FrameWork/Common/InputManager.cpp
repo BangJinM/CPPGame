@@ -1,7 +1,8 @@
-
 #include "InputManager.h"
 #include <utility>
-int GameEngine::InputManager::Initialize()
+
+GameEngineBegin
+int InputManager::Initialize()
 {
 	window = glfwGetCurrentContext();
 	glfwSetMouseButtonCallback(window, mouseInput);
@@ -9,28 +10,28 @@ int GameEngine::InputManager::Initialize()
 	return 0;
 }
 
-void GameEngine::InputManager::mouseInput(GLFWwindow *window, int key, int action, int mods)
+void InputManager::mouseInput(GLFWwindow *window, int key, int action, int mods)
 {
 }
 
-void GameEngine::InputManager::keyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
+void InputManager::keyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
 	if (action == GLFW_PRESS)
 		if (key == GLFW_KEY_ESCAPE)
 			glfwSetWindowShouldClose(window, true);
 }
 
-void GameEngine::InputManager::Finalize()
+void InputManager::Finalize()
 {
 	
 }
 
-void GameEngine::InputManager::Tick()
+void InputManager::Tick()
 {
 	glfwPollEvents();
 }
 
-void GameEngine::InputManager::addClickEventListener(const char key, CallBack callBack)
+void InputManager::addClickEventListener(const char key, CallBack callBack)
 {
 	auto iter = g_pInputManager->_listeners.find(key);
 
@@ -44,7 +45,7 @@ void GameEngine::InputManager::addClickEventListener(const char key, CallBack ca
 	iter->second->push(callBack);
 }
 
-void GameEngine::InputManager::removeClickEventListener(char key, CallBack callBack)
+void InputManager::removeClickEventListener(char key, CallBack callBack)
 {
 	auto iter = g_pInputManager->_listeners.find(key);
 	if (iter != g_pInputManager->_listeners.end())
@@ -54,7 +55,7 @@ void GameEngine::InputManager::removeClickEventListener(char key, CallBack callB
 }
 
 //
-void GameEngine::InputManager::dispatchClickEvent(char key)
+void InputManager::dispatchClickEvent(char key)
 {
 	auto iter = g_pInputManager->_listeners.find(key);
 	int i = 0;
@@ -63,3 +64,4 @@ void GameEngine::InputManager::dispatchClickEvent(char key)
 		iter->second->dispatch();
 	}
 }
+GameEngineEnd

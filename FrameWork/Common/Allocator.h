@@ -3,78 +3,79 @@
 #include <stddef.h>
 #include <stdint.h>
 
-namespace GameEngine
+#include "Config.h"
+
+GameEngineBegin
+
+struct BlockHeader
 {
+    // union-ed with data
+    BlockHeader *pNext;
+};
 
-    struct BlockHeader
+struct PageHeader
+{
+    PageHeader *pNext;
+    BlockHeader *Blocks()
     {
-        // union-ed with data
-        BlockHeader *pNext;
-    };
+        return reinterpret_cast<BlockHeader *>(this + 1);
+    }
+};
 
-    struct PageHeader
-    {
-        PageHeader *pNext;
-        BlockHeader *Blocks()
-        {
-            return reinterpret_cast<BlockHeader *>(this + 1);
-        }
-    };
+class Allocator
+{
+public:
+    // debug patterns
+    static const uint8_t PATTERN_ALIGN = 0xFC;
+    static const uint8_t PATTERN_ALLOC = 0xFD;
+    static const uint8_t PATTERN_FREE = 0xFE;
 
-    class Allocator
-    {
-    public:
-        // debug patterns
-        static const uint8_t PATTERN_ALIGN = 0xFC;
-        static const uint8_t PATTERN_ALLOC = 0xFD;
-        static const uint8_t PATTERN_FREE = 0xFE;
+    Allocator();
+    Allocator(size_t data_size, size_t page_size, size_t alignment);
+    ~Allocator();
 
-        Allocator();
-        Allocator(size_t data_size, size_t page_size, size_t alignment);
-        ~Allocator();
+    // resets the allocator to a new configuration
+    void Reset(size_t data_size, size_t page_size, size_t alignment);
 
-        // resets the allocator to a new configuration
-        void Reset(size_t data_size, size_t page_size, size_t alignment);
+    // alloc and free blocks
+    void *Allocate();
+    void Free(void *p);
+    void FreeAll();
 
-        // alloc and free blocks
-        void *Allocate();
-        void Free(void *p);
-        void FreeAll();
-
-    private:
+private:
 #if defined(_DEBUG)
-        // fill a free page with debug patterns
-        void FillFreePage(PageHeader *pPage);
+    // fill a free page with debug patterns
+    void FillFreePage(PageHeader *pPage);
 
-        // fill a block with debug patterns
-        void FillFreeBlock(BlockHeader *pBlock);
+    // fill a block with debug patterns
+    void FillFreeBlock(BlockHeader *pBlock);
 
-        // fill an allocated block with debug patterns
-        void FillAllocatedBlock(BlockHeader *pBlock);
+    // fill an allocated block with debug patterns
+    void FillAllocatedBlock(BlockHeader *pBlock);
 #endif
 
-        // gets the next block
-        BlockHeader *NextBlock(BlockHeader *pBlock);
+    // gets the next block
+    BlockHeader *NextBlock(BlockHeader *pBlock);
 
-        // the page list
-        PageHeader *m_pPageList;
+    // the page list
+    PageHeader *m_pPageList;
 
-        // the free block list
-        BlockHeader *m_pFreeList;
+    // the free block list
+    BlockHeader *m_pFreeList;
 
-        size_t m_szDataSize;
-        size_t m_szPageSize;
-        size_t m_szAlignmentSize;
-        size_t m_szBlockSize;
-        size_t m_nBlocksPerPage;
+    size_t m_szDataSize;
+    size_t m_szPageSize;
+    size_t m_szAlignmentSize;
+    size_t m_szBlockSize;
+    size_t m_nBlocksPerPage;
 
-        // statistics
-        uint32_t m_nPages;
-        uint32_t m_nBlocks;
-        uint32_t m_nFreeBlocks;
+    // statistics
+    uint32_t m_nPages;
+    uint32_t m_nBlocks;
+    uint32_t m_nFreeBlocks;
 
-        // disable copy & assignment
-        Allocator(const Allocator &clone);
-        Allocator &operator=(const Allocator &rhs);
-    };
-} // namespace GameEngine
+    // disable copy & assignment
+    Allocator(const Allocator &clone);
+    Allocator &operator=(const Allocator &rhs);
+};
+GameEngineEnd

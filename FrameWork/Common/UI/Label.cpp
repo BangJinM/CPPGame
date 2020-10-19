@@ -1,39 +1,38 @@
 #include "Label.h"
 
-namespace GameEngine
+GameEngineBegin
+Label::Label()
 {
-	Label::Label()
-	{
-	}
+}
 
-	Label::~Label()
-	{
-	}
+Label::~Label()
+{
+}
 
-	void Label::setFontSize(int size)
-	{
-	}
+void Label::setFontSize(int size)
+{
+}
 
-	int Label::getFontSize()
-	{
-		return 0;
-	}
+int Label::getFontSize()
+{
+	return 0;
+}
 
-	void Label::setText(std::string str)
-	{
-	}
+void Label::setText(std::string str)
+{
+}
 
-	std::string Label::getText()
-	{
-		return std::string();
-	}
+std::string Label::getText()
+{
+	return std::string();
+}
 
-	void Label::setContentSize(vecterFloat2 contentSize)
-	{
-	}
+void Label::setContentSize(vecterFloat2 contentSize)
+{
+}
 
-	vecterFloat2 Label::getContentSize()
-	{
-		return vecterFloat2();
-	}
-} // namespace GameEngine
+vecterFloat2 Label::getContentSize()
+{
+	return vecterFloat2();
+}
+GameEngineEnd

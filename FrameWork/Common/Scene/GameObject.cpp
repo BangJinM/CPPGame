@@ -6,86 +6,87 @@
 #include "Transform.h"
 #include <glm/gtc/type_ptr.hpp>
 
-namespace GameEngine
+GameEngineBegin
+
+std::shared_ptr<GameObject>
+
+GameObject::createGameObject()
 {
+    auto obj = std::make_shared<GameObject>();
+    obj->m_GameObject = obj;
 
-    std::shared_ptr<GameObject> GameObject::createGameObject()
+    obj->addComponent<Transform>(std::make_shared<Transform>());
+
+    return obj;
+}
+
+void GameObject::addChild(std::shared_ptr<GameObject> child)
+{
+    auto begin = m_children.find(child->getName());
+    if (begin != m_children.end())
     {
-        auto obj = std::make_shared<GameObject>();
-        obj->m_GameObject = obj;
-
-        obj->addComponent<Transform>(std::make_shared<Transform>());
-
-        return obj;
+        return;
     }
+    child->setParent(m_GameObject.lock());
+    m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
+}
 
-    void GameObject::addChild(std::shared_ptr<GameObject> child)
+std::shared_ptr<GameObject> GameObject::getChildByName(std::string name)
+{
+    auto begin = m_children.find(name);
+    if (begin != m_children.end())
     {
-        auto begin = m_children.find(child->getName());
-        if (begin != m_children.end())
-        {
-            return;
-        }
-        child->setParent(m_GameObject.lock());
-        m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
+        return begin->second;
     }
+    return nullptr;
+}
 
-    std::shared_ptr<GameObject> GameObject::getChildByName(std::string name)
+void GameObject::deleteChild(std::shared_ptr<GameObject> child)
+{
+    auto begin = m_children.find(child->getName());
+    if (begin != m_children.end())
     {
-        auto begin = m_children.find(name);
-        if (begin != m_children.end())
-        {
-            return begin->second;
-        }
-        return nullptr;
+        m_children.erase(child->getName());
     }
+}
 
-    void GameObject::deleteChild(std::shared_ptr<GameObject> child)
+void GameObject::setParent(std::shared_ptr<GameObject> parent)
+{
+    m_Parent = parent;
+}
+
+std::shared_ptr<GameObject> GameObject::getParent()
+{
+    return m_Parent;
+}
+
+GameObject::GameObject()
+{
+}
+
+GameObject::~GameObject()
+{
+    m_compenents.clear();
+    m_children.clear();
+}
+
+void GameObject::setName(std::string name)
+{
+    m_Name = name;
+}
+
+void GameObject::Update()
+{
+    for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
     {
-        auto begin = m_children.find(child->getName());
-        if (begin != m_children.end())
-        {
-            m_children.erase(child->getName());
-        }
+        if (!(*i)->m_Started)
+            (*i)->Start();
+        (*i)->Update();
     }
-
-    void GameObject::setParent(std::shared_ptr<GameObject> parent)
+    for (auto i = m_children.begin(); i != m_children.end(); i++)
     {
-        m_Parent = parent;
+        i->second->Update();
     }
+}
 
-    std::shared_ptr<GameObject> GameObject::getParent()
-    {
-        return m_Parent;
-    }
-
-    GameObject::GameObject()
-    {
-    }
-
-    GameObject::~GameObject()
-    {
-        m_compenents.clear();
-        m_children.clear();
-    }
-
-    void GameObject::setName(std::string name)
-    {
-        m_Name = name;
-    }
-
-    void GameObject::Update()
-    {
-        for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
-        {
-            if (!(*i)->m_Started)
-                (*i)->Start();
-            (*i)->Update();
-        }
-        for (auto i = m_children.begin(); i != m_children.end(); i++)
-        {
-            i->second->Update();
-        }
-    }
-
-} // namespace GameEngine
+GameEngineEnd

@@ -1,13 +1,15 @@
 #pragma once
 
+#include "Config.h"
 #include "Buffer.h"
 #include "Image.h"
 
-namespace GameEngine
+GameEngineBegin
+
+class ImageParser
 {
-    class ImageParser
-    {
-    public:
-        virtual Image Parse(const Buffer &buf) = 0;
-    };
-} // namespace GameEngine
+public:
+    virtual Image Parse(const Buffer &buf) = 0;
+};
+
+GameEngineEnd
