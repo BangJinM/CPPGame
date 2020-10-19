@@ -1,7 +1,7 @@
 #!/bin/bash
 git submodule update --init ../External/src/crossguid
-mkdir -p ../External/build/crossguid
-cd ../External/build/crossguid
-cmake -DCMAKE_INSTALL_PREFIX=../../ ../../src/crossguid
-cmake --build . --config debug --target install
+mkdir -p ../build/crossguid
+cd  ../build/crossguid
+cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=../../External ../../External/src/crossguid
+make install
 

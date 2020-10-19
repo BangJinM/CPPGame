@@ -13,4 +13,4 @@
 	url = https://github.com/BangjinMa/OpenGEX.git
 [submodule "External/src/freetype"]
 	path = External/src/freetype
-	url = https://github.com/BangjinMa/freetype-windows-binaries.git
+	url = https://git.sv.nongnu.org/r/freetype/freetype2.git

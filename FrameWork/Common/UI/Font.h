@@ -5,8 +5,8 @@
 #include "Object.h"
 #include "Texture.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
+// #include <ft2build.h>
+// #include FT_FREETYPE_H
 
 
 namespace GameEngine
@@ -27,19 +27,19 @@ namespace GameEngine
 	class Font : public Object
 	{
 	private:
-		std::string m_Path;
-		FT_Face m_Face;
+	// 	std::string m_Path;
+	// 	FT_Face m_Face;
 
-	public:
-		Font();
-		~Font();
+	// public:
+	// 	Font();
+	// 	~Font();
 
-		void setFace(FT_Face face);
-		void setPath(std::string path);
+	// 	void setFace(FT_Face face);
+	// 	void setPath(std::string path);
 
-		void getText();
+	// 	void getText();
 
-		static FT_Library GetFontTypeLib();
+	// 	static FT_Library GetFontTypeLib();
 	};
 
 } // namespace GameEngine

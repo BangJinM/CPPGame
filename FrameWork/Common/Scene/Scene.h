@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <memory>
 namespace GameEngine
 {
   class Camera;

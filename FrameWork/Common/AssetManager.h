@@ -33,7 +33,7 @@ namespace GameEngine
         static std::shared_ptr<Texture> LoadTexture(const std::string &path);
         static std::shared_ptr<Material> LoadMaterial(const std::string &path);
 
-        static std::shared_ptr<Font> GetFont(const std::string &path);
+        // static std::shared_ptr<Font> GetFont(const std::string &path);
         static std::shared_ptr<Texture> GetTexture(const std::string &path);
         static void AddTexture(const std::string &path, std::shared_ptr<Texture> image);
 

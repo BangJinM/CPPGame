@@ -3,8 +3,8 @@ add_executable(Windows
 )
 target_link_libraries(Windows Common)
 
-find_library(GLEW glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
-target_link_libraries(Windows ${GLEW})
+find_library(GLFW3 libglfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
+target_link_libraries(Windows ${GLFW3})
 
 
 

@@ -7,21 +7,12 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <memory>
 
 #include "Texture.h"
 #include "Shader.h"
 #include "Buffer.h"
 #include "MyMath.h"
-
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#else
-#define DBG_NEW new
-#endif
 
 namespace GameEngine
 {

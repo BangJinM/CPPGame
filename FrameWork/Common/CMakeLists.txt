@@ -52,8 +52,8 @@ target_link_libraries(Common Glad cJson)
 
 target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad/include")
 
-find_library(FREETYPE freetype PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
-target_link_libraries(Common ${FREETYPE})
+# find_library(FREETYPE freetype PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
+# target_link_libraries(Common ${FREETYPE})
 
 SOURCE_GROUP( src\\Parser FILES ${Parser})
 SOURCE_GROUP( src\\3dloader FILES ${3dloader})

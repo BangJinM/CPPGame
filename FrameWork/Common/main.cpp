@@ -19,8 +19,6 @@ namespace GameEngine
 
 int main(int argc, char *argv[])
 {
-	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
-
 	for (int i = 0; i < argc; i++)
 		printf(argv[i]);
 

@@ -7,6 +7,7 @@
 #include "ClassIDs.h"
 namespace GameEngine
 {
+    class GameObject;
     class Component : public Object
     {
         friend class GameObject;
