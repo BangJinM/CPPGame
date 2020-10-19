@@ -11,6 +11,3 @@
 [submodule "External/src/OpenGEX"]
 	path = External/src/OpenGEX
 	url = https://github.com/BangjinMa/OpenGEX.git
-[submodule "External/src/freetype"]
-	path = External/src/freetype
-	url = https://git.sv.nongnu.org/r/freetype/freetype2.git

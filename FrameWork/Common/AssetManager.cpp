@@ -21,9 +21,9 @@ namespace GameEngine
 		// if (FT_Init_FreeType(&ft))
 		// {
 		// 	std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-		// 	return 1;
+			// return 1;
 		// }
-		// return 0;
+		return 0;
 	}
 
 	void AssetManager::Finalize()
