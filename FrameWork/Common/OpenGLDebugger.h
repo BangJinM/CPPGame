@@ -1,5 +1,4 @@
-#ifndef Gameengine_Common_OpenGLDebugger_H_
-#define Gameengine_Common_OpenGLDebugger_H_
+#pragma once
 
 #include <iostream>
 #include <glad/glad.h>
@@ -51,4 +50,3 @@ namespace GameEngine
 	};
 
 } // namespace GameEngine
-#endif

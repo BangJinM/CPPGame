@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_Renderer_H
-#define GameEngine_Common_Scene_Renderer_H
+#pragma once
 
 #include <list>
 #include <vector>
@@ -26,4 +25,3 @@ namespace GameEngine
         std::vector<std::shared_ptr<Material>> m_Materials;
     };
 } // namespace GameEngine
-#endif

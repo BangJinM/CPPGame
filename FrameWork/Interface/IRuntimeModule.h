@@ -1,6 +1,5 @@
+#pragma once
 
-#ifndef CPPGAME_INTERFACE_IRUNTIMEMODULE_H
-#define CPPGAME_INTERFACE_IRUNTIMEMODULE_H
 namespace GameEngine
 {
 	class IRuntimeModule
@@ -21,4 +20,3 @@ namespace GameEngine
 		virtual void Tick() = 0;
 	};
 } // namespace GameEngine
-#endif //CPPGAME_INTERFACE_IRUNTIMEMODULE_H

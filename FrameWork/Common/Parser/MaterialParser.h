@@ -4,8 +4,7 @@
 // Licensed under 2-clause BSD license.
 //
 //https://github.com/syoyo/tinyobjloader
-#ifndef _GameEngine_Common_Material_Parser_H
-#define _GameEngine_Common_Material_Parser_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -59,5 +58,3 @@ namespace GameEngine
 	}; // namespace GameEngine
 
 } // namespace GameEngine
-
-#endif // _TINY_OBJ_LOADER_H

@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_Shader_H
-#define GameEngine_Common_Scene_Shader_H
+#pragma once
 
 #include <cstdint>
 #include <string>
@@ -290,4 +289,3 @@ namespace GameEngine
 
 } // namespace GameEngine
 
-#endif

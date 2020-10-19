@@ -1,5 +1,4 @@
-#ifndef GameEngine_InputManager_H
-#define GameEngine_InputManager_H
+#pragma once
 
 #include "IRuntimeModule.h"
 #include <list>
@@ -72,4 +71,3 @@ namespace GameEngine
 	};
 
 } // namespace GameEngine
-#endif

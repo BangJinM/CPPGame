@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_Mesh_H
-#define GameEngine_Common_Scene_Mesh_H
+#pragma once
 
 #include <glad/glad.h>
 #include <vector>
@@ -81,4 +80,3 @@ namespace GameEngine
     };
 
 } // namespace GameEngine
-#endif

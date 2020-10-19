@@ -1,15 +1,13 @@
-#ifndef CPPGAME_INTERFACE_ImageParser_H
-#define CPPGAME_INTERFACE_ImageParser_H
+#pragma once
 
 #include "Buffer.h"
 #include "Image.h"
 
-namespace GameEngine {
+namespace GameEngine
+{
     class ImageParser
     {
     public:
-        virtual Image Parse(const Buffer& buf) = 0;
+        virtual Image Parse(const Buffer &buf) = 0;
     };
-}
-
-#endif
+} // namespace GameEngine

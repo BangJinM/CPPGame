@@ -2,12 +2,13 @@
 // Created by 马邦进 on 2018/4/21.
 //
 
-#ifndef CPPGAME_INTERFACE_IAPPLICATION_H
-#define CPPGAME_INTERFACE_IAPPLICATION_H
+#pragma once
 
 #include "IRuntimeModule.h"
-namespace GameEngine{
-	class IApplication :public IRuntimeModule{
+namespace GameEngine
+{
+	class IApplication : public IRuntimeModule
+	{
 	public:
 		virtual int Initialize() = 0;
 
@@ -22,5 +23,4 @@ namespace GameEngine{
 		*/
 		virtual bool IsQuit() = 0;
 	};
-}
-#endif //MAENGINE_IAPPLICATION_H
+} // namespace GameEngine

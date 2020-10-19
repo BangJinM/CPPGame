@@ -1,5 +1,4 @@
-#ifndef GameEngine_Buffer_H
-#define GameEngine_Buffer_H
+#pragma once
 
 #include <memory.h>
 #include <stddef.h>
@@ -84,5 +83,3 @@ namespace GameEngine
         size_t m_szAlignment;
     };
 } // namespace GameEngine
-
-#endif

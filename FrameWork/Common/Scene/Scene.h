@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_H
-#define GameEngine_Common_Scene_H
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -52,5 +51,3 @@ namespace GameEngine
   };
 
 } // namespace GameEngine
-
-#endif

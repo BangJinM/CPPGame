@@ -1,5 +1,5 @@
-#ifndef CPPGAME_COMMON_AssetLoader_H
-#define CPPGAME_COMMON_AssetLoader_H
+#pragma once
+
 #include "IRuntimeModule.h"
 #include "Buffer.h"
 #include <string>
@@ -80,5 +80,3 @@ namespace GameEngine
     };
 
 } // namespace GameEngine
-
-#endif

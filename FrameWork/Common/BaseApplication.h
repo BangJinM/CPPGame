@@ -2,8 +2,7 @@
 // Created by 马邦�? on 2018/4/21.
 //
 
-#ifndef MAENGINE_BASEAPPLICATION_H
-#define MAENGINE_BASEAPPLICATION_H
+#pragma once
 
 #include "IApplication.h"
 #include "GfxConfiguration.h"
@@ -36,4 +35,4 @@ namespace GameEngine
         BaseApplication(){};
     };
 } // namespace GameEngine
-#endif //MAENGINE_BASEAPPLICATION_H
+

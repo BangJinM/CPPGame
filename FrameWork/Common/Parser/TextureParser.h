@@ -1,6 +1,4 @@
-#ifndef CPPGAME_INTERFACE_TextureParser_H
-#define CPPGAME_INTERFACE_TextureParser_H
-
+#pragma once
 #include <cstdint>
 #include <memory>
 
@@ -66,4 +64,4 @@ namespace GameEngine
 
 } // namespace GameEngine
 
-#endif
+#pragma once

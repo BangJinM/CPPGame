@@ -1,6 +1,6 @@
 
 
-#pragma one
+#pragma once
 #include "InputManager.h"
 #include "Material.h"
 #include "MyMath.h"

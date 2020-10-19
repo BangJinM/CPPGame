@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_AssetManager_H
-#define GameEngine_Common_AssetManager_H
+#pragma once
 
 #include "IRuntimeModule.h"
 #include <list>
@@ -41,4 +40,3 @@ namespace GameEngine
     };
 
 } // namespace GameEngine
-#endif

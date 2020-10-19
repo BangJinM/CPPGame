@@ -1,5 +1,4 @@
-#ifndef GameEngine_MemoryManager_H
-#define GameEngine_MemoryManager_H
+#pragma once
 #include <new>
 #include "IRuntimeModule.h"
 #include "Allocator.h"
@@ -41,5 +40,3 @@ namespace GameEngine
         static Allocator *LookUpAllocator(size_t size);
     };
 } // namespace GameEngine
-
-#endif

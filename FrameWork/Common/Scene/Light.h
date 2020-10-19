@@ -1,5 +1,4 @@
-#ifndef CPPGAME_Common_Scene_Light_H
-#define CPPGAME_Common_Scene_Light_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -64,4 +63,3 @@ namespace GameEngine
     };
 
 } // namespace GameEngine
-#endif //SRC_RENDERER_LIGHT_H

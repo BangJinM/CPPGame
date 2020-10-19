@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_MeshRenderer_H
-#define GameEngine_Common_Scene_MeshRenderer_H
+#pragma once
 
 #include "Renderer.h"
 #include "Mesh.h"
@@ -19,4 +18,3 @@ namespace GameEngine
         std::shared_ptr<Mesh> m_Mesh;
     };
 } // namespace GameEngine
-#endif

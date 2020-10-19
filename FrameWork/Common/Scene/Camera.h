@@ -1,5 +1,4 @@
-#ifndef CPPGAME_Common_Scene_Camera_H
-#define CPPGAME_Common_Scene_Camera_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -51,4 +50,3 @@ namespace GameEngine
         glm::mat4 m_ProjectionMatrix4_Orthographic;
     };
 } // namespace GameEngine
-#endif //SRC_RENDERER_CAMERA_H

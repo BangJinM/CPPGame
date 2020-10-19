@@ -1,5 +1,4 @@
-#ifndef GameEngine_Allocator_H
-#define GameEngine_Allocator_H
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -79,5 +78,3 @@ namespace GameEngine
         Allocator &operator=(const Allocator &rhs);
     };
 } // namespace GameEngine
-
-#endif

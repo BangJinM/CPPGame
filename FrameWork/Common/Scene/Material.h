@@ -1,5 +1,4 @@
-#ifndef CPPGAME_Common_Scene_Material_H
-#define CPPGAME_Common_Scene_Material_H
+#pragma once
 
 #include "MyMath.h"
 #include "Object.h"
@@ -134,4 +133,3 @@ namespace GameEngine
     }
 } // namespace GameEngine
 
-#endif //MAENGINE_IAPPLICATION_H

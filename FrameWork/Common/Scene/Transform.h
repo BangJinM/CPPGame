@@ -1,5 +1,4 @@
-#ifndef CPPGAME_Common_Scene_Transform_H
-#define CPPGAME_Common_Scene_Transform_H
+#pragma once
 
 #include "MyMath.h"
 #include "Component.h"
@@ -32,4 +31,3 @@ namespace GameEngine
     };
 } // namespace GameEngine
 
-#endif //MAENGINE_IAPPLICATION_H

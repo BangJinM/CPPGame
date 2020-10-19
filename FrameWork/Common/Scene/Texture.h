@@ -1,5 +1,4 @@
-#ifndef GameEngine_Image_H
-#define GameEngine_Image_H
+#pragma once
 
 #include <cstdint>
 #include "MyMath.h"
@@ -19,4 +18,3 @@ namespace GameEngine
     };
 } // namespace GameEngine
 
-#endif

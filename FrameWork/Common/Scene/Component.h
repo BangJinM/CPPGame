@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_Component_H
-#define GameEngine_Common_Scene_Component_H
+#pragma once
 
 #include "ClassIDs.h"
 #include <memory>
@@ -62,4 +61,3 @@ namespace GameEngine
         bool m_Started = false;
     };
 } // namespace GameEngine
-#endif

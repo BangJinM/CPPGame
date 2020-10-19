@@ -1,5 +1,4 @@
-#ifndef GameEngine_Common_Scene_Object_H
-#define GameEngine_Common_Scene_Object_H
+#pragma once
 
 #include "ClassIDs.h"
 #include <map>
@@ -115,4 +114,3 @@ namespace GameEngine
     }
 
 } // namespace GameEngine
-#endif

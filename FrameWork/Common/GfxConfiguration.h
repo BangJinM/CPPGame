@@ -1,5 +1,5 @@
-#ifndef CPPGAME_COMMON_GFXCONFIGURATION_H
-#define CPPGAME_COMMON_GFXCONFIGURATION_H
+#pragma once
+
 #include <cstdint>
 #include <iostream>
 namespace GameEngine
@@ -44,4 +44,4 @@ namespace GameEngine
         }
     };
 } // namespace GameEngine
-#endif //MAENGINE_GFXCONFIGURATION_H
+
