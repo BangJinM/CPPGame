@@ -28,7 +28,7 @@ public:
     }
     Component(ClassIDType classID) : m_ClassID(classID) {}
 
-    void setParent(std::shared_ptr<GameObject> host)
+    void setParent(SharedGameObject host)
     {
         if (m_Parent.lock() != host)
         {
@@ -36,7 +36,7 @@ public:
         }
     }
 
-    std::shared_ptr<GameObject> getParent()
+    SharedGameObject getParent()
     {
         return m_Parent.lock();
     }
@@ -51,7 +51,7 @@ public:
     virtual void Update() {}
     virtual void LateUpdate() {}
     virtual void OnEnable(bool enable) { m_Enable = enable; }
-    virtual void InitComponent(std::shared_ptr<GameObject> host)
+    virtual void InitComponent(SharedGameObject host)
     {
         setParent(host);
     }

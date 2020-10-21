@@ -19,7 +19,7 @@ glm::mat4 Camera::getProjectionMatrix()
 	return this->m_ProjectionMatrix4_Perspective;
 }
 
-void Camera::Render(std::list<std::shared_ptr<Renderer>> renderers)
+void Camera::Render(std::list<SharePtr<Renderer>> renderers)
 {
 	auto viewMat = getParent()->getComponent<Transform>()->getMatrix();
 	auto projectMat = m_ProjectionMatrix4_Perspective;

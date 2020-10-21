@@ -20,10 +20,10 @@ public:
     virtual void Tick();
     virtual void Clear();
 
-    void addRendererCommand(std::shared_ptr<Renderer> command);
+    void addRendererCommand(SharePtr<Renderer> command);
 
 private:
-    std::vector<std::shared_ptr<Renderer>> m_RendererCommands;
+    std::vector<SharePtr<Renderer>> m_RendererCommands;
 };
 
 extern GraphicsManager *g_pGraphicsManager;

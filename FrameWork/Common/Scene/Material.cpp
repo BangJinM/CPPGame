@@ -42,7 +42,7 @@ void Material::Prepare()
 			if (location != -1)
 			{
 				OpenGLDebugger::glCheckError();
-				std::shared_ptr<Texture> image = g_pAssetManager->LoadTexture(property);
+				SharedTexture image = g_pAssetManager->LoadTexture(property);
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
 				m_Shader.setInt(data.name, textureID);

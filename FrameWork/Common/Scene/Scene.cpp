@@ -31,16 +31,16 @@ void Scene::LoadSceneByPath(std::string path)
 	SceneParser::Parse(path, this);
 }
 
-void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject)
+void Scene::AddGameObject(SharedGameObject gameobject)
 {
 	GetRootGameObject()->addChild(gameobject);
 }
 
-void Scene::AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent)
+void Scene::AddGameObject(SharedGameObject gameobject, SharedGameObject parent)
 {
 }
 
-std::shared_ptr<GameObject> Scene::GetRootGameObject() { return m_Root; }
+SharedGameObject Scene::GetRootGameObject() { return m_Root; }
 
 Scene::~Scene()
 {
@@ -70,7 +70,7 @@ void Scene::RemoveCamera()
 {
 }
 
-void Scene::AddCamera(std::shared_ptr<Camera> camera)
+void Scene::AddCamera(SharePtr<Camera> camera)
 {
 	m_Cameras.push_back(camera);
 }
@@ -82,31 +82,31 @@ void Scene::PrepareAll()
 		(*i)->Prepare();
 	}
 }
-void Scene::AddRenderer(std::shared_ptr<Renderer> reenderer)
+void Scene::AddRenderer(SharePtr<Renderer> reenderer)
 {
 	m_Renderers.push_back(reenderer);
 }
 void Scene::RemoveRenderer()
 {
 }
-std::shared_ptr<CanvasRenderer> Scene::GetCanvasRenderer()
+SharePtr<CanvasRenderer> Scene::GetCanvasRenderer()
 {
 	return m_Canvas;
 }
 
-void Scene::SetCanvasRenderer(std::shared_ptr<CanvasRenderer> canvas)
+void Scene::SetCanvasRenderer(SharePtr<CanvasRenderer> canvas)
 {
 	m_Canvas = canvas;
 }
 
-std::shared_ptr<GameObject> Scene::GetObject(std::shared_ptr<GameObject> parent, int sid)
+SharedGameObject Scene::GetObject(SharedGameObject parent, int sid)
 {
-	std::map<std::string, std::shared_ptr<GameObject>> children;
+	std::map<std::string, SharedGameObject> children;
 	if (parent)
 		children = parent->getChildren();
 	else
 		children = GetRootGameObject()->getChildren();
-	std::shared_ptr<GameObject> result;
+	SharedGameObject result;
 	for (auto i = children.begin(); i != children.end(); i++)
 	{
 		auto child = i->second;
@@ -118,6 +118,6 @@ std::shared_ptr<GameObject> Scene::GetObject(std::shared_ptr<GameObject> parent,
 		if (result)
 			return result;
 	}
-	return std::shared_ptr<GameObject>();
+	return SharedGameObject();
 }
 GameEngineEnd

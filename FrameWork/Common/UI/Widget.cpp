@@ -16,12 +16,12 @@ Widget::~Widget()
 {
 }
 
-void Widget::InitComponent(std::shared_ptr<GameObject> host)
+void Widget::InitComponent(SharedGameObject host)
 {
 	Component::InitComponent(host);
 }
 
-void Widget::setCanvasRenderer(std::shared_ptr<CanvasRenderer> canvasRenderer)
+void Widget::setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer)
 {
 }
 
@@ -108,7 +108,7 @@ void Widget::Start()
 	Component::Start();
 }
 
-std::shared_ptr<Material> Widget::GetMaterial()
+SharedMaterial Widget::GetMaterial()
 {
 	return m_Material;
 }

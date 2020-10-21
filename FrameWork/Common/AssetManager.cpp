@@ -14,7 +14,7 @@ GameEngineBegin
 extern AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 
-static std::map<std::string, std::shared_ptr<Object>> g_cache;
+static std::map<std::string, SharedObject> g_cache;
 static FT_Library ft;
 
 int AssetManager::Initialize()
@@ -37,20 +37,20 @@ void AssetManager::Tick()
 {
 }
 
-std::shared_ptr<GameObject> AssetManager::LoadGameObject(const std::string &path)
+SharedGameObject AssetManager::LoadGameObject(const std::string &path)
 {
-	std::shared_ptr<GameObject> obj;
+	SharedGameObject obj;
 	// if (g_pAssetLoader->FileExists(path.c_str()))
 	// {
 
-	// 	obj = ReadGameObject(ms, std::shared_ptr<GameObject>());
+	// 	obj = ReadGameObject(ms, SharedGameObject());
 	// }
 	return obj;
 }
 
-std::shared_ptr<Material> AssetManager::LoadMaterial(const std::string &path)
+SharedMaterial AssetManager::LoadMaterial(const std::string &path)
 {
-	std::shared_ptr<Material> obj;
+	SharedMaterial obj;
 	if (g_cache.find(path) != g_cache.end())
 	{
 		return std::dynamic_pointer_cast<Material>(g_cache[path]);
@@ -61,22 +61,22 @@ std::shared_ptr<Material> AssetManager::LoadMaterial(const std::string &path)
 	return obj;
 }
 
-std::shared_ptr<Mesh> AssetManager::LoadMesh(const std::string &path)
+SharedMesh AssetManager::LoadMesh(const std::string &path)
 {
 	if (g_cache.find(path) != g_cache.end())
 	{
 		return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
 	}
 
-	std::shared_ptr<Mesh> mesh = ObjParser::Parse(path);
+	SharedMesh mesh = ObjParser::Parse(path);
 	if (mesh)
 		g_cache[path] = mesh;
 	return mesh;
 }
 
-std::shared_ptr<Texture> AssetManager::LoadTexture(const std::string &path)
+SharedTexture AssetManager::LoadTexture(const std::string &path)
 {
-	std::shared_ptr<Texture> image;
+	SharedTexture image;
 	if (g_cache.find(path) != g_cache.end())
 	{
 		return std::dynamic_pointer_cast<Texture>(g_cache[path]);
@@ -90,9 +90,9 @@ std::shared_ptr<Texture> AssetManager::LoadTexture(const std::string &path)
 	}
 	return image;
 }
-// std::shared_ptr<Font> AssetManager::GetFont(const std::string &path)
+// SharePtr<Font> AssetManager::GetFont(const std::string &path)
 // {
-// 	std::shared_ptr<Font> font;
+// 	SharePtr<Font> font;
 // 	if (g_cache.find(path) != g_cache.end())
 // 	{
 // 		return std::dynamic_pointer_cast<Font>(g_cache[path]);
@@ -106,7 +106,7 @@ std::shared_ptr<Texture> AssetManager::LoadTexture(const std::string &path)
 // 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 // 		}
 
-// 		font = std::shared_ptr<Font>(new Font());
+// 		font = SharePtr<Font>(new Font());
 // 		font->setFace(face);
 // 		font->setPath(path);
 
@@ -114,9 +114,9 @@ std::shared_ptr<Texture> AssetManager::LoadTexture(const std::string &path)
 // 	}
 // 	return font;
 // }
-std::shared_ptr<Texture> AssetManager::GetTexture(const std::string &path)
+SharedTexture AssetManager::GetTexture(const std::string &path)
 {
-	std::shared_ptr<Texture> image;
+	SharedTexture image;
 	if (g_cache.find(path) != g_cache.end())
 	{
 		return std::dynamic_pointer_cast<Texture>(g_cache[path]);
@@ -124,7 +124,7 @@ std::shared_ptr<Texture> AssetManager::GetTexture(const std::string &path)
 	return image;
 }
 
-void AssetManager::AddTexture(const std::string &path, std::shared_ptr<Texture> image)
+void AssetManager::AddTexture(const std::string &path, SharedTexture image)
 {
 	if (g_cache.find(path) != g_cache.end() || !image)
 	{
@@ -133,7 +133,7 @@ void AssetManager::AddTexture(const std::string &path, std::shared_ptr<Texture> 
 	g_cache[path] = image;
 }
 const int size = 4;
-std::shared_ptr<Texture> AssetManager::getWhiteTexture()
+SharedTexture AssetManager::getWhiteTexture()
 {
 
 	const std::string path = "default/white.png";

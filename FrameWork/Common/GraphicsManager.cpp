@@ -42,7 +42,7 @@ int GraphicsManager::Initialize()
         glCullFace(GL_BACK);
         // }
 
-        std::shared_ptr<Scene> m_Scene;
+        SharePtr<Scene> m_Scene;
         m_Scene = std::make_shared<Scene>();
         m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
         SceneManager::GetInstance()->SetNextScene(m_Scene);
@@ -68,7 +68,7 @@ void GraphicsManager::Tick()
 void GraphicsManager::Clear()
 {
 }
-void GraphicsManager::addRendererCommand(std::shared_ptr<Renderer> command)
+void GraphicsManager::addRendererCommand(SharePtr<Renderer> command)
 {
     m_RendererCommands.push_back(command);
 }

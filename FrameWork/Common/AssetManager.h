@@ -26,16 +26,16 @@ public:
     virtual void Finalize();
     virtual void Tick();
 
-    static std::shared_ptr<GameObject> LoadGameObject(const std::string &path);
-    static std::shared_ptr<Mesh> LoadMesh(const std::string &path);
-    static std::shared_ptr<Texture> LoadTexture(const std::string &path);
-    static std::shared_ptr<Material> LoadMaterial(const std::string &path);
+    static SharedGameObject LoadGameObject(const std::string &path);
+    static SharedMesh LoadMesh(const std::string &path);
+    static SharedTexture LoadTexture(const std::string &path);
+    static SharedMaterial LoadMaterial(const std::string &path);
 
-    // static std::shared_ptr<Font> GetFont(const std::string &path);
-    static std::shared_ptr<Texture> GetTexture(const std::string &path);
-    static void AddTexture(const std::string &path, std::shared_ptr<Texture> image);
+    // static SharePtr<Font> GetFont(const std::string &path);
+    static SharedTexture GetTexture(const std::string &path);
+    static void AddTexture(const std::string &path, SharedTexture image);
 
-    static std::shared_ptr<Texture> getWhiteTexture();
+    static SharedTexture getWhiteTexture();
 };
 
 GameEngineEnd

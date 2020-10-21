@@ -44,5 +44,5 @@ set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)
 add_subdirectory(FrameWork)
 add_subdirectory(Platform)
 add_subdirectory(Test)
-add_subdirectory(Editor)
+# add_subdirectory(Editor)
 

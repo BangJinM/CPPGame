@@ -19,24 +19,24 @@ class GameObject : public Object
     friend class Component;
 
 public:
-    static std::shared_ptr<GameObject> createGameObject();
+    static SharedGameObject createGameObject();
     template <class T>
-    std::shared_ptr<T> getComponent();
+    SharePtr<T> getComponent();
     template <class T>
-    std::shared_ptr<T> addComponent(std::shared_ptr<T> component);
+    SharePtr<T> addComponent(SharePtr<T> component);
     template <class T>
-    void removeComponent(std::shared_ptr<T> component);
+    void removeComponent(SharePtr<T> component);
     template <class T>
-    std::shared_ptr<T> addComponent(T *component);
+    SharePtr<T> addComponent(T *component);
 
-    void addChild(std::shared_ptr<GameObject> child);
-    void deleteChild(std::shared_ptr<GameObject> child);
+    void addChild(SharedGameObject child);
+    void deleteChild(SharedGameObject child);
 
     void setName(std::string name);
 
-    std::shared_ptr<GameObject> getChildByName(std::string name);
-    std::shared_ptr<GameObject> getParent();
-    void setParent(std::shared_ptr<GameObject> parent);
+    SharedGameObject getChildByName(std::string name);
+    SharedGameObject getParent();
+    void setParent(SharedGameObject parent);
 
     void Update();
 
@@ -48,27 +48,27 @@ public:
         return m_Name;
     }
 
-    std::map<std::string, std::shared_ptr<GameObject>> getChildren()
+    std::map<std::string, SharedGameObject> getChildren()
     {
         return m_children;
     }
 
 private:
-    std::vector<std::shared_ptr<Component>> m_compenents;
-    std::shared_ptr<GameObject> m_Parent;
-    std::map<std::string, std::shared_ptr<GameObject>> m_children;
+    std::vector<SharePtr<Component>> m_compenents;
+    SharedGameObject m_Parent;
+    std::map<std::string, SharedGameObject> m_children;
     std::string m_Name;
 
 public:
     //private:
     bool m_isVisual = true;
-    std::shared_ptr<Mesh> m_Mesh;
+    SharedMesh m_Mesh;
     std::weak_ptr<GameObject> m_GameObject;
-    std::vector<std::shared_ptr<Material>> m_Materials;
+    std::vector<SharedMaterial> m_Materials;
 };
 
 template <class T>
-inline std::shared_ptr<T> GameObject::getComponent()
+inline SharePtr<T> GameObject::getComponent()
 {
     for (int i = 0; i < m_compenents.size(); ++i)
     {
@@ -79,11 +79,11 @@ inline std::shared_ptr<T> GameObject::getComponent()
             return t;
         }
     }
-    return std::shared_ptr<T>();
+    return SharePtr<T>();
 }
 
 template <class T>
-inline void GameObject::removeComponent(std::shared_ptr<T> component)
+inline void GameObject::removeComponent(SharePtr<T> component)
 {
     for (int i = 0; i < m_compenents.size(); ++i)
     {
@@ -95,7 +95,7 @@ inline void GameObject::removeComponent(std::shared_ptr<T> component)
     }
 }
 template <class T>
-inline std::shared_ptr<T> GameObject::addComponent(std::shared_ptr<T> component)
+inline SharePtr<T> GameObject::addComponent(SharePtr<T> component)
 {
     if (component)
     {
@@ -104,13 +104,13 @@ inline std::shared_ptr<T> GameObject::addComponent(std::shared_ptr<T> component)
         m_compenents.push_back(component);
         return component;
     }
-    return std::shared_ptr<T>();
+    return SharePtr<T>();
 }
 
 template <class T>
-inline std::shared_ptr<T> GameObject::addComponent(T *component)
+inline SharePtr<T> GameObject::addComponent(T *component)
 {
-    std::shared_ptr<T> t = std::shared_ptr<T>(component);
+    SharePtr<T> t = SharePtr<T>(component);
     auto com = addComponent<T>(t);
     return com;
 }

@@ -3,18 +3,18 @@
 
 GameEngineBegin
 
-std::shared_ptr<SceneManager>	
+SharePtr<SceneManager>	
 SceneManager::m_SceneManager;
 
-std::shared_ptr<SceneManager> SceneManager::GetInstance()
+SharePtr<SceneManager> SceneManager::GetInstance()
 {
 	if (m_SceneManager)
 		return m_SceneManager;
-	m_SceneManager = std::shared_ptr<SceneManager>(new SceneManager());
+	m_SceneManager = SharePtr<SceneManager>(new SceneManager());
 	return m_SceneManager;
 }
 
-void SceneManager::SetNextScene(std::shared_ptr<Scene> scene)
+void SceneManager::SetNextScene(SharePtr<Scene> scene)
 {
 	nextScene = scene;
 }
@@ -27,7 +27,7 @@ void SceneManager::ChangeScene()
 	nextScene = nullptr;
 }
 
-std::shared_ptr<Scene> SceneManager::GetScene()
+SharePtr<Scene> SceneManager::GetScene()
 {
 	if (curScene)
 		return curScene;

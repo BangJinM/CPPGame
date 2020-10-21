@@ -18,7 +18,7 @@ class Widget : public Component
 private:
     /* data */
     std::weak_ptr<CanvasRenderer> m_CanvasRenderer;
-    std::shared_ptr<Material> m_Material;
+    SharedMaterial m_Material;
     MeshData m_MeshData;
 
     vecterFloat3 color[4];
@@ -31,14 +31,14 @@ public:
     Widget(/* args */);
     ~Widget();
 
-    std::shared_ptr<Material> GetMaterial();
+    SharedMaterial GetMaterial();
     MeshData GetMeshData();
 
     virtual void Start();
-    virtual void InitComponent(std::shared_ptr<GameObject> host);
+    virtual void InitComponent(SharedGameObject host);
 
-    std::shared_ptr<CanvasRenderer> getCanvasRenderer();
-    void setCanvasRenderer(std::shared_ptr<CanvasRenderer> canvasRenderer);
+    SharePtr<CanvasRenderer> getCanvasRenderer();
+    void setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer);
 
     void initDefaultMesh();
     void initMaterial();

@@ -20,7 +20,7 @@ class ObjParser
 {
 
 public:
-	static std::shared_ptr<Mesh> Parse(const std::string modelPath)
+	static SharedMesh Parse(const std::string modelPath)
 	{
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;
@@ -29,9 +29,9 @@ public:
 		return parserMesh(shapes, materials);
 	}
 
-	static std::shared_ptr<Mesh> parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
+	static SharedMesh parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
 	{
-		std::shared_ptr<Mesh> m_mesh;
+		SharedMesh m_mesh;
 		for (auto &shape : shapes)
 		{
 			if (!m_mesh)

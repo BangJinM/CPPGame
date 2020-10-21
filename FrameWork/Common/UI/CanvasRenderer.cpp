@@ -19,7 +19,7 @@ CanvasRenderer::~CanvasRenderer()
 {
 }
 
-void CanvasRenderer::addWidget(std::shared_ptr<Widget> widget)
+void CanvasRenderer::addWidget(SharePtr<Widget> widget)
 {
 	m_Widgets.push_back(widget);
 }
@@ -44,7 +44,7 @@ void CanvasRenderer::Start()
 	Renderer::Start();
 }
 
-void CanvasRenderer::Render(std::shared_ptr<Camera> camera)
+void CanvasRenderer::Render(SharePtr<Camera> camera)
 {
 	auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
 	auto projectMat = camera->getProjectionMatrixOrthographic();
@@ -53,7 +53,7 @@ void CanvasRenderer::Render(std::shared_ptr<Camera> camera)
 	{
 		auto widget = *widgetPtr;
 
-		std::shared_ptr<GameObject> parent = widget->getParent();
+		SharedGameObject parent = widget->getParent();
 		auto modelMat = parent->getComponent<Transform>()->getMatrix();
 		MeshData meshData = widget->GetMeshData();
 		auto materials = widget->GetMaterial();

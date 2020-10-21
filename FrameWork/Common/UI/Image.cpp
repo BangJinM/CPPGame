@@ -11,7 +11,7 @@ Image::~Image()
 {
 }
 
-void Image::setTexture(std::shared_ptr<Texture> texture)
+void Image::setTexture(SharedTexture texture)
 {
 	m_Texture = texture;
 }

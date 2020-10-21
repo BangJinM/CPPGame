@@ -21,9 +21,9 @@ class MaterialParser
 {
 
 public:
-	static std::shared_ptr<Material> Parse(const std::string scenePath)
+	static SharedMaterial Parse(const std::string scenePath)
 	{
-		std::shared_ptr<Material> material = std::make_shared<Material>();
+		SharedMaterial material = std::make_shared<Material>();
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 		auto json = cJSON_Parse(sceneStr.c_str());
 		int i = 0;

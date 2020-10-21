@@ -11,12 +11,12 @@ class Image : public Widget
 {
 private:
     vecterFloat2 m_Size;
-    std::shared_ptr<Texture> m_Texture;
+    SharedTexture m_Texture;
 
 public:
     Image(/* args */);
     ~Image();
     virtual void Start();
-    void setTexture(std::shared_ptr<Texture> texture);
+    void setTexture(SharedTexture texture);
 };
 GameEngineEnd

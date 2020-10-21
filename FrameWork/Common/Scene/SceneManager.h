@@ -11,21 +11,21 @@ class SceneManager
 {
 
 private:
-    static std::shared_ptr<SceneManager> m_SceneManager;
+    static SharePtr<SceneManager> m_SceneManager;
 
 public:
-    static std::shared_ptr<SceneManager> GetInstance();
+    static SharePtr<SceneManager> GetInstance();
 
 private:
     SceneManager(/* args */);
-    std::shared_ptr<Scene> curScene;
-    std::shared_ptr<Scene> nextScene;
+    SharePtr<Scene> curScene;
+    SharePtr<Scene> nextScene;
 
 public:
-    void SetNextScene(std::shared_ptr<Scene> scene);
+    void SetNextScene(SharePtr<Scene> scene);
     void ChangeScene();
     void Update();
-    std::shared_ptr<Scene> GetScene();
+    SharePtr<Scene> GetScene();
     ~SceneManager();
 };
 GameEngineEnd

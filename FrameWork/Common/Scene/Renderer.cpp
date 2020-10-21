@@ -21,22 +21,22 @@ Renderer::Renderer() : Component(ClassIDType::CLASS_Undefined)
 {
 }
 
-std::shared_ptr<Mesh> Renderer::getMesh()
+SharedMesh Renderer::getMesh()
 {
-    return std::shared_ptr<Mesh>();
+    return SharedMesh();
 }
 
-std::vector<std::shared_ptr<Material>> Renderer::getMaterials()
+std::vector<SharedMaterial> Renderer::getMaterials()
 {
     return m_Materials;
 }
 
-void Renderer::AddMaterial(std::shared_ptr<Material> material)
+void Renderer::AddMaterial(SharedMaterial material)
 {
     m_Materials.push_back(material);
 }
 
-void Renderer::Render(std::shared_ptr<Camera> camera)
+void Renderer::Render(SharePtr<Camera> camera)
 {
 }
 

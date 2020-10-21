@@ -63,13 +63,13 @@ struct NMaterialData
 class Material : public Object
 {
 public:
-    static std::shared_ptr<Material> createMaterial()
+    static SharedMaterial createMaterial()
     {
         return std::make_shared<Material>();
     }
-    static std::shared_ptr<Material> createMaterial(std::shared_ptr<Material> material1)
+    static SharedMaterial createMaterial(SharedMaterial material1)
     {
-        std::shared_ptr<Material> material = Material::createMaterial();
+        SharedMaterial material = Material::createMaterial();
         material->setMaterial(material1);
         return material;
     }
@@ -81,7 +81,7 @@ public:
     }
 
 private:
-    void setMaterial(std::shared_ptr<Material> material)
+    void setMaterial(SharedMaterial material)
     {
         m_Shader = material->m_Shader;
         Clear();

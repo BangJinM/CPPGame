@@ -8,7 +8,7 @@
 
 GameEngineBegin
 
-std::shared_ptr<GameObject>
+SharedGameObject
 
 GameObject::createGameObject()
 {
@@ -20,7 +20,7 @@ GameObject::createGameObject()
     return obj;
 }
 
-void GameObject::addChild(std::shared_ptr<GameObject> child)
+void GameObject::addChild(SharedGameObject child)
 {
     auto begin = m_children.find(child->getName());
     if (begin != m_children.end())
@@ -28,10 +28,10 @@ void GameObject::addChild(std::shared_ptr<GameObject> child)
         return;
     }
     child->setParent(m_GameObject.lock());
-    m_children.insert(std::pair<std::string, std::shared_ptr<GameObject>>(child->getName(), child));
+    m_children.insert(std::pair<std::string, SharedGameObject>(child->getName(), child));
 }
 
-std::shared_ptr<GameObject> GameObject::getChildByName(std::string name)
+SharedGameObject GameObject::getChildByName(std::string name)
 {
     auto begin = m_children.find(name);
     if (begin != m_children.end())
@@ -41,7 +41,7 @@ std::shared_ptr<GameObject> GameObject::getChildByName(std::string name)
     return nullptr;
 }
 
-void GameObject::deleteChild(std::shared_ptr<GameObject> child)
+void GameObject::deleteChild(SharedGameObject child)
 {
     auto begin = m_children.find(child->getName());
     if (begin != m_children.end())
@@ -50,12 +50,12 @@ void GameObject::deleteChild(std::shared_ptr<GameObject> child)
     }
 }
 
-void GameObject::setParent(std::shared_ptr<GameObject> parent)
+void GameObject::setParent(SharedGameObject parent)
 {
     m_Parent = parent;
 }
 
-std::shared_ptr<GameObject> GameObject::getParent()
+SharedGameObject GameObject::getParent()
 {
     return m_Parent;
 }

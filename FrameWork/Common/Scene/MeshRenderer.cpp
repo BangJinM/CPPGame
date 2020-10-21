@@ -10,14 +10,14 @@ MeshRenderer::MeshRenderer()
 {
 }
 
-void MeshRenderer::Render(std::shared_ptr<Camera> camera)
+void MeshRenderer::Render(SharePtr<Camera> camera)
 {
     auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
     auto projectMat = camera->getProjectionMatrix();
 
-    std::shared_ptr<GameObject> parent = getParent();
+    SharedGameObject parent = getParent();
     auto modelMat = parent->getComponent<Transform>()->getMatrix();
-    std::shared_ptr<Mesh> mesh = getMesh();
+    SharedMesh mesh = getMesh();
     auto materials = getMaterials();
     for (size_t mi = 0; mi < mesh->m_MeshDatas.size(); mi++)
     {

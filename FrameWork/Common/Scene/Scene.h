@@ -27,30 +27,30 @@ public:
 
   void Update();
 
-  void AddGameObject(std::shared_ptr<GameObject> gameobject);
-  void AddGameObject(std::shared_ptr<GameObject> gameobject, std::shared_ptr<GameObject> parent);
-  std::shared_ptr<GameObject> GetRootGameObject();
+  void AddGameObject(SharedGameObject gameobject);
+  void AddGameObject(SharedGameObject gameobject, SharedGameObject parent);
+  SharedGameObject GetRootGameObject();
 
   std::string m_Name;
 
   void RenderAll();
-  void AddCamera(std::shared_ptr<Camera> camera);
+  void AddCamera(SharePtr<Camera> camera);
   void RemoveCamera();
 
   void PrepareAll();
-  void AddRenderer(std::shared_ptr<Renderer> renderer);
+  void AddRenderer(SharePtr<Renderer> renderer);
   void RemoveRenderer();
 
-  std::shared_ptr<CanvasRenderer> GetCanvasRenderer();
-  void SetCanvasRenderer(std::shared_ptr<CanvasRenderer> canvas);
+  SharePtr<CanvasRenderer> GetCanvasRenderer();
+  void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
 
-  std::shared_ptr<GameObject> GetObject(std::shared_ptr<GameObject> parent, int sid);
-  std::list<std::shared_ptr<Renderer>> GetRenderer() { return m_Renderers; }
+  SharedGameObject GetObject(SharedGameObject parent, int sid);
+  std::list<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
 
-  std::list<std::shared_ptr<Camera>> m_Cameras;
-  std::list<std::shared_ptr<Renderer>> m_Renderers;
-  std::shared_ptr<CanvasRenderer> m_Canvas;
-  std::shared_ptr<GameObject> m_Root;
+  std::list<SharePtr<Camera>> m_Cameras;
+  std::list<SharePtr<Renderer>> m_Renderers;
+  SharePtr<CanvasRenderer> m_Canvas;
+  SharedGameObject m_Root;
 };
 
 GameEngineEnd

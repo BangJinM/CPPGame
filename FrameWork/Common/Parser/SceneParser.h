@@ -35,7 +35,7 @@ public:
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 		auto json = cJSON_Parse(sceneStr.c_str());
 		int i = 0;
-		std::map<int, std::shared_ptr<Object>> list;
+		std::map<int, SharedObject> list;
 		for (; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
 		{
 			cJSON *item = cJSON_GetArrayItem(json, i);
@@ -46,9 +46,9 @@ public:
 		list.clear();
 		delete json;
 	}
-	static std::shared_ptr<Object> compareGameObject(cJSON *root)
+	static SharedObject compareGameObject(cJSON *root)
 	{
-		std::shared_ptr<GameObject> gameobject = GameObject::createGameObject();
+		SharedGameObject gameobject = GameObject::createGameObject();
 		auto paramsNode = cJSON_GetObjectItem(root, "name");
 		if (paramsNode)
 		{
@@ -57,9 +57,9 @@ public:
 		return gameobject;
 	}
 
-	static std::shared_ptr<Object> compareTransform(cJSON *root)
+	static SharedObject compareTransform(cJSON *root)
 	{
-		std::shared_ptr<Transform> gameobject = std::make_shared<Transform>();
+		SharePtr<Transform> gameobject = std::make_shared<Transform>();
 		auto paramsNode = cJSON_GetObjectItem(root, "scale");
 		if (paramsNode)
 		{
@@ -81,15 +81,15 @@ public:
 		return gameobject;
 	}
 
-	static std::shared_ptr<Object> compareCamera(cJSON *root)
+	static SharedObject compareCamera(cJSON *root)
 	{
-		std::shared_ptr<Camera> gameobject = std::make_shared<Camera>();
+		SharePtr<Camera> gameobject = std::make_shared<Camera>();
 		return gameobject;
 	}
 
-	static std::shared_ptr<Object> compareMeshRenderer(cJSON *root)
+	static SharedObject compareMeshRenderer(cJSON *root)
 	{
-		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		SharePtr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
 		auto paramsNode = cJSON_GetObjectItem(root, "m_Materials");
 		if (paramsNode)
 		{
@@ -108,9 +108,9 @@ public:
 		return meshRenderer;
 	}
 
-	static std::shared_ptr<Object> compareImage(cJSON *root)
+	static SharedObject compareImage(cJSON *root)
 	{
-		std::shared_ptr<Image> meshRenderer = std::make_shared<Image>();
+		SharePtr<Image> meshRenderer = std::make_shared<Image>();
 		auto paramsNode = cJSON_GetObjectItem(root, "Texture");
 		if (paramsNode)
 		{
@@ -126,12 +126,12 @@ public:
 		return str.compare(str2) == 0;
 	}
 
-	static void parser(cJSON *root, std::map<int, std::shared_ptr<Object>> &list) //以递归的方式打印json的最内层键值对
+	static void parser(cJSON *root, std::map<int, SharedObject> &list) //以递归的方式打印json的最内层键值对
 	{
 		static const struct
 		{
 			const char *name;
-			std::function<std::shared_ptr<Object>(cJSON *root)> func;
+			std::function<SharedObject(cJSON *root)> func;
 		} attribute_locations[] =
 			{
 				{"GameObject", compareGameObject},
@@ -141,7 +141,7 @@ public:
 				{"Camera", compareCamera}};
 		const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
 		int i = 0;
-		std::shared_ptr<Object> object;
+		SharedObject object;
 		auto type = root->string;
 		for (size_t i = 0; i < size; i++)
 		{
@@ -162,12 +162,12 @@ public:
 		{
 			object->SetParentFileID(paramsNode->valueint);
 		}
-		list.insert(std::pair<int, std::shared_ptr<Object>>(object->GetFileID(), object));
+		list.insert(std::pair<int, SharedObject>(object->GetFileID(), object));
 	}
 
-	static void formatScene(std::map<int, std::shared_ptr<Object>> &list, Scene *scene)
+	static void formatScene(std::map<int, SharedObject> &list, Scene *scene)
 	{
-		std::shared_ptr<GameObject> gameobject = GameObject::createGameObject();
+		SharedGameObject gameobject = GameObject::createGameObject();
 		for (auto i = list.begin(); i != list.end(); i++)
 		{
 			auto tempObject = std::dynamic_pointer_cast<GameObject>(i->second);
