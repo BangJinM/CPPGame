@@ -22,10 +22,11 @@
 #include "AssetManager.h"
 #include "UI/Image.h"
 
-GameEngineBegin 
+GameEngineBegin
 
 extern AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
+
 class SceneParser
 {
 
@@ -33,16 +34,46 @@ public:
 	static void Parse(std::string scenePath, Scene *scene)
 	{
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
+		SharedGameObject gameobject = GameObject::createGameObject();
 		auto json = cJSON_Parse(sceneStr.c_str());
 		int i = 0;
 		std::map<int, SharedObject> list;
 		for (; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
 		{
 			cJSON *item = cJSON_GetArrayItem(json, i);
+			SharedObject object;
 			if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
-				parser(item, list);
+				object = parser(item, list);
+
+			auto tempObject = std::dynamic_pointer_cast<GameObject>(object);
+			if (tempObject)
+			{
+				if (tempObject->GetParentFileID() > 0)
+				{
+					auto parentOject = gameobject->getChildByID(tempObject->GetParentFileID());
+					parentOject->addChild(tempObject);
+				}
+				else
+				{
+					gameobject->addChild(tempObject);
+				}
+			}
+			else
+			{
+				auto tempComponent = std::dynamic_pointer_cast<Component>(object);
+				auto fatherID = tempComponent->GetParentFileID();
+				if (fatherID > 0)
+				{
+					auto parentTemp = gameobject->getChildByID(fatherID);
+					parentTemp->addComponent(tempComponent);
+				}
+			}
 		}
-		formatScene(list, scene);
+		auto children = gameobject->getChildren();
+		for (auto i = children.begin(); i != children.end(); i++)
+		{
+			scene->AddGameObject(i->second);
+		}
 		list.clear();
 		delete json;
 	}
@@ -126,7 +157,7 @@ public:
 		return str.compare(str2) == 0;
 	}
 
-	static void parser(cJSON *root, std::map<int, SharedObject> &list) //以递归的方式打印json的最内层键值对
+	static SharedObject parser(cJSON *root, std::map<int, SharedObject> &list) //以递归的方式打印json的最内层键值对
 	{
 		static const struct
 		{
@@ -163,42 +194,7 @@ public:
 			object->SetParentFileID(paramsNode->valueint);
 		}
 		list.insert(std::pair<int, SharedObject>(object->GetFileID(), object));
-	}
-
-	static void formatScene(std::map<int, SharedObject> &list, Scene *scene)
-	{
-		SharedGameObject gameobject = GameObject::createGameObject();
-		for (auto i = list.begin(); i != list.end(); i++)
-		{
-			auto tempObject = std::dynamic_pointer_cast<GameObject>(i->second);
-			if (tempObject)
-			{
-				if (tempObject->GetParentFileID() > 0)
-				{
-					auto parentOject = std::dynamic_pointer_cast<GameObject>(list.find(tempObject->GetParentFileID())->second);
-					parentOject->addChild(tempObject);
-				}
-				else
-				{
-					gameobject->addChild(tempObject);
-				}
-			}
-			else
-			{
-				auto tempComponent = std::dynamic_pointer_cast<Component>(i->second);
-				auto fatherID = tempComponent->GetParentFileID();
-				if (fatherID > 0)
-				{
-					auto parentTemp = std::dynamic_pointer_cast<GameObject>(list.find(fatherID)->second);
-					parentTemp->addComponent(tempComponent);
-				}
-			}
-		}
-		auto children = gameobject->getChildren();
-		for (auto i = children.begin(); i != children.end(); i++)
-		{
-			scene->AddGameObject(i->second);
-		}
+		return object;
 	}
 
 }; // namespace GameEngine

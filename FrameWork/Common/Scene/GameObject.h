@@ -35,6 +35,7 @@ public:
     void setName(std::string name);
 
     SharedGameObject getChildByName(std::string name);
+    SharedGameObject getChildByID(int id);
     SharedGameObject getParent();
     void setParent(SharedGameObject parent);
 

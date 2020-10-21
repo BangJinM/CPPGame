@@ -17,7 +17,7 @@ class Texture;
 class Widget;
 class Renderer;
 
-#define SharePtr SharePtr
+#define SharePtr std::shared_ptr
 #define SharedObject SharePtr<Object>
 #define SharedGameObject SharePtr<GameObject>
 #define SharedMaterial SharePtr<Material>

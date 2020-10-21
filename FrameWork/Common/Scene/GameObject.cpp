@@ -8,9 +8,9 @@
 
 GameEngineBegin
 
-SharedGameObject
+    SharedGameObject
 
-GameObject::createGameObject()
+    GameObject::createGameObject()
 {
     auto obj = std::make_shared<GameObject>();
     obj->m_GameObject = obj;
@@ -38,6 +38,25 @@ SharedGameObject GameObject::getChildByName(std::string name)
     {
         return begin->second;
     }
+    return nullptr;
+}
+
+SharedGameObject GameObject::getChildByID(int id)
+{
+    for (auto child = m_children.begin(); child != m_children.end(); child++)
+    {
+        if (child->second->GetFileID() == id)
+        {
+            return child->second;
+        }
+        else
+        {
+            auto res = child->second->getChildByID(id);
+            if (res)
+                return res;
+        }
+    }
+
     return nullptr;
 }
 
