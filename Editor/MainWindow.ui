@@ -14,20 +14,15 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTreeWidget" name="treeWidget">
+   <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>256</width>
-      <height>192</height>
+      <x>10</x>
+      <y>20</y>
+      <width>761</width>
+      <height>491</height>
      </rect>
     </property>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
-     </property>
-    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -50,7 +45,15 @@
     <addaction name="separator"/>
     <addaction name="action_close"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>关于</string>
+    </property>
+    <addaction name="about"/>
+    <addaction name="about_qt"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
@@ -69,6 +72,16 @@
   <action name="action_close">
    <property name="text">
     <string>关闭</string>
+   </property>
+  </action>
+  <action name="about">
+   <property name="text">
+    <string>关于</string>
+   </property>
+  </action>
+  <action name="about_qt">
+   <property name="text">
+    <string>关于QT</string>
    </property>
   </action>
  </widget>

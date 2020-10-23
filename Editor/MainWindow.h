@@ -5,6 +5,7 @@
 
 #include <QIcon>
 #include <QDir>
+#include <QPlainTextEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,18 +21,17 @@ public:
 
     void menuClick();
 
-    ///在QListWidget里显示当前目录下的明细
-    void showFileInfoList(QFileInfoList pInfoList);
+    void about();
 
-    ///根据文件性质获取图标
-    ///iType=1:文件夹
-    ///iType=2:文件
-    QIcon *getItemPropertyIcon(int iType);
-
-    ///显示当前目录下的文件夹和文件
-    void showCurrentDirFiles();
+    void open();
 
 private:
+    void createActions();
+    void loadFile(const QString& fileName);
+    void setCurrentFile(const QString &fileName);
+
+    QString curFile;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

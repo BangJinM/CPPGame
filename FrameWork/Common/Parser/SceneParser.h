@@ -24,7 +24,7 @@
 
 GameEngineBegin
 
-extern AssetLoader *g_pAssetLoader;
+	extern AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 
 class SceneParser
@@ -36,14 +36,13 @@ public:
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 		SharedGameObject gameobject = GameObject::createGameObject();
 		auto json = cJSON_Parse(sceneStr.c_str());
-		int i = 0;
-		std::map<int, SharedObject> list;
-		for (; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
+
+		for (int i = 0; i < cJSON_GetArraySize(json); i++) //遍历最外层json键值对
 		{
 			cJSON *item = cJSON_GetArrayItem(json, i);
 			SharedObject object;
 			if (cJSON_Object == item->type) //如果对应键的值仍为cJSON_Object就递归调用printJson
-				object = parser(item, list);
+				object = parser(item);
 
 			auto tempObject = std::dynamic_pointer_cast<GameObject>(object);
 			if (tempObject)
@@ -74,7 +73,6 @@ public:
 		{
 			scene->AddGameObject(i->second);
 		}
-		list.clear();
 		delete json;
 	}
 	static SharedObject compareGameObject(cJSON *root)
@@ -157,7 +155,7 @@ public:
 		return str.compare(str2) == 0;
 	}
 
-	static SharedObject parser(cJSON *root, std::map<int, SharedObject> &list) //以递归的方式打印json的最内层键值对
+	static SharedObject parser(cJSON *root) //以递归的方式打印json的最内层键值对
 	{
 		static const struct
 		{
@@ -193,7 +191,7 @@ public:
 		{
 			object->SetParentFileID(paramsNode->valueint);
 		}
-		list.insert(std::pair<int, SharedObject>(object->GetFileID(), object));
+
 		return object;
 	}
 

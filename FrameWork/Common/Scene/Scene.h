@@ -8,7 +8,7 @@
 
 #include "Config.h"
 
-GameEngineBegin 
+GameEngineBegin
 
 class Camera;
 class GameObject;

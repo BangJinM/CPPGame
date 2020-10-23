@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "Component.h"
-#include "glad/glad.h"
 #include "MeshRenderer.h"
 #include "GraphicsManager.h"
 #include "Transform.h"
