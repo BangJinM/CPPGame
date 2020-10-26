@@ -14,13 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>761</width>
-      <height>491</height>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>600</height>
      </rect>
     </property>
    </widget>
@@ -52,7 +52,19 @@
     <addaction name="about"/>
     <addaction name="about_qt"/>
    </widget>
+   <widget class="QMenu" name="menu_show">
+    <property name="title">
+     <string>查看</string>
+    </property>
+    <widget class="QMenu" name="menu_window">
+     <property name="title">
+      <string>视图</string>
+     </property>
+    </widget>
+    <addaction name="menu_window"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_show"/>
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -82,6 +94,11 @@
   <action name="about_qt">
    <property name="text">
     <string>关于QT</string>
+   </property>
+  </action>
+  <action name="actionda">
+   <property name="text">
+    <string>da</string>
    </property>
   </action>
  </widget>

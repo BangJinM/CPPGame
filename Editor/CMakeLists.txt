@@ -26,19 +26,40 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if(ANDROID)
-  add_library(Editor SHARED
+SET( EditorCPP
     main.cpp
     MainWindow.cpp
     MainWindow.h
     MainWindow.ui
+
+    FileView.cpp
+    FileView.h
+    FileView.ui
+
+    OutputView.cpp
+    OutputView.h
+    OutputView.ui
+
+    EditorView.cpp
+    EditorView.h
+    EditorView.ui
+
+    RuningView.cpp
+    RuningView.h
+    RuningView.ui
+
+    PropertiesView.cpp
+    PropertiesView.h
+    PropertiesView.ui
+)
+
+if(ANDROID)
+  add_library(Editor SHARED
+    ${EditorCPP}
   )
 else()
   add_executable(Editor
-    main.cpp
-    MainWindow.cpp
-    MainWindow.h
-    MainWindow.ui
+    ${EditorCPP}
   )
 endif()
 

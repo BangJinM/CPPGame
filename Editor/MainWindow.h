@@ -25,7 +25,13 @@ public:
 
     void open();
 
+    bool maybeSave();
+    void documentWasModified();
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
+    void setupDockWidgets();
     void createActions();
     void loadFile(const QString& fileName);
     void setCurrentFile(const QString &fileName);

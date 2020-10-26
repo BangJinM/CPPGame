@@ -4,11 +4,22 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include "FileView.h"
+#include "EditorView.h"
+#include "OutputView.h"
+#include "RuningView.h"
+#include "PropertiesView.h"
+
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QWidget* p = takeCentralWidget();
+    if(p)
+        delete p;
+    //允许嵌套dock
+    setDockNestingEnabled(true);
+    setupDockWidgets();
     createActions();
 }
 
@@ -17,34 +28,71 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::about(){
+void MainWindow::about()
+{
     QMessageBox::about(this, tr("About"),
-             tr("GameEngine Editor"));
+                       tr("GameEngine Editor"));
 }
 
 void MainWindow::open()
-//! [5] //! [6]
 {
-    QString fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty())
-        loadFile(fileName);
+    if (maybeSave())
+    {
+        QString fileName = QFileDialog::getOpenFileName(this);
+        if (!fileName.isEmpty())
+            loadFile(fileName);
+    }
+}
+
+bool MainWindow::maybeSave()
+{
+//    if (!ui->plainTextEdit->document()->isModified())
+//        return true;
+    const QMessageBox::StandardButton ret = QMessageBox::warning(this, tr("Application"),
+                                                                 tr("The document has been modified.\n"
+                                                                    "Do you want to save your changes?"),
+                                                                 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    switch (ret)
+    {
+    case QMessageBox::Save:
+        return true;
+        //        return save();
+    case QMessageBox::Cancel:
+        return false;
+    default:
+        break;
+    }
+    return true;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (maybeSave())
+    {
+//        writeSettings();
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 
 void MainWindow::loadFile(const QString &fileName)
-//! [46] //! [47]
 {
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
         QMessageBox::warning(this, tr("Application"),
                              tr("Cannot read file %1:\n%2.")
-                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+                                 .arg(QDir::toNativeSeparators(fileName), file.errorString()));
         return;
     }
-QTextStream in(&file);
+    QTextStream in(&file);
 #ifndef QT_NO_CURSOR
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-    ui->plainTextEdit->setPlainText(in.readAll());
+//    ui->plainTextEdit->setPlainText(in.readAll());
 #ifndef QT_NO_CURSOR
     QGuiApplication::restoreOverrideCursor();
 #endif
@@ -54,7 +102,6 @@ QTextStream in(&file);
 }
 
 void MainWindow::setCurrentFile(const QString &fileName)
-//! [46] //! [47]
 {
     curFile = fileName;
     setWindowModified(false);
@@ -65,9 +112,41 @@ void MainWindow::setCurrentFile(const QString &fileName)
     setWindowFilePath(shownName);
 }
 
-void MainWindow::createActions(){
+void MainWindow::documentWasModified()
+{
+//    setWindowModified(ui->plainTextEdit->document()->isModified());
+}
+
+void MainWindow::setupDockWidgets(){
+//    auto actionWindow = ui->menu_window;
+
+    FileView* fileView = new FileView();
+    addDockWidget(Qt::LeftDockWidgetArea, fileView);
+    fileView->show();
+
+    EditorView* editorView = new EditorView();
+    addDockWidget(Qt::RightDockWidgetArea, editorView);
+    editorView->show();
+
+    RuningView* runingView = new RuningView();
+    addDockWidget(Qt::RightDockWidgetArea, runingView);
+    runingView->show();
+
+    PropertiesView* propertiesView = new PropertiesView();
+    addDockWidget(Qt::RightDockWidgetArea, propertiesView);
+    propertiesView->show();
+
+    OutputView* outputView = new OutputView();
+    addDockWidget(Qt::BottomDockWidgetArea, outputView);
+    outputView->show();
+//    actionWindow->addMenu(fileView->colorSwatchMenu());
+}
+
+void MainWindow::createActions()
+{
     connect(ui->about, &QAction::triggered, this, &MainWindow::about);
     connect(ui->about_qt, &QAction::triggered, this, &QApplication::aboutQt);
     connect(ui->action_open, &QAction::triggered, this, &MainWindow::open);
     connect(ui->action_close, &QAction::triggered, this, &QWidget::close);
+//    connect(ui->plainTextEdit->document(), &QTextDocument::contentsChanged, this, &MainWindow::documentWasModified);
 }

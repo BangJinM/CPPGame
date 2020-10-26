@@ -1,0 +1,17 @@
+<ui version="4.0">
+ <class>PropertiesView</class>
+ <widget name="PropertiesView" class="QDockWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DockWidget</string>
+  </property>
+  <widget name="dockWidgetContents" class="QWidget"/>
+ </widget>
+</ui>
