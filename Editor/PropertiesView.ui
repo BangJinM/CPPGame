@@ -1,17 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PropertiesView</class>
- <widget name="PropertiesView" class="QDockWidget">
+ <widget class="QDockWidget" name="PropertiesView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>100</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>DockWidget</string>
+   <string>PropertiesView</string>
   </property>
-  <widget name="dockWidgetContents" class="QWidget"/>
+  <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>100</width>
+      <height>500</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
  </widget>
+ <resources/>
+ <connections/>
 </ui>

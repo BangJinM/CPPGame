@@ -51,6 +51,10 @@ SET( EditorCPP
     PropertiesView.cpp
     PropertiesView.h
     PropertiesView.ui
+
+    StructureView.cpp
+    StructureView.h
+    StructureView.ui
 )
 
 if(ANDROID)

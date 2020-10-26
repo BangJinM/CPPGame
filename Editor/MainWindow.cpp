@@ -8,6 +8,7 @@
 #include "EditorView.h"
 #include "OutputView.h"
 #include "RuningView.h"
+#include "StructureView.h"
 #include "PropertiesView.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -124,12 +125,16 @@ void MainWindow::setupDockWidgets(){
     addDockWidget(Qt::LeftDockWidgetArea, fileView);
     fileView->show();
 
+    StructureView* structureView = new StructureView();
+    addDockWidget(Qt::LeftDockWidgetArea, structureView);
+    structureView->show();
+
     EditorView* editorView = new EditorView();
-    addDockWidget(Qt::RightDockWidgetArea, editorView);
+    addDockWidget(Qt::LeftDockWidgetArea, editorView);
     editorView->show();
 
     RuningView* runingView = new RuningView();
-    addDockWidget(Qt::RightDockWidgetArea, runingView);
+    addDockWidget(Qt::LeftDockWidgetArea, runingView);
     runingView->show();
 
     PropertiesView* propertiesView = new PropertiesView();
@@ -139,6 +144,18 @@ void MainWindow::setupDockWidgets(){
     OutputView* outputView = new OutputView();
     addDockWidget(Qt::BottomDockWidgetArea, outputView);
     outputView->show();
+
+    splitDockWidget(structureView, outputView, Qt::Vertical);
+    splitDockWidget(structureView, editorView, Qt::Horizontal);
+    splitDockWidget(editorView, runingView, Qt::Horizontal);
+    splitDockWidget(runingView, propertiesView, Qt::Horizontal);
+
+    tabifyDockWidget(outputView, fileView);
+
+    resizeDocks({fileView},{100},Qt::Horizontal);
+    resizeDocks({editorView},{300},Qt::Horizontal);
+    resizeDocks({runingView},{300},Qt::Horizontal);
+    resizeDocks({propertiesView},{100},Qt::Horizontal);
 //    actionWindow->addMenu(fileView->colorSwatchMenu());
 }
 

@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::FileView *ui;
+
+    QString curPath = "";
 };
 
 #endif // FILEVIEW_H
