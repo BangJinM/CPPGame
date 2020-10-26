@@ -1,5 +1,4 @@
 {
-
     "GameObject":	{
         "name":"peopleObject",
         "fileID": 1,
@@ -47,5 +46,77 @@
         "fileID":9,
         "scale":[100, 100, 1],
         "position":[600, 400, -0.02]
+    },
+    "GameObject":{
+        "name":"UI21",
+        "fileID": 10,
+        "m_Component":[8]
+    },
+    "Transform":{
+        "m_GameObject":10,
+        "fileID":11,
+        "scale":[1, 1, 1],
+        "rotation":[50, 50, 50],
+        "position":[-1, -1, 10]
+    },
+    "GameObject":{
+        "name":"UI11",
+        "fileID": 12,
+        "m_Component":[8]
+    },
+    "Transform":{
+        "m_GameObject":12,
+        "fileID":13,
+        "scale":[1, 1, 1],
+        "rotation":[50, 50, 50],
+        "position":[0, 0, 10]
+    },
+    "GameObject":{
+        "name":"UI111",
+        "fileID": 14,
+        "m_Component":[8]
+    },
+    "Transform":{
+        "m_GameObject":14,
+        "fileID":15,
+        "scale":[1, 1, 1],
+        "rotation":[50, 50, 50],
+        "position":[3, 3, 10]
+    },
+    "GameObject":{
+        "name":"UI1111",
+        "fileID": 16,
+        "m_Component":[8]
+    },
+    "Transform":{
+        "m_GameObject":16,
+        "fileID":17,
+        "scale":[1, 1, 1],
+        "rotation":[50, 50, 50],
+        "position":[2, 2, 10]
+    },
+    "MeshRenderer":{
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":10,
+        "fileID":18
+    },
+    "MeshRenderer":{
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":12,
+        "fileID":19
+    },
+    "MeshRenderer":{
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":14,
+        "fileID":20
+    },
+    "MeshRenderer":{
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":16,
+        "fileID":21
     }
 }
