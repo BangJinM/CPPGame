@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
 #include <vector>
 
 #include "Config.h"
@@ -11,9 +10,9 @@ GameEngineBegin
 struct MeshVertexAttrib
 {
     //attribute size
-    GLint size;
+    unsigned int size;
     //GL_FLOAT
-    GLenum type;
+    unsigned int type;
     //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
     int vertexAttrib;
     //size in bytes

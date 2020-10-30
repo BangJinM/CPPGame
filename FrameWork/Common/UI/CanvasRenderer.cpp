@@ -8,7 +8,11 @@
 #include "Transform.h"
 #include "Camera.h"
 
+#include "BaseGraphicsManager.h"
+
 GameEngineBegin
+
+extern BaseGraphicsManager *g_pGraphicsManager;
 
 CanvasRenderer::CanvasRenderer()
 {
@@ -58,17 +62,17 @@ void CanvasRenderer::Render(SharePtr<Camera> camera)
 		MeshData meshData = widget->GetMeshData();
 		auto materials = widget->GetMaterial();
 
-		auto material = Material::createMaterial(materials);
+		
+		Material material = *materials;
+		material.AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
+		material.AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
+		material.AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
 
-		material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
-		material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
-		material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
-		material->Prepare();
+		RendererCammand rC;
+		rC.material = material;
+		rC.meshData = meshData;
 
-		auto meshdata = meshData;
-		glBindVertexArray(meshdata.VAO);
-		glDrawElements(GL_TRIANGLES, meshdata.indices.size(), GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		g_pGraphicsManager->addRendererCommand(rC);
 	}
 }
 GameEngineEnd

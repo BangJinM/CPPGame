@@ -13,7 +13,7 @@ namespace GameEngine
 	OpenGLApplication g_App(config);
 	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
 	InputManager *g_pInputManager = static_cast<InputManager *>(new InputManager);
-	GraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
+	BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
 	AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
 	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
 	IApplication *g_pApp = &g_App;

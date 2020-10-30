@@ -1,4 +1,6 @@
 #!/bin/bash
 git submodule update --init ../External/src/freetype
-cp -f -R ../External/src/freetype/win32/freetype.lib ../External/Windows/lib
-
+mkdir -p ../build/freetype
+cd  ../build/freetype
+cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=../../External ../../External/src/freetype
+make install

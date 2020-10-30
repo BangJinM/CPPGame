@@ -1,10 +1,8 @@
 SET( Scene
     Scene/GameObject.cpp
-    Scene/Mesh.cpp
     Scene/Scene.cpp
     Scene/Transform.cpp
     Scene/Camera.cpp
-    Scene/Material.cpp
     Scene/Renderer.cpp
     Scene/MeshRenderer.cpp
     Scene/SceneManager.cpp
@@ -32,7 +30,7 @@ SET( Common
     Allocator.cpp
     MemoryManager.cpp
     AssetLoader.cpp
-    GraphicsManager.cpp
+    BaseGraphicsManager.cpp
     AssetManager.cpp
     main.cpp
 )
@@ -44,13 +42,10 @@ add_library(Common
     ${Common}    
     ${Scene}
     ${UI}
-    #${Parser}
     ${3dloader}
     ${CURRENT_HEADERS}
 )
 target_link_libraries(Common Glad cJson)
-
-target_include_directories(Glad PRIVATE "${PROJECT_SOURCE_DIR}/External/src/glad/include")
 
 # find_library(FREETYPE freetype PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
 # target_link_libraries(Common ${FREETYPE})

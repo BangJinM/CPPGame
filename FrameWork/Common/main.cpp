@@ -12,7 +12,7 @@ namespace GameEngine
 	extern MemoryManager *g_pMemoryManager;
 	extern InputManager *g_pInputManager;
 	extern AssetLoader *g_pAssetLoader;
-	extern GraphicsManager *g_pGraphicsManager;
+	extern BaseGraphicsManager *g_pGraphicsManager;
 	extern AssetManager *g_pAssetManager;
 
 } // namespace GameEngine

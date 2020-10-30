@@ -1,4 +1,5 @@
 add_executable(Windows 
+    GraphicsManager.cpp
     GamePlatform-opengl.cpp
 )
 target_link_libraries(Windows Common)
@@ -6,7 +7,7 @@ target_link_libraries(Windows Common)
 if(WIN32)
     find_library(GLFW3 glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
 else()
-    find_library(GLFW3 libglfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
+    find_library(GLFW3 glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
 endif(WIN32)
 
 target_link_libraries(Windows ${GLFW3})

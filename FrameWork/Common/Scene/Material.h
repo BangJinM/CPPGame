@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Texture.h"
-#include "Shader.h"
+#include "ShaderData.h"
 #include "Buffer.h"
 #include "MyMath.h"
 #include "Config.h"
@@ -15,7 +15,7 @@
 
 GameEngineBegin
 
-struct ViewUniforms
+    struct ViewUniforms
 {
     static constexpr const char *VIEW_MATRIX = "u_view_matrix";
     static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
@@ -38,10 +38,6 @@ struct RendererUniforms
     static constexpr const char *LIGHTMAP_INDEX = "u_lightmap_index";
 
     GlmMat4 model_matrix;
-    // GlmMat4 bounds_matrix;
-    //Color bounds_color;
-    // vecterFloat4 lightmap_scale_offset;
-    // vecterFloat4 lightmap_index; // in x
 };
 
 enum MaterialType
@@ -54,12 +50,12 @@ enum MaterialType
 
 struct NMaterialData
 {
-
     std::string name;
     MaterialType type;
     char *buffer;
     int size;
 };
+
 class Material : public Object
 {
 public:
@@ -67,30 +63,17 @@ public:
     {
         return std::make_shared<Material>();
     }
-    static SharedMaterial createMaterial(SharedMaterial material1)
-    {
-        SharedMaterial material = Material::createMaterial();
-        material->setMaterial(material1);
-        return material;
-    }
 
-    void Use();
+	Material():Object(){}
 
-    Material()
-    {
-    }
-
-private:
-    void setMaterial(SharedMaterial material)
-    {
-        m_Shader = material->m_Shader;
-        Clear();
-        for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
+    Material(const Material &other):Object(other) {
+        for (size_t i = 0; i < other.m_MaterialDatas.size(); i++)
         {
-            AddProperty(material->m_MaterialDatas[i].buffer, material->m_MaterialDatas[i].name, material->m_MaterialDatas[i].size, material->m_MaterialDatas[i].type);
+            AddProperty(other.m_MaterialDatas[i].buffer, other.m_MaterialDatas[i].name, other.m_MaterialDatas[i].size, other.m_MaterialDatas[i].type);
         }
+        vert = other.vert;
+        frag = other.frag;
     }
-
 public:
     ~Material()
     {
@@ -109,13 +92,10 @@ public:
     template <typename Type>
     void AddProperty(Type value, std::string name, int size, MaterialType type);
 
-    void Prepare();
-
-    void setShader(Shader &shader);
-
     std::vector<NMaterialData> m_MaterialDatas;
 
-    Shader m_Shader;
+    ShaderData frag;
+    ShaderData vert;
 };
 
 template <typename Type>

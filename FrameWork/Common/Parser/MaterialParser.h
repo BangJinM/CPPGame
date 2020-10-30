@@ -29,10 +29,12 @@ public:
 		int i = 0;
 		auto frag = cJSON_GetObjectItem(json, "frag");
 		auto vert = cJSON_GetObjectItem(json, "vert");
+
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
-		Shader shader = Shader(vertStr, fragStr);
-		material->setShader(shader);
+
+		material->frag = ShaderData(frag->valuestring, fragStr);
+		material->vert = ShaderData(vert->valuestring,vertStr);
 
 		auto paramsNode = cJSON_GetObjectItem(json, "params");
 		if (paramsNode)

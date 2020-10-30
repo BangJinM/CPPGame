@@ -77,7 +77,6 @@ MeshData Widget::getDefaultData()
 		meshData.vertex.push_back(textcoord[i][0]);
 		meshData.vertex.push_back(textcoord[i][1]);
 	}
-	meshData.setupMesh();
 	return meshData;
 }
 
@@ -88,7 +87,7 @@ void Widget::initDefaultMesh()
 
 void Widget::initMaterial()
 {
-	m_Material = Material::createMaterial(AssetManager::LoadMaterial("Materials/defaultUI.gemtl"));
+	m_Material = AssetManager::LoadMaterial("Materials/defaultUI.gemtl");
 }
 
 void Widget::Start()

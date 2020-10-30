@@ -11,6 +11,7 @@
 #include <map>
 
 #include "Config.h"
+#include "Mesh.h"
 #include "ObjLoader.h"
 #include "GameObject.h"
 
@@ -40,7 +41,7 @@ public:
 			auto mesh = shape.mesh;
 			MeshVertexAttrib attrib;
 			attrib.size = 3;
-			attrib.type = GL_FLOAT;
+			//attrib.type = GL_FLOAT;
 
 			if (mesh.positions.size())
 			{
@@ -90,7 +91,6 @@ public:
 			}
 
 			meshData.indices = mesh.indices;
-			meshData.setupMesh();
 			m_mesh->pushMeshData(meshData);
 		}
 		return m_mesh;

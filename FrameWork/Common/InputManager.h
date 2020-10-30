@@ -4,9 +4,6 @@
 #include <map>
 #include <functional>
 
-#include "glad/glad.h"
-#include <GLFW/glfw3.h>
-
 #include "Config.h"
 #include "IRuntimeModule.h"
 
@@ -64,11 +61,7 @@ public:
 
 	static void dispatchClickEvent(const char key);
 
-	static void mouseInput(GLFWwindow *window, int button, int action, int mods);
-	static void keyInput(GLFWwindow *window, int key, int scancode, int action, int mods);
-
 private:
-	GLFWwindow *window;
 	/* data */
 	std::map<char, GameEngineCallBack *> _listeners;
 };
