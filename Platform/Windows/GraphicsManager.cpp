@@ -69,7 +69,7 @@ void GraphicsManager::Draw()
 	for each (auto renderer in m_RendererCommands)
 	{
 		PrepareMesh(renderer.meshData);
-		//PrepareMaterial(renderer.material);
+		PrepareMaterial(renderer.material);
 		glBindVertexArray(renderer.meshData.VAO);
 		glDrawElements(GL_TRIANGLES, renderer.meshData.indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
