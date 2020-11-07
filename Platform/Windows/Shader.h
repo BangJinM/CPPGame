@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <cstdint>
 #include <string>
@@ -42,10 +42,6 @@ public:
 
     Shader() {}
 
-    Shader(const Shader &c)
-    {
-        ID = c.ID;
-    }
     ~Shader()
     {
     }
@@ -53,24 +49,21 @@ public:
     // ------------------------------------------------------------------------
     Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = "")
     {
-
-        const char *vShaderCode = vertexCode.c_str();
-        const char *fShaderCode = fragmentCode.c_str();
         // 2. compile shaders
         unsigned int vertex, fragment;
 
-        if (vShaderCode)
+        if (vertexCode.size()>0)
         {
-            if (!compileShader(&vertex, GL_VERTEX_SHADER, vShaderCode))
+            if (!compileShader(&vertex, GL_VERTEX_SHADER, vertexCode.c_str()))
             {
                 checkCompileErrors(vertex, "VERTEX");
                 return;
             }
         }
 
-        if (fShaderCode)
+        if (fragmentCode.size()>0)
         {
-            if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fShaderCode))
+            if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fragmentCode.c_str()))
             {
                 checkCompileErrors(fragment, "FRAGMENT");
                 return;
@@ -80,14 +73,10 @@ public:
         unsigned int geometry;
         if (geometryCode.size() > 0)
         {
-            const char *gShaderCode = geometryCode.c_str();
-            if (gShaderCode)
+            if (!compileShader(&geometry, GL_FRAGMENT_SHADER, geometryCode.c_str()))
             {
-                if (!compileShader(&geometry, GL_FRAGMENT_SHADER, gShaderCode))
-                {
-                    checkCompileErrors(geometry, "GEOMETRY");
-                    return;
-                }
+                checkCompileErrors(geometry, "GEOMETRY");
+                return;
             }
         }
         // shader Program
@@ -160,12 +149,10 @@ public:
             GLchar *src = (GLchar *)malloc(sizeof(GLchar) * length);
 
             glGetShaderSource(*shader, length, nullptr, src);
-            printf(src);
             free(src);
 
             return false;
         }
-
         return (status == GL_TRUE);
     }
 

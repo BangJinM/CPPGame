@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Texture.h"
 #include "ShaderData.h"
@@ -12,6 +12,11 @@
 #include <vector>
 #include <string>
 #include <memory>
+#ifdef WIN32
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif // WIN32
 
 GameEngineBegin
 
@@ -48,12 +53,35 @@ enum MaterialType
     T_Mat4,
 };
 
-struct NMaterialData
+class NMaterialData
 {
-    std::string name;
-    MaterialType type;
-    char *buffer;
-    int size;
+public:
+    std::string m_Name;
+    MaterialType  m_Type;
+    char * m_Buffer;
+    int  m_Size;
+    template <typename Type>
+    NMaterialData(Type value, std::string name, int size, MaterialType type){
+		m_Name = name;
+		m_Buffer = new char[size + 1];
+        memcpy(m_Buffer, value, size);
+		m_Buffer[size] = '\0';
+		m_Size = size;
+		m_Type = type;
+    }
+    
+    NMaterialData(const NMaterialData &data) {
+		m_Name = data.m_Name;
+		m_Buffer = new char[data.m_Size + 1];
+        memcpy(m_Buffer, data.m_Buffer, data.m_Size);
+		m_Buffer[data.m_Size] = '\0';
+		m_Size = data.m_Size;
+		m_Type = data.m_Type;
+    }
+
+	~NMaterialData() {
+		delete m_Buffer;
+	}
 };
 
 class Material : public Object
@@ -69,7 +97,7 @@ public:
     Material(const Material &other):Object(other) {
         for (size_t i = 0; i < other.m_MaterialDatas.size(); i++)
         {
-            AddProperty(other.m_MaterialDatas[i].buffer, other.m_MaterialDatas[i].name, other.m_MaterialDatas[i].size, other.m_MaterialDatas[i].type);
+            AddProperty(other.m_MaterialDatas[i].m_Buffer, other.m_MaterialDatas[i].m_Name, other.m_MaterialDatas[i].m_Size, other.m_MaterialDatas[i].m_Type);
         }
         vert = other.vert;
         frag = other.frag;
@@ -82,10 +110,6 @@ public:
 
     void Clear()
     {
-        for (size_t i = 0; i < m_MaterialDatas.size(); i++)
-        {
-            delete[] m_MaterialDatas[i].buffer;
-        }
         m_MaterialDatas.clear();
     }
 
@@ -101,13 +125,7 @@ public:
 template <typename Type>
 inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
 {
-    NMaterialData data;
-    data.name = name;
-    data.buffer = new char[size + 1];
-    memcpy(data.buffer, value, size);
-    data.buffer[size] = '\0';
-    data.size = size;
-    data.type = type;
+    NMaterialData data(value, name, size, type);
     m_MaterialDatas.push_back(data);
 }
 GameEngineEnd

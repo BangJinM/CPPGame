@@ -36,6 +36,7 @@ SharePtr<Scene> SceneManager::GetScene()
 
 SceneManager::~SceneManager()
 {
+	
 }
 
 SceneManager::SceneManager()

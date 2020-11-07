@@ -1,6 +1,7 @@
 add_executable(Windows 
     GraphicsManager.cpp
     GamePlatform-opengl.cpp
+    InputManagerWindows.cpp
 )
 target_link_libraries(Windows Common)
 

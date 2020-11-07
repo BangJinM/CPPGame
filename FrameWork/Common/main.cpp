@@ -1,10 +1,16 @@
-#include "IApplication.h"
+﻿#include "IApplication.h"
 #include "MemoryManager.h"
 #include "InputManager.h"
 #include "AssetLoader.h"
 #include "GraphicsManager.h"
 #include "AssetManager.h"
 using namespace GameEngine;
+
+#ifdef WIN32
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif // WIN32
 
 namespace GameEngine
 {
@@ -19,6 +25,7 @@ namespace GameEngine
 
 int main(int argc, char *argv[])
 {
+
 	for (int i = 0; i < argc; i++)
 		printf(argv[i]);
 
@@ -62,14 +69,26 @@ int main(int argc, char *argv[])
 	int i = 1;
 	while (!g_pApp->IsQuit())
 	{
+#ifdef WIN32
+	_CrtMemState s1, s2, s3;
+	_CrtMemCheckpoint(&s1);
+#endif // DEBUG
 
 		g_pMemoryManager->Tick();
 		g_pInputManager->Tick();
 		g_pAssetLoader->Tick();
 		g_pAssetManager->Tick();
-		g_pApp->Tick();
 		g_pGraphicsManager->Tick();
+		g_pApp->Tick();
+#ifdef WIN32
+		_CrtMemCheckpoint(&s2);
+		if (_CrtMemDifference(&s3, &s1, &s2))
+			_CrtMemDumpStatistics(&s3);
+		_CrtDumpMemoryLeaks();
+#endif // DEBUG
 	}
+
+
 	g_pGraphicsManager->Finalize();
 	g_pInputManager->Finalize();
 	g_pAssetLoader->Finalize();
@@ -82,5 +101,7 @@ int main(int argc, char *argv[])
 	delete g_pAssetLoader;
 	delete g_pAssetManager;
 	delete g_pMemoryManager;
+
+
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "BaseGraphicsManager.h"
 #include "AssetLoader.h"
 #include "Scene.h"
@@ -35,7 +35,7 @@ void BaseGraphicsManager::Tick()
     Draw();
 }
 
-void BaseGraphicsManager::addRendererCommand(RendererCammand& command)
+void BaseGraphicsManager::addRendererCommand(RendererCammand command)
 {
     m_RendererCommands.push_back(command);
 }

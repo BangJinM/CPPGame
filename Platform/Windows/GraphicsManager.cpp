@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "GraphicsManager.h"
 #include "glad/glad.h"
 #include "Scene.h"
@@ -54,6 +54,7 @@ void GraphicsManager::Tick()
 {
     auto window = glfwGetCurrentContext();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	m_RendererCommands.clear();
     BaseGraphicsManager::Tick();
     glfwSwapBuffers(window);
 }
@@ -65,36 +66,43 @@ void GraphicsManager::Clear()
 
 void GraphicsManager::Draw()
 {
-
+	for each (auto renderer in m_RendererCommands)
+	{
+		PrepareMesh(renderer.meshData);
+		//PrepareMaterial(renderer.material);
+		glBindVertexArray(renderer.meshData.VAO);
+		glDrawElements(GL_TRIANGLES, renderer.meshData.indices.size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+	}
 }
 
 void GraphicsManager::PrepareMaterial(Material& material){ 
-	Shader shader(material.frag.value, material.vert.value);
+	Shader shader( material.vert.value, material.frag.value);
     int textureID = 0;
 	shader.use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
 	{
 		auto data = material.m_MaterialDatas[i];
 
-		switch (data.type)
+		switch (data.m_Type)
 		{
 		case MaterialType::T_Mat4:
 		{
-			auto property = (float *)data.buffer;
-			shader.setMat4(data.name, &property[0]);
+			auto property = (float *)data.m_Buffer;
+			shader.setMat4(data.m_Name, &property[0]);
 			break;
 		}
 		case MaterialType::T_Texture:
 		{
-			auto property = (char *)data.buffer;
+			auto property = (char *)data.m_Buffer;
 			unsigned int location;
-			location = glGetUniformLocation(shader.ID, data.name.c_str());
+			location = glGetUniformLocation(shader.ID, data.m_Name.c_str());
 			if (location != -1)
 			{
 				SharedTexture image = g_pAssetManager->LoadTexture(property);
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
-				shader.setInt(data.name, textureID);
+				shader.setInt(data.m_Name, textureID);
 				glActiveTexture(GL_TEXTURE0 + textureID);
 				glBindTexture(GL_TEXTURE_2D, image->id);
 				textureID++;

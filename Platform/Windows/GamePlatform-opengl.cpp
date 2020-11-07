@@ -4,6 +4,7 @@
 #include "IApplication.h"
 #include "MemoryManager.h"
 #include "InputManager.h"
+#include "InputManagerWindows.h"
 #include "GraphicsManager.h"
 #include "AssetLoader.h"
 #include "AssetManager.h"
@@ -12,7 +13,7 @@ namespace GameEngine
 	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
 	OpenGLApplication g_App(config);
 	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
-	InputManager *g_pInputManager = static_cast<InputManager *>(new InputManager);
+	InputManager *g_pInputManager = static_cast<InputManagerWindows *>(new InputManagerWindows);
 	BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
 	AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
 	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);

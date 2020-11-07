@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-#include <vector>
+#include <list>
 
 #include "Config.h"
 #include "Renderer.h"
@@ -31,10 +31,10 @@ public:
     virtual void Clear();
     virtual void Draw();
 
-    void addRendererCommand(RendererCammand& command);
+    void addRendererCommand(RendererCammand command);
 
-private:
-    std::vector<RendererCammand> m_RendererCommands;
+protected:
+    std::list<RendererCammand> m_RendererCommands;
 };
 
 extern BaseGraphicsManager *g_pGraphicsManager;
