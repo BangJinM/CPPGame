@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <cstdint>
 
@@ -17,6 +17,7 @@ public:
     uint32_t Height;
     unsigned char *data;
     size_t data_size;
+	int formate;
 };
 
 GameEngineEnd

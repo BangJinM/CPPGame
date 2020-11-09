@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 #include <memory>
 
@@ -38,6 +38,7 @@ public:
         image->Height = height;
         image->Width = width;
         image->data = data;
+		image->id = -1;
         return image;
     }
 };

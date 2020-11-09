@@ -53,6 +53,7 @@ void GraphicsManager::Finalize()
 void GraphicsManager::Tick()
 {
     auto window = glfwGetCurrentContext();
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_RendererCommands.clear();
     BaseGraphicsManager::Tick();
@@ -100,6 +101,9 @@ void GraphicsManager::PrepareMaterial(Material& material){
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
 				shader.setInt(data.m_Name, textureID);
+				if (image->id <= 0) {
+					BindTexture(image);
+				}
 				glActiveTexture(GL_TEXTURE0 + textureID);
 				glBindTexture(GL_TEXTURE_2D, image->id);
 				textureID++;
@@ -110,6 +114,21 @@ void GraphicsManager::PrepareMaterial(Material& material){
 			break;
 		}
 	}
+}
+
+
+void GraphicsManager::BindTexture(SharedTexture texture)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, texture->formate, texture->Width, texture->Height, 0, texture->formate, GL_UNSIGNED_BYTE, texture->data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	texture->id = textureID;
 }
 
 void GraphicsManager::PrepareMesh(SharedMesh mesh,int index){

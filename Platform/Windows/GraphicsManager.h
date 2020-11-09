@@ -22,6 +22,7 @@ public:
 
     virtual void Draw();
 
+	void BindTexture(SharedTexture texture);
     void PrepareMesh(SharedMesh mesh, int index);
     void PrepareMaterial(GameEngine::Material &material);
 };
