@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include <map>
 
 #include "glad/glad.h"
 
@@ -18,6 +19,16 @@ struct Pass
     std::string fs;
 };
 
+struct ShaderProperty
+{
+	unsigned int vs;
+	unsigned int fs;
+	unsigned int gs;
+	unsigned int id;
+};
+
+static std::map<string,unsigned int> compileShaders;
+static std::list<ShaderProperty> shaderProperty;
 class Shader
 {
 public:
@@ -47,14 +58,14 @@ public:
     }
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(std::string vertexCode, std::string fragmentCode, std::string geometryCode = "")
+    Shader(std::string vertexCode, std::string vertexCodePath, std::string fragmentCode, std::string fragmentCodePath, std::string geometryCode = "", std::string geometryCodePath = "")
     {
         // 2. compile shaders
         unsigned int vertex, fragment;
 
         if (vertexCode.size()>0)
         {
-            if (!compileShader(&vertex, GL_VERTEX_SHADER, vertexCode.c_str()))
+            if (!compileShader(&vertex, GL_VERTEX_SHADER, vertexCode.c_str(), vertexCodePath.c_str()))
             {
                 checkCompileErrors(vertex, "VERTEX");
                 return;
@@ -63,7 +74,7 @@ public:
 
         if (fragmentCode.size()>0)
         {
-            if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fragmentCode.c_str()))
+            if (!compileShader(&fragment, GL_FRAGMENT_SHADER, fragmentCode.c_str(), fragmentCodePath.c_str()))
             {
                 checkCompileErrors(fragment, "FRAGMENT");
                 return;
@@ -73,18 +84,42 @@ public:
         unsigned int geometry;
         if (geometryCode.size() > 0)
         {
-            if (!compileShader(&geometry, GL_FRAGMENT_SHADER, geometryCode.c_str()))
+            if (!compileShader(&geometry, GL_FRAGMENT_SHADER, geometryCode.c_str(), geometryCodePath.c_str()))
             {
                 checkCompileErrors(geometry, "GEOMETRY");
                 return;
             }
         }
+
+		for each (auto pros in shaderProperty)
+		{
+			if (pros.fs == fragment && pros.vs == vertex) {
+				if (geometryCode.size() > 0 && geometry == pros.gs)
+				{
+					ID = pros.id;
+					return;
+				}	
+				else
+				{
+					ID = pros.id;
+					return;
+				}
+			}
+		}
+		ShaderProperty shaderPro;
+		shaderPro.fs = fragment;
+		shaderPro.vs = vertex;
+
+
         // shader Program
         ID = glCreateProgram();
         glAttachShader(ID, vertex);
         glAttachShader(ID, fragment);
-        if (geometryCode.size() > 0)
-            glAttachShader(ID, geometry);
+		if (geometryCode.size() > 0) {
+			shaderPro.gs = geometry;
+			glAttachShader(ID, geometry);
+		}
+            
         bindPredefinedVertexAttribs();
         glLinkProgram(ID);
         checkCompileErrors(ID, "PROGRAM");
@@ -93,6 +128,9 @@ public:
         glDeleteShader(fragment);
         if (geometryCode.size() > 0)
             glDeleteShader(geometry);
+		shaderPro.id = ID;
+		shaderProperty.push_back(shaderPro);
+
     }
 
     void bindPredefinedVertexAttribs()
@@ -123,8 +161,13 @@ public:
     // activate the shader
     // ------------------------------------------------------------------------
 
-    bool compileShader(GLuint *shader, GLenum type, const GLchar *source)
+    bool compileShader(GLuint *shader, GLenum type, const GLchar *source, const GLchar* path)
     {
+		if (compileShaders.find(path) != compileShaders.end()) {
+			*shader = compileShaders[path];
+			return GL_TRUE;
+		}
+
         GLint status;
 
         if (!source)
@@ -153,6 +196,7 @@ public:
 
             return false;
         }
+		compileShaders[path] = *shader;
         return (status == GL_TRUE);
     }
 

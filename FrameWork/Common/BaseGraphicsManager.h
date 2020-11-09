@@ -15,7 +15,8 @@ class Scene;
 struct RendererCammand
 {
     Material material;
-    MeshData meshData;
+    SharedMesh mesh;
+	int index;
 };
 
 

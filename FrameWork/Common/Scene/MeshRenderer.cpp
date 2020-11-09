@@ -34,10 +34,10 @@ void MeshRenderer::Render(SharePtr<Camera> camera)
 
             if (mesh && mi <= mesh->m_MeshDatas.size())
             {
-                auto meshdata = mesh->m_MeshDatas[mi];
 				RendererCammand rC;
 				rC.material = material;
-				rC.meshData = meshdata;
+				rC.mesh = mesh;
+				rC.index = mi;
 
 				g_pGraphicsManager->addRendererCommand(rC);
             }

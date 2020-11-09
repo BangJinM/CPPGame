@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
 
@@ -65,7 +65,7 @@ public:
     {
         resetData();
     }
-    void setupMesh();
+	void setupMesh() {}
 };
 
 class Mesh : public Object
@@ -79,6 +79,7 @@ public:
 public:
     /*  渲染数据  */
     std::vector<MeshData> m_MeshDatas;
+	bool isPrepare = false;
 };
 
 GameEngineEnd

@@ -68,16 +68,13 @@ void GraphicsManager::Draw()
 {
 	for each (auto renderer in m_RendererCommands)
 	{
-		PrepareMesh(renderer.meshData);
 		PrepareMaterial(renderer.material);
-		glBindVertexArray(renderer.meshData.VAO);
-		glDrawElements(GL_TRIANGLES, renderer.meshData.indices.size(), GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		PrepareMesh(renderer.mesh,renderer.index);
 	}
 }
 
 void GraphicsManager::PrepareMaterial(Material& material){ 
-	Shader shader( material.vert.value, material.frag.value);
+	Shader shader( material.vert.value, material.vert.path, material.frag.value, material.frag.path);
     int textureID = 0;
 	shader.use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
@@ -115,30 +112,41 @@ void GraphicsManager::PrepareMaterial(Material& material){
 	}
 }
 
-void GraphicsManager::PrepareMesh(MeshData& meshData){
-    glGenVertexArrays(1, &meshData.VAO);
-	glGenBuffers(1, &meshData.VBO);
-	glGenBuffers(1, &meshData.EBO);
-
-	glBindVertexArray(meshData.VAO);
-	// load data into vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, meshData.VBO);
-	// A great thing about structs is that their memory layout is sequential for all its items.
-	// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-	// again translates to 3/2 floats which translates to a byte array.
-	glBufferData(GL_ARRAY_BUFFER, meshData.vertex.size() * sizeof(float), &meshData.vertex[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData.EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, meshData.indices.size() * sizeof(unsigned int), &meshData.indices[0], GL_STATIC_DRAW);
-	int offest = 0;
-	for (size_t i = 0; i < meshData.attribs.size(); i++)
-	{
-		auto data = meshData.attribs[i];
-		glEnableVertexAttribArray(data.vertexAttrib);
-		glVertexAttribPointer(data.vertexAttrib, data.size, GL_FLOAT, GL_FALSE, meshData.vertexSizeInFloat * sizeof(float), (void *)offest);
-		offest += data.attribSizeBytes;
+void GraphicsManager::PrepareMesh(SharedMesh mesh,int index){
+	if (mesh->isPrepare) {
+		glBindVertexArray(mesh->m_MeshDatas[index].VAO);
+		glDrawElements(GL_TRIANGLES, mesh->m_MeshDatas[index].indices.size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+		return;
 	}
-	glBindVertexArray(0);
+	for (size_t iMesh = 0; iMesh < mesh->m_MeshDatas.size(); iMesh++)
+	{
+		glGenVertexArrays(1, &mesh->m_MeshDatas[iMesh].VAO);
+		glGenBuffers(1, &mesh->m_MeshDatas[iMesh].VBO);
+		glGenBuffers(1, &mesh->m_MeshDatas[iMesh].EBO);
+
+		glBindVertexArray(mesh->m_MeshDatas[iMesh].VAO);
+		// load data into vertex buffers
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].VBO);
+		// A great thing about structs is that their memory layout is sequential for all its items.
+		// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
+		// again translates to 3/2 floats which translates to a byte array.
+		glBufferData(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].vertex.size() * sizeof(float), &mesh->m_MeshDatas[iMesh].vertex[0], GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].indices.size() * sizeof(unsigned int), &mesh->m_MeshDatas[iMesh].indices[0], GL_STATIC_DRAW);
+		int offest = 0;
+		for (size_t i = 0; i < mesh->m_MeshDatas[iMesh].attribs.size(); i++)
+		{
+			auto data = mesh->m_MeshDatas[iMesh].attribs[i];
+			glEnableVertexAttribArray(data.vertexAttrib);
+			glVertexAttribPointer(data.vertexAttrib, data.size, GL_FLOAT, GL_FALSE, mesh->m_MeshDatas[iMesh].vertexSizeInFloat * sizeof(float), (void *)offest);
+			offest += data.attribSizeBytes;
+		}
+		glBindVertexArray(0);
+	}
+	mesh->isPrepare = true;
+	PrepareMesh(mesh, index);
 }
 
 GameEngineEnd

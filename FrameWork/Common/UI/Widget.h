@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Mesh.h"
 #include "MyMath.h"
@@ -19,13 +19,6 @@ private:
     /* data */
     std::weak_ptr<CanvasRenderer> m_CanvasRenderer;
     SharedMaterial m_Material;
-    MeshData m_MeshData;
-
-    vecterFloat3 color[4];
-    vecterFloat3 position[4];
-    vecterFloat2 textcoord[4];
-
-    MeshData getDefaultData();
 
 public:
     Widget(/* args */);
@@ -39,8 +32,5 @@ public:
 
     SharePtr<CanvasRenderer> getCanvasRenderer();
     void setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer);
-
-    void initDefaultMesh();
-    void initMaterial();
 };
 GameEngineEnd

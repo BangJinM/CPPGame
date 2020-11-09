@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Config.h"
 #include "BaseGraphicsManager.h"
@@ -22,7 +22,7 @@ public:
 
     virtual void Draw();
 
-    void PrepareMesh(GameEngine::MeshData &meshData);
+    void PrepareMesh(SharedMesh mesh, int index);
     void PrepareMaterial(GameEngine::Material &material);
 };
 

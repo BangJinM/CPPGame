@@ -69,10 +69,10 @@ int main(int argc, char *argv[])
 	int i = 1;
 	while (!g_pApp->IsQuit())
 	{
-#ifdef WIN32
-	_CrtMemState s1, s2, s3;
-	_CrtMemCheckpoint(&s1);
-#endif // DEBUG
+//#ifdef WIN32
+//	_CrtMemState s1, s2, s3;
+//	_CrtMemCheckpoint(&s1);
+//#endif // DEBUG
 
 		g_pMemoryManager->Tick();
 		g_pInputManager->Tick();
@@ -80,12 +80,12 @@ int main(int argc, char *argv[])
 		g_pAssetManager->Tick();
 		g_pGraphicsManager->Tick();
 		g_pApp->Tick();
-#ifdef WIN32
-		_CrtMemCheckpoint(&s2);
-		if (_CrtMemDifference(&s3, &s1, &s2))
-			_CrtMemDumpStatistics(&s3);
-		_CrtDumpMemoryLeaks();
-#endif // DEBUG
+//#ifdef WIN32
+//		_CrtMemCheckpoint(&s2);
+//		if (_CrtMemDifference(&s3, &s1, &s2))
+//			_CrtMemDumpStatistics(&s3);
+//		_CrtDumpMemoryLeaks();
+//#endif // DEBUG
 	}
 
 

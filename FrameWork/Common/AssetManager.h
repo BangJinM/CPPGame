@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <list>
 #include <map>
@@ -18,6 +18,8 @@
 
 GameEngineBegin 
 
+#define UIMESHDATA "_UIMESH"
+
 class AssetManager : IRuntimeModule
 {
 private:
@@ -28,10 +30,12 @@ public:
 
     static SharedGameObject LoadGameObject(const std::string &path);
     static SharedMesh LoadMesh(const std::string &path);
+	static SharedMesh GetUIMesh();
     static SharedTexture LoadTexture(const std::string &path);
     static SharedMaterial LoadMaterial(const std::string &path);
 
     // static SharePtr<Font> GetFont(const std::string &path);
+	
     static SharedTexture GetTexture(const std::string &path);
     static void AddTexture(const std::string &path, SharedTexture image);
 
