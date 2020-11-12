@@ -11,7 +11,7 @@
 #include <map>
 
 #include "Config.h"
-#include "cJSON.h"
+#include "cjson/cJSON.h"
 #include "Material.h"
 
 GameEngineBegin 

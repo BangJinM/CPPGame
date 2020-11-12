@@ -8,10 +8,8 @@
 #include "Transform.h"
 
 #include "MyMath.h"
-#include "OpenGLDebugger.h"
 #include "SceneParser.h"
 #include "UI/CanvasRenderer.h"
-#include "glfw/glfw3.h"
 
 GameEngineBegin
 

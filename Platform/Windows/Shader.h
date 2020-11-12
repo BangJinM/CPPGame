@@ -91,17 +91,17 @@ public:
             }
         }
 
-		for each (auto pros in shaderProperty)
+		for(auto pros = shaderProperty.begin(); pros != shaderProperty.end(); pros++)
 		{
-			if (pros.fs == fragment && pros.vs == vertex) {
-				if (geometryCode.size() > 0 && geometry == pros.gs)
+			if (pros->fs == fragment && pros->vs == vertex) {
+				if (geometryCode.size() > 0 && geometry == pros->gs)
 				{
-					ID = pros.id;
+					ID = pros->id;
 					return;
 				}	
 				else
 				{
-					ID = pros.id;
+					ID = pros->id;
 					return;
 				}
 			}

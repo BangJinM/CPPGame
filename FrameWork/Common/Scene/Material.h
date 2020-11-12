@@ -12,11 +12,6 @@
 #include <vector>
 #include <string>
 #include <memory>
-#ifdef WIN32
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#endif // WIN32
 
 GameEngineBegin
 

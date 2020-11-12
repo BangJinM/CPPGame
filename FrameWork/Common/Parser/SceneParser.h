@@ -16,7 +16,7 @@
 #include "MaterialParser.h"
 #include "GameObject.h"
 #include "Light.h"
-#include "cJSON.h"
+#include "cjson/cJSON.h"
 #include "MyMath.h"
 #include "MeshRenderer.h"
 #include "AssetManager.h"

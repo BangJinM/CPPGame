@@ -10,6 +10,11 @@ set (CMAKE_CXX_STANDARD 11)
 # set (CMAKE_C_FLAGS_RELWITHDEBINFO   "-O2 /Debug")
 # set (CMAKE_C_STANDARD 11)
 
+# 设置VCPKG_ROOT所在的位置
+
+set(VCPKG_TARGET_TRIPLET x86-windows )
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+
 project (GameEngine)
 
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common")
@@ -18,28 +23,6 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/Parser")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/3dloader")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
-
-
-set(MYGE_TARGET_PLATFORM "Windows")
-
-set(MYGE_EXTERNAL_ROOT ${PROJECT_SOURCE_DIR}/External/${MYGE_TARGET_PLATFORM}/)
-
-include_directories("${PROJECT_SOURCE_DIR}/Platform/${MYGE_TARGET_PLATFORM}")
-include_directories("${PROJECT_SOURCE_DIR}/External/src/glm")
-include_directories("${PROJECT_SOURCE_DIR}/External/src/glad/include")
-include_directories("${PROJECT_SOURCE_DIR}/External/src/cJSON")
-include_directories("${PROJECT_SOURCE_DIR}/External/src/freetype/include")
-
-add_library( cJson
-    ${PROJECT_SOURCE_DIR}/External/src/cJson/cJson.c
-)
-
-add_library( Glad
-    ${PROJECT_SOURCE_DIR}/External/src/glad/src/glad.c
-)
-
-include_directories("${MYGE_EXTERNAL_ROOT}include")
-set(MYGE_EXTERNAL_LIBRARY_PATH ${MYGE_EXTERNAL_ROOT}lib/)
 
 add_subdirectory(FrameWork)
 add_subdirectory(Platform)

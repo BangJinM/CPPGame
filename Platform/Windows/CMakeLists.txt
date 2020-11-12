@@ -3,15 +3,13 @@ add_executable(Windows
     GamePlatform-opengl.cpp
     InputManagerWindows.cpp
 )
-target_link_libraries(Windows Common)
 
-if(WIN32)
-    find_library(GLFW3 glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
-else()
-    find_library(GLFW3 glfw3 PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
-endif(WIN32)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
 
-target_link_libraries(Windows ${GLFW3})
+target_link_libraries(Windows PRIVATE glfw )
+target_link_libraries(Windows PRIVATE glad::glad)
+target_link_libraries(Windows PRIVATE Common )
 
 
 

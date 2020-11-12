@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "MeshRenderer.h"
-#include "GraphicsManager.h"
+#include "BaseGraphicsManager.h"
 #include "Transform.h"
 #include <glm/gtc/type_ptr.hpp>
 

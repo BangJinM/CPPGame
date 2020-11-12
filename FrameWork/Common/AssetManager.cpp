@@ -27,6 +27,7 @@ int AssetManager::Initialize()
 	return 0;
 }
 
+
 void AssetManager::Finalize()
 {
 	// FT_Done_FreeType(ft);

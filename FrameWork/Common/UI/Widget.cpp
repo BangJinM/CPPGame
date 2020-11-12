@@ -1,6 +1,5 @@
 ﻿#include "Widget.h"
 #include "MyMath.h"
-#include "Shader.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "GameObject.h"

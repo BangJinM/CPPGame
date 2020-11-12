@@ -67,10 +67,10 @@ void GraphicsManager::Clear()
 
 void GraphicsManager::Draw()
 {
-	for each (auto renderer in m_RendererCommands)
+	for (auto renderer = m_RendererCommands.begin(); renderer!= m_RendererCommands.end(); renderer++)
 	{
-		PrepareMaterial(renderer.material);
-		PrepareMesh(renderer.mesh,renderer.index);
+		PrepareMaterial(renderer->material);
+		PrepareMesh(renderer->mesh,renderer->index);
 	}
 }
 
