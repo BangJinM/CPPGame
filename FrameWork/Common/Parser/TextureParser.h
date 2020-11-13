@@ -27,6 +27,7 @@ public:
             image->Height = height;
             image->Width = width;
             image->data = data;
+            image->formate = nrComponents;
             return image;
         }
         return SharedTexture();
@@ -39,6 +40,7 @@ public:
         image->Width = width;
         image->data = data;
 		image->id = -1;
+        image->formate = format;
         return image;
     }
 };

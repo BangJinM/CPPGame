@@ -15,35 +15,35 @@ using namespace std;
 
 GameEngineBegin
 
-extern AssetManager *g_pAssetManager;
+	extern AssetManager *g_pAssetManager;
 
 int GraphicsManager::Initialize()
 {
-    int result;
-    result = gladLoadGL();
-    if (!result)
-    {
-        cerr << "OpenGL load failed!" << endl;
-        result = -1;
-    }
-    else
-    {
-        result = 0;
-        cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
+	int result;
+	result = gladLoadGL();
+	if (!result)
+	{
+		cerr << "OpenGL load failed!" << endl;
+		result = -1;
+	}
+	else
+	{
+		result = 0;
+		cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
 
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
+		glClearDepth(1.0f);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 
-        SharePtr<Scene> m_Scene;
-        m_Scene = std::make_shared<Scene>();
-        m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
-        SceneManager::GetInstance()->SetNextScene(m_Scene);
-        result = 1;
-    }
+		SharePtr<Scene> m_Scene;
+		m_Scene = std::make_shared<Scene>();
+		m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
+		SceneManager::GetInstance()->SetNextScene(m_Scene);
+		result = 1;
+	}
 
-    return result;
+	return result;
 }
 
 void GraphicsManager::Finalize()
@@ -52,31 +52,31 @@ void GraphicsManager::Finalize()
 
 void GraphicsManager::Tick()
 {
-    auto window = glfwGetCurrentContext();
+	auto window = glfwGetCurrentContext();
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_RendererCommands.clear();
-    BaseGraphicsManager::Tick();
-    glfwSwapBuffers(window);
+	BaseGraphicsManager::Tick();
+	glfwSwapBuffers(window);
 }
 
 void GraphicsManager::Clear()
 {
 }
 
-
 void GraphicsManager::Draw()
 {
-	for (auto renderer = m_RendererCommands.begin(); renderer!= m_RendererCommands.end(); renderer++)
+	for (auto renderer = m_RendererCommands.begin(); renderer != m_RendererCommands.end(); renderer++)
 	{
 		PrepareMaterial(renderer->material);
-		PrepareMesh(renderer->mesh,renderer->index);
+		PrepareMesh(renderer->mesh, renderer->index);
 	}
 }
 
-void GraphicsManager::PrepareMaterial(Material& material){ 
-	Shader shader( material.vert.value, material.vert.path, material.frag.value, material.frag.path);
-    int textureID = 0;
+void GraphicsManager::PrepareMaterial(Material &material)
+{
+	Shader shader(material.vert.value, material.vert.path, material.frag.value, material.frag.path);
+	int textureID = 0;
 	shader.use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
 	{
@@ -101,7 +101,8 @@ void GraphicsManager::PrepareMaterial(Material& material){
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
 				shader.setInt(data.m_Name, textureID);
-				if (image->id <= 0) {
+				if (image->id <= 0)
+				{
 					BindTexture(image);
 				}
 				glActiveTexture(GL_TEXTURE0 + textureID);
@@ -116,13 +117,20 @@ void GraphicsManager::PrepareMaterial(Material& material){
 	}
 }
 
-
 void GraphicsManager::BindTexture(SharedTexture texture)
 {
+	GLenum format;
+	if (texture->formate == 1)
+		format = GL_RED;
+	else if (texture->formate == 3)
+		format = GL_RGB;
+	else if (texture->formate == 4)
+		format = GL_RGBA;
+
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, texture->formate, texture->Width, texture->Height, 0, texture->formate, GL_UNSIGNED_BYTE, texture->data);
+	glTexImage2D(GL_TEXTURE_2D, 0, format, texture->Width, texture->Height, 0, format, GL_UNSIGNED_BYTE, texture->data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -131,8 +139,10 @@ void GraphicsManager::BindTexture(SharedTexture texture)
 	texture->id = textureID;
 }
 
-void GraphicsManager::PrepareMesh(SharedMesh mesh,int index){
-	if (mesh->isPrepare) {
+void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
+{
+	if (mesh->isPrepare)
+	{
 		glBindVertexArray(mesh->m_MeshDatas[index].VAO);
 		glDrawElements(GL_TRIANGLES, mesh->m_MeshDatas[index].indices.size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);

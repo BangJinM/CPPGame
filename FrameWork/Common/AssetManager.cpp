@@ -214,7 +214,7 @@ SharedTexture AssetManager::getWhiteTexture()
 		pixels[i * 4 + 2] = 255;
 		pixels[i * 4 + 3] = 255;
 	}
-	image = TextureParser::bindTexture(0x1908, size, size, pixels);
+	image = TextureParser::bindTexture(3, size, size, pixels);
 	g_pAssetManager->AddTexture(path, image);
 	return image;
 }
