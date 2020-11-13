@@ -27,6 +27,9 @@ public:
 
     bool maybeSave();
     void documentWasModified();
+
+    void writeSettings();
+    void readSettings();
 protected:
     void closeEvent(QCloseEvent *event) override;
 

@@ -7,23 +7,24 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>100</height>
+    <height>125</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Output</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>800</width>
-      <height>100</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QFrame" name="verticalFrame">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QTextBrowser" name="textBrowser"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

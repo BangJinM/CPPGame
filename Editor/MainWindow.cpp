@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QSettings>
 
 #include "FileView.h"
 #include "EditorView.h"
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     setDockNestingEnabled(true);
     setupDockWidgets();
     createActions();
+
+    readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -71,6 +74,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if (maybeSave())
     {
 //        writeSettings();
+        writeSettings();
         event->accept();
     }
     else
@@ -152,10 +156,8 @@ void MainWindow::setupDockWidgets(){
 
     tabifyDockWidget(outputView, fileView);
 
-    resizeDocks({fileView},{100},Qt::Horizontal);
-    resizeDocks({editorView},{300},Qt::Horizontal);
-    resizeDocks({runingView},{300},Qt::Horizontal);
-    resizeDocks({propertiesView},{100},Qt::Horizontal);
+    resizeDocks({fileView, editorView, runingView, propertiesView},{100, 300, 300,100},Qt::Horizontal);
+    resizeDocks({outputView, editorView},{100,500},Qt::Vertical);
 //    actionWindow->addMenu(fileView->colorSwatchMenu());
 }
 
@@ -166,4 +168,24 @@ void MainWindow::createActions()
     connect(ui->action_open, &QAction::triggered, this, &MainWindow::open);
     connect(ui->action_close, &QAction::triggered, this, &QWidget::close);
 //    connect(ui->plainTextEdit->document(), &QTextDocument::contentsChanged, this, &MainWindow::documentWasModified);
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings("Software Inc.", "Icon Editor");
+
+    settings.beginGroup("mainWindow");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("state", saveState());
+    settings.endGroup();
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings("Software Inc.", "Icon Editor");
+
+    settings.beginGroup("mainWindow");
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("state").toByteArray());
+    settings.endGroup();
 }
