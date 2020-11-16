@@ -1,3 +1,4 @@
+project (Windows)
 add_executable(Windows 
     GraphicsManager.cpp
     GamePlatform-opengl.cpp

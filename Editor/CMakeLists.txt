@@ -1,15 +1,8 @@
-cmake_minimum_required(VERSION 3.5)
+
 
 project(Editor LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check http://doc.qt.io/qt-5/deployment-android.html for more information.
@@ -23,8 +16,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
 #    endif()
 #endif()
-
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 SET( EditorCPP
     main.cpp
@@ -67,4 +58,5 @@ else()
   )
 endif()
 
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 target_link_libraries(Editor PRIVATE Qt5::Widgets)
