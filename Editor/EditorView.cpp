@@ -8,8 +8,9 @@ EditorView::EditorView(QWidget *parent) :
     ui(new Ui::EditorView)
 {
     ui->setupUi(this);
-    openGlWidget = new OpenGLWidget(ui->verticalWidget);
+    openGlWidget = new OpenGLWidget();
     openGlWidget->show();
+    ui->verticalLayout->addWidget(openGlWidget);
 }
 
 EditorView::~EditorView()

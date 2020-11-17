@@ -15,9 +15,9 @@ public:
     int _height;
 
 protected:
-    virtual void initializeGL();
-    virtual void resizeGL(int w, int h);
-    virtual void paintGL();
+    virtual void initializeGL() Q_DECL_OVERRIDE;
+    virtual void resizeGL(int w, int h) Q_DECL_OVERRIDE;
+    virtual void paintGL() Q_DECL_OVERRIDE;
 
     QOpenGLContext *m_context;
 signals:

@@ -158,6 +158,13 @@ void MainWindow::setupDockWidgets(){
 
     resizeDocks({fileView, editorView, runingView, propertiesView},{100, 300, 300,100},Qt::Horizontal);
     resizeDocks({outputView, editorView},{100,500},Qt::Vertical);
+
+    ui->menu_window->addAction(fileView->toggleViewAction());
+    ui->menu_window->addAction(outputView->toggleViewAction());
+    ui->menu_window->addAction(editorView->toggleViewAction());
+    ui->menu_window->addAction(runingView->toggleViewAction());
+    ui->menu_window->addAction(propertiesView->toggleViewAction());
+    ui->menu_window->addAction(structureView->toggleViewAction());
 //    actionWindow->addMenu(fileView->colorSwatchMenu());
 }
 

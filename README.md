@@ -19,4 +19,14 @@
 
   https://learnopengl-cn.github.io/
 
-9.C++ 包管理器 vcpkg
+9.C++ 包管理器 vcpkg,下载源码,编译源码太慢太慢太慢
+
+```
+1.cjson
+2.glm
+3.glad
+4.glfw
+5.qt5
+6.freetype
+```
+
