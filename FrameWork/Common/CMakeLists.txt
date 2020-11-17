@@ -50,8 +50,6 @@ target_link_libraries(Common PRIVATE glm)
 
 find_package(cjson CONFIG REQUIRED)
 target_link_libraries(Common PRIVATE cjson)
-# find_library(FREETYPE freetype PATHS ${MYGE_EXTERNAL_LIBRARY_PATH})
-# target_link_libraries(Common ${FREETYPE})
 
 SOURCE_GROUP( src\\Parser FILES ${Parser})
 SOURCE_GROUP( src\\3dloader FILES ${3dloader})

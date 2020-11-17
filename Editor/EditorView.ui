@@ -16,7 +16,9 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QOpenGLWidget" name="openGLWidget"/>
+     <widget class="QWidget" name="verticalWidget" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout"/>
+     </widget>
     </item>
    </layout>
   </widget>
