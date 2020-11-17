@@ -3,7 +3,7 @@ set (CMAKE_C_STANDARD 11)
 set (CMAKE_CXX_STANDARD 11)
 
 # 设置VCPKG_ROOT所在的位置
-set(VCPKG_TARGET_TRIPLET x86-windows )
+set(VCPKG_TARGET_TRIPLET x86-windows)
 set(VCPKG_ROOT "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT} CACHE STRING "")
 
@@ -18,6 +18,7 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
 
 add_subdirectory(FrameWork)
 add_subdirectory(Platform)
+add_subdirectory(RHI)
 # add_subdirectory(Test)
-add_subdirectory(Editor)
+#add_subdirectory(Editor)
 

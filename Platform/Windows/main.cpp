@@ -96,6 +96,5 @@ int main(int argc, char *argv[])
 	delete g_pAssetManager;
 	delete g_pMemoryManager;
 
-
 	return 0;
 }

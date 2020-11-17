@@ -32,7 +32,6 @@ SET( Common
     AssetLoader.cpp
     BaseGraphicsManager.cpp
     AssetManager.cpp
-    main.cpp
 )
 
 file(GLOB_RECURSE CURRENT_HEADERS  *.h *.hpp)

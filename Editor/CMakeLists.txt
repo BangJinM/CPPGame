@@ -57,4 +57,4 @@ target_link_libraries(Editor PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core)
 
 find_package(glfw3 CONFIG REQUIRED)
 
-target_link_libraries(Editor PRIVATE glfw )
+target_link_libraries(Editor PRIVATE glfw Common )
