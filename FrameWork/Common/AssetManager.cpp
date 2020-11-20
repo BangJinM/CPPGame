@@ -11,7 +11,7 @@
 
 GameEngineBegin
 
-	extern AssetLoader *g_pAssetLoader;
+extern AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 
 static std::map<std::string, SharedObject> g_cache;
@@ -60,6 +60,19 @@ SharedMaterial AssetManager::LoadMaterial(const std::string &path)
 	if (obj)
 		g_cache[path] = obj;
 	return obj;
+}
+
+SharedShader AssetManager::LoadMShader(MShader::ShaderType type, const std::string & path)
+{
+	if (g_cache.find(path) != g_cache.end())
+	{
+		return std::dynamic_pointer_cast<MShader>(g_cache[path]);
+	}
+	string str = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
+	SharedShader shader = make_shared<MShader>(type);
+	if(shader)
+		g_cache[path] = shader;
+	return shader;
 }
 
 SharedMesh AssetManager::LoadMesh(const std::string &path)
@@ -197,6 +210,10 @@ void AssetManager::AddTexture(const std::string &path, SharedTexture image)
 		return;
 	}
 	g_cache[path] = image;
+}
+void AssetManager::GetShaderProgram(int ID)
+{
+	
 }
 const int size = 4;
 SharedTexture AssetManager::getWhiteTexture()

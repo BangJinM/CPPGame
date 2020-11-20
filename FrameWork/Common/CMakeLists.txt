@@ -1,4 +1,4 @@
-SET( Scene
+﻿SET( Scene
     Scene/GameObject.cpp
     Scene/Scene.cpp
     Scene/Transform.cpp
@@ -44,15 +44,18 @@ add_library(Common
     ${3dloader}
     ${CURRENT_HEADERS}
 )
-find_package(glm CONFIG REQUIRED)
-target_link_libraries(Common PRIVATE glm)
-
-find_package(cjson CONFIG REQUIRED)
-target_link_libraries(Common PRIVATE cjson)
 
 SOURCE_GROUP( src\\Parser FILES ${Parser})
 SOURCE_GROUP( src\\3dloader FILES ${3dloader})
 SOURCE_GROUP( src\\Scene FILES ${Scene})
 SOURCE_GROUP( src\\UI FILES ${UI})
 SOURCE_GROUP( src FILES ${Common})
+
+find_package(glm CONFIG REQUIRED)
+target_link_libraries(Common PRIVATE glm)
+
+find_package(cjson CONFIG REQUIRED)
+target_link_libraries(Common PRIVATE cjson)
+
+target_link_libraries(Common PRIVATE RHI)
 

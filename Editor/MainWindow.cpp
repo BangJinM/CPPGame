@@ -12,9 +12,39 @@
 #include "StructureView.h"
 #include "PropertiesView.h"
 
+#include "MemoryManager.h"
+#include "AssetLoader.h"
+#include "AssetManager.h"
+
+namespace GameEngine
+{
+    MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
+    AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
+    AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
+} // namespace GameEngine
+
+using namespace GameEngine;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    int ret;
+
+    if ((ret = g_pMemoryManager->Initialize()) != 0)
+    {
+        printf("App Initialize failed, will exit now.");
+    }
+
+    if ((ret = g_pAssetLoader->Initialize()) != 0)
+    {
+        printf("App Initialize failed, will exit now.");
+    }
+
+    if ((ret = g_pAssetManager->Initialize()) != 0)
+    {
+        printf("App Initialize failed, will exit now.");
+    }
+
     ui->setupUi(this);
     QWidget* p = takeCentralWidget();
     if(p)
@@ -29,6 +59,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    g_pAssetLoader->Finalize();
+    g_pAssetManager->Finalize();
+    g_pMemoryManager->Finalize();
+
+    delete g_pAssetLoader;
+    delete g_pAssetManager;
+    delete g_pMemoryManager;
+
     delete ui;
 }
 

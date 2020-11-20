@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright 2012-2015, Syoyo Fujita.
 //
 // Licensed under 2-clause BSD license.
@@ -13,6 +13,7 @@
 #include "Config.h"
 #include "cjson/cJSON.h"
 #include "Material.h"
+#include "MShader.h"
 
 GameEngineBegin 
 
@@ -32,9 +33,11 @@ public:
 
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
-
-		material->frag = ShaderData(frag->valuestring, fragStr);
-		material->vert = ShaderData(vert->valuestring,vertStr);
+		SharedShaderProgram shader = make_shared<MShaderProgram>();
+		shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
+		shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
+		shader->Link();
+		material->shader = shader;
 
 		auto paramsNode = cJSON_GetObjectItem(json, "params");
 		if (paramsNode)

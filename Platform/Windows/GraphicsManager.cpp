@@ -10,6 +10,7 @@
 #include "Mesh.h"
 
 #include "Shader.h"
+#include "MShader.h"
 
 using namespace std;
 
@@ -75,9 +76,8 @@ void GraphicsManager::Draw()
 
 void GraphicsManager::PrepareMaterial(Material &material)
 {
-	Shader shader(material.vert.value, material.vert.path, material.frag.value, material.frag.path);
 	int textureID = 0;
-	shader.use();
+	material.shader->Use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
 	{
 		auto data = material.m_MaterialDatas[i];
@@ -87,20 +87,20 @@ void GraphicsManager::PrepareMaterial(Material &material)
 		case MaterialType::T_Mat4:
 		{
 			auto property = (float *)data.m_Buffer;
-			shader.setMat4(data.m_Name, &property[0]);
+			material.shader->setMat4(data.m_Name, &property[0]);
 			break;
 		}
 		case MaterialType::T_Texture:
 		{
 			auto property = (char *)data.m_Buffer;
-			unsigned int location;
-			location = glGetUniformLocation(shader.ID, data.m_Name.c_str());
+			int location;
+			location = glGetUniformLocation(material.shader->m_ProgramID, data.m_Name.c_str());
 			if (location != -1)
 			{
 				SharedTexture image = g_pAssetManager->LoadTexture(property);
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
-				shader.setInt(data.m_Name, textureID);
+				material.shader->setInt(data.m_Name, textureID);
 				if (image->id <= 0)
 				{
 					BindTexture(image);

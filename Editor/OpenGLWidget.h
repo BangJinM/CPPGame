@@ -3,9 +3,16 @@
 
 #include <QWidget>
 #include <QOpenGLWidget>
-#include <QtGui/QOpenGLFunctions>
+#include <QOpenGLExtraFunctions>
+#include <QOpenGLFunctions_3_3_Core>
 
-class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+#include "Texture.h"
+#include "Mesh.h"
+#include "Material.h"
+
+using namespace GameEngine;
+
+class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
     Q_OBJECT
 public:
@@ -13,6 +20,10 @@ public:
 
     int _width;
     int _height;
+
+    void BindTexture(SharedTexture texture);
+    void PrepareMesh(SharedMesh mesh, int index);
+    void PrepareMaterial(Material &material);
 
 protected:
     virtual void initializeGL() Q_DECL_OVERRIDE;

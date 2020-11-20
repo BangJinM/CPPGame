@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "MShader.h"
 
 GameEngineBegin
 
@@ -94,8 +95,7 @@ public:
         {
             AddProperty(other.m_MaterialDatas[i].m_Buffer, other.m_MaterialDatas[i].m_Name, other.m_MaterialDatas[i].m_Size, other.m_MaterialDatas[i].m_Type);
         }
-        vert = other.vert;
-        frag = other.frag;
+		shader = other.shader;
     }
 public:
     ~Material()
@@ -112,9 +112,8 @@ public:
     void AddProperty(Type value, std::string name, int size, MaterialType type);
 
     std::vector<NMaterialData> m_MaterialDatas;
-
-    ShaderData frag;
-    ShaderData vert;
+	
+	SharedShaderProgram shader;
 };
 
 template <typename Type>

@@ -1,4 +1,4 @@
-add_executable(Windows 
+﻿add_executable(Windows 
     main.cpp
     GraphicsManager.cpp
     GamePlatform-opengl.cpp
@@ -11,7 +11,7 @@ find_package(glad CONFIG REQUIRED)
 target_link_libraries(Windows PRIVATE glfw )
 target_link_libraries(Windows PRIVATE glad::glad)
 target_link_libraries(Windows PRIVATE Common )
-
+target_link_libraries(Windows PRIVATE RHI )
 
 
 

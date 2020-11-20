@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1) 
+﻿cmake_minimum_required (VERSION 3.1) 
 set (CMAKE_C_STANDARD 11)
 set (CMAKE_CXX_STANDARD 11)
 
@@ -6,6 +6,8 @@ set (CMAKE_CXX_STANDARD 11)
 set(VCPKG_TARGET_TRIPLET x86-windows)
 set(VCPKG_ROOT "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT} CACHE STRING "")
+
+set(GAMEENGINE_RHI_OPENGL true)
 
 project (GameEngine)
 
@@ -15,6 +17,7 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/Parser")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/3dloader")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
+include_directories("${PROJECT_SOURCE_DIR}/RHI")
 
 add_subdirectory(FrameWork)
 add_subdirectory(Platform)
