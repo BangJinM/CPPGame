@@ -62,18 +62,6 @@ SharedMaterial AssetManager::LoadMaterial(const std::string &path)
 	return obj;
 }
 
-SharedShader AssetManager::LoadMShader(MShader::ShaderType type, const std::string & path)
-{
-	if (g_cache.find(path) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<MShader>(g_cache[path]);
-	}
-	string str = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
-	SharedShader shader = make_shared<MShader>(type);
-	if(shader)
-		g_cache[path] = shader;
-	return shader;
-}
 
 SharedMesh AssetManager::LoadMesh(const std::string &path)
 {

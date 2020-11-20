@@ -1,7 +1,7 @@
 ﻿add_library(RHI
     MShader.cpp
 )
-
+include_directories("${PROJECT_SOURCE_DIR}/RHI/OpenGL")
 find_package(glad CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 

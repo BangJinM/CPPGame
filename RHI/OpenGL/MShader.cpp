@@ -1,7 +1,7 @@
-﻿#include "../MShader.h"
+﻿#include "MShader.h"
 
-#include "GLFW/glfw3.h"
 #include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 GameEngineBegin
 

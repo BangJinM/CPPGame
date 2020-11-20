@@ -57,5 +57,11 @@ target_link_libraries(Common PRIVATE glm)
 find_package(cjson CONFIG REQUIRED)
 target_link_libraries(Common PRIVATE cjson)
 
+
+if(GAMEENGINE_RHI_QT_OPENGL)
+    find_package(Qt5 COMPONENTS Gui REQUIRED)
+    target_link_libraries(Common PRIVATE Qt5::Gui)
+endif()
+
 target_link_libraries(Common PRIVATE RHI)
 

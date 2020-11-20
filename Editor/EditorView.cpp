@@ -2,6 +2,7 @@
 #include "ui_EditorView.h"
 
 #include "OpenGLWidget.h"
+#include "BaseGraphicsManager.h"
 
 EditorView::EditorView(QWidget *parent) :
     QDockWidget(parent),

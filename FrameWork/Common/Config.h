@@ -23,7 +23,6 @@ class Renderer;
 #define SharedMaterial SharePtr<Material>
 #define SharedMesh SharePtr<Mesh>
 #define SharedTexture SharePtr<Texture>
-#define SharedShader SharePtr<MShader>
 #define SharedShaderProgram SharePtr<MShaderProgram>
 
 enum MeshValueType {

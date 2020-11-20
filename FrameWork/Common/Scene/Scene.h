@@ -44,7 +44,7 @@ public:
   SharePtr<CanvasRenderer> GetCanvasRenderer();
   void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
 
-  SharedGameObject GetObject(SharedGameObject parent, int sid);
+  SharedGameObject GetGObject(SharedGameObject parent, int sid);
   std::list<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
 
   std::list<SharePtr<Camera>> m_Cameras;

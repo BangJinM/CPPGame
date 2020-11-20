@@ -40,6 +40,9 @@ SET( EditorCPP
 
     OpenGLWidget.cpp
     OpenGLWidget.h
+
+    GraphicsManager.cpp
+    GraphicsManager.h
 )
 
 if(ANDROID)
@@ -56,5 +59,4 @@ find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
 target_link_libraries(Editor PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core)
 
 find_package(glfw3 CONFIG REQUIRED)
-
-target_link_libraries(Editor PRIVATE glfw Common )
+target_link_libraries(Editor PRIVATE glfw Common RHI)

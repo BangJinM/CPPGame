@@ -35,7 +35,7 @@ public:
 	static SharedMesh GetUIMesh();
     static SharedTexture LoadTexture(const std::string &path);
     static SharedMaterial LoadMaterial(const std::string &path);
-	static SharedShader LoadMShader(MShader::ShaderType type, const std::string &path);
+
 
     // static SharePtr<Font> GetFont(const std::string &path);
 	

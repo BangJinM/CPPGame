@@ -33,7 +33,7 @@ public:
     virtual void Draw();
 
     void addRendererCommand(RendererCammand command);
-
+    std::list<RendererCammand> getRendererCommand();
 protected:
     std::list<RendererCammand> m_RendererCommands;
 };

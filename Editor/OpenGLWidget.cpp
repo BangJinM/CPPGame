@@ -1,8 +1,9 @@
 #include "OpenGLWidget.h"
 
+#include "BaseGraphicsManager.h"
 #include "AssetManager.h"
 #include "SceneManager.h"
-#include "ShaderProgram.h"
+#include "MShader.h"
 #include "Scene.h"
 
 #include <QOpenGLWidget>
@@ -12,38 +13,71 @@
 
 using namespace GameEngine;
 
-extern AssetManager *g_pAssetManager;
+namespace GameEngine {
+    extern BaseGraphicsManager *g_pGraphicsManager;
+    extern AssetManager *g_pAssetManager;
+}
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
+
+}
+
+void OpenGLWidget::paintGL(){
+    glClearColor(0.3,0.3,0.3,1);
+    Tick();
+}
+
+void OpenGLWidget::initializeGL(){
+    Initialize();
+    glClearColor(0.3,0.3,0.3,1);
+}
+
+int OpenGLWidget::Initialize()
+{
+    initializeOpenGLFunctions();
+    int result;
     SharePtr<Scene> m_Scene;
     m_Scene = std::make_shared<Scene>();
     m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
     SceneManager::GetInstance()->SetNextScene(m_Scene);
-}
-
-void OpenGLWidget::paintGL(){
-
-}
-
-void OpenGLWidget::initializeGL(){
-    initializeOpenGLFunctions();
-    glClearColor(0,0,0,1);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_COLOR_MATERIAL);
+    result = 1;
+    return result;
 }
 
 void OpenGLWidget::resizeGL(int width, int height){
     glViewport(0,0,width,height);
 }
 
+void OpenGLWidget::Finalize()
+{
+}
+
+void OpenGLWidget::Tick()
+{
+    g_pGraphicsManager->Tick();
+    auto m_RendererCommands=  g_pGraphicsManager->getRendererCommand();
+    Draw(m_RendererCommands);
+    g_pGraphicsManager->Clear();
+}
+
+void OpenGLWidget::Clear()
+{
+}
+
+void OpenGLWidget::Draw(std::list<RendererCammand> m_RendererCommands)
+{
+    for (auto renderer = m_RendererCommands.begin(); renderer != m_RendererCommands.end(); renderer++)
+    {
+//        PrepareMaterial(renderer->material);
+        PrepareMesh(renderer->mesh, renderer->index);
+    }
+}
+
 void OpenGLWidget::PrepareMaterial(Material &material)
 {
-    ShaderProgram shader(material.vert.value, material.vert.path, material.frag.value, material.frag.path);
     int textureID = 0;
-    shader.use();
+    material.shader->Use();
     for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
     {
         auto data = material.m_MaterialDatas[i];
@@ -53,20 +87,20 @@ void OpenGLWidget::PrepareMaterial(Material &material)
         case MaterialType::T_Mat4:
         {
             auto property = (float *)data.m_Buffer;
-            shader.setMat4(data.m_Name, &property[0]);
+            material.shader->setMat4(data.m_Name, &property[0]);
             break;
         }
         case MaterialType::T_Texture:
         {
             auto property = (char *)data.m_Buffer;
             unsigned int location;
-            location = glGetUniformLocation(shader.ID, data.m_Name.c_str());
+            location = material.shader->uniformLocation(data.m_Name.c_str());
             if (location != -1)
             {
                 SharedTexture image = g_pAssetManager->LoadTexture(property);
                 if (!image)
                     image = g_pAssetManager->getWhiteTexture();
-                shader.setInt(data.m_Name, textureID);
+                material.shader->setInt(data.m_Name, textureID);
                 if (image->id <= 0)
                 {
                     BindTexture(image);

@@ -10,7 +10,9 @@
 #include "Mesh.h"
 #include "Material.h"
 
+#include "BaseGraphicsManager.h"
 using namespace GameEngine;
+
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -21,9 +23,16 @@ public:
     int _width;
     int _height;
 
+    virtual int Initialize();
+    virtual void Finalize();
+
+    virtual void Tick();
+    virtual void Clear();
+    virtual void Draw(std::list<RendererCammand> m_RendererCommands);
+
     void BindTexture(SharedTexture texture);
     void PrepareMesh(SharedMesh mesh, int index);
-    void PrepareMaterial(Material &material);
+    void PrepareMaterial(GameEngine::Material &material);
 
 protected:
     virtual void initializeGL() Q_DECL_OVERRIDE;

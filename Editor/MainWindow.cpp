@@ -15,12 +15,14 @@
 #include "MemoryManager.h"
 #include "AssetLoader.h"
 #include "AssetManager.h"
-
+#include "BaseGraphicsManager.h"
+#include "GraphicsManager.h"
 namespace GameEngine
 {
     MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
     AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
     AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
+    BaseGraphicsManager *g_pGraphicsManager = static_cast<BaseGraphicsManager*>(new BaseGraphicsManager);
 } // namespace GameEngine
 
 using namespace GameEngine;
@@ -62,11 +64,12 @@ MainWindow::~MainWindow()
     g_pAssetLoader->Finalize();
     g_pAssetManager->Finalize();
     g_pMemoryManager->Finalize();
+    g_pGraphicsManager->Finalize();
 
     delete g_pAssetLoader;
     delete g_pAssetManager;
     delete g_pMemoryManager;
-
+    delete g_pGraphicsManager;
     delete ui;
 }
 

@@ -97,7 +97,7 @@ void Scene::SetCanvasRenderer(SharePtr<CanvasRenderer> canvas)
 	m_Canvas = canvas;
 }
 
-SharedGameObject Scene::GetObject(SharedGameObject parent, int sid)
+SharedGameObject Scene::GetGObject(SharedGameObject parent, int sid)
 {
 	std::map<std::string, SharedGameObject> children;
 	if (parent)
@@ -112,7 +112,7 @@ SharedGameObject Scene::GetObject(SharedGameObject parent, int sid)
 			result = child;
 		if (result)
 			return result;
-		auto result = GetObject(child, sid);
+        auto result = GetGObject(child, sid);
 		if (result)
 			return result;
 	}

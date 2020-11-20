@@ -17,11 +17,20 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/Parser")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Common/3dloader")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
-include_directories("${PROJECT_SOURCE_DIR}/RHI")
+
+if(GAMEENGINE_RHI_OPENGL)
+    include_directories("${PROJECT_SOURCE_DIR}/RHI/OpenGL")
+    add_subdirectory(RHI/OpenGL)
+    add_subdirectory(Platform)
+else(GAMEENGINE_RHI_QT_OPENGL)
+    include_directories("${PROJECT_SOURCE_DIR}/RHI/QtOpenGL")
+    add_subdirectory(RHI/QtOpenGL)
+    add_subdirectory(Editor)
+endif()
+
 
 add_subdirectory(FrameWork)
-add_subdirectory(Platform)
-add_subdirectory(RHI)
-# add_subdirectory(Test)
-#add_subdirectory(Editor)
+
+
+
 
