@@ -14,7 +14,7 @@
 #include "cjson/cJSON.h"
 #include "Material.h"
 #include "MShader.h"
-
+#include "AssetLoader.h"
 GameEngineBegin 
 
 extern AssetLoader *g_pAssetLoader;
@@ -34,9 +34,9 @@ public:
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
 		SharedShaderProgram shader = make_shared<MShaderProgram>();
-		shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
-		shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
-		shader->Link();
+        bool flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
+        flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
+        flag = shader->Link();
 		material->shader = shader;
 
 		auto paramsNode = cJSON_GetObjectItem(json, "params");

@@ -7,7 +7,7 @@ set(VCPKG_TARGET_TRIPLET x86-windows)
 set(VCPKG_ROOT "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT} CACHE STRING "")
 
-set(GAMEENGINE_RHI_OPENGL true)
+set(GAMEENGINE_RHI_QT_OPENGL true)
 
 project (GameEngine)
 

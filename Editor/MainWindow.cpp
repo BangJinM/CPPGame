@@ -16,7 +16,7 @@
 #include "AssetLoader.h"
 #include "AssetManager.h"
 #include "BaseGraphicsManager.h"
-#include "GraphicsManager.h"
+
 namespace GameEngine
 {
     MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);

@@ -69,7 +69,11 @@ public:
 
     int uniformLocation(const char *name);
 
-    QOpenGLShaderProgram* m_QOpenGLShaderProgram;
+    void log();
+
+    void release();
+
+    SharePtr<QOpenGLShaderProgram> m_QOpenGLShaderProgram;
 };
 
 GameEngineEnd

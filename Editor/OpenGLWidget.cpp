@@ -77,7 +77,7 @@ void OpenGLWidget::Draw(std::list<RendererCammand> m_RendererCommands)
 void OpenGLWidget::PrepareMaterial(Material &material)
 {
     int textureID = 0;
-    material.shader->Use();
+    bool flag = material.shader->Use();
     for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
     {
         auto data = material.m_MaterialDatas[i];

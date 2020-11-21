@@ -41,8 +41,8 @@ SET( EditorCPP
     OpenGLWidget.cpp
     OpenGLWidget.h
 
-    GraphicsManager.cpp
-    GraphicsManager.h
+    CoreFunctionWidget.cpp
+    CoreFunctionWidget.h
 )
 
 if(ANDROID)

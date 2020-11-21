@@ -7,7 +7,7 @@ namespace Ui {
 class EditorView;
 }
 
-class OpenGLWidget;
+class CoreFunctionWidget;
 
 class EditorView : public QDockWidget
 {
@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::EditorView *ui;
-    OpenGLWidget *openGlWidget;
+    CoreFunctionWidget *openGlWidget;
 };
 
 #endif // EDITORVIEW_H

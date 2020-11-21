@@ -1,9 +1,10 @@
 #include "MShader.h"
 #include <QVector2D>
+#include <memory>
 
 GameEngine::MShaderProgram::MShaderProgram()
 {
-    m_QOpenGLShaderProgram = new QOpenGLShaderProgram();
+    m_QOpenGLShaderProgram = std::make_shared<QOpenGLShaderProgram>();
 }
 
 bool GameEngine::MShaderProgram::AddShaderFromSourceCode(GameEngine::MShader::ShaderType type, const char *source)
@@ -26,26 +27,25 @@ bool GameEngine::MShaderProgram::AddShaderFromSourceCode(GameEngine::MShader::Sh
             "uniform sampler2D CC_Texture3;\n"
             "//CC INCLUDES END\n\n";
     str += source;
+    bool flag;
     if(type == MShader::ShaderType::Vertex)
-        m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Vertex, str);
+        flag = m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Vertex, str);
     else if(type == MShader::ShaderType::Fragment)
-        m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Fragment, str);
+        flag = m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Fragment, str);
     else if (type == MShader::ShaderType::Geometry)
-        m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Geometry, str);
-    return true;
+        flag = m_QOpenGLShaderProgram->addShaderFromSourceCode(QOpenGLShader::Geometry, str);
+    return flag;
 }
 
 bool GameEngine::MShaderProgram::Link()
 {
     BindPredefinedVertexAttribs();
-    m_QOpenGLShaderProgram->link();
-    return true;
+    return m_QOpenGLShaderProgram->link();
 }
 
 bool GameEngine::MShaderProgram::Use()
 {
-    m_QOpenGLShaderProgram->bind();
-    return true;
+    return m_QOpenGLShaderProgram->bind();
 }
 
 void GameEngine::MShaderProgram::BindPredefinedVertexAttribs()
@@ -138,4 +138,14 @@ void GameEngine::MShaderProgram::setMat4(const std::string &name, const float *v
 int GameEngine::MShaderProgram::uniformLocation(const char *name)
 {
     return m_QOpenGLShaderProgram->uniformLocation(name);
+}
+
+void GameEngine::MShaderProgram::log()
+{
+    auto log = m_QOpenGLShaderProgram->log();
+}
+
+void GameEngine::MShaderProgram::release()
+{
+    m_QOpenGLShaderProgram->release();
 }
