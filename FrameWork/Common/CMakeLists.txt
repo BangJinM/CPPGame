@@ -1,67 +1,40 @@
-﻿SET( Scene
-    Scene/GameObject.cpp
-    Scene/Scene.cpp
-    Scene/Transform.cpp
-    Scene/Camera.cpp
-    Scene/Renderer.cpp
-    Scene/MeshRenderer.cpp
-    Scene/SceneManager.cpp
+﻿include(Common/UI/CMakeLists.txt)
+include(Common/3dloader/CMakeLists.txt)
+include(Common/Parser/CMakeLists.txt)
+include(Common/Scene/CMakeLists.txt)
+
+SET(FRAMEWORK_COMMON_HEADER 
+${FRAMEWORK_COMMON_3DLOADER_HEADER}
+${FRAMEWORK_COMMON_PARSER_HEADER}
+${FRAMEWORK_COMMON_SCENE_HEADER}
+${FRAMEWORK_COMMON_UI_HEADER}
+Common/Allocator.h
+Common/AssetLoader.h
+Common/AssetManager.h
+Common/BaseApplication.h
+Common/BaseGraphicsManager.h
+Common/Buffer.h
+Common/CommonIniter.h
+Common/Config.h
+Common/GfxConfiguration.h
+Common/GfxConfiguration.h
+Common/InputManager.h
+Common/MemoryManager.h
 )
 
-SET( UI
-    UI/Button.cpp
-    UI/CanvasRenderer.cpp
-    UI/Image.cpp
-    UI/Label.cpp
-    UI/Widget.cpp
-    UI/Font.cpp
+SET(FRAMEWORK_COMMON_SRC 
+${FRAMEWORK_COMMON_3DLOADER_SRC}
+${FRAMEWORK_COMMON_PARSER_SRC}
+${FRAMEWORK_COMMON_SCENE_SRC}
+${FRAMEWORK_COMMON_UI_SRC}
+Common/InputManager.cpp
+Common/BaseApplication.cpp
+Common/Allocator.cpp
+Common/MemoryManager.cpp
+Common/AssetLoader.cpp
+Common/BaseGraphicsManager.cpp
+Common/AssetManager.cpp
 )
 
-#SET( Parser
-#)
 
-SET( 3dloader
-    3dloader/ObjLoader.cpp
-)
-
-SET( Common
-    InputManager.cpp
-    BaseApplication.cpp
-    Allocator.cpp
-    MemoryManager.cpp
-    AssetLoader.cpp
-    BaseGraphicsManager.cpp
-    AssetManager.cpp
-)
-
-file(GLOB_RECURSE CURRENT_HEADERS  *.h *.hpp)
-source_group(include FILES ${CURRENT_HEADERS}) 
-
-add_library(Common
-    ${Common}    
-    ${Scene}
-    ${UI}
-    ${3dloader}
-    ${CURRENT_HEADERS}
-)
-
-SOURCE_GROUP( src\\Parser FILES ${Parser})
-SOURCE_GROUP( src\\3dloader FILES ${3dloader})
-SOURCE_GROUP( src\\Scene FILES ${Scene})
-SOURCE_GROUP( src\\UI FILES ${UI})
-SOURCE_GROUP( src FILES ${Common})
-
-find_package(glm CONFIG REQUIRED)
-target_link_libraries(Common PRIVATE glm)
-
-find_package(cjson CONFIG REQUIRED)
-target_link_libraries(Common PRIVATE cjson)
-
-
-if(GAMEENGINE_RHI_QT_OPENGL)
-    find_package(Qt5 COMPONENTS Gui REQUIRED)
-    target_link_libraries(Common PRIVATE Qt5::Gui)
-endif()
-
-target_link_libraries(Common PRIVATE RHI)
 

@@ -1,7 +1,7 @@
 #include "EditorView.h"
 #include "ui_EditorView.h"
 
-#include "CoreFunctionWidget.h"
+#include "OpenGLWidget.h"
 #include "BaseGraphicsManager.h"
 
 EditorView::EditorView(QWidget *parent) :
@@ -9,7 +9,7 @@ EditorView::EditorView(QWidget *parent) :
     ui(new Ui::EditorView)
 {
     ui->setupUi(this);
-    openGlWidget = new CoreFunctionWidget();
+    openGlWidget = new OpenGLWidget();
     openGlWidget->show();
     ui->verticalLayout->addWidget(openGlWidget);
 }

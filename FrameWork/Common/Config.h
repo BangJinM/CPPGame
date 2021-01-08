@@ -5,6 +5,9 @@
 #define GameEngineBegin namespace GameEngine {
 #define GameEngineEnd } // namespace GameEngine
 
+#define GameEngineFileBegin namespace GameEngineFile {
+#define GameEngineFileEnd } // namespace GameEngine
+
 #define UseGameEngine using namespace GameEngine;
 
 GameEngineBegin
