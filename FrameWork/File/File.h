@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../Config.h"
-#include "IFile.h"
+#include "../Interface/IFile.h"
 #include "../Buffer.h"
 
 #include <string>

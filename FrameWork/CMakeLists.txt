@@ -1,18 +1,21 @@
 project (Framework)
 
 include(Common/CMakeLists.txt)
-include(File/CMakeLists.txt)
+include(File/CMa    keLists.txt)
+include(Interface/CMakeLists.txt)
 
 # aux_source_directory(. DIR_SRCS)
 
 set(FRAMEWORK_HEADER 
     ${FRAMEWORK_FILE_HEADER}
     ${FRAMEWORK_COMMON_HEADER}
+    ${FRAMEWORK_INTERFACE_HEADER}
 )
 
 set(FRAMEWORK_SRC 
     ${FRAMEWORK_FILE_SRC}
     ${FRAMEWORK_COMMON_SRC}
+    ${FRAMEWORK_INTERFACE_SRC}
 )
 
 list(APPEND FRAMEWORK_SRC ${FRAMEWORK_HEADER})
