@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "MemoryManager.h"
 #include "Scene.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "ObjLoader.h"
 #include "ObjParser.h"
 using namespace std;

@@ -1,6 +1,6 @@
 ﻿#include "AssetManager.h"
 #include <algorithm>
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "TextureParser.h"
 #include "ObjParser.h"
 #include "Material.h"
@@ -11,7 +11,7 @@
 
 GameEngineBegin
 
-extern AssetLoader *g_pAssetLoader;
+extern GameEngineFile::AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 
 static std::map<std::string, SharedObject> g_cache;

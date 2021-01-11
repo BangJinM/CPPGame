@@ -1,7 +1,7 @@
 ﻿#include "IApplication.h"
 #include "MemoryManager.h"
 #include "InputManager.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "BaseGraphicsManager.h"
 #include "AssetManager.h"
 using namespace GameEngine;
@@ -11,7 +11,7 @@ namespace GameEngine
 	extern IApplication *g_pApp;
 	extern MemoryManager *g_pMemoryManager;
 	extern InputManager *g_pInputManager;
-	extern AssetLoader *g_pAssetLoader;
+	extern GameEngineFile::AssetLoader *g_pAssetLoader;
 	extern BaseGraphicsManager *g_pGraphicsManager;
 	extern AssetManager *g_pAssetManager;
 

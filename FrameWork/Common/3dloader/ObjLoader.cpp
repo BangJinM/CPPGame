@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright 2012-2015, Syoyo Fujita.
 //
 // Licensed under 2-clause BSD license.
@@ -36,13 +36,13 @@
 #include <fstream>
 #include <sstream>
 
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "ObjLoader.h"
 
 using namespace GameEngine;
 namespace GameEngine
 {
-    extern AssetLoader *g_pAssetLoader;
+    extern GameEngineFile::AssetLoader *g_pAssetLoader;
 }
 namespace tinyobj
 {

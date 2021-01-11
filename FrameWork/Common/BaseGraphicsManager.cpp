@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "BaseGraphicsManager.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "SceneManager.h"
@@ -8,7 +8,7 @@ using namespace std;
 
 GameEngineBegin
 
-    extern AssetLoader *g_pAssetLoader;
+    extern GameEngineFile::AssetLoader *g_pAssetLoader;
 
 int BaseGraphicsManager::Initialize()
 {

@@ -17,7 +17,7 @@
 // GL includes
 #include "Shader.h"
 #include "MemoryManager.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "OpenGLDebugger.h"
 
 namespace GameEngine

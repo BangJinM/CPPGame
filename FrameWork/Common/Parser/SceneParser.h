@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright 2012-2015, Syoyo Fujita.
 //
 // Licensed under 2-clause BSD license.
@@ -11,7 +11,7 @@
 #include <map>
 
 #include "Config.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "ObjParser.h"
 #include "MaterialParser.h"
 #include "GameObject.h"
@@ -24,7 +24,7 @@
 
 GameEngineBegin
 
-	extern AssetLoader *g_pAssetLoader;
+extern GameEngineFile::AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 
 class SceneParser

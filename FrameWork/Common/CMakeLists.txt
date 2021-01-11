@@ -9,7 +9,6 @@ ${FRAMEWORK_COMMON_PARSER_HEADER}
 ${FRAMEWORK_COMMON_SCENE_HEADER}
 ${FRAMEWORK_COMMON_UI_HEADER}
 Common/Allocator.h
-Common/AssetLoader.h
 Common/AssetManager.h
 Common/BaseApplication.h
 Common/BaseGraphicsManager.h
@@ -31,7 +30,6 @@ Common/InputManager.cpp
 Common/BaseApplication.cpp
 Common/Allocator.cpp
 Common/MemoryManager.cpp
-Common/AssetLoader.cpp
 Common/BaseGraphicsManager.cpp
 Common/AssetManager.cpp
 )

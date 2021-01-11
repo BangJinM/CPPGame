@@ -4,7 +4,7 @@
 #include "MemoryManager.h"
 #include "GfxConfiguration.h"
 #include "InputManager.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "glad/glad_wgl.h"
 #include "GraphicsManager.h"
 using namespace GameEngine;

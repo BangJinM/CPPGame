@@ -1,6 +1,6 @@
-#include "AssetLoader.h"
+﻿#include "../File/AssetLoader.h"
 #include <algorithm>
-GameEngineBegin 
+GameEngineFileBegin
 
 int AssetLoader::Initialize()
 {
@@ -16,7 +16,7 @@ void AssetLoader::Tick()
 {
 }
 
-bool AssetLoader::AddSearchPath(const char *path)
+bool AssetLoader::AddSearchPath(const string path)
 {
     std::vector<std::string>::iterator src = m_strSearchPath.begin();
 
@@ -31,7 +31,7 @@ bool AssetLoader::AddSearchPath(const char *path)
     return true;
 }
 
-bool AssetLoader::RemoveSearchPath(const char *path)
+bool AssetLoader::RemoveSearchPath(const string path)
 {
     std::vector<std::string>::iterator src = m_strSearchPath.begin();
 
@@ -48,9 +48,14 @@ bool AssetLoader::RemoveSearchPath(const char *path)
     return true;
 }
 
-bool AssetLoader::FileExists(const char *filePath)
+string AssetLoader::GetFileFullPath(const string path) 
 {
-    AssetFilePtr fp = OpenFile(filePath, MY_OPEN_BINARY);
+	return "";
+}
+
+bool AssetLoader::FileExists(const string fullPath)
+{
+    FilePtr fp = OpenFile(fullPath.c_str(), MY_OPEN_BINARY);
     if (fp != nullptr)
     {
         CloseFile(fp);
@@ -59,7 +64,7 @@ bool AssetLoader::FileExists(const char *filePath)
     return false;
 }
 
-AssetLoader::AssetFilePtr AssetLoader::OpenFile(const char *name, AssetOpenMode mode)
+FilePtr AssetLoader::OpenFile(const string name, FileOpenMode mode)
 {
     FILE *fp = nullptr;
     // loop N times up the hierarchy, testing at each level
@@ -98,7 +103,7 @@ AssetLoader::AssetFilePtr AssetLoader::OpenFile(const char *name, AssetOpenMode 
             }
 
             if (fp)
-                return (AssetFilePtr)fp;
+                return (FilePtr)fp;
         }
 
         upPath.append("../");
@@ -107,14 +112,14 @@ AssetLoader::AssetFilePtr AssetLoader::OpenFile(const char *name, AssetOpenMode 
     return nullptr;
 }
 
-Buffer AssetLoader::SyncOpenAndReadText(const char *filePath)
+Buffer AssetLoader::SyncOpenAndReadText(const string filePath)
 {
-    AssetFilePtr fp = OpenFile(filePath, MY_OPEN_TEXT);
+    FilePtr fp = OpenFile(filePath, MY_OPEN_TEXT);
     Buffer *pBuff = nullptr;
 
     if (fp)
     {
-        size_t length = GetSize(fp);
+        size_t length = GetFileSize(fp);
 
         pBuff = new Buffer(length + 1);
         length = fread(pBuff->m_pData, 1, length, static_cast<FILE *>(fp));
@@ -135,14 +140,14 @@ Buffer AssetLoader::SyncOpenAndReadText(const char *filePath)
     return *pBuff;
 }
 
-Buffer AssetLoader::SyncOpenAndReadBinary(const char *filePath)
+Buffer AssetLoader::SyncOpenAndReadBinary(const string filePath)
 {
-    AssetFilePtr fp = OpenFile(filePath, MY_OPEN_BINARY);
+    FilePtr fp = OpenFile(filePath, MY_OPEN_BINARY);
     Buffer *pBuff = nullptr;
 
     if (fp)
     {
-        size_t length = GetSize(fp);
+        size_t length = GetFileSize(fp);
 
         pBuff = new Buffer(length);
         fread(pBuff->m_pData, length, 1, static_cast<FILE *>(fp));
@@ -162,13 +167,13 @@ Buffer AssetLoader::SyncOpenAndReadBinary(const char *filePath)
     return *pBuff;
 }
 
-void AssetLoader::CloseFile(AssetFilePtr &fp)
+void AssetLoader::CloseFile(FilePtr &fp)
 {
     fclose((FILE *)fp);
     fp = nullptr;
 }
 
-size_t AssetLoader::GetSize(const AssetFilePtr &fp)
+size_t AssetLoader::GetFileSize(const FilePtr &fp)
 {
     FILE *_fp = static_cast<FILE *>(fp);
 
@@ -180,7 +185,7 @@ size_t AssetLoader::GetSize(const AssetFilePtr &fp)
     return length;
 }
 
-size_t AssetLoader::SyncRead(const AssetFilePtr &fp, Buffer &buf)
+size_t AssetLoader::SyncRead(const FilePtr &fp, Buffer &buf)
 {
     size_t sz;
 
@@ -195,36 +200,6 @@ size_t AssetLoader::SyncRead(const AssetFilePtr &fp, Buffer &buf)
     return sz;
 }
 
-int32_t AssetLoader::Seek(AssetFilePtr fp, long offset, AssetSeekBase where)
-{
-    return fseek(static_cast<FILE *>(fp), offset, static_cast<int>(where));
-}
-
-std::string AssetLoader::getFileExtension(const std::string &filePath) const
-{
-    std::string fileExtension;
-    size_t pos = filePath.find_last_of('.');
-    if (pos != std::string::npos)
-    {
-        fileExtension = filePath.substr(pos, filePath.length());
-
-        std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
-    }
-
-    return fileExtension;
-}
-
-std::string AssetLoader::GetFileName(const std::string &filePath) const
-{
-    char drive[_MAX_DRIVE];
-    char dir[_MAX_DIR];
-    char fname[_MAX_FNAME];
-    char ext[_MAX_EXT];
-
-    _splitpath(filePath.data(), drive, dir, fname, ext);
-    std::string result = fname;
-    return result;
-}
 
 void AssetLoader::WriteFile(const std::string &file, const std::string path)
 {
@@ -233,4 +208,4 @@ void AssetLoader::WriteFile(const std::string &file, const std::string path)
     fp = fopen(path.c_str(), "w");
     fwrite(file.c_str(), file.size(), 1, fp);
 }
-GameEngineEnd
+GameEngineFileEnd

@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <tchar.h>
 #include "GamePlatform-opengl.h"
 #include "IApplication.h"
@@ -6,7 +6,7 @@
 #include "InputManager.h"
 #include "InputManagerWindows.h"
 #include "GraphicsManager.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 #include "AssetManager.h"
 namespace GameEngine
 {
@@ -15,7 +15,7 @@ namespace GameEngine
 	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
 	InputManager *g_pInputManager = static_cast<InputManagerWindows *>(new InputManagerWindows);
 	BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
-	AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
+	GameEngineFile::AssetLoader *g_pAssetLoader = static_cast<GameEngineFile::AssetLoader *>(new GameEngineFile::AssetLoader);
 	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
 	IApplication *g_pApp = &g_App;
 

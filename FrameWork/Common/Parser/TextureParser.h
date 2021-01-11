@@ -5,11 +5,11 @@
 #include "Config.h"
 #include "stb_image.h"
 #include "Texture.h"
-#include "AssetLoader.h"
+#include "../File/AssetLoader.h"
 
 GameEngineBegin
 
-    extern AssetLoader *g_pAssetLoader;
+    extern GameEngineFile::AssetLoader *g_pAssetLoader;
 
 class TextureParser
 {
