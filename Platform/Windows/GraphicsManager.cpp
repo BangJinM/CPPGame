@@ -5,6 +5,9 @@
 #include <GLFW/glfw3.h>
 #include "SceneManager.h"
 #include "AssetManager.h"
+#include "ParserManager.h"
+
+#include <algorithm>
 
 #include "Material.h"
 #include "Mesh.h"
@@ -17,6 +20,7 @@ using namespace std;
 GameEngineBegin
 
 	extern AssetManager *g_pAssetManager;
+extern GameEngineParser::ParserManager *g_pParserManager;
 
 int GraphicsManager::Initialize()
 {
@@ -38,8 +42,7 @@ int GraphicsManager::Initialize()
 		glCullFace(GL_BACK);
 
 		SharePtr<Scene> m_Scene;
-		m_Scene = std::make_shared<Scene>();
-		m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
+		m_Scene = std::dynamic_pointer_cast<Scene>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::SCENE, "Scene/defaultEx.scene"));
 		SceneManager::GetInstance()->SetNextScene(m_Scene);
 		result = 1;
 	}

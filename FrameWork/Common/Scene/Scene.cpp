@@ -8,7 +8,6 @@
 #include "Transform.h"
 
 #include "MyMath.h"
-#include "SceneParser.h"
 #include "UI/CanvasRenderer.h"
 
 GameEngineBegin
@@ -22,11 +21,6 @@ Scene::Scene()
 	canvas->setName("Canvas");
 	m_Root->addChild(canvas);
 	canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
-}
-
-void Scene::LoadSceneByPath(std::string path)
-{ //
-	SceneParser::Parse(path, this);
 }
 
 void Scene::AddGameObject(SharedGameObject gameobject)

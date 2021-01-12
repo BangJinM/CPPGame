@@ -19,18 +19,24 @@
 #include "MeshRenderer.h"
 #include "AssetManager.h"
 #include "UI/Image.h"
+#include "IParser.h"
+#include "Scene.h"
+#include "Camera.h"
 
 GameEngineBegin
-
 extern GameEngineFile::AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
+GameEngineEnd
 
-class SceneParser
+GameEngineParserBegin
+
+class SceneParser : public IParser
 {
 
 public:
-	static void Parse(std::string scenePath, Scene *scene)
+	virtual SharedObject Parser(const std::string scenePath) override
 	{
+		SharedScene scene = make_shared<Scene>();
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
 		SharedGameObject gameobject = GameObject::createGameObject();
 		auto json = cJSON_Parse(sceneStr.c_str());
@@ -72,6 +78,7 @@ public:
 			scene->AddGameObject(i->second);
 		}
 		delete json;
+		return scene;
 	}
 	static SharedObject compareGameObject(cJSON *root)
 	{
@@ -195,4 +202,4 @@ public:
 
 }; // namespace GameEngine
 
-GameEngineEnd
+GameEngineParserEnd

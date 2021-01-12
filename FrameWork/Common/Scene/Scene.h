@@ -7,14 +7,14 @@
 #include <memory>
 
 #include "Config.h"
-
+#include "Object.h"
 GameEngineBegin
 
 class Camera;
 class GameObject;
 class Renderer;
 class CanvasRenderer;
-class Scene
+class Scene:public Object
 {
 private:
   /* data */
@@ -22,8 +22,6 @@ public:
   Scene(/* args */);
 
   ~Scene();
-
-  void LoadSceneByPath(std::string path);
 
   void Update();
 

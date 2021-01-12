@@ -1,12 +1,13 @@
 ﻿#include "ParserManager.h"
 #include "MaterialParser.h"
-
+#include "SceneParser.h"
 GameEngineParserBegin
 
     int
     ParserManager::Initialize()
 {
     AddParser(ParserExtType::MTL, new MaterialParser());
+    AddParser(ParserExtType::SCENE, new SceneParser());
 	return 1;
 }
 
