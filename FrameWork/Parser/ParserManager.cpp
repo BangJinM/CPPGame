@@ -2,6 +2,7 @@
 #include "MaterialParser.h"
 #include "SceneParser.h"
 #include "TextureParser.h"
+#include "ObjParser.h"
 GameEngineParserBegin
 
     int
@@ -10,6 +11,7 @@ GameEngineParserBegin
     AddParser(ParserExtType::MTL, new MaterialParser());
     AddParser(ParserExtType::SCENE, new SceneParser());
     AddParser(ParserExtType::IMAGE, new TextureParser());
+    AddParser(ParserExtType::OBJ, new ObjParser());
     return 1;
 }
 

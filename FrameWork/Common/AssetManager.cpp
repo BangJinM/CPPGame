@@ -1,7 +1,6 @@
 ﻿#include "AssetManager.h"
 #include <algorithm>
 #include "AssetLoader.h"
-#include "ObjParser.h"
 #include "Material.h"
 #include "MaterialParser.h"
 #include "ParserManager.h"
@@ -68,7 +67,7 @@ SharedMesh AssetManager::LoadMesh(const std::string &path)
 		return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
 	}
 
-	SharedMesh mesh = ObjParser::Parse(path);
+	SharedMesh mesh = std::dynamic_pointer_cast<Mesh>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::OBJ, path));
 	if (mesh)
 		g_cache[path] = mesh;
 	return mesh;

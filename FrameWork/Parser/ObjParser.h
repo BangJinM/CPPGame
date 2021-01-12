@@ -14,18 +14,19 @@
 #include "Mesh.h"
 #include "ObjLoader.h"
 #include "GameObject.h"
+#include "IParser.h"
 
-GameEngineBegin
+GameEngineParserBegin
 
-class ObjParser
+class ObjParser:public IParser
 {
 
 public:
-	static SharedMesh Parse(const std::string modelPath)
+	virtual SharedObject Parser(const std::string path)override
 	{
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;
-		tinyobj::LoadObj(shapes, materials, modelPath.c_str(), "");
+		tinyobj::LoadObj(shapes, materials, path.c_str(), "");
 
 		return parserMesh(shapes, materials);
 	}
@@ -98,4 +99,4 @@ public:
 
 }; // namespace GameEngine
 
-GameEngineEnd
+GameEngineParserEnd
