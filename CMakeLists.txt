@@ -17,6 +17,7 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Parser")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/File")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Logger")
 
 if(GAMEENGINE_RHI_OPENGL)
     include_directories("${PROJECT_SOURCE_DIR}/RHI/OpenGL")

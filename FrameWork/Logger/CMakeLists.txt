@@ -1,3 +1,11 @@
-#add_library(Logger
-#log.cpp
-#)
+SET(FRAMEWORK_LOGGER_HEADER 
+Logger/easylogging++.h
+
+)
+
+SET(FRAMEWORK_LOGGER_SRC 
+Logger/easylogging++.cc
+)
+
+list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_LOGGER_HEADER})
+list(APPEND FRAMEWORK_SRC ${FRAMEWORK_LOGGER_SRC})

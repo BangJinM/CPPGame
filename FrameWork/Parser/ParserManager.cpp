@@ -3,6 +3,7 @@
 #include "SceneParser.h"
 #include "TextureParser.h"
 #include "ObjParser.h"
+#include "easylogging++.h"
 GameEngineParserBegin
 
     int
@@ -49,6 +50,7 @@ void ParserManager::RemoveParser(ParserExtType type)
 
 SharedObject ParserManager::ExecuteParser(ParserExtType type, string path)
 {
+    LOG(INFO) << "ExecuteParser   type:"<< type << "      path:"<< path;
     auto pf = m_ParserMaps.find(type);
     if (pf == m_ParserMaps.end())
         return nullptr;

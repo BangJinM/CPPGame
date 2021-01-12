@@ -5,6 +5,9 @@
 #include "BaseGraphicsManager.h"
 #include "AssetManager.h"
 #include "ParserManager.h"
+#include "easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP
 using namespace GameEngine;
 
 namespace GameEngine
@@ -20,7 +23,7 @@ namespace GameEngine
 
 int main(int argc, char *argv[])
 {
-
+	LOG(ERROR) << "Starting...";
 	for (int i = 0; i < argc; i++)
 		printf(argv[i]);
 
@@ -92,5 +95,6 @@ int main(int argc, char *argv[])
 	delete g_pMemoryManager;
 	delete g_pParserManager;
 	delete g_pApp;
+	LOG(ERROR) << "End...";
 	return 0;
 }
