@@ -1,7 +1,6 @@
 ﻿#include "AssetManager.h"
 #include <algorithm>
 #include "AssetLoader.h"
-#include "TextureParser.h"
 #include "ObjParser.h"
 #include "Material.h"
 #include "MaterialParser.h"
@@ -147,13 +146,11 @@ SharedTexture AssetManager::LoadTexture(const std::string &path)
 	{
 		return std::dynamic_pointer_cast<Texture>(g_cache[path]);
 	}
-	Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
-	if (buffer.m_szSize > 0)
-	{
-		image = TextureParser::Parse(buffer);
-		image->Path = path;
+
+	image = std::dynamic_pointer_cast<Texture>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::IMAGE, path));
+	image->Path = path;
+	if (image)
 		g_cache[path] = image;
-	}
 	return image;
 }
 // SharePtr<Font> AssetManager::GetFont(const std::string &path)
@@ -217,7 +214,12 @@ SharedTexture AssetManager::getWhiteTexture()
 		pixels[i * 4 + 2] = 255;
 		pixels[i * 4 + 3] = 255;
 	}
-	image = TextureParser::bindTexture(3, size, size, pixels);
+	pixels += '\0';
+	image = std::make_shared<Texture>();
+	image->formate = 3;
+	image->Width = size;
+	image->Height = size;
+	image->data = pixels;
 	g_pAssetManager->AddTexture(path, image);
 	return image;
 }

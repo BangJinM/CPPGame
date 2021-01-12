@@ -1,6 +1,7 @@
 ﻿#include "ParserManager.h"
 #include "MaterialParser.h"
 #include "SceneParser.h"
+#include "TextureParser.h"
 GameEngineParserBegin
 
     int
@@ -8,26 +9,27 @@ GameEngineParserBegin
 {
     AddParser(ParserExtType::MTL, new MaterialParser());
     AddParser(ParserExtType::SCENE, new SceneParser());
-	return 1;
+    AddParser(ParserExtType::IMAGE, new TextureParser());
+    return 1;
 }
 
 void ParserManager::Finalize()
 {
-	ParserMap::iterator iter = m_ParserMaps.begin();
+    ParserMap::iterator iter = m_ParserMaps.begin();
 
-	while (iter != m_ParserMaps.end())
-	{
-		delete iter->second;
-		iter->second = nullptr;
-		iter = m_ParserMaps.erase(iter);
-	}
+    while (iter != m_ParserMaps.end())
+    {
+        delete iter->second;
+        iter->second = nullptr;
+        iter = m_ParserMaps.erase(iter);
+    }
 
-	m_ParserMaps.clear();
+    m_ParserMaps.clear();
 }
 
 void ParserManager::Tick() {}
 
-void ParserManager::AddParser(ParserExtType type, IParser* parser)
+void ParserManager::AddParser(ParserExtType type, IParser *parser)
 {
     m_ParserMaps[type] = parser;
 }

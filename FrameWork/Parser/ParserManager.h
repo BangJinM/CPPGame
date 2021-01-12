@@ -10,8 +10,7 @@ using namespace std;
 GameEngineParserBegin
 
     enum ParserExtType {
-        JPG = 0,
-        PNG,
+        IMAGE = 0,
         OBJ,
         SCENE,
         MTL,
