@@ -25,3 +25,6 @@ Common/Scene/Scene.cpp
 Common/Scene/SceneManager.cpp
 Common/Scene/Transform.cpp
 )
+
+list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_SCENE_HEADER})
+list(APPEND FRAMEWORK_SRC ${FRAMEWORK_COMMON_SCENE_SRC})

@@ -1,4 +1,4 @@
-﻿#include "../File/AssetLoader.h"
+﻿#include "AssetLoader.h"
 #include <algorithm>
 GameEngineFileBegin
 

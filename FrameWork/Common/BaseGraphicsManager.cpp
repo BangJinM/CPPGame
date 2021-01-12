@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "BaseGraphicsManager.h"
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "SceneManager.h"

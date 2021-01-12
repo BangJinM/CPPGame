@@ -13,7 +13,7 @@
 #include "PropertiesView.h"
 
 #include "MemoryManager.h"
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 #include "AssetManager.h"
 #include "BaseGraphicsManager.h"
 

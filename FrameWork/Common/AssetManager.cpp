@@ -1,17 +1,19 @@
 ﻿#include "AssetManager.h"
 #include <algorithm>
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 #include "TextureParser.h"
 #include "ObjParser.h"
 #include "Material.h"
 #include "MaterialParser.h"
+#include "ParserManager.h"
 #include <mutex>
 
 #include "UI/Font.h"
 
 GameEngineBegin
 
-extern GameEngineFile::AssetLoader *g_pAssetLoader;
+	extern GameEngineFile::AssetLoader *g_pAssetLoader;
+extern GameEngineParser::ParserManager *g_pParserManager;
 extern AssetManager *g_pAssetManager;
 
 static std::map<std::string, SharedObject> g_cache;
@@ -26,7 +28,6 @@ int AssetManager::Initialize()
 	// }
 	return 0;
 }
-
 
 void AssetManager::Finalize()
 {
@@ -51,17 +52,15 @@ SharedGameObject AssetManager::LoadGameObject(const std::string &path)
 
 SharedMaterial AssetManager::LoadMaterial(const std::string &path)
 {
-	SharedMaterial obj;
 	if (g_cache.find(path) != g_cache.end())
 	{
 		return std::dynamic_pointer_cast<Material>(g_cache[path]);
 	}
-	obj = MaterialParser::Parse(path);
+	SharedMaterial obj = std::dynamic_pointer_cast<Material>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::MTL, path));
 	if (obj)
 		g_cache[path] = obj;
 	return obj;
 }
-
 
 SharedMesh AssetManager::LoadMesh(const std::string &path)
 {
@@ -201,7 +200,6 @@ void AssetManager::AddTexture(const std::string &path, SharedTexture image)
 }
 void AssetManager::GetShaderProgram(int ID)
 {
-	
 }
 const int size = 4;
 SharedTexture AssetManager::getWhiteTexture()

@@ -5,7 +5,7 @@
 #include "Config.h"
 #include "stb_image.h"
 #include "Texture.h"
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 
 GameEngineBegin
 

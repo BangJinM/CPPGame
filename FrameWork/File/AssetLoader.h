@@ -13,7 +13,7 @@
 
 GameEngineFileBegin
 
-    class AssetLoader : public IRuntimeModule,
+class AssetLoader : public IRuntimeModule,
                         public IFile,
                         public IFileSystem
 {
@@ -39,8 +39,8 @@ public:
     virtual void WriteFile(const std::string &file, const std::string path) override;
     virtual bool FileExists(const string fullPath) override;
 
-    virtual Buffer SyncOpenAndReadText(const string filePath)override;
-    virtual Buffer SyncOpenAndReadBinary(const string filePath)override;
+    virtual Buffer SyncOpenAndReadText(const string filePath) override;
+    virtual Buffer SyncOpenAndReadBinary(const string filePath) override;
     //***************************************************IFile
 
     inline std::string SyncOpenAndReadTextFileToString(const char *fileName)

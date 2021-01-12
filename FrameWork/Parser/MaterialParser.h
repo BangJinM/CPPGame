@@ -14,19 +14,23 @@
 #include "cjson/cJSON.h"
 #include "Material.h"
 #include "MShader.h"
-#include "../File/AssetLoader.h"
-GameEngineBegin 
-
+#include "IParser.h"
+#include "AssetLoader.h"
+GameEngineBegin
 extern GameEngineFile::AssetLoader *g_pAssetLoader;
-class MaterialParser
+GameEngineEnd
+UseGameEngine
+GameEngineParserBegin
+
+class MaterialParser : public IParser
 {
 
 public:
-	static SharedMaterial Parse(const std::string scenePath)
+	virtual SharedObject Parser(const std::string path) override
 	{
 		SharedMaterial material = std::make_shared<Material>();
-		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(scenePath.c_str());
-		auto json = cJSON_Parse(sceneStr.c_str());
+		std::string mstr = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
+		auto json = cJSON_Parse(mstr.c_str());
 		int i = 0;
 		auto frag = cJSON_GetObjectItem(json, "frag");
 		auto vert = cJSON_GetObjectItem(json, "vert");
@@ -34,9 +38,9 @@ public:
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
 		SharedShaderProgram shader = make_shared<MShaderProgram>();
-        bool flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
-        flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
-        flag = shader->Link();
+		bool flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
+		flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
+		flag = shader->Link();
 		material->shader = shader;
 
 		auto paramsNode = cJSON_GetObjectItem(json, "params");
@@ -62,4 +66,4 @@ public:
 		return material;
 	}
 }; // namespace GameEngine
-GameEngineEnd
+GameEngineParserEnd

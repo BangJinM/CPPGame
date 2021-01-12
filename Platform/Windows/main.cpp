@@ -1,9 +1,10 @@
 ﻿#include "IApplication.h"
 #include "MemoryManager.h"
 #include "InputManager.h"
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 #include "BaseGraphicsManager.h"
 #include "AssetManager.h"
+#include "ParserManager.h"
 using namespace GameEngine;
 
 namespace GameEngine
@@ -14,7 +15,7 @@ namespace GameEngine
 	extern GameEngineFile::AssetLoader *g_pAssetLoader;
 	extern BaseGraphicsManager *g_pGraphicsManager;
 	extern AssetManager *g_pAssetManager;
-
+	extern GameEngineParser::ParserManager *g_pParserManager;
 } // namespace GameEngine
 
 int main(int argc, char *argv[])
@@ -36,7 +37,11 @@ int main(int argc, char *argv[])
 		printf("App Initialize failed, will exit now.");
 		return ret;
 	}
-
+	if ((ret == g_pParserManager->Initialize()) != 0)
+	{
+		printf("App Initialize failed, will exit now.");
+		return ret;
+	}
 	if ((ret = g_pInputManager->Initialize()) != 0)
 	{
 		printf("App Initialize failed, will exit now.");
@@ -63,31 +68,21 @@ int main(int argc, char *argv[])
 	int i = 1;
 	while (!g_pApp->IsQuit())
 	{
-//#ifdef WIN32
-//	_CrtMemState s1, s2, s3;
-//	_CrtMemCheckpoint(&s1);
-//#endif // DEBUG
-
 		g_pMemoryManager->Tick();
 		g_pInputManager->Tick();
 		g_pAssetLoader->Tick();
 		g_pAssetManager->Tick();
 		g_pGraphicsManager->Tick();
+		g_pParserManager->Tick();
 		g_pApp->Tick();
-//#ifdef WIN32
-//		_CrtMemCheckpoint(&s2);
-//		if (_CrtMemDifference(&s3, &s1, &s2))
-//			_CrtMemDumpStatistics(&s3);
-//		_CrtDumpMemoryLeaks();
-//#endif // DEBUG
 	}
-
 
 	g_pGraphicsManager->Finalize();
 	g_pInputManager->Finalize();
 	g_pAssetLoader->Finalize();
 	g_pAssetManager->Finalize();
 	g_pMemoryManager->Finalize();
+	g_pParserManager->Finalize();
 	g_pApp->Finalize();
 
 	delete g_pGraphicsManager;
@@ -95,6 +90,7 @@ int main(int argc, char *argv[])
 	delete g_pAssetLoader;
 	delete g_pAssetManager;
 	delete g_pMemoryManager;
-
+	delete g_pParserManager;
+	delete g_pApp;
 	return 0;
 }

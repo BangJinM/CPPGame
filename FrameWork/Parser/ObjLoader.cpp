@@ -36,7 +36,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "../File/AssetLoader.h"
+#include "AssetLoader.h"
 #include "ObjLoader.h"
 
 using namespace GameEngine;

@@ -1,10 +1,11 @@
 set(FRAMEWORK_INTERFACE_HEADER 
 Interface/IApplication.h
-Interface/ImageParser.h
 Interface/IRuntimeModule.h
-Interface/ISceneParser.h
 )
 
 set(FRAMEWORK_INTERFACE_SRC
 
 )
+
+list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_INTERFACE_HEADER})
+list(APPEND FRAMEWORK_SRC ${FRAMEWORK_INTERFACE_SRC})

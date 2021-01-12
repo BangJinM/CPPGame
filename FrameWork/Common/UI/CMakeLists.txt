@@ -15,3 +15,6 @@ Common/UI/Image.cpp
 Common/UI/Label.cpp
 Common/UI/Widget.cpp
 )
+
+list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_UI_HEADER})
+list(APPEND FRAMEWORK_SRC ${FRAMEWORK_COMMON_UI_SRC})

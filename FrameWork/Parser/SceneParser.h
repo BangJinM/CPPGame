@@ -11,9 +11,7 @@
 #include <map>
 
 #include "Config.h"
-#include "../File/AssetLoader.h"
-#include "ObjParser.h"
-#include "MaterialParser.h"
+#include "AssetLoader.h"
 #include "GameObject.h"
 #include "Light.h"
 #include "cjson/cJSON.h"
