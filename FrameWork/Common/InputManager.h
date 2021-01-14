@@ -7,11 +7,11 @@
 #include "Config.h"
 #include "IRuntimeModule.h"
 
-GameEngineBegin 
+GameEngineBegin
 
-class InputManager;
+	class InputManager;
 extern InputManager *g_pInputManager;
-class InputManager : IRuntimeModule
+class InputManager : public IRuntimeModule
 {
 
 	typedef std::function<void()> CallBack;

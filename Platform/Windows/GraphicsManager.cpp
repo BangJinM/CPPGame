@@ -44,7 +44,7 @@ int GraphicsManager::Initialize()
 		SharePtr<Scene> m_Scene;
 		m_Scene = std::dynamic_pointer_cast<Scene>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::SCENE, "Scene/defaultEx.scene"));
 		SceneManager::GetInstance()->SetNextScene(m_Scene);
-		result = 1;
+		result = 0;
 	}
 
 	return result;

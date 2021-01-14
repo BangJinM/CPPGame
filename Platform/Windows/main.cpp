@@ -23,78 +23,49 @@ namespace GameEngine
 
 int main(int argc, char *argv[])
 {
-	LOG(ERROR) << "Starting...";
+	el::Loggers::getLogger("logger")->info("GameEngine Begin...");
+
 	for (int i = 0; i < argc; i++)
-		printf(argv[i]);
+		el::Loggers::getLogger("logger")->info(argv[i]);
 
 	int ret;
+	vector<IRuntimeModule *> run_time_modules;
+	run_time_modules.push_back(g_pApp);
+	run_time_modules.push_back(g_pMemoryManager);
+	run_time_modules.push_back(g_pParserManager);
+	run_time_modules.push_back(g_pInputManager);
+	run_time_modules.push_back(g_pAssetLoader);
+	run_time_modules.push_back(g_pAssetManager);
+	run_time_modules.push_back(g_pGraphicsManager);
 
-	if ((ret = g_pApp->Initialize()) != 0)
+	for (auto &module : run_time_modules)
 	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
-
-	if ((ret = g_pMemoryManager->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
-	if ((ret == g_pParserManager->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
-	if ((ret = g_pInputManager->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
+		if ((ret = module->Initialize()) != 0)
+		{
+			el::Loggers::getLogger("logger")->error("nitialize failed, will exit now.");
+			return ret;
+		}
 	}
 
-	if ((ret = g_pAssetLoader->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
-
-	if ((ret = g_pAssetManager->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
-
-	if ((ret == g_pGraphicsManager->Initialize()) != 0)
-	{
-		printf("App Initialize failed, will exit now.");
-		return ret;
-	}
 	int i = 1;
 	while (!g_pApp->IsQuit())
 	{
-		g_pMemoryManager->Tick();
-		g_pInputManager->Tick();
-		g_pAssetLoader->Tick();
-		g_pAssetManager->Tick();
-		g_pGraphicsManager->Tick();
-		g_pParserManager->Tick();
-		g_pApp->Tick();
+		for (auto &module : run_time_modules)
+		{
+			module->Tick();
+		}
 	}
 
-	g_pGraphicsManager->Finalize();
-	g_pInputManager->Finalize();
-	g_pAssetLoader->Finalize();
-	g_pAssetManager->Finalize();
-	g_pMemoryManager->Finalize();
-	g_pParserManager->Finalize();
-	g_pApp->Finalize();
+	for (auto &module : run_time_modules)
+	{
+		module->Finalize();
+	}
 
-	delete g_pGraphicsManager;
-	delete g_pInputManager;
-	delete g_pAssetLoader;
-	delete g_pAssetManager;
-	delete g_pMemoryManager;
-	delete g_pParserManager;
-	delete g_pApp;
-	LOG(ERROR) << "End...";
+	for (vector<IRuntimeModule *>::const_iterator itr = run_time_modules.begin(); itr != run_time_modules.end(); ++itr) {
+		delete *itr;
+	}
+	run_time_modules.clear();
+
+	el::Loggers::getLogger("logger")->info("GameEngine End...");
 	return 0;
 }

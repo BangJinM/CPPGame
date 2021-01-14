@@ -13,7 +13,7 @@ GameEngineParserBegin
     AddParser(ParserExtType::SCENE, new SceneParser());
     AddParser(ParserExtType::IMAGE, new TextureParser());
     AddParser(ParserExtType::OBJ, new ObjParser());
-    return 1;
+    return 0;
 }
 
 void ParserManager::Finalize()

@@ -22,7 +22,7 @@ GameEngineBegin
 
 #define UIMESHDATA "_UIMESH"
 
-class AssetManager : IRuntimeModule
+class AssetManager : public IRuntimeModule
 {
 private:
 public:

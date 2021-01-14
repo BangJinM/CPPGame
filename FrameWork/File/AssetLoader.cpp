@@ -1,5 +1,6 @@
 ﻿#include "AssetLoader.h"
 #include <algorithm>
+#include "easylogging++.h"
 GameEngineFileBegin
 
 int AssetLoader::Initialize()
@@ -129,7 +130,7 @@ Buffer AssetLoader::SyncOpenAndReadText(const string filePath)
     }
     else
     {
-        fprintf(stderr, "Error opening file '%s'\n", filePath);
+        el::Loggers::getLogger("logger")->info("Error opening file '%s'\n", filePath);
         pBuff = new Buffer();
     }
 

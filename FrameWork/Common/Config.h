@@ -11,6 +11,9 @@
 #define GameEngineParserBegin namespace GameEngineParser {
 #define GameEngineParserEnd } // namespace GameEngine
 
+#define GameEngineLoggerBegin namespace GameEngineLogger {
+#define GameEngineLoggerEnd } // namespace GameEngine
+
 #define UseGameEngine using namespace GameEngine;
 
 GameEngineBegin
