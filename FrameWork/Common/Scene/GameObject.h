@@ -71,7 +71,7 @@ public:
 template <class T>
 inline SharePtr<T> GameObject::getComponent()
 {
-    for (int i = 0; i < m_compenents.size(); ++i)
+    for (unsigned int i = 0; i < m_compenents.size(); ++i)
     {
         auto &com = m_compenents[i];
         auto t = std::dynamic_pointer_cast<T>(com);
@@ -86,7 +86,7 @@ inline SharePtr<T> GameObject::getComponent()
 template <class T>
 inline void GameObject::removeComponent(SharePtr<T> component)
 {
-    for (int i = 0; i < m_compenents.size(); ++i)
+    for (unsigned int i = 0; i < m_compenents.size(); ++i)
     {
         auto &com = m_compenents[i];
         if (component->getClassID() == com->getClassID())

@@ -11,7 +11,7 @@
 GameEngineBegin
 
 class CanvasRenderer;
-struct MeshData;
+class MeshData;
 class Material;
 class Widget : public Component
 {

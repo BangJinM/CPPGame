@@ -128,7 +128,7 @@ public:
 		if (paramsNode)
 		{
 			auto count = cJSON_GetArraySize(paramsNode);
-			for (size_t i = 0; i < count; i++)
+			for (int i = 0; i < count; i++)
 			{
 				cJSON *item = cJSON_GetArrayItem(paramsNode, i);
 				meshRenderer->AddMaterial(g_pAssetManager->LoadMaterial(item->valuestring));

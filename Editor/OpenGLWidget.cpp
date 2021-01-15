@@ -25,7 +25,7 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 
 void OpenGLWidget::paintGL(){
     glClearColor(0.3,0.3,0.3,1);
-    Tick();
+    Tick(); 
 }
 
 void OpenGLWidget::initializeGL(){
