@@ -13,8 +13,6 @@
 #include "GameObject.h"
 #include "IRuntimeModule.h"
 
-#include "MShader.h"
-
 #include <ft2build.h>
 #include FT_FREETYPE_H
 

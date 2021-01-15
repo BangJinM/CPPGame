@@ -13,16 +13,15 @@
 #include "Config.h"
 #include "cjson/cJSON.h"
 #include "Material.h"
-#include "MShader.h"
+#include "Shader.h"
 #include "IParser.h"
 #include "AssetLoader.h"
-GameEngineBegin
-extern GameEngineFile::AssetLoader *g_pAssetLoader;
+GameEngineBegin extern GameEngineFile::AssetLoader *g_pAssetLoader;
 GameEngineEnd
-UseGameEngine
-GameEngineParserBegin
+	UseGameEngine
+		GameEngineParserBegin
 
-class MaterialParser : public IParser
+	class MaterialParser : public IParser
 {
 
 public:
@@ -37,9 +36,9 @@ public:
 
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
-		SharedShaderProgram shader = make_shared<MShaderProgram>();
-		bool flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Vertex, vertStr.c_str());
-		flag = shader->AddShaderFromSourceCode(MShader::ShaderType::Fragment, fragStr.c_str());
+		SharedShaderProgramBase shader = make_shared<ShaderProgram>();
+		bool flag = shader->AddShaderFromSourceCode(Shader::ShaderType::Vertex, vertStr.c_str());
+		flag = shader->AddShaderFromSourceCode(Shader::ShaderType::Fragment, fragStr.c_str());
 		flag = shader->Link();
 		material->shader = shader;
 

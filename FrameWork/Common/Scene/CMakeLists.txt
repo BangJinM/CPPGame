@@ -11,7 +11,6 @@ Common/Scene/Object.h
 Common/Scene/Renderer.h
 Common/Scene/Scene.h
 Common/Scene/SceneManager.h
-Common/Scene/ShaderData.h
 Common/Scene/Texture.h
 Common/Scene/Transform.h
 )

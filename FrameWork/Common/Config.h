@@ -20,6 +20,7 @@ GameEngineBegin
 
 class Object;
 class GameObject;
+class ShaderProgramBase;
 class Material;
 class Mesh;
 class Texture;
@@ -27,13 +28,14 @@ class Widget;
 class Renderer;
 class Scene;
 
+
 #define SharePtr std::shared_ptr
 #define SharedObject SharePtr<Object>
 #define SharedGameObject SharePtr<GameObject>
 #define SharedMaterial SharePtr<Material>
 #define SharedMesh SharePtr<Mesh>
 #define SharedTexture SharePtr<Texture>
-#define SharedShaderProgram SharePtr<MShaderProgram>
+#define SharedShaderProgramBase SharePtr<ShaderProgramBase>
 #define SharedScene SharePtr<Scene>
 
 enum MeshValueType {

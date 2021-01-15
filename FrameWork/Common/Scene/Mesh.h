@@ -5,9 +5,9 @@
 #include "Config.h"
 #include "Object.h"
 
-GameEngineBegin 
+GameEngineBegin
 
-struct MeshVertexAttrib
+    struct MeshVertexAttrib
 {
     //attribute size
     unsigned int size;
@@ -19,8 +19,9 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
-struct MeshData
+class MeshData
 {
+public:
     std::vector<float> vertex;
     std::vector<int> indices;
     int vertexSizeInFloat;
@@ -65,7 +66,7 @@ public:
     {
         resetData();
     }
-	void setupMesh() {}
+    void setupMesh() {}
 };
 
 class Mesh : public Object
@@ -79,7 +80,7 @@ public:
 public:
     /*  渲染数据  */
     std::vector<MeshData> m_MeshDatas;
-	bool isPrepare = false;
+    bool isPrepare = false;
 };
 
 GameEngineEnd

@@ -1,6 +1,15 @@
-﻿add_library(RHI
-    MShader.cpp
+﻿set(RHI_HEADER 
+    Shader.h
 )
+set(RHI_SRC 
+    Shader.cpp
+)
+
+add_library(RHI
+    ${RHI_HEADER}
+    ${RHI_SRC}
+)
+
 include_directories("${PROJECT_SOURCE_DIR}/RHI/OpenGL")
 find_package(glad CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)

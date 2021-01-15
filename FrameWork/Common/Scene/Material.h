@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Texture.h"
-#include "ShaderData.h"
 #include "Buffer.h"
 #include "MyMath.h"
 #include "Config.h"
@@ -12,7 +11,8 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "MShader.h"
+
+#include "Shader.h"
 
 GameEngineBegin
 
@@ -113,7 +113,7 @@ public:
 
     std::vector<NMaterialData> m_MaterialDatas;
 	
-	SharedShaderProgram shader;
+	SharedShaderProgramBase shader;
 };
 
 template <typename Type>

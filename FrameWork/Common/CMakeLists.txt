@@ -13,6 +13,7 @@ Common/GfxConfiguration.h
 Common/GfxConfiguration.h
 Common/InputManager.h
 Common/MemoryManager.h
+Common/ShaderBase.h
 )
 
 SET(FRAMEWORK_COMMON_SRC 

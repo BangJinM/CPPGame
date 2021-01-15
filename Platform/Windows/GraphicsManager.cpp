@@ -9,17 +9,16 @@
 
 #include <algorithm>
 
+#include "Shader.h"
 #include "Material.h"
 #include "Mesh.h"
 
-#include "Shader.h"
-#include "MShader.h"
 
+#include <string>
 using namespace std;
 
 GameEngineBegin
-
-	extern AssetManager *g_pAssetManager;
+extern AssetManager *g_pAssetManager;
 extern GameEngineParser::ParserManager *g_pParserManager;
 
 int GraphicsManager::Initialize()
