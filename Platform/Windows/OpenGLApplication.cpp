@@ -9,16 +9,7 @@
 #include "GraphicsManager.h"
 using namespace GameEngine;
 
-namespace GameEngine
-{
-    GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
-    IApplication *g_pApp = static_cast<IApplication *>(new OpenGLApplication(config));
-    MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
-    InputManager *g_pInputManager = static_cast<InputManager *>(new InputManager);
-    AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
-	GraphicsManager* g_pGraphicsManager = static_cast<GraphicsManager*>(new GraphicsManager);
 
-} // namespace GameEngine
 
 int GameEngine::OpenGLApplication::Initialize()
 {

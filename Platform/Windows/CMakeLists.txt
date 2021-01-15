@@ -1,6 +1,5 @@
 ﻿add_executable(Windows 
     main.cpp
-    GraphicsManager.cpp
     GamePlatform-opengl.cpp
     InputManagerWindows.cpp
 )

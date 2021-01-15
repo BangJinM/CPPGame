@@ -5,7 +5,6 @@
 #include "MemoryManager.h"
 #include "InputManager.h"
 #include "InputManagerWindows.h"
-#include "GraphicsManager.h"
 #include "AssetLoader.h"
 #include "AssetManager.h"
 #include "ParserManager.h"
@@ -17,7 +16,6 @@ namespace GameEngine
 	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
 	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
 	InputManager *g_pInputManager = static_cast<InputManagerWindows *>(new InputManagerWindows);
-	BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
 	GameEngineFile::AssetLoader *g_pAssetLoader = static_cast<GameEngineFile::AssetLoader *>(new GameEngineFile::AssetLoader);
 	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
 	GameEngineParser::ParserManager *g_pParserManager = static_cast<GameEngineParser::ParserManager *>(new GameEngineParser::ParserManager);
