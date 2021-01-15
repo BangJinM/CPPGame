@@ -1,6 +1,3 @@
-project (Framework)
-
-
 set(FRAMEWORK_HEADER)
 set(FRAMEWORK_SRC)
 

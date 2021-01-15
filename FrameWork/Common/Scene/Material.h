@@ -95,7 +95,7 @@ public:
         {
             AddProperty(other.m_MaterialDatas[i].m_Buffer, other.m_MaterialDatas[i].m_Name, other.m_MaterialDatas[i].m_Size, other.m_MaterialDatas[i].m_Type);
         }
-		shader = other.shader;
+		shaderID = other.shaderID;
     }
 public:
     ~Material()
@@ -113,7 +113,7 @@ public:
 
     std::vector<NMaterialData> m_MaterialDatas;
 	
-	SharedShaderProgramBase shader;
+	int shaderID;
 };
 
 template <typename Type>

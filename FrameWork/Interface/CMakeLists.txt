@@ -1,6 +1,7 @@
 set(FRAMEWORK_INTERFACE_HEADER 
 Interface/IApplication.h
 Interface/IRuntimeModule.h
+Interface/IShaderManager.h
 )
 
 set(FRAMEWORK_INTERFACE_SRC

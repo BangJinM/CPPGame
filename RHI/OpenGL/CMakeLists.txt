@@ -1,8 +1,11 @@
 ﻿set(RHI_HEADER 
     Shader.h
+    OpenGLCoinfig.h
+    OpenGLShaderManager.h
 )
 set(RHI_SRC 
     Shader.cpp
+    OpenGLShaderManager.cpp
 )
 
 add_library(RHI

@@ -9,6 +9,9 @@
 #include "AssetLoader.h"
 #include "AssetManager.h"
 #include "ParserManager.h"
+
+#include "OpenGLCoinfig.h"
+
 namespace GameEngine
 {
 	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);

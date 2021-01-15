@@ -6,7 +6,7 @@
 #include "SceneManager.h"
 #include "AssetManager.h"
 #include "ParserManager.h"
-
+#include "ShaderManager.h"
 #include <algorithm>
 
 #include "Shader.h"
@@ -20,6 +20,7 @@ using namespace std;
 GameEngineBegin
 extern AssetManager *g_pAssetManager;
 extern GameEngineParser::ParserManager *g_pParserManager;
+extern ShaderManager *g_pShaderManager;
 
 int GraphicsManager::Initialize()
 {
@@ -79,7 +80,8 @@ void GraphicsManager::Draw()
 void GraphicsManager::PrepareMaterial(Material &material)
 {
 	int textureID = 0;
-	material.shader->Use();
+	auto shader = g_pShaderManager->GetShaderProgram(material.shaderID);
+	shader->Use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
 	{
 		auto data = material.m_MaterialDatas[i];
@@ -89,20 +91,20 @@ void GraphicsManager::PrepareMaterial(Material &material)
 		case MaterialType::T_Mat4:
 		{
 			auto property = (float *)data.m_Buffer;
-			material.shader->setMat4(data.m_Name, &property[0]);
+			shader->setMat4(data.m_Name, &property[0]);
 			break;
 		}
 		case MaterialType::T_Texture:
 		{
 			auto property = (char *)data.m_Buffer;
 			int location;
-			location = glGetUniformLocation(material.shader->m_ProgramID, data.m_Name.c_str());
+			location = glGetUniformLocation(shader->m_ProgramID, data.m_Name.c_str());
 			if (location != -1)
 			{
 				SharedTexture image = g_pAssetManager->LoadTexture(property);
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
-				material.shader->setInt(data.m_Name, textureID);
+				shader->setInt(data.m_Name, textureID);
 				if (image->id <= 0)
 				{
 					BindTexture(image);

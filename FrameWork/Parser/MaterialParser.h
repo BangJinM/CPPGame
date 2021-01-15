@@ -16,7 +16,9 @@
 #include "Shader.h"
 #include "IParser.h"
 #include "AssetLoader.h"
+#include "ShaderManager.h"
 GameEngineBegin extern GameEngineFile::AssetLoader *g_pAssetLoader;
+extern ShaderManager *g_pShaderManager;
 GameEngineEnd
 	UseGameEngine
 		GameEngineParserBegin
@@ -36,11 +38,8 @@ public:
 
 		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
 		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
-		SharedShaderProgramBase shader = make_shared<ShaderProgram>();
-		bool flag = shader->AddShaderFromSourceCode(Shader::ShaderType::Vertex, vertStr.c_str());
-		flag = shader->AddShaderFromSourceCode(Shader::ShaderType::Fragment, fragStr.c_str());
-		flag = shader->Link();
-		material->shader = shader;
+
+		material->shaderID = g_pShaderManager->AddShaderByPath(vertStr, fragStr);
 
 		auto paramsNode = cJSON_GetObjectItem(json, "params");
 		if (paramsNode)
