@@ -1,7 +1,7 @@
 #include "MemoryManager.h"
 #include <stdint.h>
-extern "C" void *malloc(size_t size);
-extern "C" void free(void *p);
+// extern "C" void *malloc(size_t size);
+// extern "C" void free(void *p);
 
 #ifndef ALIGN
 #define ALIGN(x, a) (((x) + ((a)-1)) & ~((a)-1))

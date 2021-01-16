@@ -7,6 +7,7 @@ include(Parser/CMakeLists.txt)
 include(Interface/CMakeLists.txt)
 include(Math/CMakeLists.txt)
 include(Logger/CMakeLists.txt)
+include(Memory/CMakeLists.txt)
 
 list(APPEND FRAMEWORK_SRC ${FRAMEWORK_HEADER})
 
