@@ -91,7 +91,7 @@ bool ShaderProgram::AddShaderFromFilePath(Shader::ShaderType type,
 bool ShaderProgram::Link()
 {
     m_ProgramID = glCreateProgram();
-    for (int i = 0; i < m_Shaders.size(); i++)
+    for (unsigned int i = 0; i < m_Shaders.size(); i++)
     {
         glAttachShader(m_ProgramID, m_Shaders[i]->m_CompileID);
     }

@@ -2,25 +2,9 @@
 #include <tchar.h>
 #include "GamePlatform-opengl.h"
 #include "IApplication.h"
-#include "MemoryManager.h"
-#include "InputManager.h"
-#include "InputManagerWindows.h"
-#include "AssetLoader.h"
-#include "AssetManager.h"
-#include "ParserManager.h"
-
-#include "OpenGLCoinfig.h"
 
 namespace GameEngine
 {
-	GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
-	MemoryManager *g_pMemoryManager = static_cast<MemoryManager *>(new MemoryManager);
-	InputManager *g_pInputManager = static_cast<InputManagerWindows *>(new InputManagerWindows);
-	GameEngineFile::AssetLoader *g_pAssetLoader = static_cast<GameEngineFile::AssetLoader *>(new GameEngineFile::AssetLoader);
-	AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
-	GameEngineParser::ParserManager *g_pParserManager = static_cast<GameEngineParser::ParserManager *>(new GameEngineParser::ParserManager);
-	IApplication *g_pApp = static_cast<IApplication *>(new OpenGLApplication(config));
-
 	OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config) {}
 
 	int OpenGLApplication::Initialize()

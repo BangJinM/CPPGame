@@ -18,6 +18,7 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Interface")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/File")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Logger")
+include_directories("${PROJECT_SOURCE_DIR}/Platform")
 
 if(GAMEENGINE_RHI_OPENGL)
     include_directories("${PROJECT_SOURCE_DIR}/RHI/OpenGL")
@@ -29,7 +30,7 @@ else(GAMEENGINE_RHI_QT_OPENGL)
     add_subdirectory(Editor)
 endif()
 
-
+add_subdirectory(GameLogic)
 add_subdirectory(FrameWork)
 
 

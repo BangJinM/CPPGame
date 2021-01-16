@@ -7,6 +7,7 @@
 #include "ParserManager.h"
 #include "easylogging++.h"
 #include "ShaderManager.h"
+#include "GameLogic.h"
 
 INITIALIZE_EASYLOGGINGPP
 using namespace GameEngine;
@@ -21,6 +22,7 @@ namespace GameEngine
 	extern AssetManager *g_pAssetManager;
 	extern GameEngineParser::ParserManager *g_pParserManager;
 	extern ShaderManager *g_pShaderManager;
+	extern GameLogic *g_pGameLogic;
 } // namespace GameEngine
 
 int main(int argc, char *argv[])
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
 	run_time_modules.push_back(g_pAssetManager);
 	run_time_modules.push_back(g_pGraphicsManager);
 	run_time_modules.push_back(g_pShaderManager);
+	run_time_modules.push_back(g_pGameLogic);
 
 	for (auto &module : run_time_modules)
 	{
@@ -64,7 +67,8 @@ int main(int argc, char *argv[])
 		module->Finalize();
 	}
 
-	for (vector<IRuntimeModule *>::const_iterator itr = run_time_modules.begin(); itr != run_time_modules.end(); ++itr) {
+	for (vector<IRuntimeModule *>::const_iterator itr = run_time_modules.begin(); itr != run_time_modules.end(); ++itr)
+	{
 		delete *itr;
 	}
 	run_time_modules.clear();

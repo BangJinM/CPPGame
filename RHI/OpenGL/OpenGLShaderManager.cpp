@@ -24,6 +24,6 @@ int OpenGLShaderManager::AddShaderByPath(std::string vspath, std::string fspath)
 
 int OpenGLShaderManager::AddShaderByString(std::string vspath, std::string fspath)
 {
-	return 0;
+    return 0;
 }
 GameEngineEnd

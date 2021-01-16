@@ -24,6 +24,7 @@ Common/Allocator.cpp
 Common/MemoryManager.cpp
 Common/BaseGraphicsManager.cpp
 Common/AssetManager.cpp
+Common/main.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_HEADER})
