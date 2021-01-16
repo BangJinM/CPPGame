@@ -5,9 +5,7 @@
 
 #include "Config.h"
 
-GameEngineBegin
-
-struct BlockHeader
+GameEngineBegin struct BlockHeader
 {
     // union-ed with data
     BlockHeader *pNext;
@@ -43,17 +41,6 @@ public:
     void FreeAll();
 
 private:
-#if defined(_DEBUG)
-    // fill a free page with debug patterns
-    void FillFreePage(PageHeader *pPage);
-
-    // fill a block with debug patterns
-    void FillFreeBlock(BlockHeader *pBlock);
-
-    // fill an allocated block with debug patterns
-    void FillAllocatedBlock(BlockHeader *pBlock);
-#endif
-
     // gets the next block
     BlockHeader *NextBlock(BlockHeader *pBlock);
 
@@ -70,9 +57,9 @@ private:
     size_t m_nBlocksPerPage;
 
     // statistics
-    uint32_t m_nPages;
-    uint32_t m_nBlocks;
-    uint32_t m_nFreeBlocks;
+    size_t m_nPages;
+    size_t m_nBlocks;
+    size_t m_nFreeBlocks;
 
     // disable copy & assignment
     Allocator(const Allocator &clone);

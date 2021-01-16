@@ -5,9 +5,9 @@
 #include "IRuntimeModule.h"
 #include "Allocator.h"
 
-GameEngineBegin 
+GameEngineBegin
 
-class MemoryManager : public IRuntimeModule
+    class MemoryManager : public IRuntimeModule
 {
 public:
     template <class T, typename... Arguments>
@@ -37,8 +37,11 @@ public:
 private:
     static size_t *m_pBlockSizeLookup;
     static Allocator *m_pAllocators;
+    static bool m_bInitialized;
 
 private:
     static Allocator *LookUpAllocator(size_t size);
 };
+
+extern MemoryManager *g_pMemoryManager;
 GameEngineEnd

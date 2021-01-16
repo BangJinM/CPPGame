@@ -9,9 +9,7 @@
 
 using namespace GameEngine;
 
-GameEngineBegin
-
-static const uint32_t kBlockSizes[] = {
+GameEngineBegin static const uint32_t kBlockSizes[] = {
     // 4-increments
     4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
     52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96,
@@ -36,12 +34,11 @@ static const uint32_t kMaxBlockSize =
 
 size_t *MemoryManager::m_pBlockSizeLookup;
 Allocator *MemoryManager::m_pAllocators;
+bool MemoryManager::m_bInitialized = false;
 
 int MemoryManager::Initialize()
 {
-    // one-time initialization
-    static bool s_bInitialized = false;
-    if (!s_bInitialized)
+    if (!m_bInitialized)
     {
         // initialize block size lookup table
         m_pBlockSizeLookup = new size_t[kMaxBlockSize + 1];
@@ -60,7 +57,7 @@ int MemoryManager::Initialize()
             m_pAllocators[i].Reset(kBlockSizes[i], kPageSize, kAlignment);
         }
 
-        s_bInitialized = true;
+        m_bInitialized = true;
     }
 
     return 0;
@@ -70,6 +67,7 @@ void MemoryManager::Finalize()
 {
     delete[] m_pAllocators;
     delete[] m_pBlockSizeLookup;
+    m_bInitialized = false;
 }
 
 void MemoryManager::Tick()
@@ -111,10 +109,13 @@ void *MemoryManager::Allocate(size_t size, size_t alignment)
 
 void MemoryManager::Free(void *p, size_t size)
 {
-    Allocator *pAlloc = LookUpAllocator(size);
-    if (pAlloc)
-        pAlloc->Free(p);
-    else
-        free(p);
+    if (m_bInitialized)
+    {
+        Allocator *pAlloc = LookUpAllocator(size);
+        if (pAlloc)
+            pAlloc->Free(p);
+        else
+            free(p);
+    }
 }
 GameEngineEnd

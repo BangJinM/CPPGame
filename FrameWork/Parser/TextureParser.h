@@ -20,10 +20,10 @@ public:
     {
         unsigned char *data;
         Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
-        unsigned char *picData = reinterpret_cast<unsigned char *>(buffer.m_pData);
+        unsigned char *picData = reinterpret_cast<unsigned char *>(buffer.GetData());
 
         int width, height, nrComponents;
-        data = stbi_load_from_memory(picData, buffer.m_szSize, &width, &height, &nrComponents, 0);
+        data = stbi_load_from_memory(picData, buffer.GetDataSize(), &width, &height, &nrComponents, 0);
         if (data)
         {
             SharedTexture image = std::make_shared<Texture>();
