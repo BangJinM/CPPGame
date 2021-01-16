@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "../Config.h"
-#include "../Buffer.h"
+#include "Config.h"
+#include "Buffer.h"
 
 UseGameEngine
 

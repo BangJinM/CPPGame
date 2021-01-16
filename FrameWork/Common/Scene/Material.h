@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include "Buffer.h"
+#include "Buffer.h"
 #include "MyMath.h"
 #include "Config.h"
 #include "MyMath.h"

@@ -1,6 +1,4 @@
-﻿#pragma once
-
-#include "Config.h"
+﻿#include "Config.h"
 #include "OpenGLCoinfig.h"
 #include "Windows/WindowsConfig.h"
 #include "GfxConfiguration.h"

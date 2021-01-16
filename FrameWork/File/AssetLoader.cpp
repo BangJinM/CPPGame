@@ -3,7 +3,8 @@
 #include "easylogging++.h"
 GameEngineFileBegin
 
-int AssetLoader::Initialize()
+    int
+    AssetLoader::Initialize()
 {
     return 0;
 }
@@ -49,9 +50,9 @@ bool AssetLoader::RemoveSearchPath(const string path)
     return true;
 }
 
-string AssetLoader::GetFileFullPath(const string path) 
+string AssetLoader::GetFileFullPath(const string path)
 {
-	return "";
+    return "";
 }
 
 bool AssetLoader::FileExists(const string fullPath)
@@ -95,12 +96,20 @@ FilePtr AssetLoader::OpenFile(const string name, FileOpenMode mode)
 #endif
             switch (mode)
             {
+#ifdef _WINDOWS
+            case MY_OPEN_TEXT:
+                fopen_s(&fp, fullPath.c_str(), "r");
+            case MY_OPEN_BINARY:
+                fopen_s(&fp, fullPath.c_str(), "rb");
+                break;
+#else
             case MY_OPEN_TEXT:
                 fp = fopen(fullPath.c_str(), "r");
                 break;
             case MY_OPEN_BINARY:
                 fp = fopen(fullPath.c_str(), "rb");
                 break;
+#endif
             }
 
             if (fp)
@@ -157,7 +166,7 @@ Buffer AssetLoader::SyncOpenAndReadBinary(const string filePath)
     }
     else
     {
-        fprintf(stderr, "Error opening file '%s'\n", filePath);
+        el::Loggers::getLogger("logger")->info("Error opening file '%s'\n", filePath);
         pBuff = new Buffer();
     }
 
@@ -201,12 +210,16 @@ size_t AssetLoader::SyncRead(const FilePtr &fp, Buffer &buf)
     return sz;
 }
 
-
 void AssetLoader::WriteFile(const std::string &file, const std::string path)
 {
     bool exist = FileExists(path.c_str());
     FILE *fp;
+#ifdef _WINDOWS
+    fopen_s(&fp, path.c_str(), "w");
+#else
     fp = fopen(path.c_str(), "w");
+#endif
+
     fwrite(file.c_str(), file.size(), 1, fp);
 }
 GameEngineFileEnd

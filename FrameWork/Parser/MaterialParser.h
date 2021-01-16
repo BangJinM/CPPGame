@@ -45,7 +45,7 @@ public:
 		if (paramsNode)
 		{
 			auto count = cJSON_GetArraySize(paramsNode);
-			for (unsigned int i = 0; i < count; i++)
+			for (int i = 0; i < count; i++)
 			{
 				cJSON *item = cJSON_GetArrayItem(paramsNode, i);
 				std::string name = item->string;
