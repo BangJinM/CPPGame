@@ -40,10 +40,6 @@ int GraphicsManager::Initialize()
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-
-		SharePtr<Scene> m_Scene;
-		m_Scene = std::dynamic_pointer_cast<Scene>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::SCENE, "Scene/defaultEx.scene"));
-		SceneManager::GetInstance()->SetNextScene(m_Scene);
 		result = 0;
 	}
 
