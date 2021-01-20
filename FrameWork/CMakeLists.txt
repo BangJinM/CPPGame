@@ -2,6 +2,7 @@ set(FRAMEWORK_HEADER)
 set(FRAMEWORK_SRC)
 
 include(Common/CMakeLists.txt)
+include(Scene/CMakeLists.txt)
 include(File/CMakeLists.txt)
 include(Parser/CMakeLists.txt)
 include(Interface/CMakeLists.txt)

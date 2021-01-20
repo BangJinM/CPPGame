@@ -1,11 +1,7 @@
-﻿include(Common/UI/CMakeLists.txt)
-include(Common/Scene/CMakeLists.txt)
-
-SET(FRAMEWORK_COMMON_HEADER 
+﻿SET(FRAMEWORK_COMMON_HEADER 
 Common/AssetManager.h
 Common/BaseApplication.h
 Common/BaseGraphicsManager.h
-Common/CommonIniter.h
 Common/Config.h
 Common/GfxConfiguration.h
 Common/GfxConfiguration.h
