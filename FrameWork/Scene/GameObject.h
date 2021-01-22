@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <map>
 #include <list>
@@ -9,16 +9,21 @@
 #include "Material.h"
 #include "ClassIDs.h"
 #include "Transform.h"
+#include "IComponent.h"
 
 GameEngineBegin 
 
 class Material;
 
-class GameObject : public Object
+class GameObject : public Object, public IComponent
 {
     friend class Component;
 
 public:
+    virtual void Start() override;
+    virtual void Update() override;
+    virtual void Destory() override;
+
     static SharedGameObject createGameObject();
     template <class T>
     SharePtr<T> getComponent();
@@ -38,8 +43,6 @@ public:
     SharedGameObject getChildByID(int id);
     SharedGameObject getParent();
     void setParent(SharedGameObject parent);
-
-    void Update();
 
     GameObject();
     virtual ~GameObject();
@@ -100,7 +103,7 @@ inline SharePtr<T> GameObject::addComponent(SharePtr<T> component)
 {
     if (component)
     {
-        component->InitComponent(m_GameObject.lock());
+        component->SetParent(m_GameObject.lock());
         removeComponent<T>(component);
         m_compenents.push_back(component);
         return component;

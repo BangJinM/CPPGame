@@ -1,30 +1,11 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 #include "Scene.h"
 
 GameEngineBegin
 
-SharePtr<SceneManager>	
-SceneManager::m_SceneManager;
-
-SharePtr<SceneManager> SceneManager::GetInstance()
-{
-	if (m_SceneManager)
-		return m_SceneManager;
-	m_SceneManager = SharePtr<SceneManager>(new SceneManager());
-	return m_SceneManager;
-}
-
 void SceneManager::SetNextScene(SharePtr<Scene> scene)
 {
 	nextScene = scene;
-}
-
-void SceneManager::ChangeScene()
-{
-	if (!nextScene)
-		return;
-	curScene = nextScene;
-	nextScene = nullptr;
 }
 
 SharePtr<Scene> SceneManager::GetScene()
@@ -34,21 +15,30 @@ SharePtr<Scene> SceneManager::GetScene()
 	return std::make_shared<Scene>();
 }
 
-SceneManager::~SceneManager()
-{
-	
-}
-
-SceneManager::SceneManager()
+int SceneManager::Initialize()
 {
 	curScene = std::make_shared<Scene>();
 	nextScene = nullptr;
+	return 0;
 }
 
-void SceneManager::Update()
+void SceneManager::Finalize()
+{
+	curScene = nullptr;
+	nextScene = nullptr;
+}
+
+void SceneManager::Tick()
 {
 	if (!curScene)
-		curScene = std::make_shared<Scene>();
+		nextScene = std::make_shared<Scene>();
+	if (nextScene)
+	{
+		curScene = nextScene;
+		curScene->Start();
+		nextScene = nullptr;
+		return;
+	}
 	curScene->Update();
 	curScene->RenderAll();
 }

@@ -6,6 +6,7 @@
 #include "AssetManager.h"
 #include "ParserManager.h"
 #include "easylogging++.h"
+#include "SceneManager.h"
 #include "ShaderManager.h"
 #include "GameLogic.h"
 
@@ -23,6 +24,8 @@ namespace GameEngine
 	extern GameEngineParser::ParserManager *g_pParserManager;
 	extern ShaderManager *g_pShaderManager;
 	extern GameLogic *g_pGameLogic;
+	extern SceneManager *g_pSceneManager;
+	
 } // namespace GameEngine
 
 int main(int argc, char *argv[])
@@ -42,8 +45,9 @@ int main(int argc, char *argv[])
 	run_time_modules.push_back(g_pAssetManager);
 	run_time_modules.push_back(g_pGraphicsManager);
 	run_time_modules.push_back(g_pShaderManager);
+	run_time_modules.push_back(g_pSceneManager);
 	run_time_modules.push_back(g_pGameLogic);
-
+	
 	for (auto &module : run_time_modules)
 	{
 		if ((ret = module->Initialize()) != 0)

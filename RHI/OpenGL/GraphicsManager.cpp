@@ -57,8 +57,8 @@ void GraphicsManager::Tick()
 	auto window = glfwGetCurrentContext();
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_RendererCommands.clear();
 	BaseGraphicsManager::Tick();
+	m_RendererCommands.clear();
 	glfwSwapBuffers(window);
 }
 

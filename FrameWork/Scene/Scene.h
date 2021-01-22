@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -8,13 +8,14 @@
 
 #include "Config.h"
 #include "Object.h"
+#include "IComponent.h"
 GameEngineBegin
 
-class Camera;
+    class Camera;
 class GameObject;
 class Renderer;
 class CanvasRenderer;
-class Scene:public Object
+class Scene : public Object, public IComponent
 {
 private:
   /* data */
@@ -23,8 +24,10 @@ public:
 
   ~Scene();
 
-  void Update();
-
+  virtual void Start() override;
+  virtual void Update() override;
+  virtual void Destory() override;
+  
   void AddGameObject(SharedGameObject gameobject);
   void AddGameObject(SharedGameObject gameobject, SharedGameObject parent);
   SharedGameObject GetRootGameObject();

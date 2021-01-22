@@ -5,6 +5,8 @@
 #include "GameObject.h"
 GameEngineBegin 
 
+extern SceneManager *g_pSceneManager;
+
 void Renderer::Prepare()
 {
     // for (int i = 0; i < m_Materials.size(); ++i)
@@ -47,7 +49,7 @@ void Renderer::Start()
     auto renderer = getParent()->getComponent<Renderer>();
     if (!renderer)
         return;
-    auto scene = SceneManager::GetInstance()->GetScene();
+    auto scene = g_pSceneManager->GetScene();
     scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
     Component::Start();
 }

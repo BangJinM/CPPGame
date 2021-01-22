@@ -1,4 +1,4 @@
-#include "Scene.h"
+﻿#include "Scene.h"
 
 //һ�²���
 #include "Mesh.h"
@@ -40,12 +40,30 @@ Scene::~Scene()
 	m_Renderers.clear();
 }
 
+void Scene::Start()
+{
+	auto children = m_Root->getChildren();
+	for (auto i = children.begin(); i != children.end(); i++)
+	{
+		i->second->Start();
+	}
+}
+
 void Scene::Update()
 {
 	auto children = m_Root->getChildren();
 	for (auto i = children.begin(); i != children.end(); i++)
 	{
 		i->second->Update();
+	}
+}
+
+void Scene::Destory()
+{
+	auto children = m_Root->getChildren();
+	for (auto i = children.begin(); i != children.end(); i++)
+	{
+		i->second->Destory();
 	}
 }
 
@@ -106,7 +124,7 @@ SharedGameObject Scene::GetGObject(SharedGameObject parent, int sid)
 			result = child;
 		if (result)
 			return result;
-        auto result = GetGObject(child, sid);
+		auto result = GetGObject(child, sid);
 		if (result)
 			return result;
 	}

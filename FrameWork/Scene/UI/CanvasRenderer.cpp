@@ -12,7 +12,7 @@
 #include "BaseGraphicsManager.h"
 
 GameEngineBegin
-
+extern SceneManager *g_pSceneManager;
 extern BaseGraphicsManager *g_pGraphicsManager;
 
 CanvasRenderer::CanvasRenderer()
@@ -44,7 +44,7 @@ void CanvasRenderer::Start()
 	auto canvasRenderer = getParent()->getComponent<CanvasRenderer>();
 	if (!canvasRenderer)
 		return;
-	auto scene = SceneManager::GetInstance()->GetScene();
+	auto scene = g_pSceneManager->GetScene();
 	scene->SetCanvasRenderer(canvasRenderer);
 	Renderer::Start();
 }

@@ -1,4 +1,4 @@
-#include "GameObject.h"
+﻿#include "GameObject.h"
 #include "Component.h"
 #include "MeshRenderer.h"
 #include "BaseGraphicsManager.h"
@@ -93,17 +93,39 @@ void GameObject::setName(std::string name)
     m_Name = name;
 }
 
+void GameObject::Start()
+{
+    for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+    {
+        (*i)->Start();
+    }
+    for (auto i = m_children.begin(); i != m_children.end(); i++)
+    {
+        i->second->Start();
+    }
+}
+
 void GameObject::Update()
 {
     for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
     {
-        if (!(*i)->m_Started)
-            (*i)->Start();
         (*i)->Update();
     }
     for (auto i = m_children.begin(); i != m_children.end(); i++)
     {
         i->second->Update();
+    }
+}
+
+void GameObject::Destory()
+{
+    for (auto i = m_compenents.begin(); i != m_compenents.end(); i++)
+    {
+        (*i)->Destory();
+    }
+    for (auto i = m_children.begin(); i != m_children.end(); i++)
+    {
+        i->second->Destory();
     }
 }
 

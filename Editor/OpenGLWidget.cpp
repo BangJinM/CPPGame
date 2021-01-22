@@ -16,6 +16,7 @@ using namespace GameEngine;
 namespace GameEngine {
     extern BaseGraphicsManager *g_pGraphicsManager;
     extern AssetManager *g_pAssetManager;
+        extern SceneManager *g_pSceneManager;
 }
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
@@ -40,7 +41,7 @@ int OpenGLWidget::Initialize()
     SharePtr<Scene> m_Scene;
     m_Scene = std::make_shared<Scene>();
     m_Scene->LoadSceneByPath("Scene/defaultEx.scene");
-    SceneManager::GetInstance()->SetNextScene(m_Scene);
+    g_pSceneManager->SetNextScene(m_Scene);
     result = 1;
     return result;
 }

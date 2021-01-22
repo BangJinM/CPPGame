@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <memory>
 
@@ -6,11 +6,12 @@
 #include "Object.h"
 #include "ClassIDs.h"
 #include "ClassIDs.h"
+#include "IComponent.h"
 
-GameEngineBegin 
+GameEngineBegin
 
-class GameObject;
-class Component : public Object
+    class GameObject;
+class Component : public Object, public IComponent
 {
     friend class GameObject;
 
@@ -42,16 +43,16 @@ public:
     }
 
 public:
-    virtual void Start()
+    virtual void Start() override
     {
         if (m_Started)
             return;
         m_Started = true;
     }
-    virtual void Update() {}
-    virtual void LateUpdate() {}
+    virtual void Update() override {}
+    virtual void Destory() override {}
     virtual void OnEnable(bool enable) { m_Enable = enable; }
-    virtual void InitComponent(SharedGameObject host)
+    virtual void SetParent(SharedGameObject host)
     {
         setParent(host);
     }

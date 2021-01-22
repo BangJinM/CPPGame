@@ -15,9 +15,9 @@ GameEngineBegin
 public:
     enum ShaderType
     {
-        Vertex = 0x0001,
-        Fragment = 0x0002,
-        Geometry = 0x0004,
+        Vertex = 1 << 1,
+        Fragment = 1 << 2,
+        Geometry = 1 << 3,
     };
 
     ShaderBase(ShaderType type) : m_ShaerType(type) {}

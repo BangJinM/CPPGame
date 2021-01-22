@@ -6,7 +6,7 @@
 #include "AssetManager.h"
 #include "CanvasRenderer.h"
 GameEngineBegin
-
+extern SceneManager *g_pSceneManager;
 Widget::Widget() : Component(ClassID(Widget))
 {
 }
@@ -17,7 +17,7 @@ Widget::~Widget()
 
 void Widget::InitComponent(SharedGameObject host)
 {
-	Component::InitComponent(host);
+	Component::SetParent(host);
 }
 
 void Widget::setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer)
@@ -32,7 +32,7 @@ void Widget::Start()
 	auto widget = getParent()->getComponent<Widget>();
 	if (!widget)
 		return;
-	auto scene = SceneManager::GetInstance()->GetScene();
+	auto scene = g_pSceneManager->GetScene();
 	auto canvas = scene->GetCanvasRenderer();
 	if (!canvas)
 		return;

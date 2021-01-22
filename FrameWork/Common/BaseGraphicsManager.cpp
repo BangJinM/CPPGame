@@ -31,8 +31,6 @@ void BaseGraphicsManager::Draw()
 
 void BaseGraphicsManager::Tick()
 {
-    SceneManager::GetInstance()->ChangeScene();
-    SceneManager::GetInstance()->Update();
     Draw();
 }
 

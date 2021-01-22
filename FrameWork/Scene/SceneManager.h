@@ -1,31 +1,31 @@
-#pragma once
+﻿#pragma once
 
 #include <memory>
 
 #include "Config.h"
+#include "IRuntimeModule.h"
 
-GameEngineBegin 
 
-class Scene;
-class SceneManager
+GameEngineBegin
+
+    class Scene;
+class SceneManager:public IRuntimeModule
 {
-
 private:
-    static SharePtr<SceneManager> m_SceneManager;
-
-public:
-    static SharePtr<SceneManager> GetInstance();
-
-private:
-    SceneManager(/* args */);
     SharePtr<Scene> curScene;
     SharePtr<Scene> nextScene;
 
 public:
     void SetNextScene(SharePtr<Scene> scene);
-    void ChangeScene();
-    void Update();
+
     SharePtr<Scene> GetScene();
-    ~SceneManager();
+
+	virtual int Initialize() override;
+
+	virtual void Finalize() override;
+
+	virtual void Tick() override;
 };
+
+extern SceneManager *g_pSceneManager;
 GameEngineEnd
