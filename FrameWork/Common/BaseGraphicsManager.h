@@ -3,33 +3,40 @@
 #include <list>
 
 #include "Config.h"
-#include "IRuntimeModule.h"
 #include "Renderer.h"
+#include "IRuntimeModule.h"
 
-#include "../Renderer/Frame.h"
 #include "Material.h"
 #include "Mesh.h"
 GameEngineBegin
 
-    class Scene;
+class Scene;
+
+struct RendererCammand
+{
+	Material material;
+	SharedMesh mesh;
+	int index;
+};
+
 
 class BaseGraphicsManager : public IRuntimeModule
 {
 public:
-    virtual ~BaseGraphicsManager() {}
+	virtual ~BaseGraphicsManager() {}
 
-    virtual int Initialize();
-    virtual void Finalize();
+	virtual int Initialize();
+	virtual void Finalize();
 
-    virtual void Tick();
-    virtual void Clear();
-    virtual void Draw();
+	virtual void Tick();
+	virtual void Clear();
+	virtual void Draw();
 
-    void addRendererCommand(RendererCammand command);
-    std::list<RendererCammand> getRendererCommand();
+	void addRendererCommand(RendererCammand command);
+	std::list<RendererCammand> getRendererCommand();
 
 protected:
-    std::list<RendererCammand> m_RendererCommands;
+	std::list<RendererCammand> m_RendererCommands;
 };
 
 extern BaseGraphicsManager *g_pGraphicsManager;
