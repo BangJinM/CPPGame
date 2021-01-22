@@ -1,4 +1,4 @@
-# CPPGame
+﻿# CPPGame
 1.语言：C++
 
 2.图形API：openGL
@@ -28,5 +28,6 @@
 4.glfw
 5.qt5
 6.freetype
+7.imgui
 ```
 
