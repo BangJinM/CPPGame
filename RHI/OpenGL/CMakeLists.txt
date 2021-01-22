@@ -3,11 +3,15 @@
     OpenGLCoinfig.h
     OpenGLShaderManager.h
     GraphicsManager.h
+    imgui_impl_glfw.h
+    imgui_impl_opengl3.h
 )
 set(RHI_SRC 
     Shader.cpp
     OpenGLShaderManager.cpp
     GraphicsManager.cpp
+    imgui_impl_glfw.cpp
+    imgui_impl_opengl3.cpp
 )
 
 add_library(RHI

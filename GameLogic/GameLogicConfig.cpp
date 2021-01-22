@@ -7,6 +7,6 @@
 namespace GameEngine
 {
     GfxConfiguration config(8, 8, 8, 8, 32, 0, 0, 960, 540);
-    IApplication *g_pApp = static_cast<IApplication *>(new OpenGLApplication(config));
+    BaseApplication *g_pApp = static_cast<BaseApplication *>(new OpenGLApplication(config));
     GameLogic *g_pGameLogic = static_cast<GameLogic *>(new MyGameLogic);
 } // namespace GameEngine

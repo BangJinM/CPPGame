@@ -3,22 +3,15 @@
 #include <list>
 
 #include "Config.h"
-#include "Renderer.h"
 #include "IRuntimeModule.h"
+#include "Renderer.h"
 
+#include "../Renderer/Frame.h"
 #include "Material.h"
 #include "Mesh.h"
 GameEngineBegin
 
-class Scene;
-
-struct RendererCammand
-{
-    Material material;
-    SharedMesh mesh;
-	int index;
-};
-
+    class Scene;
 
 class BaseGraphicsManager : public IRuntimeModule
 {
@@ -34,6 +27,7 @@ public:
 
     void addRendererCommand(RendererCammand command);
     std::list<RendererCammand> getRendererCommand();
+
 protected:
     std::list<RendererCammand> m_RendererCommands;
 };

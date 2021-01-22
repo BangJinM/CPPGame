@@ -24,6 +24,8 @@ public:
 
     virtual bool IsQuit();
 
+    GfxConfiguration GetGfxConfiguration(){return m_Config;}
+
 protected:
     virtual void OnDraw(){};
 

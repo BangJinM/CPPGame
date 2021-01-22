@@ -13,6 +13,7 @@ add_executable(MyGame
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 target_link_libraries(MyGame PRIVATE 
     glfw 
@@ -20,4 +21,5 @@ target_link_libraries(MyGame PRIVATE
     glad::glad 
     Framework
     Windows
+    imgui::imgui
 ) 
