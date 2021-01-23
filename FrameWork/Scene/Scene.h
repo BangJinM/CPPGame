@@ -15,6 +15,7 @@ GameEngineBegin
 class GameObject;
 class Renderer;
 class CanvasRenderer;
+class Light;
 class Scene : public Object, public IComponent
 {
 private:
@@ -27,7 +28,7 @@ public:
   virtual void Start() override;
   virtual void Update() override;
   virtual void Destory() override;
-  
+
   void AddGameObject(SharedGameObject gameobject);
   void AddGameObject(SharedGameObject gameobject, SharedGameObject parent);
   SharedGameObject GetRootGameObject();
@@ -36,7 +37,10 @@ public:
 
   void RenderAll();
   void AddCamera(SharePtr<Camera> camera);
-  void RemoveCamera();
+  void RemoveCamera(SharePtr<Camera> camera);
+
+  void AddLight(SharePtr<Light> light);
+  void RemoveLight(SharePtr<Light> light);
 
   void PrepareAll();
   void AddRenderer(SharePtr<Renderer> renderer);
@@ -49,6 +53,7 @@ public:
   std::list<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
 
   std::list<SharePtr<Camera>> m_Cameras;
+  std::list<SharePtr<Light>> m_Lights;
   std::list<SharePtr<Renderer>> m_Renderers;
   SharePtr<CanvasRenderer> m_Canvas;
   SharedGameObject m_Root;

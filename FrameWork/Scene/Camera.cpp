@@ -54,14 +54,12 @@ void Camera::Render(std::list<SharePtr<Renderer>> renderers)
 
 void Camera::Start()
 {
-  if (m_Started)
-    return;
+  Component::Start();
   auto camera = getParent()->getComponent<Camera>();
   if (!camera)
     return;
   auto scene = g_pSceneManager->GetScene();
   scene->AddCamera(std::dynamic_pointer_cast<Camera>(camera));
-  Component::Start();
 }
 
 glm::mat4 Camera::getProjectionMatrixOrthographic()

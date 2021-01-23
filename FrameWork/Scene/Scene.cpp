@@ -2,6 +2,7 @@
 
 //һ�²���
 #include "Mesh.h"
+#include "Light.h"
 #include "Camera.h"
 #include "Renderer.h"
 #include "GameObject.h"
@@ -76,13 +77,32 @@ void Scene::RenderAll()
 	}
 }
 
-void Scene::RemoveCamera()
+void Scene::RemoveCamera(SharePtr<Camera> camera)
 {
+	for (auto i = m_Cameras.begin(); i != m_Cameras.end(); i++)
+	{
+		if (*i == camera)
+			m_Cameras.erase(i);
+	}
 }
 
 void Scene::AddCamera(SharePtr<Camera> camera)
 {
 	m_Cameras.push_back(camera);
+}
+
+void Scene::AddLight(SharePtr<Light> light)
+{
+	m_Lights.push_back(light);
+}
+
+void Scene::RemoveLight(SharePtr<Light> light)
+{
+	for (auto i = m_Lights.begin(); i != m_Lights.end(); i++)
+	{
+		if (*i == light)
+			m_Lights.erase(i);
+	}
 }
 
 void Scene::PrepareAll()

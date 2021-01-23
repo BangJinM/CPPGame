@@ -118,5 +118,17 @@
         "m_Materials":["Materials/wall.gemtl"],
         "m_GameObject":16,
         "fileID":21
+    },
+    "GameObject":{
+        "name":"dirLight",
+        "fileID": 22,
+        "m_Component":[21]
+    },
+    "Light":{
+        "type": 16,
+        "color":[255, 0, 0],
+        "dir":[50, 50, 50],
+        "m_GameObject":22,
+        "fileID":21
     }
 }

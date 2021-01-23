@@ -23,14 +23,13 @@
 #include "Scene.h"
 #include "Camera.h"
 
-GameEngineBegin
-extern GameEngineFile::AssetLoader *g_pAssetLoader;
+GameEngineBegin extern GameEngineFile::AssetLoader *g_pAssetLoader;
 extern AssetManager *g_pAssetManager;
 GameEngineEnd
 
-GameEngineParserBegin
+	GameEngineParserBegin
 
-class SceneParser : public IParser
+	class SceneParser : public IParser
 {
 
 public:
@@ -80,6 +79,12 @@ public:
 		delete json;
 		return scene;
 	}
+
+	static vecterFloat3 GetVF3(string name, cJSON* node){
+		vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(node, 0)->valuedouble, cJSON_GetArrayItem(node, 1)->valuedouble, cJSON_GetArrayItem(node, 2)->valuedouble));
+		return vec3;
+	}
+
 	static SharedObject compareGameObject(cJSON *root)
 	{
 		SharedGameObject gameobject = GameObject::createGameObject();
@@ -97,20 +102,17 @@ public:
 		auto paramsNode = cJSON_GetObjectItem(root, "scale");
 		if (paramsNode)
 		{
-			vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
-			gameobject->setScale(vec3);
+			gameobject->setScale(GetVF3("scale", paramsNode));
 		}
 		paramsNode = cJSON_GetObjectItem(root, "position");
 		if (paramsNode)
 		{
-			vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
-			gameobject->setPosition(vec3);
+			gameobject->setPosition(GetVF3("position", paramsNode));
 		}
 		paramsNode = cJSON_GetObjectItem(root, "rotation");
 		if (paramsNode)
 		{
-			vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble));
-			gameobject->setRotation(vec3);
+			gameobject->setRotation(GetVF3("rotation", paramsNode));
 		}
 		return gameobject;
 	}
@@ -153,6 +155,25 @@ public:
 		return meshRenderer;
 	}
 
+	static SharedObject compareLight(cJSON *root)
+	{
+		SharePtr<Light> light;
+
+		auto typeNode = cJSON_GetObjectItem(root, "Type");
+		if (typeNode)
+		{
+			if (typeNode->valueint == Light::LightType::DirectionalLight)
+				light = make_shared<DirectionalLight>();
+			else if (typeNode->valueint == Light::LightType::PointLight)
+				light = make_shared<PointLight>();
+			else if (typeNode->valueint == Light::LightType::AreaLight)
+				light = make_shared<AreaLight>();
+			else if (typeNode->valueint == Light::LightType::SpotLight)
+				light = make_shared<SpotLight>();
+		}
+		return light;
+	}
+
 	static bool strCompare(const char *str1, const char *str2)
 	{
 
@@ -172,6 +193,7 @@ public:
 				{"Transform", compareTransform},
 				{"MeshRenderer", compareMeshRenderer},
 				{"Image", compareImage},
+				{"Light", compareLight},
 				{"Camera", compareCamera}};
 		const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
 		int i = 0;
