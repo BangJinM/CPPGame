@@ -2,23 +2,31 @@
 
 #include <memory>
 
-#define GameEngineBegin namespace GameEngine {
+#define GameEngineBegin  \
+    namespace GameEngine \
+    {
 #define GameEngineEnd } // namespace GameEngine
 
-#define GameEngineFileBegin namespace GameEngineFile {
+#define GameEngineFileBegin  \
+    namespace GameEngineFile \
+    {
 #define GameEngineFileEnd } // namespace GameEngine
 
-#define GameEngineParserBegin namespace GameEngineParser {
+#define GameEngineParserBegin  \
+    namespace GameEngineParser \
+    {
 #define GameEngineParserEnd } // namespace GameEngine
 
-#define GameEngineLoggerBegin namespace GameEngineLogger {
+#define GameEngineLoggerBegin  \
+    namespace GameEngineLogger \
+    {
 #define GameEngineLoggerEnd } // namespace GameEngine
 
 #define UseGameEngine using namespace GameEngine;
 
 GameEngineBegin
 
-class Object;
+    class Object;
 class GameObject;
 class ShaderProgramBase;
 class Material;
@@ -27,7 +35,6 @@ class Texture;
 class Widget;
 class Renderer;
 class Scene;
-
 
 #define SharePtr std::shared_ptr
 #define SharedObject SharePtr<Object>
@@ -38,7 +45,8 @@ class Scene;
 #define SharedShaderProgramBase SharePtr<ShaderProgramBase>
 #define SharedScene SharePtr<Scene>
 
-enum MeshValueType {
+enum MeshValueType
+{
     /**Index 0 will be used as Position.*/
     VERTEX_ATTRIB_POSITION,
     /**Index 1 will be used as Color.*/
