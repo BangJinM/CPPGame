@@ -40,6 +40,5 @@ void SceneManager::Tick()
 		return;
 	}
 	curScene->Update();
-	curScene->RenderAll();
 }
 GameEngineEnd

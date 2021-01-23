@@ -8,7 +8,8 @@ using namespace std;
 
 GameEngineBegin
 
-    extern GameEngineFile::AssetLoader *g_pAssetLoader;
+    extern SceneManager *g_pSceneManager;
+extern GameEngineFile::AssetLoader *g_pAssetLoader;
 
 int BaseGraphicsManager::Initialize()
 {
@@ -17,7 +18,6 @@ int BaseGraphicsManager::Initialize()
 
 void BaseGraphicsManager::Finalize()
 {
-
 }
 
 void BaseGraphicsManager::Clear()
@@ -31,6 +31,9 @@ void BaseGraphicsManager::Draw()
 
 void BaseGraphicsManager::Tick()
 {
+    auto scene = g_pSceneManager->GetScene();
+    if (scene)
+        scene->RenderAll();
     Draw();
 }
 
