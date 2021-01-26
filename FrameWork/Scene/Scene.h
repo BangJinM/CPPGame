@@ -35,14 +35,12 @@ public:
 
   std::string m_Name;
 
-  void RenderAll();
   void AddCamera(SharePtr<Camera> camera);
   void RemoveCamera(SharePtr<Camera> camera);
 
   void AddLight(SharePtr<Light> light);
   void RemoveLight(SharePtr<Light> light);
 
-  void PrepareAll();
   void AddRenderer(SharePtr<Renderer> renderer);
   void RemoveRenderer();
 

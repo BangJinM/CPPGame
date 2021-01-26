@@ -124,11 +124,24 @@
         "fileID": 22,
         "m_Component":[21]
     },
+    "MeshRenderer":{
+        "m_Mesh":"Scene/mayaCube.OBJ",
+        "m_Materials":["Materials/wall.gemtl"],
+        "m_GameObject":22,
+        "fileID":26
+    },
+    "Transform":{
+        "m_GameObject":22,
+        "fileID":23,
+        "scale":[1, 1, 1],
+        "rotation":[50, 50, 50],
+        "position":[0, 0, 5]
+    },
     "Light":{
-        "type": 16,
+        "type": 2,
         "color":[255, 0, 0],
         "dir":[50, 50, 50],
         "m_GameObject":22,
-        "fileID":21
+        "fileID":24
     }
 }

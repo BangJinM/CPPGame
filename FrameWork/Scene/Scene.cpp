@@ -68,15 +68,6 @@ void Scene::Destory()
 	}
 }
 
-void Scene::RenderAll()
-{
-	for (auto i = m_Cameras.begin(); i != m_Cameras.end(); i++)
-	{
-		auto renderers = GetRenderer();
-		(*i)->Render(renderers);
-	}
-}
-
 void Scene::RemoveCamera(SharePtr<Camera> camera)
 {
 	for (auto i = m_Cameras.begin(); i != m_Cameras.end(); i++)
@@ -105,20 +96,15 @@ void Scene::RemoveLight(SharePtr<Light> light)
 	}
 }
 
-void Scene::PrepareAll()
-{
-	for (auto i = m_Renderers.begin(); i != m_Renderers.end(); i++)
-	{
-		(*i)->Prepare();
-	}
-}
 void Scene::AddRenderer(SharePtr<Renderer> reenderer)
 {
 	m_Renderers.push_back(reenderer);
 }
+
 void Scene::RemoveRenderer()
 {
 }
+
 SharePtr<CanvasRenderer> Scene::GetCanvasRenderer()
 {
 	return m_Canvas;

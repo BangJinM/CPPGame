@@ -27,8 +27,8 @@ Camera::Camera(glm::float32 near, glm::float32 far, glm::float32 fieldofView)
       Component(ClassID(Camera))
 {
   auto config = g_pApp->GetGfxConfiguration();
-  m_ScreenHeight = config.screenHeight;
-  m_ScreenWidth = config.screenWidth;
+  m_ScreenHeight = (float)config.screenHeight;
+  m_ScreenWidth = (float)config.screenWidth;
   m_ProjectionMatrix4_Perspective = glm::perspective(
       glm::radians(m_FieldofView), m_ScreenWidth / m_ScreenHeight, this->m_Near,
       this->m_Far);

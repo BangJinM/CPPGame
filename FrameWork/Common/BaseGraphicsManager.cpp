@@ -32,8 +32,11 @@ void BaseGraphicsManager::Draw()
 void BaseGraphicsManager::Tick()
 {
     auto scene = g_pSceneManager->GetScene();
-    if (scene)
-        scene->RenderAll();
+    
+    for (auto i = scene->m_Cameras.begin(); i != scene->m_Cameras.end(); i++)
+    {
+        (*i)->Render(scene->m_Renderers);
+    }
     Draw();
 }
 
