@@ -1,16 +1,17 @@
 ﻿#pragma once
 
 #include <list>
+#include <memory>
 
 #include "Config.h"
 #include "Renderer.h"
 #include "IRuntimeModule.h"
-
+#include "Render/IDrawPass.h"
 #include "Material.h"
 #include "Mesh.h"
 GameEngineBegin
 
-class Scene;
+	class Scene;
 
 struct RendererCammand
 {
@@ -18,7 +19,6 @@ struct RendererCammand
 	SharedMesh mesh;
 	int index;
 };
-
 
 class BaseGraphicsManager : public IRuntimeModule
 {
@@ -37,6 +37,7 @@ public:
 
 protected:
 	std::list<RendererCammand> m_RendererCommands;
+	std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
 };
 
 extern BaseGraphicsManager *g_pGraphicsManager;

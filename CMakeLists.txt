@@ -19,6 +19,7 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Math")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Logger")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Memory")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Scene")
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork")
 include_directories("${PROJECT_SOURCE_DIR}/Platform")
 
 if(GAMEENGINE_RHI_OPENGL)
