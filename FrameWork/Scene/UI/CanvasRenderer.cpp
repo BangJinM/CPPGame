@@ -11,8 +11,7 @@
 #include "AssetManager.h"
 #include "BaseGraphicsManager.h"
 
-GameEngineBegin
-extern SceneManager *g_pSceneManager;
+GameEngineBegin extern SceneManager *g_pSceneManager;
 extern BaseGraphicsManager *g_pGraphicsManager;
 
 CanvasRenderer::CanvasRenderer()
@@ -61,8 +60,8 @@ void CanvasRenderer::Render(SharePtr<Camera> camera)
 		SharedGameObject parent = widget->getParent();
 		auto modelMat = parent->getComponent<Transform>()->getMatrix();
 		SharedMesh mesh = AssetManager::GetUIMesh();
-		Material material = *AssetManager::LoadMaterial("Materials/defaultUI.gemtl");;
-		
+		Material material = *AssetManager::LoadMaterial("Materials/defaultUI.gemtl");
+
 		material.AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
 		material.AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
 		material.AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
