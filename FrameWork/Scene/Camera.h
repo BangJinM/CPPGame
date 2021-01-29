@@ -24,7 +24,6 @@ public:
          glm::float32 fieldofView = 45);
   glm::mat4 getProjectionMatrix();
 
-  void Render(std::list<SharePtr<Renderer>> renderers);
   virtual void Start();
 
   glm::mat4 getProjectionMatrixOrthographic();

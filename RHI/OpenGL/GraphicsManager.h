@@ -20,11 +20,9 @@ public:
     virtual void Tick();
     virtual void Clear();
 
-    virtual void Draw();
-
-	void BindTexture(SharedTexture texture);
-    void PrepareMesh(SharedMesh mesh, int index);
-    void PrepareMaterial(GameEngine::Material &material);
+    virtual void BindTexture(SharedTexture texture)override;
+    virtual void PrepareMesh(SharedMesh mesh, int index) override;
+    virtual void PrepareMaterial(Material &material) override;
 };
 
 GameEngineEnd

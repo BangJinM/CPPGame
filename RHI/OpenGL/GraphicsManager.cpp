@@ -58,21 +58,11 @@ void GraphicsManager::Tick()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	BaseGraphicsManager::Tick();
-	m_RendererCommands.clear();
 	glfwSwapBuffers(window);
 }
 
 void GraphicsManager::Clear()
 {
-}
-void GraphicsManager::Draw()
-{
-	for (auto renderer = m_RendererCommands.begin(); renderer != m_RendererCommands.end(); renderer++)
-	{
-		PrepareMaterial(renderer->material);
-		PrepareMesh(renderer->mesh, renderer->index);
-	}
-	BaseGraphicsManager::Draw();
 }
 
 void GraphicsManager::PrepareMaterial(Material &material)

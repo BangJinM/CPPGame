@@ -35,6 +35,10 @@ public:
 	void addRendererCommand(RendererCammand command);
 	std::list<RendererCammand> getRendererCommand();
 
+	virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
+	virtual void BindTexture(SharedTexture texture) = 0;
+	virtual void PrepareMaterial(Material &material) = 0;
+
 protected:
 	std::list<RendererCammand> m_RendererCommands;
 	std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
