@@ -49,35 +49,62 @@ enum MaterialType
     T_Mat4,
 };
 
-class NMaterialData
+class MaterialData
 {
 public:
     std::string m_Name;
-    MaterialType  m_Type;
-    char * m_Buffer;
-    int  m_Size;
-    template <typename Type>
-    NMaterialData(Type value, std::string name, int size, MaterialType type){
-		m_Name = name;
-		m_Buffer = new char[size + 1];
-        memcpy(m_Buffer, value, size);
-		m_Buffer[size] = '\0';
-		m_Size = size;
-		m_Type = type;
-    }
-    
-    NMaterialData(const NMaterialData &data) {
-		m_Name = data.m_Name;
-		m_Buffer = new char[data.m_Size + 1];
-        memcpy(m_Buffer, data.m_Buffer, data.m_Size);
-		m_Buffer[data.m_Size] = '\0';
-		m_Size = data.m_Size;
-		m_Type = data.m_Type;
+    MaterialType m_Type;
+    Buffer *m_Buffer = nullptr;
+    int m_Size;
+
+    MaterialData()
+    {
+        m_Name = "";
+        m_Size = 0;
+        m_Type = T_Unknown;
     }
 
-	~NMaterialData() {
-		delete m_Buffer;
-	}
+    template <typename Type>
+    MaterialData(Type value, std::string name, int size, MaterialType type)
+    {
+        AddData(value, name, size, type);
+    }
+
+    ~MaterialData()
+    {
+        delete m_Buffer;
+    }
+    template <typename Type>
+    void AddData(Type value, std::string name, int size, MaterialType type)
+    {
+        if (m_Buffer != nullptr)
+        {
+            delete m_Buffer;
+            m_Buffer = nullptr;
+        }
+        m_Name = name;
+        m_Buffer = new Buffer(size + 1);
+        memcpy(m_Buffer->m_pData, value, size);
+        m_Buffer->GetData()[size] = '\0';
+        auto property = reinterpret_cast<char *>(m_Buffer->GetData());
+        m_Size = size;
+        m_Type = type;
+    }
+
+    MaterialData(const MaterialData &other)
+    {
+        AddData(other.m_Buffer->GetData(), other.m_Name, other.m_Size, other.m_Type);
+    }
+
+    MaterialData &operator=(const MaterialData &other)
+    {
+        if (this != &other)
+        {
+
+            AddData(other.m_Buffer, other.m_Name, other.m_Size, other.m_Type);
+        }
+        return *this;
+    }
 };
 
 class Material : public Object
@@ -88,15 +115,24 @@ public:
         return std::make_shared<Material>();
     }
 
-	Material():Object(){}
+    Material() : Object() {}
 
-    Material(const Material &other):Object(other) {
-        for (size_t i = 0; i < other.m_MaterialDatas.size(); i++)
-        {
-            AddProperty(other.m_MaterialDatas[i].m_Buffer, other.m_MaterialDatas[i].m_Name, other.m_MaterialDatas[i].m_Size, other.m_MaterialDatas[i].m_Type);
-        }
-		shaderID = other.shaderID;
+    Material(const Material &other) : Object()
+    {
+        m_MaterialDatas = other.m_MaterialDatas;
+        shaderID = other.shaderID;
     }
+
+    MaterialData &operator=(const MaterialData &other)
+    {
+        if (this != &other)
+        {
+            m_MaterialDatas = other.m_MaterialDatas;
+            shaderID = other.shaderID;
+        }
+        return *this;
+    }
+
 public:
     ~Material()
     {
@@ -111,15 +147,15 @@ public:
     template <typename Type>
     void AddProperty(Type value, std::string name, int size, MaterialType type);
 
-    std::vector<NMaterialData> m_MaterialDatas;
-	
-	int shaderID;
+    std::vector<MaterialData> m_MaterialDatas;
+
+    int shaderID;
 };
 
 template <typename Type>
 inline void Material::AddProperty(Type value, std::string name, int size, MaterialType type)
 {
-    NMaterialData data(value, name, size, type);
+    MaterialData data(value, name, size, type);
     m_MaterialDatas.push_back(data);
 }
 GameEngineEnd

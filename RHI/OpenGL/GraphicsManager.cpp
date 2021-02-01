@@ -72,27 +72,24 @@ void GraphicsManager::PrepareMaterial(Material &material)
 	shader->Use();
 	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
 	{
-		auto data = material.m_MaterialDatas[i];
-
-		switch (data.m_Type)
+		switch (material.m_MaterialDatas[i].m_Type)
 		{
 		case MaterialType::T_Mat4:
 		{
-			auto property = (float *)data.m_Buffer;
-			shader->setMat4(data.m_Name, &property[0]);
+			auto property = reinterpret_cast<float *>(material.m_MaterialDatas[i].m_Buffer->GetData());
+			shader->setMat4(material.m_MaterialDatas[i].m_Name, &property[0]);
 			break;
 		}
 		case MaterialType::T_Texture:
 		{
-			auto property = (char *)data.m_Buffer;
-			int location;
-			location = glGetUniformLocation(shader->m_ProgramID, data.m_Name.c_str());
+			string property = reinterpret_cast<char *>(material.m_MaterialDatas[i].m_Buffer->GetData());
+			int location = glGetUniformLocation(shader->m_ProgramID, material.m_MaterialDatas[i].m_Name.c_str());
 			if (location != -1)
 			{
 				SharedTexture image = g_pAssetManager->LoadTexture(property);
 				if (!image)
 					image = g_pAssetManager->getWhiteTexture();
-				shader->setInt(data.m_Name, textureID);
+				shader->setInt(material.m_MaterialDatas[i].m_Name, textureID);
 				if (image->id <= 0)
 				{
 					BindTexture(image);
