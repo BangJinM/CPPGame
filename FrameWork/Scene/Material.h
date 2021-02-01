@@ -123,7 +123,7 @@ public:
         shaderID = other.shaderID;
     }
 
-    MaterialData &operator=(const MaterialData &other)
+	Material &operator=(const Material &other)
     {
         if (this != &other)
         {
