@@ -36,4 +36,4 @@ namespace GameEngine
 
         int m_ShaderID;
     };
-} // namespace GameEngine
+}  // namespace GameEngine

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ISubPass.h"
-
 #include "ShaderManager.h"
 
 namespace GameEngine
@@ -23,4 +22,4 @@ namespace GameEngine
 
         int m_ShaderID;
     };
-} // namespace GameEngine
+}  // namespace GameEngine

@@ -10,4 +10,4 @@ namespace GameEngine
         virtual void Draw() = 0;
         virtual void EndPass() = 0;
     };
-} // namespace GameEngine
+}  // namespace GameEngine

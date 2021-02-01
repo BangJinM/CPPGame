@@ -1,17 +1,18 @@
 ﻿#pragma once
 
-#include "Object.h"
-#include "Buffer.h"
 #include <string>
+
+#include "Buffer.h"
+#include "Object.h"
 
 using namespace std;
 
-UseGameEngine
-GameEngineParserBegin 
-
-class IParser
+using namespace GameEngine;
+namespace GameEngine
 {
-public:
-	virtual SharedObject Parser(const std::string path) { return nullptr; }
-};
-GameEngineParserEnd
+    class IParser
+    {
+    public:
+        virtual SharedObject Parser(const std::string path) { return nullptr; }
+    };
+}  // namespace GameEngine

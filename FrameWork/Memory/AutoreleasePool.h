@@ -25,8 +25,9 @@ THE SOFTWARE.
 ****************************************************************************/
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
+
 #include "Ref.h"
 #include "easylogging++.h"
 /**
@@ -35,7 +36,6 @@ THE SOFTWARE.
  */
 namespace GameEngine
 {
-
     /**
  * A pool for managing autorelease objects.
  * @js NA
@@ -181,4 +181,4 @@ namespace GameEngine
  * @endcond
  */
 
-} // namespace GameEngine
+}  // namespace GameEngine

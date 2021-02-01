@@ -6,18 +6,18 @@
 #include "MyMath.h"
 #include "Object.h"
 
-GameEngineBegin 
-
-class Texture : public Object
+namespace GameEngine
 {
-public:
-    int id;
-    std::string Path;
-    uint32_t Width;
-    uint32_t Height;
-    unsigned char *data;
-    size_t data_size;
-	int formate;
-};
+    class Texture : public Object
+    {
+    public:
+        int id;
+        std::string Path;
+        uint32_t Width;
+        uint32_t Height;
+        unsigned char *data;
+        size_t data_size;
+        int formate;
+    };
 
-GameEngineEnd
+}  // namespace GameEngine

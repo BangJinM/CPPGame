@@ -3,13 +3,15 @@
 #include "Config.h"
 #include "IRuntimeModule.h"
 
-GameEngineBegin class GameLogic : public IRuntimeModule
+namespace GameEngine
 {
-private:
-    /* data */
-public:
-};
+    class GameLogic : public IRuntimeModule
+    {
+    private:
+        /* data */
+    public:
+    };
 
-extern GameLogic *g_pGameLogic;
+    extern GameLogic *g_pGameLogic;
 
-GameEngineEnd
+}  // namespace GameEngine

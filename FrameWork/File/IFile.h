@@ -1,35 +1,35 @@
 ﻿#pragma once
 
-#include "Config.h"
 #include "Buffer.h"
+#include "Config.h"
 
-UseGameEngine
+using namespace GameEngine;
 
 #include <string>
-    using namespace std;
+using namespace std;
 
-GameEngineFileBegin
-
-    typedef void *FilePtr;
-typedef int FileOpenMode;
-
-class IFile
+namespace GameEngine
 {
-public:
-    virtual FilePtr OpenFile(const string fullPath, FileOpenMode mode) = 0;
+    typedef void *FilePtr;
+    typedef int FileOpenMode;
 
-    virtual void CloseFile(FilePtr &fp) = 0;
+    class IFile
+    {
+    public:
+        virtual FilePtr OpenFile(const string fullPath, FileOpenMode mode) = 0;
 
-    virtual size_t SyncRead(const FilePtr &fp, Buffer &buf) = 0;
+        virtual void CloseFile(FilePtr &fp) = 0;
 
-    virtual void WriteFile(const string &file, const string fullPath) = 0;
+        virtual size_t SyncRead(const FilePtr &fp, Buffer &buf) = 0;
 
-    virtual size_t GetFileSize(const FilePtr &fp) = 0;
+        virtual void WriteFile(const string &file, const string fullPath) = 0;
 
-    virtual bool FileExists(const string fullPath) = 0;
+        virtual size_t GetFileSize(const FilePtr &fp) = 0;
 
-    virtual Buffer SyncOpenAndReadText(const string filePath) =0;
+        virtual bool FileExists(const string fullPath) = 0;
 
-    virtual Buffer SyncOpenAndReadBinary(const string filePath) =0;
-};
-GameEngineFileEnd
+        virtual Buffer SyncOpenAndReadText(const string filePath) = 0;
+
+        virtual Buffer SyncOpenAndReadBinary(const string filePath) = 0;
+    };
+}  // namespace GameEngine

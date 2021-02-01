@@ -1,13 +1,13 @@
 #include "Button.h"
 
-GameEngineBegin
-
-Button::Button()
+namespace GameEngine
 {
-}
+    Button::Button()
+    {
+    }
 
-Button::~Button()
-{
-}
+    Button::~Button()
+    {
+    }
 
-GameEngineEnd
+}  // namespace GameEngine

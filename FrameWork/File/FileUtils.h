@@ -1,14 +1,17 @@
 ﻿#pragma once
 
-#include "../Common/Config.h"
 #include <string>
+
+#include "../Common/Config.h"
 using namespace std;
 
-GameEngineFileBegin class FileUtils
+namespace GameEngine
 {
-public:
-    static std::string GetFileExtension(const std::string &filePath);
+    class FileUtils
+    {
+    public:
+        static std::string GetFileExtension(const std::string &filePath);
 
-    static std::string GetFileName(const std::string &filePath);
-};
-GameEngineFileEnd
+        static std::string GetFileName(const std::string &filePath);
+    };
+}  // namespace GameEngine

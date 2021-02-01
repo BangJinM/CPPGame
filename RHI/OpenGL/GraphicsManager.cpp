@@ -1,170 +1,172 @@
-﻿#include <iostream>
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "GraphicsManager.h"
-#include "glad/glad.h"
-#include "Scene.h"
-#include <GLFW/glfw3.h>
-#include "SceneManager.h"
-#include "AssetManager.h"
-#include "ParserManager.h"
-#include "ShaderManager.h"
-#include <algorithm>
+﻿#include "GraphicsManager.h"
 
-#include "Shader.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+#include "AssetManager.h"
 #include "Material.h"
 #include "Mesh.h"
-
+#include "ParserManager.h"
+#include "Scene.h"
+#include "SceneManager.h"
+#include "Shader.h"
+#include "ShaderManager.h"
 #include "imgui.h"
-
-#include <string>
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 using namespace std;
 
-GameEngineBegin extern AssetManager *g_pAssetManager;
-extern GameEngineParser::ParserManager *g_pParserManager;
-extern ShaderManager *g_pShaderManager;
-
-int GraphicsManager::Initialize()
+namespace GameEngine
 {
-	int result;
-	result = gladLoadGL();
-	if (!result)
-	{
-		cerr << "OpenGL load failed!" << endl;
-		result = -1;
-	}
-	else
-	{
-		result = 0;
-		cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
+    extern AssetManager *g_pAssetManager;
+    extern ParserManager *g_pParserManager;
+    extern ShaderManager *g_pShaderManager;
 
-		glClearDepth(1.0f);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		result = 0;
-	}
-	result = BaseGraphicsManager::Initialize();
-	return result;
-}
+    int GraphicsManager::Initialize()
+    {
+        int result;
+        result = gladLoadGL();
+        if (!result)
+        {
+            cerr << "OpenGL load failed!" << endl;
+            result = -1;
+        }
+        else
+        {
+            result = 0;
+            cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
 
-void GraphicsManager::Finalize()
-{
-}
+            glClearDepth(1.0f);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
+            result = 0;
+        }
+        result = BaseGraphicsManager::Initialize();
+        return result;
+    }
 
-void GraphicsManager::Tick()
-{
-	auto window = glfwGetCurrentContext();
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	BaseGraphicsManager::Tick();
-	glfwSwapBuffers(window);
-}
+    void GraphicsManager::Finalize()
+    {
+    }
 
-void GraphicsManager::Clear()
-{
-}
+    void GraphicsManager::Tick()
+    {
+        auto window = glfwGetCurrentContext();
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        BaseGraphicsManager::Tick();
+        glfwSwapBuffers(window);
+    }
 
-void GraphicsManager::PrepareMaterial(Material &material)
-{
-	int textureID = 0;
-	auto shader = g_pShaderManager->GetShaderProgram(material.shaderID);
-	shader->Use();
-	for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
-	{
-		switch (material.m_MaterialDatas[i].m_Type)
-		{
-		case MaterialType::T_Mat4:
-		{
-			auto property = reinterpret_cast<float *>(material.m_MaterialDatas[i].m_Buffer->GetData());
-			shader->setMat4(material.m_MaterialDatas[i].m_Name, &property[0]);
-			break;
-		}
-		case MaterialType::T_Texture:
-		{
-			string property = reinterpret_cast<char *>(material.m_MaterialDatas[i].m_Buffer->GetData());
-			int location = glGetUniformLocation(shader->m_ProgramID, material.m_MaterialDatas[i].m_Name.c_str());
-			if (location != -1)
-			{
-				SharedTexture image = g_pAssetManager->LoadTexture(property);
-				if (!image)
-					image = g_pAssetManager->getWhiteTexture();
-				shader->setInt(material.m_MaterialDatas[i].m_Name, textureID);
-				if (image->id <= 0)
-				{
-					BindTexture(image);
-				}
-				glActiveTexture(GL_TEXTURE0 + textureID);
-				glBindTexture(GL_TEXTURE_2D, image->id);
-				textureID++;
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-}
+    void GraphicsManager::Clear()
+    {
+    }
 
-void GraphicsManager::BindTexture(SharedTexture texture)
-{
-	GLenum format;
-	if (texture->formate == 1)
-		format = GL_RED;
-	else if (texture->formate == 3)
-		format = GL_RGB;
-	else if (texture->formate == 4)
-		format = GL_RGBA;
+    void GraphicsManager::PrepareMaterial(Material &material)
+    {
+        int textureID = 0;
+        auto shader = g_pShaderManager->GetShaderProgram(material.shaderID);
+        shader->Use();
+        for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
+        {
+            switch (material.m_MaterialDatas[i].m_Type)
+            {
+            case MaterialType::T_Mat4:
+            {
+                auto property = reinterpret_cast<float *>(material.m_MaterialDatas[i].m_Buffer->GetData());
+                shader->setMat4(material.m_MaterialDatas[i].m_Name, &property[0]);
+                break;
+            }
+            case MaterialType::T_Texture:
+            {
+                string property = reinterpret_cast<char *>(material.m_MaterialDatas[i].m_Buffer->GetData());
+                int location = glGetUniformLocation(shader->m_ProgramID, material.m_MaterialDatas[i].m_Name.c_str());
+                if (location != -1)
+                {
+                    SharedTexture image = g_pAssetManager->LoadTexture(property);
+                    if (!image)
+                        image = g_pAssetManager->getWhiteTexture();
+                    shader->setInt(material.m_MaterialDatas[i].m_Name, textureID);
+                    if (image->id <= 0)
+                    {
+                        BindTexture(image);
+                    }
+                    glActiveTexture(GL_TEXTURE0 + textureID);
+                    glBindTexture(GL_TEXTURE_2D, image->id);
+                    textureID++;
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+    }
 
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, format, texture->Width, texture->Height, 0, format, GL_UNSIGNED_BYTE, texture->data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	texture->id = textureID;
-}
+    void GraphicsManager::BindTexture(SharedTexture texture)
+    {
+        GLenum format;
+        if (texture->formate == 1)
+            format = GL_RED;
+        else if (texture->formate == 3)
+            format = GL_RGB;
+        else if (texture->formate == 4)
+            format = GL_RGBA;
 
-void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
-{
-	if (mesh->isPrepare)
-	{
-		glBindVertexArray(mesh->m_MeshDatas[index].VAO);
-		glDrawElements(GL_TRIANGLES, mesh->m_MeshDatas[index].indices.size(), GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-		return;
-	}
-	for (size_t iMesh = 0; iMesh < mesh->m_MeshDatas.size(); iMesh++)
-	{
-		glGenVertexArrays(1, &mesh->m_MeshDatas[iMesh].VAO);
-		glGenBuffers(1, &mesh->m_MeshDatas[iMesh].VBO);
-		glGenBuffers(1, &mesh->m_MeshDatas[iMesh].EBO);
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, texture->Width, texture->Height, 0, format, GL_UNSIGNED_BYTE, texture->data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        texture->id = textureID;
+    }
 
-		glBindVertexArray(mesh->m_MeshDatas[iMesh].VAO);
-		// load data into vertex buffers
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].VBO);
-		// A great thing about structs is that their memory layout is sequential for all its items.
-		// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-		// again translates to 3/2 floats which translates to a byte array.
-		glBufferData(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].vertex.size() * sizeof(float), &mesh->m_MeshDatas[iMesh].vertex[0], GL_STATIC_DRAW);
+    void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
+    {
+        if (mesh->isPrepare)
+        {
+            glBindVertexArray(mesh->m_MeshDatas[index].VAO);
+            glDrawElements(GL_TRIANGLES, mesh->m_MeshDatas[index].indices.size(), GL_UNSIGNED_INT, 0);
+            glBindVertexArray(0);
+            return;
+        }
+        for (size_t iMesh = 0; iMesh < mesh->m_MeshDatas.size(); iMesh++)
+        {
+            glGenVertexArrays(1, &mesh->m_MeshDatas[iMesh].VAO);
+            glGenBuffers(1, &mesh->m_MeshDatas[iMesh].VBO);
+            glGenBuffers(1, &mesh->m_MeshDatas[iMesh].EBO);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].indices.size() * sizeof(unsigned int), &mesh->m_MeshDatas[iMesh].indices[0], GL_STATIC_DRAW);
-		int offest = 0;
-		for (size_t i = 0; i < mesh->m_MeshDatas[iMesh].attribs.size(); i++)
-		{
-			auto data = mesh->m_MeshDatas[iMesh].attribs[i];
-			glEnableVertexAttribArray(data.vertexAttrib);
-			glVertexAttribPointer(data.vertexAttrib, data.size, GL_FLOAT, GL_FALSE, mesh->m_MeshDatas[iMesh].vertexSizeInFloat * sizeof(float), (void *)offest);
-			offest += data.attribSizeBytes;
-		}
-		glBindVertexArray(0);
-	}
-	mesh->isPrepare = true;
-	PrepareMesh(mesh, index);
-}
+            glBindVertexArray(mesh->m_MeshDatas[iMesh].VAO);
+            // load data into vertex buffers
+            glBindBuffer(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].VBO);
+            // A great thing about structs is that their memory layout is sequential for all its items.
+            // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
+            // again translates to 3/2 floats which translates to a byte array.
+            glBufferData(GL_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].vertex.size() * sizeof(float), &mesh->m_MeshDatas[iMesh].vertex[0], GL_STATIC_DRAW);
 
-GameEngineEnd
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->m_MeshDatas[iMesh].indices.size() * sizeof(unsigned int), &mesh->m_MeshDatas[iMesh].indices[0], GL_STATIC_DRAW);
+            int offest = 0;
+            for (size_t i = 0; i < mesh->m_MeshDatas[iMesh].attribs.size(); i++)
+            {
+                auto data = mesh->m_MeshDatas[iMesh].attribs[i];
+                glEnableVertexAttribArray(data.vertexAttrib);
+                glVertexAttribPointer(data.vertexAttrib, data.size, GL_FLOAT, GL_FALSE, mesh->m_MeshDatas[iMesh].vertexSizeInFloat * sizeof(float), (void *)offest);
+                offest += data.attribSizeBytes;
+            }
+            glBindVertexArray(0);
+        }
+        mesh->isPrepare = true;
+        PrepareMesh(mesh, index);
+    }
+
+}  // namespace GameEngine

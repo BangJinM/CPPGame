@@ -1,21 +1,21 @@
 #pragma once
 
-#include "Mesh.h"
 #include "Config.h"
+#include "Mesh.h"
 #include "Renderer.h"
 
-GameEngineBegin 
-
-class Camera;
-class MeshRenderer : public Renderer
+namespace GameEngine
 {
-public:
-    MeshRenderer();
-    SharedMesh getMesh() { return m_Mesh; }
-    void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
-    virtual void Render(SharePtr<Camera> camera);
+    class Camera;
+    class MeshRenderer : public Renderer
+    {
+    public:
+        MeshRenderer();
+        SharedMesh getMesh() { return m_Mesh; }
+        void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
+        virtual void Render(SharePtr<Camera> camera);
 
-protected:
-    SharedMesh m_Mesh;
-};
-GameEngineEnd
+    protected:
+        SharedMesh m_Mesh;
+    };
+}  // namespace GameEngine

@@ -3,92 +3,91 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include <memory>
 
-#include "SceneManager.h"
-#include "Scene.h"
-#include "GameObject.h"
-#include "Config.h"
-#include "MyMath.h"
 #include "Component.h"
+#include "Config.h"
+#include "GameObject.h"
+#include "MyMath.h"
+#include "Scene.h"
+#include "SceneManager.h"
 #include "Transform.h"
 
-GameEngineBegin
-
-extern SceneManager *g_pSceneManager;
-
-class Light : public Component
+namespace GameEngine
 {
-public:
-    enum LightType
+    extern SceneManager *g_pSceneManager;
+
+    class Light : public Component
     {
-        PointLight = 1 << 1,
-        AreaLight = 1 << 2,
-        SpotLight = 1 << 3,
-        DirectionalLight = 1 << 4
+    public:
+        enum LightType
+        {
+            PointLight = 1 << 1,
+            AreaLight = 1 << 2,
+            SpotLight = 1 << 3,
+            DirectionalLight = 1 << 4
+        };
+
+    public:
+        virtual void Start() override
+        {
+            Component::Start();
+            auto light = getParent()->getComponent<Light>();
+            if (!light)
+                return;
+            auto scene = g_pSceneManager->GetScene();
+            scene->AddLight(std::dynamic_pointer_cast<Light>(light));
+        }
+
+        virtual void Update() override
+        {
+            Component::Update();
+        }
+        virtual void Destory() override
+        {
+            Component::Destory();
+        }
+
+        Light(LightType lightType) : m_LightType(lightType), Component(ClassID(Light))
+        {
+            m_Color = ColorRGBA(1, 1, 1, 1);
+        }
+
+        Light() : m_LightType(LightType::DirectionalLight), Component(ClassID(Light))
+        {
+            m_Color = ColorRGBA(1, 1, 1, 1);
+        }
+
+    private:
+        ColorRGBA m_Color;
+        LightType m_LightType;
     };
 
-public:
-    virtual void Start() override
+    class PointLight : public Light
     {
-        Component::Start();
-        auto light = getParent()->getComponent<Light>();
-        if (!light)
-            return;
-        auto scene = g_pSceneManager->GetScene();
-        scene->AddLight(std::dynamic_pointer_cast<Light>(light));
-    }
+    public:
+        PointLight() : Light(LightType::PointLight) {}
+    };
 
-    virtual void Update() override
+    class AreaLight : public Light
     {
-        Component::Update();
-    }
-    virtual void Destory() override
+    public:
+        AreaLight() : Light(LightType::AreaLight) {}
+    };
+
+    class SpotLight : public Light
     {
-        Component::Destory();
-    }
+    public:
+        SpotLight() : Light(LightType::SpotLight) {}
+    };
 
-    Light(LightType lightType) : m_LightType(lightType), Component(ClassID(Light))
+    class DirectionalLight : public Light
     {
-        m_Color = ColorRGBA(1, 1, 1, 1);
-    }
+    public:
+        DirectionalLight() : Light(LightType::DirectionalLight) {}
 
-    Light() : m_LightType(LightType::DirectionalLight), Component(ClassID(Light))
-    {
-        m_Color = ColorRGBA(1, 1, 1, 1);
-    }
+    private:
+        vecterFloat3 direction;
+    };
 
-private:
-    ColorRGBA m_Color;
-    LightType m_LightType;
-};
-
-class PointLight : public Light
-{
-public:
-    PointLight() : Light(LightType::PointLight) {}
-};
-
-class AreaLight : public Light
-{
-public:
-    AreaLight() : Light(LightType::AreaLight) {}
-};
-
-class SpotLight : public Light
-{
-public:
-    SpotLight() : Light(LightType::SpotLight) {}
-};
-
-class DirectionalLight : public Light
-{
-public:
-    DirectionalLight() : Light(LightType::DirectionalLight) {}
-
-private:
-    vecterFloat3 direction;
-};
-
-GameEngineEnd
+}  // namespace GameEngine

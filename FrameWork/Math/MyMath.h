@@ -9,5 +9,5 @@ namespace GameEngine
     typedef glm::vec4 vecterFloat4;
     typedef glm::vec2 vecterFloat2;
     typedef glm::mat4 GlmMat4;
-} // namespace GameEngine
+}  // namespace GameEngine
 #endif

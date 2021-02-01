@@ -1,14 +1,17 @@
 #pragma once
-#include "IRuntimeModule.h"
 #include <memory>
+
 #include "Config.h"
-GameEngineBegin class IShaderManager : public IRuntimeModule
+#include "IRuntimeModule.h"
+namespace GameEngine
 {
-public:
-    virtual ~IShaderManager() = default;
+    class IShaderManager : public IRuntimeModule
+    {
+    public:
+        virtual ~IShaderManager() = default;
 
-    virtual bool InitializeShaders() = 0;
-    virtual void ClearShaders() = 0;
-};
+        virtual bool InitializeShaders() = 0;
+        virtual void ClearShaders() = 0;
+    };
 
-GameEngineEnd
+}  // namespace GameEngine

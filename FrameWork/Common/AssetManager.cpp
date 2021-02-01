@@ -1,225 +1,226 @@
 ﻿#include "AssetManager.h"
+
 #include <algorithm>
+#include <mutex>
+
 #include "AssetLoader.h"
 #include "Material.h"
 #include "MaterialParser.h"
 #include "ParserManager.h"
-#include <mutex>
-
 #include "UI/Font.h"
 
-GameEngineBegin
-
-	extern GameEngineFile::AssetLoader *g_pAssetLoader;
-extern GameEngineParser::ParserManager *g_pParserManager;
-extern AssetManager *g_pAssetManager;
-
-static std::map<std::string, SharedObject> g_cache;
-static FT_Library ft;
-
-int AssetManager::Initialize()
+namespace GameEngine
 {
-	// if (FT_Init_FreeType(&ft))
-	// {
-	// 	std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-	// return 1;
-	// }
-	return 0;
-}
+    extern AssetLoader *g_pAssetLoader;
+    extern ParserManager *g_pParserManager;
+    extern AssetManager *g_pAssetManager;
 
-void AssetManager::Finalize()
-{
-	// FT_Done_FreeType(ft);
-	g_cache.clear();
-}
+    static std::map<std::string, SharedObject> g_cache;
+    static FT_Library ft;
 
-void AssetManager::Tick()
-{
-}
+    int AssetManager::Initialize()
+    {
+        // if (FT_Init_FreeType(&ft))
+        // {
+        // 	std::cout << "ERROR::FREETYPE: Could not init FreeType Library" <<
+        // std::endl; return 1;
+        // }
+        return 0;
+    }
 
-SharedGameObject AssetManager::LoadGameObject(const std::string &path)
-{
-	SharedGameObject obj;
-	// if (g_pAssetLoader->FileExists(path.c_str()))
-	// {
+    void AssetManager::Finalize()
+    {
+        // FT_Done_FreeType(ft);
+        g_cache.clear();
+    }
 
-	// 	obj = ReadGameObject(ms, SharedGameObject());
-	// }
-	return obj;
-}
+    void AssetManager::Tick() {}
 
-SharedMaterial AssetManager::LoadMaterial(const std::string &path)
-{
-	if (g_cache.find(path) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<Material>(g_cache[path]);
-	}
-	SharedMaterial obj = std::dynamic_pointer_cast<Material>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::MTL, path));
-	if (obj)
-		g_cache[path] = obj;
-	return obj;
-}
+    SharedGameObject AssetManager::LoadGameObject(const std::string &path)
+    {
+        SharedGameObject obj;
+        // if (g_pAssetLoader->FileExists(path.c_str()))
+        // {
 
-SharedMesh AssetManager::LoadMesh(const std::string &path)
-{
-	if (g_cache.find(path) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
-	}
+        // 	obj = ReadGameObject(ms, SharedGameObject());
+        // }
+        return obj;
+    }
 
-	SharedMesh mesh = std::dynamic_pointer_cast<Mesh>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::OBJ, path));
-	if (mesh)
-		g_cache[path] = mesh;
-	return mesh;
-}
+    SharedMaterial AssetManager::LoadMaterial(const std::string &path)
+    {
+        if (g_cache.find(path) != g_cache.end())
+        {
+            return std::dynamic_pointer_cast<Material>(g_cache[path]);
+        }
+        SharedMaterial obj =
+            std::dynamic_pointer_cast<Material>(g_pParserManager->ExecuteParser(
+                ParserExtType::MTL, path));
+        if (obj)
+            g_cache[path] = obj;
+        return obj;
+    }
 
-SharedMesh AssetManager::GetUIMesh()
-{
-	if (g_cache.find(UIMESHDATA) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<Mesh>(g_cache[UIMESHDATA]);
-	}
+    SharedMesh AssetManager::LoadMesh(const std::string &path)
+    {
+        if (g_cache.find(path) != g_cache.end())
+        {
+            return std::dynamic_pointer_cast<Mesh>(g_cache[path]);
+        }
 
-	SharedMesh mesh = make_shared<Mesh>();
-	vecterFloat3 position[4];
-	vecterFloat2 textcoord[4];
-	position[0] = vecterFloat3(0.5f, 0.5f, 0.0f);
-	position[1] = vecterFloat3(0.5f, -0.5f, 0.0f);
-	position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
-	position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
+        SharedMesh mesh =
+            std::dynamic_pointer_cast<Mesh>(g_pParserManager->ExecuteParser(
+                ParserExtType::OBJ, path));
+        if (mesh)
+            g_cache[path] = mesh;
+        return mesh;
+    }
 
-	textcoord[0] = vecterFloat2(1.0f, 1.0f);
-	textcoord[1] = vecterFloat2(1.0f, 0.0f);
-	textcoord[2] = vecterFloat2(0.0f, 0.0f);
-	textcoord[3] = vecterFloat2(0.0f, 1.0f);
+    SharedMesh AssetManager::GetUIMesh()
+    {
+        if (g_cache.find(UIMESHDATA) != g_cache.end())
+        {
+            return std::dynamic_pointer_cast<Mesh>(g_cache[UIMESHDATA]);
+        }
 
-	MeshData meshData;
-	meshData.indices = {
-		0, 1, 2, // first triangle
-		0, 2, 3	 // second triangle
-	};
+        SharedMesh mesh = make_shared<Mesh>();
+        vecterFloat3 position[4];
+        vecterFloat2 textcoord[4];
+        position[0] = vecterFloat3(0.5f, 0.5f, 0.0f);
+        position[1] = vecterFloat3(0.5f, -0.5f, 0.0f);
+        position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
+        position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
 
-	MeshVertexAttrib attrib;
-	attrib.size = 3;
-	attrib.type = 0x1406;
+        textcoord[0] = vecterFloat2(1.0f, 1.0f);
+        textcoord[1] = vecterFloat2(1.0f, 0.0f);
+        textcoord[2] = vecterFloat2(0.0f, 0.0f);
+        textcoord[3] = vecterFloat2(0.0f, 1.0f);
 
-	attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_POSITION;
-	attrib.attribSizeBytes = attrib.size * sizeof(float);
-	meshData.attribs.push_back(attrib);
-	meshData.vertexSizeInFloat += 3;
+        MeshData meshData;
+        meshData.indices = {
+            0, 1, 2,  // first triangle
+            0, 2, 3   // second triangle
+        };
 
-	// attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_COLOR;
-	// attrib.attribSizeBytes = attrib.size * sizeof(float);
-	// meshData.attribs.push_back(attrib);
-	// meshData.vertexSizeInFloat += 3;
+        MeshVertexAttrib attrib;
+        attrib.size = 3;
+        attrib.type = 0x1406;
 
-	attrib.size = 2;
-	attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_TEX_COORD;
-	attrib.attribSizeBytes = attrib.size * sizeof(float);
-	meshData.attribs.push_back(attrib);
-	meshData.vertexSizeInFloat += 2;
+        attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_POSITION;
+        attrib.attribSizeBytes = attrib.size * sizeof(float);
+        meshData.attribs.push_back(attrib);
+        meshData.vertexSizeInFloat += 3;
 
-	std::vector<float> vertices;
-	for (size_t i = 0; i < 4; i++)
-	{
-		meshData.vertex.push_back(position[i][0]);
-		meshData.vertex.push_back(position[i][1]);
-		meshData.vertex.push_back(position[i][2]);
+        // attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_COLOR;
+        // attrib.attribSizeBytes = attrib.size * sizeof(float);
+        // meshData.attribs.push_back(attrib);
+        // meshData.vertexSizeInFloat += 3;
 
-		// meshData.vertex.push_back(color[i][0]);
-		// meshData.vertex.push_back(color[i][1]);
-		// meshData.vertex.push_back(color[i][2]);
+        attrib.size = 2;
+        attrib.vertexAttrib = MeshValueType::VERTEX_ATTRIB_TEX_COORD;
+        attrib.attribSizeBytes = attrib.size * sizeof(float);
+        meshData.attribs.push_back(attrib);
+        meshData.vertexSizeInFloat += 2;
 
-		meshData.vertex.push_back(textcoord[i][0]);
-		meshData.vertex.push_back(textcoord[i][1]);
-	}
-	mesh->pushMeshData(meshData);
-	g_cache[UIMESHDATA] = mesh;
-	return mesh;
-}
+        std::vector<float> vertices;
+        for (size_t i = 0; i < 4; i++)
+        {
+            meshData.vertex.push_back(position[i][0]);
+            meshData.vertex.push_back(position[i][1]);
+            meshData.vertex.push_back(position[i][2]);
 
-SharedTexture AssetManager::LoadTexture(const std::string &path)
-{
-	SharedTexture image;
-	if (g_cache.find(path) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<Texture>(g_cache[path]);
-	}
+            // meshData.vertex.push_back(color[i][0]);
+            // meshData.vertex.push_back(color[i][1]);
+            // meshData.vertex.push_back(color[i][2]);
 
-	image = std::dynamic_pointer_cast<Texture>(g_pParserManager->ExecuteParser(GameEngineParser::ParserExtType::IMAGE, path));
-	image->Path = path;
-	if (image)
-		g_cache[path] = image;
-	return image;
-}
-// SharePtr<Font> AssetManager::GetFont(const std::string &path)
-// {
-// 	SharePtr<Font> font;
-// 	if (g_cache.find(path) != g_cache.end())
-// 	{
-// 		return std::dynamic_pointer_cast<Font>(g_cache[path]);
-// 	}
-// 	Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
-// 	if (buffer.m_szSize > 0)
-// 	{
-// 		FT_Face face;
-// 		if (FT_New_Memory_Face(ft, buffer.m_pData, buffer.m_szSize, 0, &face))
-// 		{
-// 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-// 		}
+            meshData.vertex.push_back(textcoord[i][0]);
+            meshData.vertex.push_back(textcoord[i][1]);
+        }
+        mesh->pushMeshData(meshData);
+        g_cache[UIMESHDATA] = mesh;
+        return mesh;
+    }
 
-// 		font = SharePtr<Font>(new Font());
-// 		font->setFace(face);
-// 		font->setPath(path);
+    SharedTexture AssetManager::LoadTexture(const std::string &path)
+    {
+        SharedTexture image;
+        if (g_cache.find(path) != g_cache.end())
+        {
+            return std::dynamic_pointer_cast<Texture>(g_cache[path]);
+        }
 
-// 		g_cache[path] = font;
-// 	}
-// 	return font;
-// }
-SharedTexture AssetManager::GetTexture(const std::string &path)
-{
-	SharedTexture image;
-	if (g_cache.find(path) != g_cache.end())
-	{
-		return std::dynamic_pointer_cast<Texture>(g_cache[path]);
-	}
-	return image;
-}
+        image = std::dynamic_pointer_cast<Texture>(g_pParserManager->ExecuteParser(
+            ParserExtType::IMAGE, path));
+        image->Path = path;
+        if (image)
+            g_cache[path] = image;
+        return image;
+    }
+    // SharePtr<Font> AssetManager::GetFont(const std::string &path)
+    // {
+    // 	SharePtr<Font> font;
+    // 	if (g_cache.find(path) != g_cache.end())
+    // 	{
+    // 		return std::dynamic_pointer_cast<Font>(g_cache[path]);
+    // 	}
+    // 	Buffer buffer = g_pAssetLoader->SyncOpenAndReadBinary(path.c_str());
+    // 	if (buffer.m_szSize > 0)
+    // 	{
+    // 		FT_Face face;
+    // 		if (FT_New_Memory_Face(ft, buffer.m_pData, buffer.m_szSize, 0, &face))
+    // 		{
+    // 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+    // 		}
 
-void AssetManager::AddTexture(const std::string &path, SharedTexture image)
-{
-	if (g_cache.find(path) != g_cache.end() || !image)
-	{
-		return;
-	}
-	g_cache[path] = image;
-}
-void AssetManager::GetShaderProgram(int ID)
-{
-}
-const int size = 4;
-SharedTexture AssetManager::getWhiteTexture()
-{
+    // 		font = SharePtr<Font>(new Font());
+    // 		font->setFace(face);
+    // 		font->setPath(path);
 
-	const std::string path = "default/white.png";
-	auto image = g_pAssetManager->GetTexture(path);
-	if (image)
-		return image;
-	uint8_t *pixels = reinterpret_cast<uint8_t *>(malloc(size * size * 4));
-	for (int i = 0; i < size * size; ++i)
-	{
-		pixels[i * 4 + 0] = 255;
-		pixels[i * 4 + 1] = 255;
-		pixels[i * 4 + 2] = 255;
-		pixels[i * 4 + 3] = 255;
-	}
-	pixels += '\0';
-	image = std::make_shared<Texture>();
-	image->formate = 3;
-	image->Width = size;
-	image->Height = size;
-	image->data = pixels;
-	g_pAssetManager->AddTexture(path, image);
-	return image;
-}
-GameEngineEnd
+    // 		g_cache[path] = font;
+    // 	}
+    // 	return font;
+    // }
+    SharedTexture AssetManager::GetTexture(const std::string &path)
+    {
+        SharedTexture image;
+        if (g_cache.find(path) != g_cache.end())
+        {
+            return std::dynamic_pointer_cast<Texture>(g_cache[path]);
+        }
+        return image;
+    }
+
+    void AssetManager::AddTexture(const std::string &path, SharedTexture image)
+    {
+        if (g_cache.find(path) != g_cache.end() || !image)
+        {
+            return;
+        }
+        g_cache[path] = image;
+    }
+    void AssetManager::GetShaderProgram(int ID) {}
+    const int size = 4;
+    SharedTexture AssetManager::getWhiteTexture()
+    {
+        const std::string path = "default/white.png";
+        auto image = g_pAssetManager->GetTexture(path);
+        if (image)
+            return image;
+        uint8_t *pixels = reinterpret_cast<uint8_t *>(malloc(size * size * 4));
+        for (int i = 0; i < size * size; ++i)
+        {
+            pixels[i * 4 + 0] = 255;
+            pixels[i * 4 + 1] = 255;
+            pixels[i * 4 + 2] = 255;
+            pixels[i * 4 + 3] = 255;
+        }
+        pixels += '\0';
+        image = std::make_shared<Texture>();
+        image->formate = 3;
+        image->Width = size;
+        image->Height = size;
+        image->data = pixels;
+        g_pAssetManager->AddTexture(path, image);
+        return image;
+    }
+}  // namespace GameEngine

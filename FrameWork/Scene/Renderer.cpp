@@ -1,57 +1,58 @@
-#include "Renderer.h"
-#include "Material.h"
-#include "SceneManager.h"
-#include "Scene.h"
+﻿#include "Renderer.h"
+
 #include "GameObject.h"
-GameEngineBegin 
-
-extern SceneManager *g_pSceneManager;
-
-void Renderer::Prepare()
+#include "Material.h"
+#include "Scene.h"
+#include "SceneManager.h"
+namespace GameEngine
 {
-    // for (int i = 0; i < m_Materials.size(); ++i)
-    // {
-    //     auto &material = m_Materials[i];
-    //     if (material)
-    //     {
-    //         material->Prepare();
-    //     }
-    // }
-}
+    extern SceneManager *g_pSceneManager;
 
-Renderer::Renderer() : Component(ClassIDType::CLASS_Undefined)
-{
-}
+    void Renderer::Prepare()
+    {
+        // for (int i = 0; i < m_Materials.size(); ++i)
+        // {
+        //     auto &material = m_Materials[i];
+        //     if (material)
+        //     {
+        //         material->Prepare();
+        //     }
+        // }
+    }
 
-SharedMesh Renderer::getMesh()
-{
-    return SharedMesh();
-}
+    Renderer::Renderer() : Component(ClassIDType::CLASS_Undefined)
+    {
+    }
 
-std::vector<SharedMaterial> Renderer::getMaterials()
-{
-    return m_Materials;
-}
+    SharedMesh Renderer::getMesh()
+    {
+        return SharedMesh();
+    }
 
-void Renderer::AddMaterial(SharedMaterial material)
-{
-    m_Materials.push_back(material);
-}
+    std::vector<SharedMaterial> Renderer::getMaterials()
+    {
+        return m_Materials;
+    }
 
-void Renderer::Render(SharePtr<Camera> camera)
-{
-}
+    void Renderer::AddMaterial(SharedMaterial material)
+    {
+        m_Materials.push_back(material);
+    }
 
-void Renderer::Start()
-{
-    if (m_Started)
-        return;
-    auto renderer = getParent()->getComponent<Renderer>();
-    if (!renderer)
-        return;
-    auto scene = g_pSceneManager->GetScene();
-    scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
-    Component::Start();
-}
+    void Renderer::Render(SharePtr<Camera> camera)
+    {
+    }
 
-GameEngineEnd
+    void Renderer::Start()
+    {
+        if (m_Started)
+            return;
+        auto renderer = getParent()->getComponent<Renderer>();
+        if (!renderer)
+            return;
+        auto scene = g_pSceneManager->GetScene();
+        scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
+        Component::Start();
+    }
+
+}  // namespace GameEngine

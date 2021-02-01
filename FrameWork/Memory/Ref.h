@@ -30,7 +30,6 @@ THE SOFTWARE.
 
 namespace GameEngine
 {
-
     class Ref;
 
     class Clonable
@@ -67,5 +66,5 @@ namespace GameEngine
 #endif
     };
 
-} // namespace GameEngine
+}  // namespace GameEngine
 // end of base group

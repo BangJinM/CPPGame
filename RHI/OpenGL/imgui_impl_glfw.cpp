@@ -37,25 +37,26 @@
 //  2017-08-25: Inputs: MousePos set to -FLT_MAX,-FLT_MAX when mouse is unavailable/missing (instead of -1,-1).
 //  2016-10-15: Misc: Added a void* user_data parameter to Clipboard function handlers.
 
-#include "imgui.h"
 #include "imgui_impl_glfw.h"
+
+#include "imgui.h"
 
 // GLFW
 #include <GLFW/glfw3.h>
 #ifdef _WIN32
 #undef APIENTRY
 #define GLFW_EXPOSE_NATIVE_WIN32
-#include <GLFW/glfw3native.h>   // for glfwGetWin32Window
+#include <GLFW/glfw3native.h>  // for glfwGetWin32Window
 #endif
-#define GLFW_HAS_WINDOW_TOPMOST       (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200) // 3.2+ GLFW_FLOATING
-#define GLFW_HAS_WINDOW_HOVERED       (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300) // 3.3+ GLFW_HOVERED
-#define GLFW_HAS_WINDOW_ALPHA         (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300) // 3.3+ glfwSetWindowOpacity
-#define GLFW_HAS_PER_MONITOR_DPI      (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300) // 3.3+ glfwGetMonitorContentScale
-#define GLFW_HAS_VULKAN               (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200) // 3.2+ glfwCreateWindowSurface
-#ifdef GLFW_RESIZE_NESW_CURSOR  // let's be nice to people who pulled GLFW between 2019-04-16 (3.4 define) and 2019-11-29 (cursors defines) // FIXME: Remove when GLFW 3.4 is released?
-#define GLFW_HAS_NEW_CURSORS          (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3400) // 3.4+ GLFW_RESIZE_ALL_CURSOR, GLFW_RESIZE_NESW_CURSOR, GLFW_RESIZE_NWSE_CURSOR, GLFW_NOT_ALLOWED_CURSOR
+#define GLFW_HAS_WINDOW_TOPMOST (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200)   // 3.2+ GLFW_FLOATING
+#define GLFW_HAS_WINDOW_HOVERED (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300)   // 3.3+ GLFW_HOVERED
+#define GLFW_HAS_WINDOW_ALPHA (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300)     // 3.3+ glfwSetWindowOpacity
+#define GLFW_HAS_PER_MONITOR_DPI (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300)  // 3.3+ glfwGetMonitorContentScale
+#define GLFW_HAS_VULKAN (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200)           // 3.2+ glfwCreateWindowSurface
+#ifdef GLFW_RESIZE_NESW_CURSOR                                                                   // let's be nice to people who pulled GLFW between 2019-04-16 (3.4 define) and 2019-11-29 (cursors defines) // FIXME: Remove when GLFW 3.4 is released?
+#define GLFW_HAS_NEW_CURSORS (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3400)      // 3.4+ GLFW_RESIZE_ALL_CURSOR, GLFW_RESIZE_NESW_CURSOR, GLFW_RESIZE_NWSE_CURSOR, GLFW_NOT_ALLOWED_CURSOR
 #else
-#define GLFW_HAS_NEW_CURSORS          (0)
+#define GLFW_HAS_NEW_CURSORS (0)
 #endif
 
 // Data
@@ -65,18 +66,18 @@ enum GlfwClientApi
     GlfwClientApi_OpenGL,
     GlfwClientApi_Vulkan
 };
-static GLFWwindow*          g_Window = NULL;    // Main window
-static GlfwClientApi        g_ClientApi = GlfwClientApi_Unknown;
-static double               g_Time = 0.0;
-static bool                 g_MouseJustPressed[ImGuiMouseButton_COUNT] = {};
-static GLFWcursor*          g_MouseCursors[ImGuiMouseCursor_COUNT] = {};
-static bool                 g_InstalledCallbacks = false;
+static GLFWwindow* g_Window = NULL;  // Main window
+static GlfwClientApi g_ClientApi = GlfwClientApi_Unknown;
+static double g_Time = 0.0;
+static bool g_MouseJustPressed[ImGuiMouseButton_COUNT] = {};
+static GLFWcursor* g_MouseCursors[ImGuiMouseCursor_COUNT] = {};
+static bool g_InstalledCallbacks = false;
 
 // Chain GLFW callbacks: our callbacks will call the user's previously installed callbacks, if any.
-static GLFWmousebuttonfun   g_PrevUserCallbackMousebutton = NULL;
-static GLFWscrollfun        g_PrevUserCallbackScroll = NULL;
-static GLFWkeyfun           g_PrevUserCallbackKey = NULL;
-static GLFWcharfun          g_PrevUserCallbackChar = NULL;
+static GLFWmousebuttonfun g_PrevUserCallbackMousebutton = NULL;
+static GLFWscrollfun g_PrevUserCallbackScroll = NULL;
+static GLFWkeyfun g_PrevUserCallbackKey = NULL;
+static GLFWcharfun g_PrevUserCallbackChar = NULL;
 
 static const char* ImGui_ImplGlfw_GetClipboardText(void* user_data)
 {
@@ -145,8 +146,8 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
 
     // Setup back-end capabilities flags
     ImGuiIO& io = ImGui::GetIO();
-    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;         // We can honor GetMouseCursor() values (optional)
-    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;          // We can honor io.WantSetMousePos requests (optional, rarely used)
+    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;  // We can honor GetMouseCursor() values (optional)
+    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;   // We can honor io.WantSetMousePos requests (optional, rarely used)
     io.BackendPlatformName = "imgui_impl_glfw";
 
     // Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
@@ -265,7 +266,7 @@ static void ImGui_ImplGlfw_UpdateMousePosAndButtons()
     const ImVec2 mouse_pos_backup = io.MousePos;
     io.MousePos = ImVec2(-FLT_MAX, -FLT_MAX);
 #ifdef __EMSCRIPTEN__
-    const bool focused = true; // Emscripten
+    const bool focused = true;  // Emscripten
 #else
     const bool focused = glfwGetWindowAttrib(g_Window, GLFW_FOCUSED) != 0;
 #endif
@@ -312,30 +313,42 @@ static void ImGui_ImplGlfw_UpdateGamepads()
     if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) == 0)
         return;
 
-    // Update gamepad inputs
-    #define MAP_BUTTON(NAV_NO, BUTTON_NO)       { if (buttons_count > BUTTON_NO && buttons[BUTTON_NO] == GLFW_PRESS) io.NavInputs[NAV_NO] = 1.0f; }
-    #define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1) { float v = (axes_count > AXIS_NO) ? axes[AXIS_NO] : V0; v = (v - V0) / (V1 - V0); if (v > 1.0f) v = 1.0f; if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v; }
+// Update gamepad inputs
+#define MAP_BUTTON(NAV_NO, BUTTON_NO)                                      \
+    {                                                                      \
+        if (buttons_count > BUTTON_NO && buttons[BUTTON_NO] == GLFW_PRESS) \
+            io.NavInputs[NAV_NO] = 1.0f;                                   \
+    }
+#define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1)                    \
+    {                                                          \
+        float v = (axes_count > AXIS_NO) ? axes[AXIS_NO] : V0; \
+        v = (v - V0) / (V1 - V0);                              \
+        if (v > 1.0f)                                          \
+            v = 1.0f;                                          \
+        if (io.NavInputs[NAV_NO] < v)                          \
+            io.NavInputs[NAV_NO] = v;                          \
+    }
     int axes_count = 0, buttons_count = 0;
     const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axes_count);
     const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttons_count);
-    MAP_BUTTON(ImGuiNavInput_Activate,   0);     // Cross / A
-    MAP_BUTTON(ImGuiNavInput_Cancel,     1);     // Circle / B
-    MAP_BUTTON(ImGuiNavInput_Menu,       2);     // Square / X
-    MAP_BUTTON(ImGuiNavInput_Input,      3);     // Triangle / Y
-    MAP_BUTTON(ImGuiNavInput_DpadLeft,   13);    // D-Pad Left
-    MAP_BUTTON(ImGuiNavInput_DpadRight,  11);    // D-Pad Right
-    MAP_BUTTON(ImGuiNavInput_DpadUp,     10);    // D-Pad Up
-    MAP_BUTTON(ImGuiNavInput_DpadDown,   12);    // D-Pad Down
-    MAP_BUTTON(ImGuiNavInput_FocusPrev,  4);     // L1 / LB
-    MAP_BUTTON(ImGuiNavInput_FocusNext,  5);     // R1 / RB
-    MAP_BUTTON(ImGuiNavInput_TweakSlow,  4);     // L1 / LB
-    MAP_BUTTON(ImGuiNavInput_TweakFast,  5);     // R1 / RB
-    MAP_ANALOG(ImGuiNavInput_LStickLeft, 0,  -0.3f,  -0.9f);
-    MAP_ANALOG(ImGuiNavInput_LStickRight,0,  +0.3f,  +0.9f);
-    MAP_ANALOG(ImGuiNavInput_LStickUp,   1,  +0.3f,  +0.9f);
-    MAP_ANALOG(ImGuiNavInput_LStickDown, 1,  -0.3f,  -0.9f);
-    #undef MAP_BUTTON
-    #undef MAP_ANALOG
+    MAP_BUTTON(ImGuiNavInput_Activate, 0);    // Cross / A
+    MAP_BUTTON(ImGuiNavInput_Cancel, 1);      // Circle / B
+    MAP_BUTTON(ImGuiNavInput_Menu, 2);        // Square / X
+    MAP_BUTTON(ImGuiNavInput_Input, 3);       // Triangle / Y
+    MAP_BUTTON(ImGuiNavInput_DpadLeft, 13);   // D-Pad Left
+    MAP_BUTTON(ImGuiNavInput_DpadRight, 11);  // D-Pad Right
+    MAP_BUTTON(ImGuiNavInput_DpadUp, 10);     // D-Pad Up
+    MAP_BUTTON(ImGuiNavInput_DpadDown, 12);   // D-Pad Down
+    MAP_BUTTON(ImGuiNavInput_FocusPrev, 4);   // L1 / LB
+    MAP_BUTTON(ImGuiNavInput_FocusNext, 5);   // R1 / RB
+    MAP_BUTTON(ImGuiNavInput_TweakSlow, 4);   // L1 / LB
+    MAP_BUTTON(ImGuiNavInput_TweakFast, 5);   // R1 / RB
+    MAP_ANALOG(ImGuiNavInput_LStickLeft, 0, -0.3f, -0.9f);
+    MAP_ANALOG(ImGuiNavInput_LStickRight, 0, +0.3f, +0.9f);
+    MAP_ANALOG(ImGuiNavInput_LStickUp, 1, +0.3f, +0.9f);
+    MAP_ANALOG(ImGuiNavInput_LStickDown, 1, -0.3f, -0.9f);
+#undef MAP_BUTTON
+#undef MAP_ANALOG
     if (axes_count > 0 && buttons_count > 0)
         io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
     else

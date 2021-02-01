@@ -2,57 +2,57 @@
 
 #include <vector>
 
-#include "ShaderBase.h"
-#include "Object.h"
 #include "Config.h"
+#include "Object.h"
+#include "ShaderBase.h"
 #include "glm/glm.hpp"
 
-GameEngineBegin
-
-class Shader : public ShaderBase
+namespace GameEngine
 {
-public:
-	Shader(ShaderType type) : ShaderBase(type) {}
-	~Shader() override;
-	virtual bool CompileSourceCode(const char *source) override;
-};
+    class Shader : public ShaderBase
+    {
+    public:
+        Shader(ShaderType type) : ShaderBase(type) {}
+        ~Shader() override;
+        virtual bool CompileSourceCode(const char *source) override;
+    };
 
-class ShaderProgram : public ShaderProgramBase
-{
-public:
-	ShaderProgram();
+    class ShaderProgram : public ShaderProgramBase
+    {
+    public:
+        ShaderProgram();
 
-	virtual bool AddShaderFromSourceCode(ShaderBase::ShaderType type, const char *source) override;
-	virtual bool AddShaderFromFilePath(ShaderBase::ShaderType type, const char *path) override;
+        virtual bool AddShaderFromSourceCode(ShaderBase::ShaderType type, const char *source) override;
+        virtual bool AddShaderFromFilePath(ShaderBase::ShaderType type, const char *path) override;
 
-	virtual bool Link() override;
+        virtual bool Link() override;
 
-	virtual bool Use() override;
+        virtual bool Use() override;
 
-	// utility uniform functions
-	// ------------------------------------------------------------------------
-	virtual void setBool(const std::string &name, bool value) const override;
-	// ------------------------------------------------------------------------
-	virtual void setInt(const std::string &name, int value) const override;
-	// ------------------------------------------------------------------------
-	virtual void setFloat(const std::string &name, float value) const override;
-	// ------------------------------------------------------------------------
-	virtual void setVec2(const std::string &name, const glm::vec2 &value) const override;
-	virtual void setVec2(const std::string &name, float x, float y) const override;
-	// ------------------------------------------------------------------------
-	virtual void setVec3(const std::string &name, const glm::vec3 &value) const override;
-	virtual void setVec3(const std::string &name, float x, float y, float z) const override;
-	// ------------------------------------------------------------------------
-	virtual void setVec4(const std::string &name, const glm::vec4 &value) const override;
-	virtual void setVec4(const std::string &name, float x, float y, float z, float w) const override;
-	// ------------------------------------------------------------------------
-	virtual void setMat2(const std::string &name, const glm::mat2 &mat) const override;
-	// ------------------------------------------------------------------------
-	virtual void setMat3(const std::string &name, const glm::mat3 &mat) const override;
-	// ------------------------------------------------------------------------
-	virtual void setMat4(const std::string &name, const float *value) const override;
+        // utility uniform functions
+        // ------------------------------------------------------------------------
+        virtual void setBool(const std::string &name, bool value) const override;
+        // ------------------------------------------------------------------------
+        virtual void setInt(const std::string &name, int value) const override;
+        // ------------------------------------------------------------------------
+        virtual void setFloat(const std::string &name, float value) const override;
+        // ------------------------------------------------------------------------
+        virtual void setVec2(const std::string &name, const glm::vec2 &value) const override;
+        virtual void setVec2(const std::string &name, float x, float y) const override;
+        // ------------------------------------------------------------------------
+        virtual void setVec3(const std::string &name, const glm::vec3 &value) const override;
+        virtual void setVec3(const std::string &name, float x, float y, float z) const override;
+        // ------------------------------------------------------------------------
+        virtual void setVec4(const std::string &name, const glm::vec4 &value) const override;
+        virtual void setVec4(const std::string &name, float x, float y, float z, float w) const override;
+        // ------------------------------------------------------------------------
+        virtual void setMat2(const std::string &name, const glm::mat2 &mat) const override;
+        // ------------------------------------------------------------------------
+        virtual void setMat3(const std::string &name, const glm::mat3 &mat) const override;
+        // ------------------------------------------------------------------------
+        virtual void setMat4(const std::string &name, const float *value) const override;
 
-	void BindPredefinedVertexAttribs();
-};
+        void BindPredefinedVertexAttribs();
+    };
 
-GameEngineEnd
+}  // namespace GameEngine

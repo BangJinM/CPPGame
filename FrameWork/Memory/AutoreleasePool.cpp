@@ -24,11 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "AutoreleasePool.h"
-#include "easylogging++.h"
+
 #include <assert.h>
+
+#include "easylogging++.h"
 namespace GameEngine
 {
-
     AutoreleasePool::AutoreleasePool()
         : _name("")
 #if defined(DEBUG)
@@ -53,7 +54,7 @@ namespace GameEngine
 
     AutoreleasePool::~AutoreleasePool()
     {
-		el::Loggers::getLogger("logger")->info("deallocing AutoreleasePool: %p", this);
+        el::Loggers::getLogger("logger")->info("deallocing AutoreleasePool: %p", this);
         clear();
 
         PoolManager::getInstance()->pop();
@@ -92,11 +93,11 @@ namespace GameEngine
 
     void AutoreleasePool::dump()
     {
-		el::Loggers::getLogger("logger")->debug("autorelease pool: %s, number of managed object %d\n", _name.c_str(), static_cast<int>(_managedObjectArray.size()));
-		el::Loggers::getLogger("logger")->debug("%20s%20s%20s", "Object pointer", "Object id", "reference count");
+        el::Loggers::getLogger("logger")->debug("autorelease pool: %s, number of managed object %d\n", _name.c_str(), static_cast<int>(_managedObjectArray.size()));
+        el::Loggers::getLogger("logger")->debug("%20s%20s%20s", "Object pointer", "Object id", "reference count");
         for (const auto &obj : _managedObjectArray)
         {
-			el::Loggers::getLogger("logger")->debug("%20p%20u\n", obj, obj->getReferenceCount());
+            el::Loggers::getLogger("logger")->debug("%20p%20u\n", obj, obj->getReferenceCount());
         }
     }
 
@@ -132,7 +133,7 @@ namespace GameEngine
 
     PoolManager::~PoolManager()
     {
-		el::Loggers::getLogger("logger")->info("deallocing PoolManager: %p", this);
+        el::Loggers::getLogger("logger")->info("deallocing PoolManager: %p", this);
 
         while (!_releasePoolStack.empty())
         {
@@ -168,4 +169,4 @@ namespace GameEngine
         _releasePoolStack.pop_back();
     }
 
-} // namespace cc
+}  // namespace GameEngine

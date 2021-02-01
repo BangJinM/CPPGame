@@ -24,29 +24,28 @@
 // version 0.9.0 : Initial
 //
 
-#include <cstdlib>
-#include <cstring>
+#include "ObjLoader.h"
+
 #include <cassert>
 #include <cmath>
 #include <cstddef>
-
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <map>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <map>
-#include <fstream>
-#include <sstream>
 
 #include "AssetLoader.h"
-#include "ObjLoader.h"
 
 using namespace GameEngine;
 namespace GameEngine
 {
-    extern GameEngineFile::AssetLoader *g_pAssetLoader;
+    extern AssetLoader *g_pAssetLoader;
 }
 namespace tinyobj
 {
-
 #define TINYOBJ_SSCANF_BUFFER_SIZE (4096)
 
     struct vertex_index
@@ -91,7 +90,7 @@ namespace tinyobj
             return idx - 1;
         if (idx == 0)
             return 0;
-        return n + idx; // negative value = relative
+        return n + idx;  // negative value = relative
     }
 
     static inline std::string parseString(const char *&token)
@@ -325,7 +324,7 @@ namespace tinyobj
         }
 
         // i/j/k
-        token++; // skip '/'
+        token++;  // skip '/'
         vi.vn_idx = fixIndex(atoi(token), vnsize);
         token += strcspn(token, "/ \t\r");
         return vi;
@@ -469,8 +468,8 @@ namespace tinyobj
         material_t material;
         InitMaterial(material);
 
-        int maxchars = 8192;             // Alloc enough size.
-        std::vector<char> buf(maxchars); // Alloc enough size.
+        int maxchars = 8192;              // Alloc enough size.
+        std::vector<char> buf(maxchars);  // Alloc enough size.
         while (inStream.peek() != -1)
         {
             inStream.getline(&buf[0], maxchars);
@@ -501,10 +500,10 @@ namespace tinyobj
 
             assert(token);
             if (token[0] == '\0')
-                continue; // empty line
+                continue;  // empty line
 
             if (token[0] == '#')
-                continue; // comment line
+                continue;  // comment line
 
             // new mtl
             if ((0 == strncmp(token, "newmtl", 6)) && isSpace((token[6])))
@@ -720,10 +719,9 @@ namespace tinyobj
     }
 
     std::string LoadObj(std::vector<shape_t> &shapes,
-                        std::vector<material_t> &materials, // [output]
+                        std::vector<material_t> &materials,  // [output]
                         const char *filename, const char *mtl_basepath)
     {
-
         shapes.clear();
 
         std::stringstream err;
@@ -746,7 +744,7 @@ namespace tinyobj
     }
 
     std::string LoadObj(std::vector<shape_t> &shapes,
-                        std::vector<material_t> &materials, // [output]
+                        std::vector<material_t> &materials,  // [output]
                         std::istream &inStream, MaterialReader &readMatFn)
     {
         std::stringstream err;
@@ -764,8 +762,8 @@ namespace tinyobj
 
         shape_t shape;
 
-        int maxchars = 8192;             // Alloc enough size.
-        std::vector<char> buf(maxchars); // Alloc enough size.
+        int maxchars = 8192;              // Alloc enough size.
+        std::vector<char> buf(maxchars);  // Alloc enough size.
         while (inStream.peek() != -1)
         {
             inStream.getline(&buf[0], maxchars);
@@ -796,10 +794,10 @@ namespace tinyobj
 
             assert(token);
             if (token[0] == '\0')
-                continue; // empty line
+                continue;  // empty line
 
             if (token[0] == '#')
-                continue; // comment line
+                continue;  // comment line
 
             // vertex
             if (token[0] == 'v' && isSpace((token[1])))
@@ -863,7 +861,6 @@ namespace tinyobj
             // use mtl
             if ((0 == strncmp(token, "usemtl", 6)) && isSpace((token[6])))
             {
-
                 char namebuf[TINYOBJ_SSCANF_BUFFER_SIZE];
                 token += 7;
 #ifdef _MSC_VER
@@ -909,7 +906,7 @@ namespace tinyobj
                 std::string err_mtl = readMatFn(namebuf, materials, material_map);
                 if (!err_mtl.empty())
                 {
-                    faceGroup.clear(); // for safety
+                    faceGroup.clear();  // for safety
                     return err_mtl;
                 }
 
@@ -919,7 +916,6 @@ namespace tinyobj
             // group name
             if (token[0] == 'g' && isSpace((token[1])))
             {
-
                 // flush previous face group.
                 bool ret = exportFaceGroupToShape(shape, vertexCache, v, vn, vt,
                                                   faceGroup, material, name, true);
@@ -938,7 +934,7 @@ namespace tinyobj
                 {
                     std::string str = parseString(token);
                     names.push_back(str);
-                    token += strspn(token, " \t\r"); // skip tag
+                    token += strspn(token, " \t\r");  // skip tag
                 }
 
                 assert(names.size() > 0);
@@ -959,7 +955,6 @@ namespace tinyobj
             // object name
             if (token[0] == 'o' && isSpace((token[1])))
             {
-
                 // flush previous face group.
                 bool ret = exportFaceGroupToShape(shape, vertexCache, v, vn, vt,
                                                   faceGroup, material, name, true);
@@ -994,8 +989,8 @@ namespace tinyobj
         {
             shapes.push_back(shape);
         }
-        faceGroup.clear(); // for safety
+        faceGroup.clear();  // for safety
 
         return err.str();
     }
-} // namespace tinyobj
+}  // namespace tinyobj

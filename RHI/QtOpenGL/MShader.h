@@ -11,69 +11,69 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
-GameEngineBegin
-
-class MShader : public Object
+namespace GameEngine
 {
-public:
-    enum ShaderType
+    class MShader : public Object
     {
-        Vertex = 0x0001,
-        Fragment = 0x0002,
-        Geometry = 0x0004,
+    public:
+        enum ShaderType
+        {
+            Vertex = 0x0001,
+            Fragment = 0x0002,
+            Geometry = 0x0004,
+        };
     };
-};
 
-class MShaderProgram : public Object
-{
-public:
-    explicit MShaderProgram();
+    class MShaderProgram : public Object
+    {
+    public:
+        explicit MShaderProgram();
 
-    bool AddShaderFromSourceCode(MShader::ShaderType type, const char *source);
+        bool AddShaderFromSourceCode(MShader::ShaderType type, const char *source);
 
-    bool AddShaderFromFilePath(MShader::ShaderType type, const char *path);
+        bool AddShaderFromFilePath(MShader::ShaderType type, const char *path);
 
-    bool Link();
-    bool IsLinked() const;
+        bool Link();
+        bool IsLinked() const;
 
-    bool Use();
+        bool Use();
 
-    void RemoveAllShaders();
+        void RemoveAllShaders();
 
-    int ProgramId() const;
+        int ProgramId() const;
 
-    void BindPredefinedVertexAttribs();
+        void BindPredefinedVertexAttribs();
 
-    // utility uniform functions
-    // ------------------------------------------------------------------------
-    void setBool(const std::string &name, bool value) const;
-    // ------------------------------------------------------------------------
-    void setInt(const std::string &name, int value) const;
-    // ------------------------------------------------------------------------
-    void setFloat(const std::string &name, float value) const;
-    // ------------------------------------------------------------------------
-    void setVec2(const std::string &name, const float *value) const;
-    void setVec2(const std::string &name, float x, float y) const;
-    // ------------------------------------------------------------------------
-    void setVec3(const std::string &name, const float *value) const;
-    void setVec3(const std::string &name, float x, float y, float z) const;
-    // ------------------------------------------------------------------------
-    void setVec4(const std::string &name, const float *value) const;
-    void setVec4(const std::string &name, float x, float y, float z, float w);
-    // ------------------------------------------------------------------------
-    void setMat2(const std::string &name, const float *value) const;
-    // ------------------------------------------------------------------------
-    void setMat3(const std::string &name, const float *value) const;
-    // ------------------------------------------------------------------------
-    void setMat4(const std::string &name, const float *value) const;
+        // utility uniform functions
+        // ------------------------------------------------------------------------
+        void setBool(const std::string &name, bool value) const;
+        // ------------------------------------------------------------------------
+        void setInt(const std::string &name, int value) const;
+        // ------------------------------------------------------------------------
+        void setFloat(const std::string &name, float value) const;
+        // ------------------------------------------------------------------------
+        void setVec2(const std::string &name, const float *value) const;
+        void setVec2(const std::string &name, float x, float y) const;
+        // ------------------------------------------------------------------------
+        void setVec3(const std::string &name, const float *value) const;
+        void setVec3(const std::string &name, float x, float y, float z) const;
+        // ------------------------------------------------------------------------
+        void setVec4(const std::string &name, const float *value) const;
+        void setVec4(const std::string &name, float x, float y, float z, float w);
+        // ------------------------------------------------------------------------
+        void setMat2(const std::string &name, const float *value) const;
+        // ------------------------------------------------------------------------
+        void setMat3(const std::string &name, const float *value) const;
+        // ------------------------------------------------------------------------
+        void setMat4(const std::string &name, const float *value) const;
 
-    int uniformLocation(const char *name);
+        int uniformLocation(const char *name);
 
-    void log();
+        void log();
 
-    void release();
+        void release();
 
-    SharePtr<QOpenGLShaderProgram> m_QOpenGLShaderProgram;
-};
+        SharePtr<QOpenGLShaderProgram> m_QOpenGLShaderProgram;
+    };
 
-GameEngineEnd
+}  // namespace GameEngine  // namespace GameEngine

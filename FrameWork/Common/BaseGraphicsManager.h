@@ -4,45 +4,46 @@
 #include <memory>
 
 #include "Config.h"
-#include "Renderer.h"
 #include "IRuntimeModule.h"
-#include "Render/IDrawPass.h"
 #include "Material.h"
 #include "Mesh.h"
-GameEngineBegin
+#include "Render/IDrawPass.h"
+#include "Renderer.h"
 
-	class Scene;
-
-struct RendererCammand
+namespace GameEngine
 {
-	Material material;
-	SharedMesh mesh;
-	int index;
-};
+    class Scene;
 
-class BaseGraphicsManager : public IRuntimeModule
-{
-public:
-	virtual ~BaseGraphicsManager() {}
+    struct RendererCammand
+    {
+        Material material;
+        SharedMesh mesh;
+        int index;
+    };
 
-	virtual int Initialize();
-	virtual void Finalize();
+    class BaseGraphicsManager : public IRuntimeModule
+    {
+    public:
+        virtual ~BaseGraphicsManager() {}
 
-	virtual void Tick();
-	virtual void Clear();
-	virtual void Draw();
+        virtual int Initialize();
+        virtual void Finalize();
 
-	void addRendererCommand(RendererCammand command);
-	std::list<RendererCammand> getRendererCommand();
+        virtual void Tick();
+        virtual void Clear();
+        virtual void Draw();
 
-	virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
-	virtual void BindTexture(SharedTexture texture) = 0;
-	virtual void PrepareMaterial(Material &material) = 0;
+        void addRendererCommand(RendererCammand command);
+        std::list<RendererCammand> getRendererCommand();
 
-protected:
-	std::list<RendererCammand> m_RendererCommands;
-	std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
-};
+        virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
+        virtual void BindTexture(SharedTexture texture) = 0;
+        virtual void PrepareMaterial(Material &material) = 0;
 
-extern BaseGraphicsManager *g_pGraphicsManager;
-GameEngineEnd
+    protected:
+        std::list<RendererCammand> m_RendererCommands;
+        std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
+    };
+
+    extern BaseGraphicsManager *g_pGraphicsManager;
+}  // namespace GameEngine

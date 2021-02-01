@@ -1,26 +1,20 @@
 
 #include "BaseApplication.h"
-GameEngineBegin
-
-bool BaseApplication::m_bQuit = false;
-void BaseApplication::Finalize() {}
-
-void BaseApplication::Tick() {}
-
-int BaseApplication::Initialize()
+namespace GameEngine
 {
-  std::cout << m_Config;
-  return 0;
-}
+    bool BaseApplication::m_bQuit = false;
+    void BaseApplication::Finalize() {}
 
-bool BaseApplication::IsQuit()
-{
-  return m_bQuit;
-}
+    void BaseApplication::Tick() {}
 
-BaseApplication::BaseApplication(GfxConfiguration &cfg)
-    : m_Config(cfg)
-{
-}
+    int BaseApplication::Initialize()
+    {
+        std::cout << m_Config;
+        return 0;
+    }
 
-GameEngineEnd
+    bool BaseApplication::IsQuit() { return m_bQuit; }
+
+    BaseApplication::BaseApplication(GfxConfiguration &cfg) : m_Config(cfg) {}
+
+}  // namespace GameEngine

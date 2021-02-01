@@ -1,54 +1,47 @@
 #include "InputManager.h"
+
 #include <utility>
 
-GameEngineBegin
-int InputManager::Initialize()
+namespace GameEngine
 {
-	return 0;
-}
+    int InputManager::Initialize() { return 0; }
 
+    void InputManager::Finalize() {}
 
+    void InputManager::Tick() {}
 
-void InputManager::Finalize()
-{
-	
-}
+    void InputManager::addClickEventListener(const char key, CallBack callBack)
+    {
+        auto iter = g_pInputManager->_listeners.find(key);
 
-void InputManager::Tick()
-{
-}
+        if (iter == g_pInputManager->_listeners.end())
+        {
+            GameEngineCallBack *list = new GameEngineCallBack();
+            g_pInputManager->_listeners.insert(
+                std::pair<char, GameEngineCallBack *>(key, list));
+            addClickEventListener(key, callBack);
+            return;
+        }
+        iter->second->push(callBack);
+    }
 
-void InputManager::addClickEventListener(const char key, CallBack callBack)
-{
-	auto iter = g_pInputManager->_listeners.find(key);
+    void InputManager::removeClickEventListener(char key, CallBack callBack)
+    {
+        auto iter = g_pInputManager->_listeners.find(key);
+        if (iter != g_pInputManager->_listeners.end())
+        {
+            iter->second->remove(callBack);
+        }
+    }
 
-	if (iter == g_pInputManager->_listeners.end())
-	{
-		GameEngineCallBack *list = new GameEngineCallBack();
-		g_pInputManager->_listeners.insert(std::pair<char, GameEngineCallBack *>(key, list));
-		addClickEventListener(key, callBack);
-		return;
-	}
-	iter->second->push(callBack);
-}
-
-void InputManager::removeClickEventListener(char key, CallBack callBack)
-{
-	auto iter = g_pInputManager->_listeners.find(key);
-	if (iter != g_pInputManager->_listeners.end())
-	{
-		iter->second->remove(callBack);
-	}
-}
-
-//
-void InputManager::dispatchClickEvent(char key)
-{
-	auto iter = g_pInputManager->_listeners.find(key);
-	int i = 0;
-	if (iter != g_pInputManager->_listeners.end())
-	{
-		iter->second->dispatch();
-	}
-}
-GameEngineEnd
+    //
+    void InputManager::dispatchClickEvent(char key)
+    {
+        auto iter = g_pInputManager->_listeners.find(key);
+        int i = 0;
+        if (iter != g_pInputManager->_listeners.end())
+        {
+            iter->second->dispatch();
+        }
+    }
+}  // namespace GameEngine

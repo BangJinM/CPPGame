@@ -1,47 +1,46 @@
 ﻿#pragma once
 
+#include <ft2build.h>
+
+#include <functional>
 #include <list>
 #include <map>
-#include <functional>
 #include <memory>
 
-#include "Mesh.h"
 #include "Config.h"
-#include "UI/Font.h"
-#include "Texture.h"
-#include "Material.h"
 #include "GameObject.h"
 #include "IRuntimeModule.h"
-
-#include <ft2build.h>
+#include "Material.h"
+#include "Mesh.h"
+#include "Texture.h"
+#include "UI/Font.h"
 #include FT_FREETYPE_H
 
-GameEngineBegin 
-
+namespace GameEngine
+{
 #define UIMESHDATA "_UIMESH"
 
-class AssetManager : public IRuntimeModule
-{
-private:
-public:
-    virtual int Initialize();
-    virtual void Finalize();
-    virtual void Tick();
+    class AssetManager : public IRuntimeModule
+    {
+    private:
+    public:
+        virtual int Initialize();
+        virtual void Finalize();
+        virtual void Tick();
 
-    static SharedGameObject LoadGameObject(const std::string &path);
-    static SharedMesh LoadMesh(const std::string &path);
-	static SharedMesh GetUIMesh();
-    static SharedTexture LoadTexture(const std::string &path);
-    static SharedMaterial LoadMaterial(const std::string &path);
+        static SharedGameObject LoadGameObject(const std::string &path);
+        static SharedMesh LoadMesh(const std::string &path);
+        static SharedMesh GetUIMesh();
+        static SharedTexture LoadTexture(const std::string &path);
+        static SharedMaterial LoadMaterial(const std::string &path);
 
+        // static SharePtr<Font> GetFont(const std::string &path);
 
-    // static SharePtr<Font> GetFont(const std::string &path);
-	
-    static SharedTexture GetTexture(const std::string &path);
-    static void AddTexture(const std::string &path, SharedTexture image);
-	static void GetShaderProgram(int ID);
+        static SharedTexture GetTexture(const std::string &path);
+        static void AddTexture(const std::string &path, SharedTexture image);
+        static void GetShaderProgram(int ID);
 
-    static SharedTexture getWhiteTexture();
-};
+        static SharedTexture getWhiteTexture();
+    };
 
-GameEngineEnd
+}  // namespace GameEngine

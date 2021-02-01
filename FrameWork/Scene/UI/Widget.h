@@ -1,36 +1,36 @@
 ﻿#pragma once
 
-#include "Mesh.h"
-#include "MyMath.h"
-#include "Config.h"
-#include "Component.h"
-
 #include <list>
 #include <vector>
 
-GameEngineBegin
+#include "Component.h"
+#include "Config.h"
+#include "Mesh.h"
+#include "MyMath.h"
 
-class CanvasRenderer;
-class MeshData;
-class Material;
-class Widget : public Component
+namespace GameEngine
 {
-private:
-    /* data */
-    std::weak_ptr<CanvasRenderer> m_CanvasRenderer;
-    SharedMaterial m_Material;
+    class CanvasRenderer;
+    class MeshData;
+    class Material;
+    class Widget : public Component
+    {
+    private:
+        /* data */
+        std::weak_ptr<CanvasRenderer> m_CanvasRenderer;
+        SharedMaterial m_Material;
 
-public:
-    Widget(/* args */);
-    ~Widget();
+    public:
+        Widget(/* args */);
+        ~Widget();
 
-    SharedMaterial GetMaterial();
-    MeshData GetMeshData();
+        SharedMaterial GetMaterial();
+        MeshData GetMeshData();
 
-    virtual void Start();
-    virtual void InitComponent(SharedGameObject host);
+        virtual void Start();
+        virtual void InitComponent(SharedGameObject host);
 
-    SharePtr<CanvasRenderer> getCanvasRenderer();
-    void setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer);
-};
-GameEngineEnd
+        SharePtr<CanvasRenderer> getCanvasRenderer();
+        void setCanvasRenderer(SharePtr<CanvasRenderer> canvasRenderer);
+    };
+}  // namespace GameEngine

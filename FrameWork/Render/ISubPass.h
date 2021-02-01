@@ -12,4 +12,4 @@ namespace GameEngine
         virtual void Draw() override {}
         virtual void EndPass() override {}
     };
-} // namespace GameEngine
+}  // namespace GameEngine

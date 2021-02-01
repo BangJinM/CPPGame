@@ -6,7 +6,6 @@
 
 namespace GameEngine
 {
-
     class ForwardDrawPass : public IDrawPass
     {
         void Initialize() override
@@ -21,10 +20,10 @@ namespace GameEngine
 
         void Draw() override
         {
-			for (auto pass : m_SubPasses)
-			{
-				pass->Draw();
-			}
+            for (auto pass : m_SubPasses)
+            {
+                pass->Draw();
+            }
         }
     };
-} // namespace GameEngine
+}  // namespace GameEngine

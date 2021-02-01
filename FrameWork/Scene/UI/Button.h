@@ -3,14 +3,14 @@
 #include "Config.h"
 #include "Widget.h"
 
-GameEngineBegin 
-
-class Button : public Widget
+namespace GameEngine
 {
-private:
-    /* data */
-public:
-    Button(/* args */);
-    ~Button();
-};
-GameEngineEnd
+    class Button : public Widget
+    {
+    private:
+        /* data */
+    public:
+        Button(/* args */);
+        ~Button();
+    };
+}  // namespace GameEngine

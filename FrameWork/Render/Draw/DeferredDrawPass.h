@@ -6,6 +6,5 @@ namespace GameEngine
 {
     class DeferredDrawPass : public IDrawPass
     {
-        
     };
-} // namespace GameEngine
+}  // namespace GameEngine

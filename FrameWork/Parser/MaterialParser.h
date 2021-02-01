@@ -6,62 +6,63 @@
 //https://github.com/syoyo/tinyobjloader
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
+#include "AssetLoader.h"
 #include "Config.h"
-#include "cjson/cJSON.h"
+#include "IParser.h"
 #include "Material.h"
 #include "Shader.h"
-#include "IParser.h"
-#include "AssetLoader.h"
 #include "ShaderManager.h"
-GameEngineBegin extern GameEngineFile::AssetLoader *g_pAssetLoader;
-extern ShaderManager *g_pShaderManager;
-GameEngineEnd
-	UseGameEngine
-		GameEngineParserBegin
-
-	class MaterialParser : public IParser
+#include "cjson/cJSON.h"
+namespace GameEngine
 {
+    extern AssetLoader *g_pAssetLoader;
+    extern ShaderManager *g_pShaderManager;
+}  // namespace GameEngine
+using namespace GameEngine;
+namespace GameEngine
+{
+    class MaterialParser : public IParser
+    {
+    public:
+        virtual SharedObject Parser(const std::string path) override
+        {
+            SharedMaterial material = std::make_shared<Material>();
+            std::string mstr = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
+            auto json = cJSON_Parse(mstr.c_str());
+            int i = 0;
+            auto frag = cJSON_GetObjectItem(json, "frag");
+            auto vert = cJSON_GetObjectItem(json, "vert");
 
-public:
-	virtual SharedObject Parser(const std::string path) override
-	{
-		SharedMaterial material = std::make_shared<Material>();
-		std::string mstr = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
-		auto json = cJSON_Parse(mstr.c_str());
-		int i = 0;
-		auto frag = cJSON_GetObjectItem(json, "frag");
-		auto vert = cJSON_GetObjectItem(json, "vert");
+            std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
+            std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
 
-		std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
-		std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
+            material->shaderID = g_pShaderManager->AddShaderByPath(vertStr, fragStr);
 
-		material->shaderID = g_pShaderManager->AddShaderByPath(vertStr, fragStr);
-
-		auto paramsNode = cJSON_GetObjectItem(json, "params");
-		if (paramsNode)
-		{
-			auto count = cJSON_GetArraySize(paramsNode);
-			for (int i = 0; i < count; i++)
-			{
-				cJSON *item = cJSON_GetArrayItem(paramsNode, i);
-				std::string name = item->string;
-				std::string type = cJSON_GetObjectItem(item, "type")->valuestring;
-				if (type.compare("texture") == 0)
-				{
-					std::string pathStr = cJSON_GetObjectItem(item, "path")->valuestring;
-					material->AddProperty(pathStr.c_str(), name, pathStr.size(), MaterialType::T_Texture);
-				}
-				else if (type.compare("vec4") == 0)
-				{
-				}
-			}
-		}
-		delete json;
-		return material;
-	}
-}; // namespace GameEngine
-GameEngineParserEnd
+            auto paramsNode = cJSON_GetObjectItem(json, "params");
+            if (paramsNode)
+            {
+                auto count = cJSON_GetArraySize(paramsNode);
+                for (int i = 0; i < count; i++)
+                {
+                    cJSON *item = cJSON_GetArrayItem(paramsNode, i);
+                    std::string name = item->string;
+                    std::string type = cJSON_GetObjectItem(item, "type")->valuestring;
+                    if (type.compare("texture") == 0)
+                    {
+                        std::string pathStr = cJSON_GetObjectItem(item, "path")->valuestring;
+                        material->AddProperty(pathStr.c_str(), name, pathStr.size(), MaterialType::T_Texture);
+                    }
+                    else if (type.compare("vec4") == 0)
+                    {
+                    }
+                }
+            }
+            delete json;
+            return material;
+        }
+    };
+}  // namespace GameEngine

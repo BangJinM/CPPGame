@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Widget.h"
-#include "MyMath.h"
 #include "Config.h"
+#include "MyMath.h"
+#include "Widget.h"
 
-GameEngineBegin 
-
-class Texture;
-class Image : public Widget
+namespace GameEngine
 {
-private:
-    vecterFloat2 m_Size;
-    SharedTexture m_Texture;
+    class Texture;
+    class Image : public Widget
+    {
+    private:
+        vecterFloat2 m_Size;
+        SharedTexture m_Texture;
 
-public:
-    Image(/* args */);
-    ~Image();
-    virtual void Start();
-    void setTexture(SharedTexture texture);
-};
-GameEngineEnd
+    public:
+        Image(/* args */);
+        ~Image();
+        virtual void Start();
+        void setTexture(SharedTexture texture);
+    };
+}  // namespace GameEngine

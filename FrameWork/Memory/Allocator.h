@@ -5,64 +5,66 @@
 
 #include "Config.h"
 
-GameEngineBegin struct BlockHeader
+namespace GameEngine
 {
-    // union-ed with data
-    BlockHeader *pNext;
-};
-
-struct PageHeader
-{
-    PageHeader *pNext;
-    BlockHeader *Blocks()
+    struct BlockHeader
     {
-        return reinterpret_cast<BlockHeader *>(this + 1);
-    }
-};
+        // union-ed with data
+        BlockHeader *pNext;
+    };
 
-class Allocator
-{
-public:
-    // debug patterns
-    static const uint8_t PATTERN_ALIGN = 0xFC;
-    static const uint8_t PATTERN_ALLOC = 0xFD;
-    static const uint8_t PATTERN_FREE = 0xFE;
+    struct PageHeader
+    {
+        PageHeader *pNext;
+        BlockHeader *Blocks()
+        {
+            return reinterpret_cast<BlockHeader *>(this + 1);
+        }
+    };
 
-    Allocator();
-    Allocator(size_t data_size, size_t page_size, size_t alignment);
-    ~Allocator();
+    class Allocator
+    {
+    public:
+        // debug patterns
+        static const uint8_t PATTERN_ALIGN = 0xFC;
+        static const uint8_t PATTERN_ALLOC = 0xFD;
+        static const uint8_t PATTERN_FREE = 0xFE;
 
-    // resets the allocator to a new configuration
-    void Reset(size_t data_size, size_t page_size, size_t alignment);
+        Allocator();
+        Allocator(size_t data_size, size_t page_size, size_t alignment);
+        ~Allocator();
 
-    // alloc and free blocks
-    void *Allocate();
-    void Free(void *p);
-    void FreeAll();
+        // resets the allocator to a new configuration
+        void Reset(size_t data_size, size_t page_size, size_t alignment);
 
-private:
-    // gets the next block
-    BlockHeader *NextBlock(BlockHeader *pBlock);
+        // alloc and free blocks
+        void *Allocate();
+        void Free(void *p);
+        void FreeAll();
 
-    // the page list
-    PageHeader *m_pPageList;
+    private:
+        // gets the next block
+        BlockHeader *NextBlock(BlockHeader *pBlock);
 
-    // the free block list
-    BlockHeader *m_pFreeList;
+        // the page list
+        PageHeader *m_pPageList;
 
-    size_t m_szDataSize;
-    size_t m_szPageSize;
-    size_t m_szAlignmentSize;
-    size_t m_szBlockSize;
-    size_t m_nBlocksPerPage;
+        // the free block list
+        BlockHeader *m_pFreeList;
 
-    // statistics
-    size_t m_nPages;
-    size_t m_nBlocks;
-    size_t m_nFreeBlocks;
+        size_t m_szDataSize;
+        size_t m_szPageSize;
+        size_t m_szAlignmentSize;
+        size_t m_szBlockSize;
+        size_t m_nBlocksPerPage;
 
-    // disable copy & assignment
-    Allocator(const Allocator &clone);
-    Allocator &operator=(const Allocator &rhs);
-};
-GameEngineEnd
+        // statistics
+        size_t m_nPages;
+        size_t m_nBlocks;
+        size_t m_nFreeBlocks;
+
+        // disable copy & assignment
+        Allocator(const Allocator &clone);
+        Allocator &operator=(const Allocator &rhs);
+    };
+}  // namespace GameEngine
