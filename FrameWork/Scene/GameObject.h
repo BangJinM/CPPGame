@@ -5,7 +5,7 @@
 
 #include "ClassIDs.h"
 #include "Config.h"
-#include "IComponent.h"
+#include "IBehaviour.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Object.h"
@@ -15,7 +15,7 @@ namespace GameEngine
 {
     class Material;
 
-    class GameObject : public Object, public IComponent
+    class GameObject : public Object, public IBehaviour
     {
         friend class Component;
 

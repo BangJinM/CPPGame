@@ -6,6 +6,7 @@
 
 #include "Component.h"
 #include "Config.h"
+#include "ISerializable.h"
 #include "Renderer.h"
 #include "Transform.h"
 
@@ -29,6 +30,9 @@ namespace GameEngine
         virtual void Start();
 
         glm::mat4 getProjectionMatrixOrthographic();
+
+        virtual void OnSerialize(cJSON *root);
+        virtual void OnDeserialize(cJSON *root);
 
     private:
         //			y

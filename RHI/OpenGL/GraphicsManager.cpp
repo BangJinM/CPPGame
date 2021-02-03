@@ -67,31 +67,31 @@ namespace GameEngine
     {
     }
 
-    void GraphicsManager::PrepareMaterial(Material &material)
+    void GraphicsManager::PrepareMaterial(SharedMaterial material)
     {
         int textureID = 0;
-        auto shader = g_pShaderManager->GetShaderProgram(material.shaderID);
+        auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
-        for (size_t i = 0; i < material.m_MaterialDatas.size(); i++)
+        for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
-            switch (material.m_MaterialDatas[i].m_Type)
+            switch (material->m_MaterialDatas[i].m_Type)
             {
             case MaterialType::T_Mat4:
             {
-                auto property = reinterpret_cast<float *>(material.m_MaterialDatas[i].m_Buffer);
-                shader->setMat4(material.m_MaterialDatas[i].m_Name, &property[0]);
+                auto property = reinterpret_cast<float *>(material->m_MaterialDatas[i].m_Buffer);
+                shader->setMat4(material->m_MaterialDatas[i].m_Name, &property[0]);
                 break;
             }
             case MaterialType::T_Texture:
             {
-                string property = reinterpret_cast<char *>(material.m_MaterialDatas[i].m_Buffer);
-                int location = glGetUniformLocation(shader->m_ProgramID, material.m_MaterialDatas[i].m_Name.c_str());
+                string property = reinterpret_cast<char *>(material->m_MaterialDatas[i].m_Buffer);
+                int location = glGetUniformLocation(shader->m_ProgramID, material->m_MaterialDatas[i].m_Name.c_str());
                 if (location != -1)
                 {
                     SharedTexture image = g_pAssetManager->LoadTexture(property);
                     if (!image)
                         image = g_pAssetManager->getWhiteTexture();
-                    shader->setInt(material.m_MaterialDatas[i].m_Name, textureID);
+                    shader->setInt(material->m_MaterialDatas[i].m_Name, textureID);
                     if (image->id <= 0)
                     {
                         BindTexture(image);

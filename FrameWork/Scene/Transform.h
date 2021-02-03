@@ -6,7 +6,9 @@
 
 #include "Component.h"
 #include "Config.h"
+#include "ISerializable.h"
 #include "MyMath.h"
+#include "cjson/cJSON.h"
 
 namespace GameEngine
 {
@@ -21,6 +23,9 @@ namespace GameEngine
         void setMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
 
         GlmMat4 getMatrix() { return m_Matrix; }
+
+        virtual void OnSerialize(cJSON *root) override;
+        virtual void OnDeserialize(cJSON *root) override;
 
     private:
         GlmMat4 m_Matrix;

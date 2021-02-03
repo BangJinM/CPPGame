@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "Utils/SerializableHelper.h"
 
 namespace GameEngine
 {
@@ -37,6 +38,23 @@ namespace GameEngine
         m_Matrix = glm::scale(m_Matrix, scale);
         glm::qua<float> q = glm::qua<float>(glm::radians(rotation));  //创建一个四元数
         m_Matrix = glm::mat4_cast(q) * m_Matrix;                      //得到一个旋转的模型矩阵
+    }
+
+    void Transform::OnSerialize(cJSON *root)
+    {
+        cJSON *monitor = cJSON_AddObjectToObject(root, "Transform");
+        SerializableHelper::Seserialize(monitor, "rotation", m_Rotation);
+        SerializableHelper::Seserialize(monitor, "position", m_Position);
+        SerializableHelper::Seserialize(monitor, "scale", m_Scale);
+        Component::OnSerialize(monitor);
+    }
+
+    void Transform::OnDeserialize(cJSON *root)
+    {
+        SetRotation(SerializableHelper::DeserializeVecterFloat3(root, "rotation"));
+        SetPosition(SerializableHelper::DeserializeVecterFloat3(root, "position"));
+        SetScale(SerializableHelper::DeserializeVecterFloat3(root, "scale"));
+        Component::OnDeserialize(root);
     }
 
 }  // namespace GameEngine

@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "Config.h"
-#include "IComponent.h"
+#include "IBehaviour.h"
 #include "Object.h"
 namespace GameEngine
 {
@@ -16,7 +16,7 @@ namespace GameEngine
     class Renderer;
     class CanvasRenderer;
     class Light;
-    class Scene : public Object, public IComponent
+    class Scene : public Object, public IBehaviour
     {
     private:
         /* data */

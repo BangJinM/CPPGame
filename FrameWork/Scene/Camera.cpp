@@ -1,10 +1,11 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 
 #include "BaseApplication.h"
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "Utils/SerializableHelper.h"
 
 namespace GameEngine
 {
@@ -56,4 +57,11 @@ namespace GameEngine
         return m_ProjectionMatrix4_Orthographic;
     }
 
+    void Camera::OnSerialize(cJSON *root)
+    {
+    }
+
+    void Camera::OnDeserialize(cJSON *root)
+    {
+    }
 }  // namespace GameEngine

@@ -10,6 +10,7 @@ include(Math/CMakeLists.txt)
 include(Render/CMakeLists.txt)
 include(Logger/CMakeLists.txt)
 include(Memory/CMakeLists.txt)
+include(Utils/CMakeLists.txt)
 
 list(APPEND FRAMEWORK_SRC ${FRAMEWORK_HEADER})
 

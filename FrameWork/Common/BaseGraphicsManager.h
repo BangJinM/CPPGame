@@ -16,7 +16,7 @@ namespace GameEngine
 
     struct RendererCammand
     {
-        Material material;
+        SharedMaterial material;
         SharedMesh mesh;
         int index;
     };
@@ -38,7 +38,7 @@ namespace GameEngine
 
         virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
         virtual void BindTexture(SharedTexture texture) = 0;
-        virtual void PrepareMaterial(Material &material) = 0;
+        virtual void PrepareMaterial(SharedMaterial material) = 0;
 
     protected:
         std::list<RendererCammand> m_RendererCommands;

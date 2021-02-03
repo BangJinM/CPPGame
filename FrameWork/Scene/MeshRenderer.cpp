@@ -29,10 +29,12 @@ namespace GameEngine
             {
                 if (mi < materials.size())
                     materialID = mi;
-                Material material = (*materials[materialID]);
-                material.AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
-                material.AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
-                material.AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
+                SharedMaterial material = make_shared<Material>();
+                material->shaderID = materials[mi]->shaderID;
+                material->AddPropertys(materials[mi]->m_MaterialDatas);
+                material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
+                material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
+                material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
 
                 if (mesh && mi <= mesh->m_MeshDatas.size())
                 {

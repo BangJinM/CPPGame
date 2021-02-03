@@ -4,13 +4,14 @@
 
 #include "ClassIDs.h"
 #include "Config.h"
-#include "IComponent.h"
+#include "IBehaviour.h"
 #include "Object.h"
 
 namespace GameEngine
 {
     class GameObject;
-    class Component : public Object, public IComponent
+
+    class Component : public Object, public IBehaviour
     {
         friend class GameObject;
 
@@ -39,6 +40,15 @@ namespace GameEngine
         SharedGameObject getParent()
         {
             return m_Parent.lock();
+        }
+
+        virtual void OnSerialize(cJSON* root) override
+        {
+            Object::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            Object::OnDeserialize(root);
         }
 
     public:

@@ -15,7 +15,6 @@ Scene/Scene.h
 Scene/SceneManager.h
 Scene/Texture.h
 Scene/Transform.h
-Scene/IComponent.h
 )
 
 SET(FRAMEWORK_SCENE_SRC 

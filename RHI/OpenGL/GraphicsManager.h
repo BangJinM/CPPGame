@@ -21,7 +21,7 @@ namespace GameEngine
 
         virtual void BindTexture(SharedTexture texture) override;
         virtual void PrepareMesh(SharedMesh mesh, int index) override;
-        virtual void PrepareMaterial(Material &material) override;
+        virtual void PrepareMaterial(SharedMaterial material) override;
     };
 
 }  // namespace GameEngine
