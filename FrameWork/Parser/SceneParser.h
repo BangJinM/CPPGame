@@ -81,9 +81,9 @@ namespace GameEngine
             return scene;
         }
 
-        static vecterFloat3 GetVF3(string name, cJSON *node)
+        static VecterFloat3 GetVF3(string name, cJSON *node)
         {
-            vecterFloat3 vec3(vecterFloat3(cJSON_GetArrayItem(node, 0)->valuedouble, cJSON_GetArrayItem(node, 1)->valuedouble, cJSON_GetArrayItem(node, 2)->valuedouble));
+            VecterFloat3 vec3(VecterFloat3(cJSON_GetArrayItem(node, 0)->valuedouble, cJSON_GetArrayItem(node, 1)->valuedouble, cJSON_GetArrayItem(node, 2)->valuedouble));
             return vec3;
         }
 
@@ -104,17 +104,17 @@ namespace GameEngine
             auto paramsNode = cJSON_GetObjectItem(root, "scale");
             if (paramsNode)
             {
-                gameobject->setScale(GetVF3("scale", paramsNode));
+                gameobject->SetScale(GetVF3("scale", paramsNode));
             }
             paramsNode = cJSON_GetObjectItem(root, "position");
             if (paramsNode)
             {
-                gameobject->setPosition(GetVF3("position", paramsNode));
+                gameobject->SetPosition(GetVF3("position", paramsNode));
             }
             paramsNode = cJSON_GetObjectItem(root, "rotation");
             if (paramsNode)
             {
-                gameobject->setRotation(GetVF3("rotation", paramsNode));
+                gameobject->SetRotation(GetVF3("rotation", paramsNode));
             }
             return gameobject;
         }

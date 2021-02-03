@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <map>
 #include <string>
@@ -15,18 +15,18 @@ namespace GameEngine
     public:
         Transform();
 
-        void setPosition(vecterFloat3 position);
-        void setScale(vecterFloat3 scale);
-        void setRotation(vecterFloat3 rotation);
-        void setMatrix(vecterFloat3 position, vecterFloat3 scale, vecterFloat3 rotation);
+        void SetPosition(VecterFloat3 position);
+        void SetScale(VecterFloat3 scale);
+        void SetRotation(VecterFloat3 rotation);
+        void setMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
 
         GlmMat4 getMatrix() { return m_Matrix; }
 
     private:
         GlmMat4 m_Matrix;
 
-        vecterFloat3 m_Position;
-        vecterFloat3 m_Scale;
-        vecterFloat3 m_Rotation;
+        VecterFloat3 m_Position;
+        VecterFloat3 m_Scale;
+        VecterFloat3 m_Rotation;
     };
 }  // namespace GameEngine

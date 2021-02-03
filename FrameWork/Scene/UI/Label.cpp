@@ -28,12 +28,12 @@ namespace GameEngine
         return std::string();
     }
 
-    void Label::setContentSize(vecterFloat2 contentSize)
+    void Label::setContentSize(VecterFloat2 contentSize)
     {
     }
 
-    vecterFloat2 Label::getContentSize()
+    VecterFloat2 Label::getContentSize()
     {
-        return vecterFloat2();
+        return VecterFloat2();
     }
 }  // namespace GameEngine

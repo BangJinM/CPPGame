@@ -23,8 +23,8 @@ namespace GameEngine
 
         GlmMat4 view_matrix;
         GlmMat4 projection_matrix;
-        vecterFloat4 camera_pos;
-        vecterFloat4 time;
+        VecterFloat4 camera_pos;
+        VecterFloat4 time;
     };
 
     // per renderer uniforms, set by renderer
@@ -52,7 +52,7 @@ namespace GameEngine
     public:
         std::string m_Name;
         MaterialType m_Type;
-        Buffer *m_Buffer = nullptr;
+        char *m_Buffer = nullptr;
         int m_Size;
 
         MaterialData()
@@ -81,17 +81,16 @@ namespace GameEngine
                 m_Buffer = nullptr;
             }
             m_Name = name;
-            m_Buffer = new Buffer(size + 1);
-            memcpy(m_Buffer->m_pData, value, size);
-            m_Buffer->GetData()[size] = '\0';
-            auto property = reinterpret_cast<char *>(m_Buffer->GetData());
+            m_Buffer = new char[size + 1];
+            memcpy(m_Buffer, value, size);
+            m_Buffer[size] = '\0';
             m_Size = size;
             m_Type = type;
         }
 
         MaterialData(const MaterialData &other)
         {
-            AddData(other.m_Buffer->GetData(), other.m_Name, other.m_Size, other.m_Type);
+            AddData(other.m_Buffer, other.m_Name, other.m_Size, other.m_Type);
         }
 
         MaterialData &operator=(const MaterialData &other)
@@ -128,6 +127,14 @@ namespace GameEngine
                 shaderID = other.shaderID;
             }
             return *this;
+        }
+
+        void AddPropertys(std::vector<MaterialData> datas)
+        {
+            for (auto data : datas)
+            {
+                AddProperty(data.m_Buffer, data.m_Name, data.m_Size, data.m_Type);
+            }
         }
 
     public:

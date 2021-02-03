@@ -12,7 +12,7 @@ namespace GameEngine
         /* data */
         int m_Font_Size;
         std::string m_Text;
-        vecterFloat2 m_Content_Size;
+        VecterFloat2 m_Content_Size;
 
     public:
         Label(/* args */);
@@ -24,7 +24,7 @@ namespace GameEngine
         void setText(std::string str);
         std::string getText();
 
-        void setContentSize(vecterFloat2 contentSize);
-        vecterFloat2 getContentSize();
+        void setContentSize(VecterFloat2 contentSize);
+        VecterFloat2 getContentSize();
     };
 }  // namespace GameEngine

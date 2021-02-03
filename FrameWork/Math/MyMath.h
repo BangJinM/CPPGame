@@ -5,9 +5,9 @@
 namespace GameEngine
 {
     typedef glm::vec4 ColorRGBA;
-    typedef glm::vec3 vecterFloat3;
-    typedef glm::vec4 vecterFloat4;
-    typedef glm::vec2 vecterFloat2;
+    typedef glm::vec3 VecterFloat3;
+    typedef glm::vec4 VecterFloat4;
+    typedef glm::vec2 VecterFloat2;
     typedef glm::mat4 GlmMat4;
 }  // namespace GameEngine
 #endif

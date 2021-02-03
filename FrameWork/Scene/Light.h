@@ -87,7 +87,7 @@ namespace GameEngine
         DirectionalLight() : Light(LightType::DirectionalLight) {}
 
     private:
-        vecterFloat3 direction;
+        VecterFloat3 direction;
     };
 
 }  // namespace GameEngine

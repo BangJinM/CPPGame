@@ -84,17 +84,17 @@ namespace GameEngine
         }
 
         SharedMesh mesh = make_shared<Mesh>();
-        vecterFloat3 position[4];
-        vecterFloat2 textcoord[4];
-        position[0] = vecterFloat3(0.5f, 0.5f, 0.0f);
-        position[1] = vecterFloat3(0.5f, -0.5f, 0.0f);
-        position[2] = vecterFloat3(-0.5f, -0.5f, 0.0f);
-        position[3] = vecterFloat3(-0.5f, 0.5f, 0.0f);
+        VecterFloat3 position[4];
+        VecterFloat2 textcoord[4];
+        position[0] = VecterFloat3(0.5f, 0.5f, 0.0f);
+        position[1] = VecterFloat3(0.5f, -0.5f, 0.0f);
+        position[2] = VecterFloat3(-0.5f, -0.5f, 0.0f);
+        position[3] = VecterFloat3(-0.5f, 0.5f, 0.0f);
 
-        textcoord[0] = vecterFloat2(1.0f, 1.0f);
-        textcoord[1] = vecterFloat2(1.0f, 0.0f);
-        textcoord[2] = vecterFloat2(0.0f, 0.0f);
-        textcoord[3] = vecterFloat2(0.0f, 1.0f);
+        textcoord[0] = VecterFloat2(1.0f, 1.0f);
+        textcoord[1] = VecterFloat2(1.0f, 0.0f);
+        textcoord[2] = VecterFloat2(0.0f, 0.0f);
+        textcoord[3] = VecterFloat2(0.0f, 1.0f);
 
         MeshData meshData;
         meshData.indices = {
