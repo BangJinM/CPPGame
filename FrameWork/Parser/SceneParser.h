@@ -22,6 +22,7 @@
 #include "Scene.h"
 #include "UI/Image.h"
 #include "cjson/cJSON.h"
+#include "easylogging++.h"
 
 namespace GameEngine
 {
@@ -191,7 +192,6 @@ namespace GameEngine
             } attribute_locations[] =
                 {
                     {"GameObject", compareGameObject},
-                    {"Transform", compareTransform},
                     {"MeshRenderer", compareMeshRenderer},
                     {"Image", compareImage},
                     {"Light", compareLight},
@@ -209,15 +209,23 @@ namespace GameEngine
                 }
             }
 
-            auto paramsNode = cJSON_GetObjectItem(root, "fileID");
-            if (paramsNode && object)
+            if (strCompare(type, "Transform"))
             {
-                object->SetFileID(paramsNode->valueint);
+                object = make_shared<Transform>();
+                object->OnDeserialize(root);
             }
-            paramsNode = cJSON_GetObjectItem(root, "m_GameObject");
-            if (paramsNode && object)
+            else
             {
-                object->SetParentFileID(paramsNode->valueint);
+                auto paramsNode = cJSON_GetObjectItem(root, "fileID");
+                if (paramsNode && object)
+                {
+                    object->SetFileID(paramsNode->valueint);
+                }
+                paramsNode = cJSON_GetObjectItem(root, "m_GameObject");
+                if (paramsNode && object)
+                {
+                    object->SetParentFileID(paramsNode->valueint);
+                }
             }
 
             return object;
