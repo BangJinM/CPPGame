@@ -15,10 +15,10 @@ namespace GameEngine
     Scene::Scene()
     {
         m_Root = GameObject::createGameObject();
-        m_Root->setName("root");
+        m_Root->SetName("root");
 
         auto canvas = GameObject::createGameObject();
-        canvas->setName("Canvas");
+        canvas->SetName("Canvas");
         m_Root->addChild(canvas);
         canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
     }

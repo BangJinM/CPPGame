@@ -1,12 +1,15 @@
 ﻿#include "Renderer.h"
 
+#include "AssetManager.h"
 #include "GameObject.h"
 #include "Material.h"
 #include "Scene.h"
 #include "SceneManager.h"
+
 namespace GameEngine
 {
-    extern SceneManager *g_pSceneManager;
+    extern SceneManager* g_pSceneManager;
+    extern AssetManager* g_pAssetManager;
 
     void Renderer::Prepare()
     {
@@ -53,6 +56,22 @@ namespace GameEngine
         auto scene = g_pSceneManager->GetScene();
         scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
         Component::Start();
+    }
+
+    void Renderer::OnSerialize(cJSON* root)
+    {
+        SerializableHelper::Seserialize(root, "m_Materials", m_MaterialPaths);
+        Object::OnSerialize(root);
+    }
+    void Renderer::OnDeserialize(cJSON* root)
+    {
+        m_MaterialPaths = SerializableHelper::DeserializeVectorString(root, "m_Materials");
+        for (auto material : m_MaterialPaths)
+        {
+            AddMaterial(g_pAssetManager->LoadMaterial(material));
+        }
+
+        Object::OnDeserialize(root);
     }
 
 }  // namespace GameEngine

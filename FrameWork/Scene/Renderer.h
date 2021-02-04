@@ -23,7 +23,11 @@ namespace GameEngine
         virtual void Render(SharePtr<Camera> camera);  // {}
         virtual void Start();
 
+        virtual void OnSerialize(cJSON* root) override;
+        virtual void OnDeserialize(cJSON* root) override;
+
     protected:
+        std::vector<std::string> m_MaterialPaths;
         std::vector<SharedMaterial> m_Materials;
     };
 }  // namespace GameEngine

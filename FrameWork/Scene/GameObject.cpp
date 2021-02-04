@@ -23,13 +23,13 @@ namespace GameEngine
 
     void GameObject::addChild(SharedGameObject child)
     {
-        auto begin = m_children.find(child->getName());
+        auto begin = m_children.find(child->GetName());
         if (begin != m_children.end())
         {
             return;
         }
         child->setParent(m_GameObject.lock());
-        m_children.insert(std::pair<std::string, SharedGameObject>(child->getName(), child));
+        m_children.insert(std::pair<std::string, SharedGameObject>(child->GetName(), child));
     }
 
     SharedGameObject GameObject::getChildByName(std::string name)
@@ -63,10 +63,10 @@ namespace GameEngine
 
     void GameObject::deleteChild(SharedGameObject child)
     {
-        auto begin = m_children.find(child->getName());
+        auto begin = m_children.find(child->GetName());
         if (begin != m_children.end())
         {
-            m_children.erase(child->getName());
+            m_children.erase(child->GetName());
         }
     }
 
@@ -88,11 +88,6 @@ namespace GameEngine
     {
         m_compenents.clear();
         m_children.clear();
-    }
-
-    void GameObject::setName(std::string name)
-    {
-        m_Name = name;
     }
 
     void GameObject::Start()

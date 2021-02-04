@@ -37,8 +37,6 @@ namespace GameEngine
         void addChild(SharedGameObject child);
         void deleteChild(SharedGameObject child);
 
-        void setName(std::string name);
-
         SharedGameObject getChildByName(std::string name);
         SharedGameObject getChildByID(int id);
         SharedGameObject getParent();
@@ -46,11 +44,6 @@ namespace GameEngine
 
         GameObject();
         virtual ~GameObject();
-
-        std::string getName()
-        {
-            return m_Name;
-        }
 
         std::map<std::string, SharedGameObject> getChildren()
         {
@@ -61,7 +54,6 @@ namespace GameEngine
         std::vector<SharePtr<Component>> m_compenents;
         SharedGameObject m_Parent;
         std::map<std::string, SharedGameObject> m_children;
-        std::string m_Name;
 
     public:
         //private:

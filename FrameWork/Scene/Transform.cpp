@@ -42,11 +42,10 @@ namespace GameEngine
 
     void Transform::OnSerialize(cJSON *root)
     {
-        cJSON *monitor = cJSON_AddObjectToObject(root, "Transform");
-        SerializableHelper::Seserialize(monitor, "rotation", m_Rotation);
-        SerializableHelper::Seserialize(monitor, "position", m_Position);
-        SerializableHelper::Seserialize(monitor, "scale", m_Scale);
-        Component::OnSerialize(monitor);
+        SerializableHelper::Seserialize(root, "rotation", m_Rotation);
+        SerializableHelper::Seserialize(root, "position", m_Position);
+        SerializableHelper::Seserialize(root, "scale", m_Scale);
+        Component::OnSerialize(root);
     }
 
     void Transform::OnDeserialize(cJSON *root)

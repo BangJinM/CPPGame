@@ -59,9 +59,11 @@ namespace GameEngine
 
     void Camera::OnSerialize(cJSON *root)
     {
+		Component::OnSerialize(root);
     }
 
     void Camera::OnDeserialize(cJSON *root)
     {
+		Component::OnDeserialize(root);
     }
 }  // namespace GameEngine

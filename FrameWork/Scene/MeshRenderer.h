@@ -14,8 +14,10 @@ namespace GameEngine
         SharedMesh getMesh() { return m_Mesh; }
         void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
         virtual void Render(SharePtr<Camera> camera);
-
+        virtual void OnSerialize(cJSON* root) override;
+        virtual void OnDeserialize(cJSON* root) override;
     protected:
         SharedMesh m_Mesh;
+        std::string m_MeshPath;
     };
 }  // namespace GameEngine

@@ -62,7 +62,7 @@ namespace GameEngine
                         gameobject->addChild(tempObject);
                     }
                 }
-                else
+                else if(object)
                 {
                     auto tempComponent = std::dynamic_pointer_cast<Component>(object);
                     auto fatherID = tempComponent->GetParentFileID();
@@ -82,101 +82,6 @@ namespace GameEngine
             return scene;
         }
 
-        static VecterFloat3 GetVF3(string name, cJSON *node)
-        {
-            VecterFloat3 vec3(VecterFloat3(cJSON_GetArrayItem(node, 0)->valuedouble, cJSON_GetArrayItem(node, 1)->valuedouble, cJSON_GetArrayItem(node, 2)->valuedouble));
-            return vec3;
-        }
-
-        static SharedObject compareGameObject(cJSON *root)
-        {
-            SharedGameObject gameobject = GameObject::createGameObject();
-            auto paramsNode = cJSON_GetObjectItem(root, "name");
-            if (paramsNode)
-            {
-                gameobject->setName(paramsNode->valuestring);
-            }
-            return gameobject;
-        }
-
-        static SharedObject compareTransform(cJSON *root)
-        {
-            SharePtr<Transform> gameobject = std::make_shared<Transform>();
-            auto paramsNode = cJSON_GetObjectItem(root, "scale");
-            if (paramsNode)
-            {
-                gameobject->SetScale(GetVF3("scale", paramsNode));
-            }
-            paramsNode = cJSON_GetObjectItem(root, "position");
-            if (paramsNode)
-            {
-                gameobject->SetPosition(GetVF3("position", paramsNode));
-            }
-            paramsNode = cJSON_GetObjectItem(root, "rotation");
-            if (paramsNode)
-            {
-                gameobject->SetRotation(GetVF3("rotation", paramsNode));
-            }
-            return gameobject;
-        }
-
-        static SharedObject compareCamera(cJSON *root)
-        {
-            SharePtr<Camera> gameobject = std::make_shared<Camera>();
-            return gameobject;
-        }
-
-        static SharedObject compareMeshRenderer(cJSON *root)
-        {
-            SharePtr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
-            auto paramsNode = cJSON_GetObjectItem(root, "m_Materials");
-            if (paramsNode)
-            {
-                auto count = cJSON_GetArraySize(paramsNode);
-                for (int i = 0; i < count; i++)
-                {
-                    cJSON *item = cJSON_GetArrayItem(paramsNode, i);
-                    meshRenderer->AddMaterial(g_pAssetManager->LoadMaterial(item->valuestring));
-                }
-            }
-            paramsNode = cJSON_GetObjectItem(root, "m_Mesh");
-            if (paramsNode)
-            {
-                meshRenderer->SetMesh(g_pAssetManager->LoadMesh(paramsNode->valuestring));
-            }
-            return meshRenderer;
-        }
-
-        static SharedObject compareImage(cJSON *root)
-        {
-            SharePtr<Image> meshRenderer = std::make_shared<Image>();
-            auto paramsNode = cJSON_GetObjectItem(root, "Texture");
-            if (paramsNode)
-            {
-                meshRenderer->setTexture(g_pAssetManager->LoadTexture(paramsNode->valuestring));
-            }
-            return meshRenderer;
-        }
-
-        static SharedObject compareLight(cJSON *root)
-        {
-            SharePtr<Light> light;
-
-            auto typeNode = cJSON_GetObjectItem(root, "Type");
-            if (typeNode)
-            {
-                if (typeNode->valueint == Light::LightType::DirectionalLight)
-                    light = make_shared<DirectionalLight>();
-                else if (typeNode->valueint == Light::LightType::PointLight)
-                    light = make_shared<PointLight>();
-                else if (typeNode->valueint == Light::LightType::AreaLight)
-                    light = make_shared<AreaLight>();
-                else if (typeNode->valueint == Light::LightType::SpotLight)
-                    light = make_shared<SpotLight>();
-            }
-            return light;
-        }
-
         static bool strCompare(const char *str1, const char *str2)
         {
             std::string str = str1;
@@ -185,33 +90,37 @@ namespace GameEngine
 
         static SharedObject parser(cJSON *root)  //以递归的方式打印json的最内层键值对
         {
-            static const struct
-            {
-                const char *name;
-                std::function<SharedObject(cJSON *root)> func;
-            } attribute_locations[] =
-                {
-                    {"GameObject", compareGameObject},
-                    {"MeshRenderer", compareMeshRenderer},
-                    {"Image", compareImage},
-                    {"Light", compareLight},
-                    {"Camera", compareCamera}};
-            const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
-            int i = 0;
-            SharedObject object;
+            SharedObject object = nullptr;
             auto type = root->string;
-            for (size_t i = 0; i < size; i++)
-            {
-                if (strCompare(type, attribute_locations[i].name))
-                {
-                    object = attribute_locations[i].func(root);
-                    break;
-                }
-            }
 
             if (strCompare(type, "Transform"))
             {
                 object = make_shared<Transform>();
+                object->OnDeserialize(root);
+            }
+            //else if (strCompare(type, "Image"))
+            //{
+            //    object = make_shared<Image>();
+            //    object->OnDeserialize(root);
+            //}
+            //else if (strCompare(type, "Light"))
+            //{
+            //    object = make_shared<Light>();
+            //    object->OnDeserialize(root);
+            //}
+            else if (strCompare(type, "Camera"))
+            {
+                object = make_shared<Camera>();
+                object->OnDeserialize(root);
+            }
+            else if (strCompare(type, "MeshRenderer"))
+            {
+                object = make_shared<MeshRenderer>();
+                object->OnDeserialize(root);
+            }
+            else if (strCompare(type, "GameObject"))
+            {
+                object = GameObject::createGameObject();
                 object->OnDeserialize(root);
             }
             else

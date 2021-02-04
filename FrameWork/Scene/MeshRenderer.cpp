@@ -1,14 +1,18 @@
 ﻿#include "MeshRenderer.h"
 
+#include "AssetManager.h"
 #include "BaseGraphicsManager.h"
 #include "Camera.h"
 #include "GameObject.h"
 #include "Material.h"
 #include "Transform.h"
 #include "glm/glm.hpp"
+
 namespace GameEngine
 {
-    extern BaseGraphicsManager *g_pGraphicsManager;
+    extern BaseGraphicsManager* g_pGraphicsManager;
+    extern AssetManager* g_pAssetManager;
+    
     MeshRenderer::MeshRenderer()
     {
     }
@@ -47,5 +51,17 @@ namespace GameEngine
                 }
             }
         }
+    }
+
+    void MeshRenderer::OnSerialize(cJSON* root)
+    {
+        SerializableHelper::Seserialize(root, "m_Mesh", m_MeshPath);
+        Renderer::OnSerialize(root);
+    }
+    void MeshRenderer::OnDeserialize(cJSON* root)
+    {
+        m_MeshPath = SerializableHelper::DeserializeString(root, "m_Mesh");
+        SetMesh(g_pAssetManager->LoadMesh(m_MeshPath));
+        Renderer::OnDeserialize(root);
     }
 }  // namespace GameEngine
