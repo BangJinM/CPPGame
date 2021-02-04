@@ -1,4 +1,4 @@
-#include "MemoryManager.h"
+﻿#include "MemoryManager.h"
 
 #include <stdint.h>
 // extern "C" void *malloc(size_t size);
@@ -110,8 +110,9 @@ namespace GameEngine
         return static_cast<void *>(p);
     }
 
-    void MemoryManager::Free(void *p, size_t size)
+    void MemoryManager::Free(void *p, size_t size, size_t alignment)
     {
+		size += alignment;
         if (m_bInitialized)
         {
             Allocator *pAlloc = LookUpAllocator(size);

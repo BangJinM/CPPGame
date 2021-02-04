@@ -47,7 +47,7 @@ namespace GameEngine
             else
             {
                 if (m_pData)
-                    g_pMemoryManager->Free(m_pData, m_szSize);
+                    g_pMemoryManager->Free(m_pData, m_szSize, m_szAlignment);
                 m_pData = reinterpret_cast<uint8_t *>(g_pMemoryManager->Allocate(rhs.m_szSize, rhs.m_szAlignment));
                 memcpy(m_pData, rhs.m_pData, rhs.m_szSize);
                 m_szSize = rhs.m_szSize;
@@ -59,7 +59,7 @@ namespace GameEngine
         Buffer &operator=(Buffer &&rhs)
         {
             if (m_pData)
-                g_pMemoryManager->Free(m_pData, m_szSize);
+                g_pMemoryManager->Free(m_pData, m_szSize, m_szAlignment);
             m_pData = rhs.m_pData;
             m_szSize = rhs.m_szSize;
             m_szAlignment = rhs.m_szAlignment;
@@ -72,7 +72,7 @@ namespace GameEngine
         ~Buffer()
         {
             if (m_pData)
-                g_pMemoryManager->Free(m_pData, m_szSize);
+                g_pMemoryManager->Free(m_pData, m_szSize, m_szAlignment);
             m_pData = nullptr;
         }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <new>
 
 #include "Allocator.h"
@@ -32,7 +32,7 @@ namespace GameEngine
 
         void *Allocate(size_t size);
         void *Allocate(size_t size, size_t alignment);
-        void Free(void *p, size_t size);
+        void Free(void *p, size_t size, size_t alignment);
 
     private:
         static size_t *m_pBlockSizeLookup;

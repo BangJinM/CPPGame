@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include "Config.h"
-
 namespace GameEngine
 {
     class IRuntimeModule

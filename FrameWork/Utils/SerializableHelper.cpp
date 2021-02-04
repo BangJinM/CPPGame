@@ -67,7 +67,6 @@ namespace GameEngine
     VecterFloat2 SerializableHelper::DeserializeVecterFloat2(cJSON* root, const std::string& p_name)
     {
         auto paramsNode = cJSON_GetObjectItem(root, p_name.c_str());
-        VecterFloat2 vec2;
         if (paramsNode)
             return VecterFloat2(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble);
         return VecterFloat2(0,0);
@@ -75,7 +74,6 @@ namespace GameEngine
     VecterFloat3 SerializableHelper::DeserializeVecterFloat3(cJSON* root, const std::string& p_name)
     {
         auto paramsNode = cJSON_GetObjectItem(root, p_name.c_str());
-        VecterFloat3 vec3();
         if (paramsNode)
             return VecterFloat3(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble);
         return VecterFloat3(0,0,0);
@@ -83,7 +81,6 @@ namespace GameEngine
     VecterFloat4 SerializableHelper::DeserializeVecterFloat4(cJSON* root, const std::string& p_name)
     {
         auto paramsNode = cJSON_GetObjectItem(root, p_name.c_str());
-        VecterFloat4 vec4;
         if (paramsNode)
             return VecterFloat4(cJSON_GetArrayItem(paramsNode, 0)->valuedouble, cJSON_GetArrayItem(paramsNode, 1)->valuedouble, cJSON_GetArrayItem(paramsNode, 2)->valuedouble, cJSON_GetArrayItem(paramsNode, 3)->valuedouble);
         return VecterFloat4(0,0,0,0);

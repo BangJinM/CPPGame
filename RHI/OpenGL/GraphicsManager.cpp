@@ -78,13 +78,13 @@ namespace GameEngine
             {
             case MaterialType::T_Mat4:
             {
-                auto property = reinterpret_cast<float *>(material->m_MaterialDatas[i].m_Buffer);
+                auto property = reinterpret_cast<float *>(material->m_MaterialDatas[i].m_Buffer->GetData());
                 shader->setMat4(material->m_MaterialDatas[i].m_Name, &property[0]);
                 break;
             }
             case MaterialType::T_Texture:
             {
-                string property = reinterpret_cast<char *>(material->m_MaterialDatas[i].m_Buffer);
+                string property = reinterpret_cast<char *>(material->m_MaterialDatas[i].m_Buffer->GetData());
                 int location = glGetUniformLocation(shader->m_ProgramID, material->m_MaterialDatas[i].m_Name.c_str());
                 if (location != -1)
                 {

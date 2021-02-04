@@ -52,7 +52,7 @@ namespace GameEngine
     public:
         std::string m_Name;
         MaterialType m_Type;
-        char *m_Buffer = nullptr;
+        Buffer *m_Buffer = nullptr;
         int m_Size;
 
         MaterialData()
@@ -81,23 +81,23 @@ namespace GameEngine
                 m_Buffer = nullptr;
             }
             m_Name = name;
-            m_Buffer = new char[size + 1];
-            memcpy(m_Buffer, value, size);
-            m_Buffer[size] = '\0';
+            m_Buffer = new Buffer(size + 1);
+            memcpy(m_Buffer->m_pData, value, size);
+            m_Buffer->m_pData[size] = '\0';
             m_Size = size;
             m_Type = type;
         }
 
         MaterialData(const MaterialData &other)
         {
-            AddData(other.m_Buffer, other.m_Name, other.m_Size, other.m_Type);
+            AddData(other.m_Buffer->GetData(), other.m_Name, other.m_Size, other.m_Type);
         }
 
         MaterialData &operator=(const MaterialData &other)
         {
             if (this != &other)
             {
-                AddData(other.m_Buffer, other.m_Name, other.m_Size, other.m_Type);
+                AddData(other.m_Buffer->GetData(), other.m_Name, other.m_Size, other.m_Type);
             }
             return *this;
         }
@@ -133,7 +133,7 @@ namespace GameEngine
         {
             for (auto data : datas)
             {
-                AddProperty(data.m_Buffer, data.m_Name, data.m_Size, data.m_Type);
+                AddProperty(data.m_Buffer->GetData(), data.m_Name, data.m_Size, data.m_Type);
             }
         }
 
