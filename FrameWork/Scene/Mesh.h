@@ -39,7 +39,7 @@ namespace GameEngine
         int getPerVertexSize() const
         {
             int vertexsize = 0;
-            for (const auto &attrib : attribs)
+            for (const auto& attrib : attribs)
             {
                 vertexsize += attrib.attribSizeBytes;
             }
@@ -72,11 +72,10 @@ namespace GameEngine
     class Mesh : public Object
     {
     public:
-        void pushMeshData(MeshData &meshData)
+        void pushMeshData(MeshData& meshData)
         {
             m_MeshDatas.push_back(meshData);
         }
-
     public:
         /*  渲染数据  */
         std::vector<MeshData> m_MeshDatas;

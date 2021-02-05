@@ -1,7 +1,6 @@
 ﻿SET(FRAMEWORK_PARSER_HEADER 
 Parser/MaterialParser.h
 Parser/ObjParser.h
-Parser/SceneParser.h
 Parser/stb_image.h
 Parser/TextureParser.h
 Parser/ParserManager.h

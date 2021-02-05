@@ -24,22 +24,30 @@ namespace GameEngine
 
     void GameObject::addChild(SharedGameObject child)
     {
-        auto begin = m_children.find(child->GetName());
+        auto begin = m_children.find(child->GetID());
         if (begin != m_children.end())
         {
             return;
         }
         child->setParent(m_GameObject.lock());
-        m_children.insert(std::pair<std::string, SharedGameObject>(child->GetName(), child));
+        m_children.insert(std::pair<int, SharedGameObject>(child->GetID(), child));
     }
 
     SharedGameObject GameObject::getChildByName(std::string name)
     {
-        auto begin = m_children.find(name);
-        if (begin != m_children.end())
-        {
-            return begin->second;
-        }
+		for (auto child = m_children.begin(); child != m_children.end(); child++)
+		{
+			if (child->second->GetName() == name)
+			{
+				return child->second;
+			}
+			else
+			{
+				auto res = child->second->getChildByName(name);
+				if (res)
+					return res;
+			}
+		}
         return nullptr;
     }
 
@@ -47,7 +55,7 @@ namespace GameEngine
     {
         for (auto child = m_children.begin(); child != m_children.end(); child++)
         {
-            if (child->second->GetFileID() == id)
+            if (child->second->GetID() == id)
             {
                 return child->second;
             }
@@ -64,10 +72,10 @@ namespace GameEngine
 
     void GameObject::deleteChild(SharedGameObject child)
     {
-        auto begin = m_children.find(child->GetName());
+        auto begin = m_children.find(child->GetID());
         if (begin != m_children.end())
         {
-            m_children.erase(child->GetName());
+            m_children.erase(child->GetID());
         }
     }
 
@@ -130,6 +138,7 @@ namespace GameEngine
     void GameObject::OnSerialize(cJSON* root)
     {
         Object::OnSerialize(root);
+		SerializableHelper::Seserialize(root, "name", GetName());
         auto gameobjects = cJSON_AddArrayToObject(root, "Children");
         for (auto child : getChildren())
         {
@@ -141,6 +150,7 @@ namespace GameEngine
         for (auto comp : m_compenents)
         {
             auto item = cJSON_CreateObject();
+			SerializableHelper::Seserialize(item, "type", comp->getClassID());
             comp->OnSerialize(item);
             cJSON_AddItemToArray(comps, item);
         }
@@ -172,6 +182,7 @@ namespace GameEngine
     void GameObject::OnDeserialize(cJSON* root)
     {
         auto paramsNode = cJSON_GetObjectItem(root, "Components");
+		SetName(SerializableHelper::DeserializeString(root, "name"));
         for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
         {
             auto compParam = cJSON_GetArrayItem(paramsNode, index);
@@ -190,6 +201,16 @@ namespace GameEngine
         }
         Object::OnDeserialize(root);
     }
+
+	void GameObject::SetName(std::string name)
+	{
+		m_Name = name;
+	}
+
+	std::string GameObject::GetName()
+	{
+		return m_Name;
+	}
 
 
 

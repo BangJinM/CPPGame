@@ -45,10 +45,13 @@ namespace GameEngine
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;
 
+		void SetName(std::string name);
+		std::string GetName();
+
         GameObject();
         virtual ~GameObject();
 
-        std::map<std::string, SharedGameObject> getChildren()
+        std::map<int, SharedGameObject> getChildren()
         {
             return m_children;
         }
@@ -56,10 +59,11 @@ namespace GameEngine
     private:
         std::vector<SharePtr<Component>> m_compenents;
         SharedGameObject m_Parent;
-        std::map<std::string, SharedGameObject> m_children;
+        std::map<int, SharedGameObject> m_children;
 
     public:
         //private:
+		std::string m_Name = "";
         bool m_isVisual = true;
         SharedMesh m_Mesh;
         std::weak_ptr<GameObject> m_GameObject;

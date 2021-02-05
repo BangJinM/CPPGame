@@ -2,7 +2,6 @@
 
 #include "MaterialParser.h"
 #include "ObjParser.h"
-#include "SceneParser.h"
 #include "TextureParser.h"
 #include "easylogging++.h"
 namespace GameEngine
@@ -11,7 +10,6 @@ namespace GameEngine
     ParserManager::Initialize()
     {
         AddParser(ParserExtType::MTL, new MaterialParser());
-        AddParser(ParserExtType::SCENE, new SceneParser());
         AddParser(ParserExtType::IMAGE, new TextureParser());
         AddParser(ParserExtType::OBJ, new ObjParser());
         return 0;

@@ -116,7 +116,7 @@ namespace GameEngine
 
     SharedGameObject Scene::GetGObject(SharedGameObject parent, int sid)
     {
-        std::map<std::string, SharedGameObject> children;
+        std::map<int, SharedGameObject> children;
         if (parent)
             children = parent->getChildren();
         else
@@ -125,7 +125,7 @@ namespace GameEngine
         for (auto i = children.begin(); i != children.end(); i++)
         {
             auto child = i->second;
-            if (child->GetId() == sid)
+            if (child->GetID() == sid)
                 result = child;
             if (result)
                 return result;
