@@ -13,7 +13,7 @@ namespace GameEngine
 
     void AssetLoader::Finalize() { m_strSearchPath.clear(); }
 
-    void AssetLoader::Tick() {}
+    void AssetLoader::Tick(float deltaTime) {}
 
     bool AssetLoader::AddSearchPath(const string path)
     {

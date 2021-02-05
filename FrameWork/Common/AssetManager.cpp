@@ -34,7 +34,7 @@ namespace GameEngine
         g_cache.clear();
     }
 
-    void AssetManager::Tick() {}
+    void AssetManager::Tick(float deltaTime) {}
 
     SharedGameObject AssetManager::LoadGameObject(const std::string &path)
     {

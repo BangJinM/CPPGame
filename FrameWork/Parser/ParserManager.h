@@ -24,7 +24,7 @@ namespace GameEngine
     public:
         virtual int Initialize() override;
         virtual void Finalize() override;
-        virtual void Tick() override;
+        virtual void Tick(float deltaTime) override;
 
         void AddParser(ParserExtType type, IParser* parser);
         void RemoveParser(ParserExtType type);

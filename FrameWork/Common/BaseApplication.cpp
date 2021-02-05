@@ -5,7 +5,7 @@ namespace GameEngine
     bool BaseApplication::m_bQuit = false;
     void BaseApplication::Finalize() {}
 
-    void BaseApplication::Tick() {}
+    void BaseApplication::Tick(float deltaTime) {}
 
     int BaseApplication::Initialize()
     {

@@ -54,12 +54,12 @@ namespace GameEngine
     {
     }
 
-    void GraphicsManager::Tick()
+    void GraphicsManager::Tick(float deltaTime)
     {
         auto window = glfwGetCurrentContext();
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        BaseGraphicsManager::Tick();
+        BaseGraphicsManager::Tick(deltaTime);
         glfwSwapBuffers(window);
     }
 

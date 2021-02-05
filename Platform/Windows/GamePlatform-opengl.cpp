@@ -67,7 +67,7 @@ namespace GameEngine
         _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
         _lastUpdate = now;
     }
-    void OpenGLApplication::Tick()
+    void OpenGLApplication::Tick(float deltaTime)
     {
         this->m_bQuit = glfwWindowShouldClose(window);
     }

@@ -8,7 +8,7 @@ namespace GameEngine
 
     void InputManager::Finalize() {}
 
-    void InputManager::Tick() {}
+    void InputManager::Tick(float deltaTime) {}
 
     void InputManager::addClickEventListener(const char key, CallBack callBack)
     {

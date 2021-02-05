@@ -1,10 +1,12 @@
 ﻿
 SET(FRAMEWORK_UTILS_HEADER 
 Utils/SerializableHelper.h
+Utils/Clock.h
 )
 
 SET(FRAMEWORK_UTILS_SRC 
 Utils/SerializableHelper.cpp
+Utils/Clock.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_UTILS_HEADER})

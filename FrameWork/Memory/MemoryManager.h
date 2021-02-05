@@ -28,7 +28,7 @@ namespace GameEngine
 
         virtual int Initialize();
         virtual void Finalize();
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
         void *Allocate(size_t size);
         void *Allocate(size_t size, size_t alignment);

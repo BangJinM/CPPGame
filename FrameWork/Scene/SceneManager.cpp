@@ -30,7 +30,7 @@ namespace GameEngine
         nextScene = nullptr;
     }
 
-    void SceneManager::Tick()
+    void SceneManager::Tick(float deltaTime)
     {
         if (!curScene)
             nextScene = std::make_shared<Scene>();

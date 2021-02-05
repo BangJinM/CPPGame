@@ -20,7 +20,7 @@ namespace GameEngine
         virtual void Finalize();
 
         // One cycle of the main loop
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
         virtual bool IsQuit();
 

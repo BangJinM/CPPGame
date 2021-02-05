@@ -23,7 +23,7 @@ namespace GameEngine
         virtual int Initialize();
         virtual void Finalize();
 
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
         //***************************************************IFileSystem
         virtual bool AddSearchPath(const string path) override;

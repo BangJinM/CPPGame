@@ -38,7 +38,7 @@ namespace GameEngine
         }
     }
 
-    void BaseGraphicsManager::Tick()
+    void BaseGraphicsManager::Tick(float deltaTime)
     {
         auto scene = g_pSceneManager->GetScene();
 

@@ -23,7 +23,7 @@ namespace GameEngine
 
         virtual void Finalize() override;
 
-        virtual void Tick() override;
+        virtual void Tick(float deltaTime) override;
     };
 
     extern SceneManager *g_pSceneManager;

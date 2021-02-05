@@ -29,7 +29,7 @@ namespace GameEngine
         m_ParserMaps.clear();
     }
 
-    void ParserManager::Tick() {}
+    void ParserManager::Tick(float deltaTime) {}
 
     void ParserManager::AddParser(ParserExtType type, IParser *parser)
     {

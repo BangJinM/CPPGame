@@ -17,7 +17,7 @@ namespace GameEngine
         virtual void Finalize() = 0;
 
         // One cycle of the main loop
-        virtual void Tick() = 0;
+        virtual void Tick(float deltaTime) = 0;
         /*
 			* 用于查询应用程序是否需要退出。
 			* 这是因为，在很多平台上用户关闭应用程序都是通过系统通知过来的。

@@ -20,6 +20,6 @@ namespace GameEngine
         return 0;
     }
     void MyGameLogic::Finalize() {}
-    void MyGameLogic::Tick() {}
+    void MyGameLogic::Tick(float deltaTime) {}
 
 }  // namespace GameEngine

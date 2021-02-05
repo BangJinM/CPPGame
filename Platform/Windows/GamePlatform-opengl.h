@@ -20,7 +20,7 @@ namespace GameEngine
         virtual int Initialize();
         virtual void Finalize();
         // One cycle of the main loop
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
     private:
         void calculateDeltaTime();

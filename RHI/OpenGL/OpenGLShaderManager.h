@@ -10,7 +10,7 @@ namespace GameEngine
     public:
         virtual int Initialize() override { return 0; }
         virtual void Finalize() override {}
-        virtual void Tick() override {}
+        virtual void Tick(float deltaTime) override {}
 
         virtual bool InitializeShaders() override;
         virtual void ClearShaders() override;

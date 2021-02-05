@@ -26,7 +26,7 @@ namespace GameEngine
     public:
         virtual int Initialize();
         virtual void Finalize();
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
         static SharedGameObject LoadGameObject(const std::string &path);
         static SharedMesh LoadMesh(const std::string &path);

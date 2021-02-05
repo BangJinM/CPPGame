@@ -29,7 +29,7 @@ namespace GameEngine
         virtual int Initialize();
         virtual void Finalize();
 
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
         virtual void Clear();
         virtual void Draw();
 

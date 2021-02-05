@@ -23,9 +23,9 @@ namespace GameEngine
                 glfwSetWindowShouldClose(window, true);
     }
 
-    void InputManagerWindows::Tick()
+    void InputManagerWindows::Tick(float deltaTime)
     {
-        InputManager::Tick();
+        InputManager::Tick(deltaTime);
         glfwPollEvents();
     }
 

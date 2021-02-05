@@ -17,6 +17,6 @@ namespace GameEngine
         /*
 		* ，这个是用来让驱动模块驱动该模块执行的。每调用一次，模块进行一个单位的处理
 		*/
-        virtual void Tick() = 0;
+        virtual void Tick(float deltaTime) = 0;
     };
 }  // namespace GameEngine

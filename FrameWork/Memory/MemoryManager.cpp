@@ -73,7 +73,7 @@ namespace GameEngine
         m_bInitialized = false;
     }
 
-    void MemoryManager::Tick()
+    void MemoryManager::Tick(float deltaTime)
     {
     }
 

@@ -46,7 +46,7 @@ namespace GameEngine
     public:
         virtual int Initialize();
         virtual void Finalize();
-        virtual void Tick();
+        virtual void Tick(float deltaTime);
 
         static void addClickEventListener(const char key, CallBack callBack);
 
