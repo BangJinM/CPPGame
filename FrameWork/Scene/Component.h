@@ -22,7 +22,7 @@ namespace GameEngine
                 return m_ClassID;
             return ClassIDType::CLASS_Undefined;
         }
-        ClassIDType m_ClassID = ClassIDType::CLASS_Undefined;
+        ClassIDType m_ClassID = ClassID(Undefined);
 
         virtual ~Component()
         {

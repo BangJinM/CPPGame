@@ -1,0 +1,339 @@
+{
+	"Gameobjects": [
+		{
+			"name": "Canvas",
+			"fileID": 0,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						0,
+						0,
+						0
+					],
+					"position": [
+						0,
+						0,
+						0
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 0,
+					"m_GameObject": 0
+				},
+				{
+					"type": 8,
+					"m_Mesh": "",
+					"m_Materials": [],
+					"name": "",
+					"fileID": 0,
+					"m_GameObject": 0
+				}
+			]
+		},
+		{
+			"name": "UI",
+			"fileID": 7,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						0,
+						0,
+						0
+					],
+					"position": [
+						600,
+						400,
+						-0.019999999552965164
+					],
+					"scale": [
+						100,
+						100,
+						1
+					],
+					"name": "",
+					"fileID": 9,
+					"m_GameObject": 7
+				}
+			]
+		},
+		{
+			"name": "UI11",
+			"fileID": 12,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						0,
+						0,
+						10
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 13,
+					"m_GameObject": 12
+				},
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 19,
+					"m_GameObject": 12
+				}
+			]
+		},
+		{
+			"name": "UI111",
+			"fileID": 14,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						3,
+						3,
+						10
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 15,
+					"m_GameObject": 14
+				},
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 20,
+					"m_GameObject": 14
+				}
+			]
+		},
+		{
+			"name": "UI1111",
+			"fileID": 16,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						2,
+						2,
+						10
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 17,
+					"m_GameObject": 16
+				},
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 21,
+					"m_GameObject": 16
+				}
+			]
+		},
+		{
+			"name": "UI21",
+			"fileID": 10,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						-1,
+						-1,
+						10
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 11,
+					"m_GameObject": 10
+				},
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 18,
+					"m_GameObject": 10
+				}
+			]
+		},
+		{
+			"name": "cameraObject",
+			"fileID": 2,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						0,
+						0,
+						0
+					],
+					"position": [
+						0,
+						0,
+						-20
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 4,
+					"m_GameObject": 2
+				},
+				{
+					"type": 6,
+					"name": "",
+					"fileID": 6,
+					"m_GameObject": 2
+				}
+			]
+		},
+		{
+			"name": "dirLight",
+			"fileID": 22,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 26,
+					"m_GameObject": 22
+				},
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						0,
+						0,
+						5
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 23,
+					"m_GameObject": 22
+				}
+			]
+		},
+		{
+			"name": "peopleObject",
+			"fileID": 1,
+			"m_GameObject": 0,
+			"Children": [],
+			"Components": [
+				{
+					"type": 5,
+					"rotation": [
+						50,
+						50,
+						50
+					],
+					"position": [
+						0,
+						0,
+						10
+					],
+					"scale": [
+						1,
+						1,
+						1
+					],
+					"name": "",
+					"fileID": 3,
+					"m_GameObject": 1
+				},
+				{
+					"type": 2,
+					"m_Mesh": "Scene/mayaCube.OBJ",
+					"m_Materials": [
+						"Materials/wall.gemtl"
+					],
+					"name": "",
+					"fileID": 5,
+					"m_GameObject": 1
+				}
+			]
+		}
+	]
+}

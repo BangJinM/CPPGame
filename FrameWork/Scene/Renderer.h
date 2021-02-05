@@ -16,7 +16,7 @@ namespace GameEngine
     {
     public:
         void Prepare();
-        Renderer();
+        Renderer(ClassIDType classID = ClassID(Renderer));
         SharedMesh getMesh();                          // { return SharedMesh(); }
         std::vector<SharedMaterial> getMaterials();    // { return m_Materials; }
         void AddMaterial(SharedMaterial material);     // { m_Materials.push_back(material); }

@@ -13,7 +13,7 @@ namespace GameEngine
         std::vector<SharePtr<Widget>> m_Widgets;
 
     public:
-        CanvasRenderer(/* args */);
+        CanvasRenderer(ClassIDType classID = ClassID(CanvasRenderer));
         ~CanvasRenderer();
 
         virtual void Start();

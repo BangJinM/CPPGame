@@ -12,8 +12,8 @@ namespace GameEngine
 {
     extern BaseGraphicsManager* g_pGraphicsManager;
     extern AssetManager* g_pAssetManager;
-    
-    MeshRenderer::MeshRenderer()
+
+    MeshRenderer::MeshRenderer(ClassIDType classID) : Renderer(classID)
     {
     }
 

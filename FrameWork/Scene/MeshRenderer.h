@@ -10,7 +10,7 @@ namespace GameEngine
     class MeshRenderer : public Renderer
     {
     public:
-        MeshRenderer();
+        MeshRenderer(ClassIDType classID = ClassID(MeshRenderer));
         SharedMesh getMesh() { return m_Mesh; }
         void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
         virtual void Render(SharePtr<Camera> camera);

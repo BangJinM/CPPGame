@@ -7,8 +7,8 @@
 enum ClassIDType
 {
     DefineClassID(Undefined, -1),
-    DefineClassID(RendererCommand, 1),
-    DefineClassID(MeshRendererCommand, 2),
+    DefineClassID(Renderer, 1),
+    DefineClassID(MeshRenderer, 2),
     DefineClassID(MeshDatas, 3),
     DefineClassID(Transform, 5),
     DefineClassID(Camera, 6),

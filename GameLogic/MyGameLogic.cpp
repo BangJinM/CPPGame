@@ -1,5 +1,6 @@
 ﻿#include "MyGameLogic.h"
 
+#include "AssetLoader.h"
 #include "ParserManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -8,10 +9,13 @@ namespace GameEngine
 {
     extern ParserManager *g_pParserManager;
     extern SceneManager *g_pSceneManager;
+    extern AssetLoader *g_pAssetLoader;
     int MyGameLogic::Initialize()
     {
-        SharePtr<Scene> m_Scene;
-        m_Scene = std::dynamic_pointer_cast<Scene>(g_pParserManager->ExecuteParser(ParserExtType::SCENE, "Scene/defaultEx.scene"));
+		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString("Scene/new.scene");
+        auto json = cJSON_Parse(sceneStr.c_str());
+        SharePtr<Scene> m_Scene = make_shared<Scene>();
+        m_Scene->OnDeserialize(json);
         g_pSceneManager->SetNextScene(m_Scene);
         return 0;
     }

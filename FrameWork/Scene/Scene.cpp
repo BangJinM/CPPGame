@@ -17,10 +17,10 @@ namespace GameEngine
         m_Root = GameObject::createGameObject();
         m_Root->SetName("root");
 
-        auto canvas = GameObject::createGameObject();
-        canvas->SetName("Canvas");
-        m_Root->addChild(canvas);
-        canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
+        // auto canvas = GameObject::createGameObject();
+        // canvas->SetName("Canvas");
+        // m_Root->addChild(canvas);
+        // canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
     }
 
     void Scene::AddGameObject(SharedGameObject gameobject)
@@ -104,15 +104,15 @@ namespace GameEngine
     {
     }
 
-    SharePtr<CanvasRenderer> Scene::GetCanvasRenderer()
-    {
-        return m_Canvas;
-    }
+    // SharePtr<CanvasRenderer> Scene::GetCanvasRenderer()
+    // {
+    //     return m_Canvas;
+    // }
 
-    void Scene::SetCanvasRenderer(SharePtr<CanvasRenderer> canvas)
-    {
-        m_Canvas = canvas;
-    }
+    // void Scene::SetCanvasRenderer(SharePtr<CanvasRenderer> canvas)
+    // {
+    //     m_Canvas = canvas;
+    // }
 
     SharedGameObject Scene::GetGObject(SharedGameObject parent, int sid)
     {
@@ -134,5 +134,27 @@ namespace GameEngine
                 return result;
         }
         return SharedGameObject();
+    }
+
+    void Scene::OnSerialize(cJSON* root)
+    {
+        auto gameobjects = cJSON_AddArrayToObject(root, "Gameobjects");
+        for (auto child : GetRootGameObject()->getChildren())
+        {
+            auto item = cJSON_CreateObject();
+            child.second->OnSerialize(item);
+            cJSON_AddItemToArray(gameobjects,  item);
+        }
+    }
+    void Scene::OnDeserialize(cJSON* root)
+    {
+		auto paramsNode = cJSON_GetObjectItem(root, "Gameobjects");
+		for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
+		{
+			auto childParam = cJSON_GetArrayItem(paramsNode, index);
+			auto childNode = GameObject::createGameObject();
+			childNode->OnDeserialize(childParam);
+			AddGameObject(childNode);
+		}
     }
 }  // namespace GameEngine

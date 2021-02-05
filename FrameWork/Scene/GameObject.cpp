@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
+#include "Camera.h"
 
 namespace GameEngine
 {
@@ -125,5 +126,71 @@ namespace GameEngine
             i->second->Destory();
         }
     }
+
+    void GameObject::OnSerialize(cJSON* root)
+    {
+        Object::OnSerialize(root);
+        auto gameobjects = cJSON_AddArrayToObject(root, "Children");
+        for (auto child : getChildren())
+        {
+            auto item = cJSON_CreateObject();
+            child.second->OnSerialize(item);
+            cJSON_AddItemToArray(gameobjects, item);
+        }
+        auto comps = cJSON_AddArrayToObject(root, "Components");
+        for (auto comp : m_compenents)
+        {
+            auto item = cJSON_CreateObject();
+            comp->OnSerialize(item);
+            cJSON_AddItemToArray(comps, item);
+        }
+    }
+	static SharedComponent ParserComp(cJSON* root)
+	{
+		SharedComponent object = nullptr;
+		auto type = cJSON_GetObjectItem(root, "type")->valueint;
+		switch (type)
+		{
+		case ClassID(Transform):
+			object = make_shared<Transform>();
+			object->OnDeserialize(root);
+			break;
+		case ClassID(Camera):
+			object = make_shared<Camera>();
+			object->OnDeserialize(root);
+			break;
+		case ClassID(MeshRenderer):
+			object = make_shared<MeshRenderer>();
+			object->OnDeserialize(root);
+			break;
+		default:
+			break;
+		}
+		return object;
+	}
+
+    void GameObject::OnDeserialize(cJSON* root)
+    {
+        auto paramsNode = cJSON_GetObjectItem(root, "Components");
+        for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
+        {
+            auto compParam = cJSON_GetArrayItem(paramsNode, index);
+            auto comp = ParserComp(compParam);
+            if(comp)
+                addComponent(comp);
+        }
+
+        paramsNode = cJSON_GetObjectItem(root, "Children");
+        for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
+        {
+            auto childParam = cJSON_GetArrayItem(paramsNode, index);
+            auto childNode = GameObject::createGameObject();
+            childNode->OnSerialize(childParam);
+            addChild(childNode);
+        }
+        Object::OnDeserialize(root);
+    }
+
+
 
 }  // namespace GameEngine

@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "ShaderManager.h"
 #include "easylogging++.h"
+#include "Scene.h"
 
 INITIALIZE_EASYLOGGINGPP
 using namespace GameEngine;
@@ -57,7 +58,6 @@ int main(int argc, char *argv[])
             return ret;
         }
     }
-
     int i = 1;
     while (!g_pApp->IsQuit())
     {
@@ -66,7 +66,11 @@ int main(int argc, char *argv[])
             module->Tick();
         }
     }
-
+    auto monitor = cJSON_CreateObject();
+    g_pSceneManager->GetScene()->OnSerialize(monitor);
+    auto str = cJSON_Print(monitor);
+    el::Loggers::getLogger("logger")->info(str);
+    g_pAssetLoader->WriteFile(str, "file_1_1_1.txt");
     for (auto &module : run_time_modules)
     {
         module->Finalize();

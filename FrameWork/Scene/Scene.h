@@ -14,7 +14,7 @@ namespace GameEngine
     class Camera;
     class GameObject;
     class Renderer;
-    class CanvasRenderer;
+    // class CanvasRenderer;
     class Light;
     class Scene : public Object, public IBehaviour
     {
@@ -44,16 +44,19 @@ namespace GameEngine
         void AddRenderer(SharePtr<Renderer> renderer);
         void RemoveRenderer();
 
-        SharePtr<CanvasRenderer> GetCanvasRenderer();
-        void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
+        // SharePtr<CanvasRenderer> GetCanvasRenderer();
+        // void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
 
         SharedGameObject GetGObject(SharedGameObject parent, int sid);
         std::list<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
 
+        virtual void OnSerialize(cJSON* root) override;
+        virtual void OnDeserialize(cJSON* root) override;
+
         std::list<SharePtr<Camera>> m_Cameras;
         std::list<SharePtr<Light>> m_Lights;
         std::list<SharePtr<Renderer>> m_Renderers;
-        SharePtr<CanvasRenderer> m_Canvas;
+        // SharePtr<CanvasRenderer> m_Canvas;
         SharedGameObject m_Root;
     };
 

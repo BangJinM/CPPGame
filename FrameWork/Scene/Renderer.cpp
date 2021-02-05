@@ -23,7 +23,7 @@ namespace GameEngine
         // }
     }
 
-    Renderer::Renderer() : Component(ClassIDType::CLASS_Undefined)
+    Renderer::Renderer(ClassIDType classID) : Component(classID)
     {
     }
 

@@ -27,6 +27,7 @@ namespace GameEngine
 #define SharedTexture SharePtr<Texture>
 #define SharedShaderProgramBase SharePtr<ShaderProgramBase>
 #define SharedScene SharePtr<Scene>
+#define SharedComponent SharePtr<Component>
 
     enum MeshValueType
     {

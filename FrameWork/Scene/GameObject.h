@@ -42,6 +42,9 @@ namespace GameEngine
         SharedGameObject getParent();
         void setParent(SharedGameObject parent);
 
+        virtual void OnSerialize(cJSON* root) override;
+        virtual void OnDeserialize(cJSON* root) override;
+
         GameObject();
         virtual ~GameObject();
 

@@ -16,7 +16,7 @@ namespace GameEngine
     extern SceneManager *g_pSceneManager;
     extern BaseGraphicsManager *g_pGraphicsManager;
 
-    CanvasRenderer::CanvasRenderer()
+    CanvasRenderer::CanvasRenderer(ClassIDType classID):MeshRenderer(classID)
     {
         m_Mesh = std::make_shared<Mesh>();
     }

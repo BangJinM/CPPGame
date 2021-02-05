@@ -7,7 +7,7 @@
 
 namespace GameEngine
 {
-    Transform::Transform() : Component(ClassID(Transform))
+    Transform::Transform(ClassIDType classID) : Component(classID)
     {
         m_Position = VecterFloat3(0, 0, 0);
         m_Scale = VecterFloat3(1, 1, 1);

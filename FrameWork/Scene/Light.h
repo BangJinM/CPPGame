@@ -48,7 +48,7 @@ namespace GameEngine
             Component::Destory();
         }
 
-        Light(LightType lightType) : m_LightType(lightType), Component(ClassID(Light))
+        Light(LightType lightType, ClassIDType classID = ClassID(Light)) : m_LightType(lightType), Component(classID)
         {
             m_Color = ColorRGBA(1, 1, 1, 1);
         }
@@ -66,25 +66,25 @@ namespace GameEngine
     class PointLight : public Light
     {
     public:
-        PointLight() : Light(LightType::PointLight) {}
+        PointLight(ClassIDType classID = ClassID(Light)) : Light(LightType::PointLight, classID) {}
     };
 
     class AreaLight : public Light
     {
     public:
-        AreaLight() : Light(LightType::AreaLight) {}
+        AreaLight(ClassIDType classID = ClassID(Light)) : Light(LightType::AreaLight, classID) {}
     };
 
     class SpotLight : public Light
     {
     public:
-        SpotLight() : Light(LightType::SpotLight) {}
+        SpotLight(ClassIDType classID = ClassID(Light)) : Light(LightType::SpotLight, classID) {}
     };
 
     class DirectionalLight : public Light
     {
     public:
-        DirectionalLight() : Light(LightType::DirectionalLight) {}
+        DirectionalLight(ClassIDType classID = ClassID(Light)) : Light(LightType::DirectionalLight, classID) {}
 
     private:
         VecterFloat3 direction;

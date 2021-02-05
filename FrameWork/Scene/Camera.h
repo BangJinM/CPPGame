@@ -22,9 +22,9 @@ namespace GameEngine
 
     public:
         Camera(glm::float32 width, glm::float32 height, glm::float32 m_Near = 0.1,
-               glm::float32 m_Far = 1000, glm::float32 fieldofView = 45);
+               glm::float32 m_Far = 1000, glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
         Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000,
-               glm::float32 fieldofView = 45);
+               glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
         glm::mat4 getProjectionMatrix();
 
         virtual void Start();

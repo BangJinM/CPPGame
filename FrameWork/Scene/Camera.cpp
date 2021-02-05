@@ -13,18 +13,17 @@ namespace GameEngine
     extern SceneManager *g_pSceneManager;
 
     Camera::Camera(glm::float32 width, glm::float32 height, glm::float32 near,
-                   glm::float32 far, glm::float32 fieldofView)
-        : m_Near(near), m_Far(far), m_ScreenWidth(width), m_ScreenHeight(height), m_FieldofView(fieldofView), Component(ClassID(Camera))
+                   glm::float32 far, glm::float32 fieldofView, ClassIDType classID)
+        : m_Near(near), m_Far(far), m_ScreenWidth(width), m_ScreenHeight(height), m_FieldofView(fieldofView), Component(classID)
     {
         m_ProjectionMatrix4_Perspective = glm::perspective(
             glm::radians(m_FieldofView), m_ScreenWidth / m_ScreenHeight, this->m_Near,
             this->m_Far);
-        // glm::orthographic
         m_ProjectionMatrix4_Orthographic = glm::ortho(0.0f, width, height, 0.0f);
     }
 
-    Camera::Camera(glm::float32 near, glm::float32 far, glm::float32 fieldofView)
-        : m_Near(near), m_Far(far), m_FieldofView(fieldofView), Component(ClassID(Camera))
+    Camera::Camera(glm::float32 near, glm::float32 far, glm::float32 fieldofView, ClassIDType classID)
+        : m_Near(near), m_Far(far), m_FieldofView(fieldofView), Component(classID)
     {
         auto config = g_pApp->GetGfxConfiguration();
         m_ScreenHeight = (float)config.screenHeight;
@@ -59,11 +58,11 @@ namespace GameEngine
 
     void Camera::OnSerialize(cJSON *root)
     {
-		Component::OnSerialize(root);
+        Component::OnSerialize(root);
     }
 
     void Camera::OnDeserialize(cJSON *root)
     {
-		Component::OnDeserialize(root);
+        Component::OnDeserialize(root);
     }
 }  // namespace GameEngine
