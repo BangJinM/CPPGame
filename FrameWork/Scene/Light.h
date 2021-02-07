@@ -15,7 +15,7 @@
 
 namespace GameEngine
 {
-    extern SceneManager *g_pSceneManager;
+    extern SceneManager* g_pSceneManager;
 
     class Light : public Component
     {
@@ -57,37 +57,111 @@ namespace GameEngine
         {
             m_Color = ColorRGBA(1, 1, 1, 1);
         }
+        virtual void OnSerialize(cJSON* root) override
+        {
+            SerializableHelper::Seserialize(root, "color", m_Color);
+            Component::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            m_Color = SerializableHelper::DeserializeVecterFloat4(root, "color");
+            Component::OnDeserialize(root);
+        }
 
     private:
         ColorRGBA m_Color;
         LightType m_LightType;
     };
 
+    //
+    //Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
+    //
     class PointLight : public Light
     {
     public:
-        PointLight(ClassIDType classID = ClassID(Light)) : Light(LightType::PointLight, classID) {}
+        virtual void OnSerialize(cJSON* root) override
+        {
+            Light::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            Light::OnDeserialize(root);
+        }
+        PointLight(ClassIDType classID = ClassID(PointLight)) : Light(LightType::PointLight, classID) {}
+
+        //
+        // Kc 常数项
+        //
+        float constant;
+        //
+        // d 一次方项
+        //
+        float linear;
+        //
+        // d^2 二次方项
+        //
+        float quadratic;
     };
 
     class AreaLight : public Light
     {
     public:
-        AreaLight(ClassIDType classID = ClassID(Light)) : Light(LightType::AreaLight, classID) {}
+        virtual void OnSerialize(cJSON* root) override
+        {
+            Light::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            Light::OnDeserialize(root);
+        }
+        AreaLight(ClassIDType classID = ClassID(AreaLight)) : Light(LightType::AreaLight, classID) {}
     };
 
     class SpotLight : public Light
     {
     public:
-        SpotLight(ClassIDType classID = ClassID(Light)) : Light(LightType::SpotLight, classID) {}
+        virtual void OnSerialize(cJSON* root) override
+        {
+            Light::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            Light::OnDeserialize(root);
+        }
+        SpotLight(ClassIDType classID = ClassID(SpotLight)) : Light(LightType::SpotLight, classID) {}
     };
 
     class DirectionalLight : public Light
     {
     public:
-        DirectionalLight(ClassIDType classID = ClassID(Light)) : Light(LightType::DirectionalLight, classID) {}
+        DirectionalLight(ClassIDType classID = ClassID(DirectionalLight)) : Light(LightType::DirectionalLight, classID) {}
+        virtual void OnSerialize(cJSON* root) override
+        {
+            SerializableHelper::Seserialize(root, "Ambient", m_Ambient);
+            SerializableHelper::Seserialize(root, "Diffuse", m_Diffuse);
+            SerializableHelper::Seserialize(root, "Specular", m_Specular);
+            Light::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            Light::OnDeserialize(root);
+            m_Ambient = SerializableHelper::DeserializeVecterFloat3(root, "Ambient");
+            m_Diffuse = SerializableHelper::DeserializeVecterFloat3(root, "Diffuse");
+            m_Specular = SerializableHelper::DeserializeVecterFloat3(root, "Specular");
+        }
 
-    private:
-        VecterFloat3 direction;
+        //
+        //环境(Ambient)
+        //
+        VecterFloat3 m_Ambient;
+        //
+        //漫反射(Diffuse)
+        //
+        VecterFloat3 m_Diffuse;
+        //
+        //镜面(Specular)光照
+        //
+        VecterFloat3 m_Specular;
     };
 
 }  // namespace GameEngine

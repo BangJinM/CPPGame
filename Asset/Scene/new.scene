@@ -90,8 +90,14 @@
 				}, {
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[0, 0, 5],
+					"position":	[0, 1, 5],
 					"scale":	[1, 1, 1]
+				}, {
+					"type":	13,
+					"Ambient":[0.1, 0.1, 0.1],
+					"Diffuse":[0.8, 0.8, 0.8],
+					"Specular":[1.0, 1.0, 1.0],
+					"color":[255, 255, 255, 255]
 				}]
 		}, {
 			"name":	"peopleObject",

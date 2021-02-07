@@ -15,6 +15,10 @@ enum ClassIDType
     DefineClassID(Light, 7),
     DefineClassID(CanvasRenderer, 8),
     DefineClassID(Widget, 9),
+    DefineClassID(PointLight, 10),
+    DefineClassID(AreaLight, 11),
+    DefineClassID(SpotLight, 12),
+    DefineClassID(DirectionalLight, 13),
 };
 
 //make sure people dont accidentally define classids in other files:

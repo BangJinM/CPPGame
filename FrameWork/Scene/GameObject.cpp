@@ -3,10 +3,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "BaseGraphicsManager.h"
+#include "Camera.h"
 #include "Component.h"
+#include "Light.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
-#include "Camera.h"
 
 namespace GameEngine
 {
@@ -35,19 +36,19 @@ namespace GameEngine
 
     SharedGameObject GameObject::getChildByName(std::string name)
     {
-		for (auto child = m_children.begin(); child != m_children.end(); child++)
-		{
-			if (child->second->GetName() == name)
-			{
-				return child->second;
-			}
-			else
-			{
-				auto res = child->second->getChildByName(name);
-				if (res)
-					return res;
-			}
-		}
+        for (auto child = m_children.begin(); child != m_children.end(); child++)
+        {
+            if (child->second->GetName() == name)
+            {
+                return child->second;
+            }
+            else
+            {
+                auto res = child->second->getChildByName(name);
+                if (res)
+                    return res;
+            }
+        }
         return nullptr;
     }
 
@@ -138,7 +139,7 @@ namespace GameEngine
     void GameObject::OnSerialize(cJSON* root)
     {
         Object::OnSerialize(root);
-		SerializableHelper::Seserialize(root, "name", GetName());
+        SerializableHelper::Seserialize(root, "name", GetName());
         auto gameobjects = cJSON_AddArrayToObject(root, "Children");
         for (auto child : getChildren())
         {
@@ -150,44 +151,60 @@ namespace GameEngine
         for (auto comp : m_compenents)
         {
             auto item = cJSON_CreateObject();
-			SerializableHelper::Seserialize(item, "type", comp->getClassID());
+            SerializableHelper::Seserialize(item, "type", comp->getClassID());
             comp->OnSerialize(item);
             cJSON_AddItemToArray(comps, item);
         }
     }
-	static SharedComponent ParserComp(cJSON* root)
-	{
-		SharedComponent object = nullptr;
-		auto type = cJSON_GetObjectItem(root, "type")->valueint;
-		switch (type)
-		{
-		case ClassID(Transform):
-			object = make_shared<Transform>();
-			object->OnDeserialize(root);
-			break;
-		case ClassID(Camera):
-			object = make_shared<Camera>();
-			object->OnDeserialize(root);
-			break;
-		case ClassID(MeshRenderer):
-			object = make_shared<MeshRenderer>();
-			object->OnDeserialize(root);
-			break;
-		default:
-			break;
-		}
-		return object;
-	}
+    static SharedComponent ParserComp(cJSON* root)
+    {
+        SharedComponent object = nullptr;
+        auto type = cJSON_GetObjectItem(root, "type")->valueint;
+        switch (type)
+        {
+        case ClassID(Transform):
+            object = make_shared<Transform>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(Camera):
+            object = make_shared<Camera>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(MeshRenderer):
+            object = make_shared<MeshRenderer>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(PointLight):
+            object = make_shared<PointLight>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(AreaLight):
+            object = make_shared<AreaLight>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(SpotLight):
+            object = make_shared<SpotLight>();
+            object->OnDeserialize(root);
+            break;
+        case ClassID(DirectionalLight):
+            object = make_shared<DirectionalLight>();
+            object->OnDeserialize(root);
+            break;
+        default:
+            break;
+        }
+        return object;
+    }
 
     void GameObject::OnDeserialize(cJSON* root)
     {
         auto paramsNode = cJSON_GetObjectItem(root, "Components");
-		SetName(SerializableHelper::DeserializeString(root, "name"));
+        SetName(SerializableHelper::DeserializeString(root, "name"));
         for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
         {
             auto compParam = cJSON_GetArrayItem(paramsNode, index);
             auto comp = ParserComp(compParam);
-            if(comp)
+            if (comp)
                 addComponent(comp);
         }
 
@@ -202,16 +219,14 @@ namespace GameEngine
         Object::OnDeserialize(root);
     }
 
-	void GameObject::SetName(std::string name)
-	{
-		m_Name = name;
-	}
+    void GameObject::SetName(std::string name)
+    {
+        m_Name = name;
+    }
 
-	std::string GameObject::GetName()
-	{
-		return m_Name;
-	}
-
-
+    std::string GameObject::GetName()
+    {
+        return m_Name;
+    }
 
 }  // namespace GameEngine

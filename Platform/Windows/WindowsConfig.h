@@ -15,7 +15,7 @@ namespace GameEngine
     InputManager *g_pInputManager = static_cast<InputManagerWindows *>(new InputManagerWindows);
     AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
     AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
-        Clock *g_pClock = static_cast<Clock *>(new Clock);
+    Clock *g_pClock = static_cast<Clock *>(new Clock);
     ParserManager *g_pParserManager = static_cast<ParserManager *>(new ParserManager);
     SceneManager *g_pSceneManager = static_cast<SceneManager *>(new SceneManager);
 }  // namespace GameEngine

@@ -17,11 +17,13 @@
 #include "Shader.h"
 #include "ShaderManager.h"
 #include "cjson/cJSON.h"
+
 namespace GameEngine
 {
     extern AssetLoader *g_pAssetLoader;
     extern ShaderManager *g_pShaderManager;
 }  // namespace GameEngine
+
 using namespace GameEngine;
 namespace GameEngine
 {

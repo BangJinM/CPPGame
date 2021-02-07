@@ -6,11 +6,11 @@
 #include "InputManager.h"
 #include "MemoryManager.h"
 #include "ParserManager.h"
+#include "Scene.h"
 #include "SceneManager.h"
 #include "ShaderManager.h"
-#include "easylogging++.h"
-#include "Scene.h"
 #include "Utils/Clock.h"
+#include "easylogging++.h"
 
 INITIALIZE_EASYLOGGINGPP
 using namespace GameEngine;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     run_time_modules.push_back(g_pSceneManager);
     run_time_modules.push_back(g_pGameLogic);
 
-	g_pClock->Initialize();
+    g_pClock->Initialize();
     for (auto &module : run_time_modules)
     {
         if ((ret = module->Initialize()) != 0)
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     int i = 1;
     while (!g_pApp->IsQuit())
     {
-		g_pClock->Tick(1);
-		float deltaTime = g_pClock->GetDeltaTime();
+        g_pClock->Tick(1);
+        float deltaTime = g_pClock->GetDeltaTime();
         for (auto &module : run_time_modules)
         {
             module->Tick(deltaTime);
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     {
         module->Finalize();
     }
-	g_pClock->Finalize();
+    g_pClock->Finalize();
     for (vector<IRuntimeModule *>::const_iterator itr =
              run_time_modules.begin();
          itr != run_time_modules.end(); ++itr)
