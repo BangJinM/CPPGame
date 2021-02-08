@@ -17,11 +17,8 @@ namespace GameEngine
     {
     }
 
-    void MeshRenderer::Render(SharePtr<Camera> camera)
+    void MeshRenderer::Render(ViewInfos viewInfos)
     {
-        auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
-        auto projectMat = camera->getProjectionMatrix();
-
         SharedGameObject parent = getParent();
         auto modelMat = parent->getComponent<Transform>()->getMatrix();
         SharedMesh mesh = getMesh();
@@ -36,15 +33,15 @@ namespace GameEngine
                 SharedMaterial material = make_shared<Material>();
                 material->shaderID = materials[mi]->shaderID;
                 material->AddPropertys(materials[mi]->m_MaterialDatas);
-                material->AddProperty(glm::value_ptr(projectMat), "projection", 16 * sizeof(float), MaterialType::T_Mat4);
-                material->AddProperty(glm::value_ptr(viewMat), "view", 16 * sizeof(float), MaterialType::T_Mat4);
-                material->AddProperty(glm::value_ptr(modelMat), "model", 16 * sizeof(float), MaterialType::T_Mat4);
 
                 if (mesh && mi <= mesh->m_MeshDatas.size())
                 {
                     RendererCammand rC;
                     rC.material = material;
                     rC.mesh = mesh;
+                    rC.viewInfos = viewInfos;
+
+                    rC.modelInfos.modelPos = modelMat;
                     rC.index = mi;
 
                     g_pGraphicsManager->addRendererCommand(rC);

@@ -22,6 +22,9 @@ namespace GameEngine
         void SetRotation(VecterFloat3 rotation);
         void setMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
 
+        VecterFloat3 GetPosition(){return m_Position;}
+        VecterFloat3 GetScale(){return m_Scale;}
+        VecterFloat3 GetRotation(){return m_Rotation;}
         GlmMat4 getMatrix() { return m_Matrix; }
 
         virtual void OnSerialize(cJSON *root) override;

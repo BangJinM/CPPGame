@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <algorithm>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <string>
 
@@ -15,6 +16,7 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "ShaderManager.h"
+#include "glm/glm.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -67,11 +69,37 @@ namespace GameEngine
     {
     }
 
-    void GraphicsManager::PrepareMaterial(SharedMaterial material)
+    void GraphicsManager::PrepareMaterial(RendererCammand rC)
     {
+        auto material = rC.material;
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
+
+        int location = glGetUniformLocation(shader->m_ProgramID, "model");
+        if (location >= 0)
+        {
+            shader->setMat4("model", glm::value_ptr(rC.modelInfos.modelPos));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "view");
+        if (location >= 0)
+        {
+            shader->setMat4("view", glm::value_ptr(rC.viewInfos.view));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "projection");
+        if (location >= 0)
+        {
+            shader->setMat4("projection", glm::value_ptr(rC.viewInfos.project));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "cameraPos");
+        if (location >= 0)
+        {
+            shader->setMat4("cameraPos", glm::value_ptr(rC.viewInfos.cameraPos));
+        }
+
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
             switch (material->m_MaterialDatas[i].m_Type)

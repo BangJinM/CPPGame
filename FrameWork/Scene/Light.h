@@ -74,7 +74,7 @@ namespace GameEngine
     };
 
     //
-    //Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
+    //点光源  Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
     //
     class PointLight : public Light
     {
@@ -93,10 +93,12 @@ namespace GameEngine
         // Kc 常数项
         //
         float constant;
+
         //
         // d 一次方项
         //
         float linear;
+
         //
         // d^2 二次方项
         //
@@ -154,10 +156,12 @@ namespace GameEngine
         //环境(Ambient)
         //
         VecterFloat3 m_Ambient;
+
         //
         //漫反射(Diffuse)
         //
         VecterFloat3 m_Diffuse;
+
         //
         //镜面(Specular)光照
         //

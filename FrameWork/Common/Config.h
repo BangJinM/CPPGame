@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+#include <glm/glm.hpp>
 #include <memory>
 
+#include "MyMath.h"
 namespace GameEngine
 {
     class Object;
@@ -59,4 +61,24 @@ namespace GameEngine
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
 
+    struct ViewInfos
+    {
+        VecterFloat3 cameraPos;
+        glm::mat4 project;
+        glm::mat4 view;
+    };
+
+    struct ModelInfos
+    {
+        glm::mat4 modelPos;
+    };
+
+    struct RendererCammand
+    {
+        SharedMaterial material;
+        SharedMesh mesh;
+        ViewInfos viewInfos;
+        ModelInfos modelInfos;
+        int index;
+    };
 }  // namespace GameEngine

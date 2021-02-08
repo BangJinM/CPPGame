@@ -20,7 +20,7 @@ namespace GameEngine
         SharedMesh getMesh();                          // { return SharedMesh(); }
         std::vector<SharedMaterial> getMaterials();    // { return m_Materials; }
         void AddMaterial(SharedMaterial material);     // { m_Materials.push_back(material); }
-        virtual void Render(SharePtr<Camera> camera);  // {}
+        virtual void Render(ViewInfos viewInfos);  // {}
         virtual void Start();
 
         virtual void OnSerialize(cJSON* root) override;

@@ -42,7 +42,7 @@ namespace GameEngine
         m_Materials.push_back(material);
     }
 
-    void Renderer::Render(SharePtr<Camera> camera)
+    void Renderer::Render(ViewInfos viewInfos)
     {
     }
 

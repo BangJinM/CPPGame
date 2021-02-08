@@ -7,19 +7,13 @@
 #include "IRuntimeModule.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "MyMath.h"
 #include "Render/IDrawPass.h"
 #include "Renderer.h"
 
 namespace GameEngine
 {
     class Scene;
-
-    struct RendererCammand
-    {
-        SharedMaterial material;
-        SharedMesh mesh;
-        int index;
-    };
 
     class BaseGraphicsManager : public IRuntimeModule
     {
@@ -38,7 +32,7 @@ namespace GameEngine
 
         virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
         virtual void BindTexture(SharedTexture texture) = 0;
-        virtual void PrepareMaterial(SharedMaterial material) = 0;
+        virtual void PrepareMaterial(RendererCammand rC) = 0;
 
     protected:
         std::list<RendererCammand> m_RendererCommands;
