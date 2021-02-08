@@ -28,7 +28,7 @@
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
 			"name":	"UI111",
@@ -41,7 +41,7 @@
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
 			"name":	"UI1111",
@@ -54,7 +54,7 @@
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
 			"name":	"UI21",
@@ -67,7 +67,7 @@
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
 			"name":	"cameraObject",
@@ -86,7 +86,7 @@
 			"Components":	[{
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}, {
 					"type":	5,
 					"rotation":	[50, 50, 50],
@@ -110,7 +110,7 @@
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/wall.gemtl"]
+					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}]
 }

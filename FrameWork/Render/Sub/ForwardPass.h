@@ -16,7 +16,7 @@ namespace GameEngine
     public:
         virtual void Initialize() override
         {
-            m_ShaderID = g_pShaderManager->AddShaderByPath("", "");
+            
         }
 
         virtual void BeginPass() override

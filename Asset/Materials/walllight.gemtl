@@ -1,0 +1,14 @@
+{
+	"vert":	"Shaders/walllight.vert",
+	"frag":	"Shaders/walllight.frag",
+	"params" : {
+		"diffuse" : {
+			"path" : "Textures/container2.png",
+			"type" : "texture"
+		},
+		"specular" : {
+			"path" : "Textures/container2_specular.png",
+			"type" : "texture"
+		}
+	}
+}

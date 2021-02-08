@@ -20,7 +20,43 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "easylogging++.h"
 using namespace std;
+
+static GLenum glCheckError1(const char *file = __FILE__, int line = __LINE__)
+{
+	GLenum errorCode;
+	while ((errorCode = glGetError()) != GL_NO_ERROR)
+	{
+		std::string error;
+		switch (errorCode)
+		{
+		case GL_INVALID_ENUM:
+			error = "INVALID_ENUM";
+			break;
+		case GL_INVALID_VALUE:
+			error = "INVALID_VALUE";
+			break;
+		case GL_INVALID_OPERATION:
+			error = "INVALID_OPERATION";
+			break;
+		case GL_STACK_OVERFLOW:
+			error = "STACK_OVERFLOW";
+			break;
+		case GL_STACK_UNDERFLOW:
+			error = "STACK_UNDERFLOW";
+			break;
+		case GL_OUT_OF_MEMORY:
+			error = "OUT_OF_MEMORY";
+			break;
+		case GL_INVALID_FRAMEBUFFER_OPERATION:
+			error = "INVALID_FRAMEBUFFER_OPERATION";
+			break;
+		}
+        el::Loggers::getLogger("logger")->info("%s|%s|%s", error.c_str(), file, line);
+	}
+	return errorCode;
+}
 
 namespace GameEngine
 {
@@ -71,11 +107,11 @@ namespace GameEngine
 
     void GraphicsManager::PrepareMaterial(RendererCammand rC)
     {
+        glCheckError1();
         auto material = rC.material;
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
-
         int location = glGetUniformLocation(shader->m_ProgramID, "model");
         if (location >= 0)
         {
@@ -98,6 +134,34 @@ namespace GameEngine
         if (location >= 0)
         {
             shader->setMat4("cameraPos", glm::value_ptr(rC.viewInfos.cameraPos));
+        }
+
+        // 	"Ambient":[0.1, 0.1, 0.1],
+        // "Diffuse":[0.8, 0.8, 0.8],
+        // "Specular":[1.0, 1.0, 1.0],
+        // "color":[255, 255, 255, 255]
+        location = glGetUniformLocation(shader->m_ProgramID, "light.direction");
+        if (location >= 0)
+        {
+            shader->setVec3("light.direction", VecterFloat3(-0.2f, -1.0f, -0.3f));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "light.ambient");
+        if (location >= 0)
+        {
+            shader->setVec3("light.ambient", VecterFloat3(0.11, 0.1, 0.1));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "light.diffuse");
+        if (location >= 0)
+        {
+            shader->setVec3("light.diffuse", VecterFloat3(0.8, 0.8, 0.8));
+        }
+
+        location = glGetUniformLocation(shader->m_ProgramID, "light.specular");
+        if (location >= 0)
+        {
+            shader->setVec3("light.specular", VecterFloat3(1.0, 1.0, 1.0));
         }
 
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
@@ -134,6 +198,7 @@ namespace GameEngine
                 break;
             }
         }
+        glCheckError1();
     }
 
     void GraphicsManager::BindTexture(SharedTexture texture)
