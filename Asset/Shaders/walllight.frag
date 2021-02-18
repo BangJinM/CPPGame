@@ -1,3 +1,4 @@
+#version 420 core
 struct DirLight {
   vec3 direction;
 
@@ -6,9 +7,9 @@ struct DirLight {
   vec3 specular;
 };
 
-varying vec2 v_texCoord;
-varying vec3 v_normal;
-varying vec3 v_FragPos;
+in vec2 v_texCoord;
+in vec3 v_normal;
+in vec3 v_FragPos;
 
 uniform sampler2D diffuse;
 uniform sampler2D specular;

@@ -1,4 +1,26 @@
 {
+	"Cube":	{
+		"m_Mesh":"Scene/mayaCube.OBJ",
+		"CubeVaules":	[{
+				"dir":	1,
+				"path":	"Textures/cube/right.jpg"
+			}, {
+				"dir":	2,
+				"path":	"Textures/cube/left.jpg"
+			}, {
+				"dir":	3,
+				"path":	"Textures/cube/top.jpg"
+			}, {
+				"dir":	4,
+				"path":	"Textures/cube/bottom.jpg"
+			}, {
+				"dir":	5,
+				"path":	"Textures/cube/back.jpg"
+			}, {
+				"dir":	6,
+				"path":	"Textures/cube/front.jpg"
+			}]
+	},
 	"Gameobjects":	[{
 			"name":	"Canvas",
 			"Children":	[],

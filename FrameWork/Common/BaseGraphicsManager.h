@@ -32,6 +32,8 @@ namespace GameEngine
 
         virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
         virtual void BindTexture(SharedTexture texture) = 0;
+        virtual void BindCubeTexture(SharedCube cube) = 0;
+        virtual void DrawCubeTexture(SharedCube cube, int shaderID) = 0;
         virtual void PrepareMaterial(RendererCammand rC) = 0;
 
     protected:

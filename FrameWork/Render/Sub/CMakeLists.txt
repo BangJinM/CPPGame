@@ -1,6 +1,7 @@
 ﻿SET(FRAMEWORK_RENDER_DRAW_HEADER 
 Render/Sub/ForwardPass.h
 Render/Sub/DeferredPass.h
+Render/Sub/CubPass.h
 )
 
 SET(FRAMEWORK_RENDER_DRAW_SRC 

@@ -19,22 +19,7 @@ namespace GameEngine
     bool Shader::CompileSourceCode(const char *source)
     {
         const char *COCOS2D_VERTEX_SHADER_UNIFORMS =
-            "#version 330 core\n"
-            "uniform mat4 CC_PMatrix;\n"
-            "uniform mat4 CC_MultiViewPMatrix[4];\n"
-            "uniform mat4 CC_MVMatrix;\n"
-            "uniform mat4 CC_MVPMatrix;\n"
-            "uniform mat4 CC_MultiViewMVPMatrix[4];\n"
-            "uniform mat3 CC_NormalMatrix;\n"
-            "uniform vec4 CC_Time;\n"
-            "uniform vec4 CC_SinTime;\n"
-            "uniform vec4 CC_CosTime;\n"
-            "uniform vec4 CC_Random01;\n"
-            "uniform sampler2D CC_Texture0;\n"
-            "uniform sampler2D CC_Texture1;\n"
-            "uniform sampler2D CC_Texture2;\n"
-            "uniform sampler2D CC_Texture3;\n"
-            "//CC INCLUDES END\n\n";
+            "";
         GLint status;
         GLenum shaderType = GL_VERTEX_SHADER;
         const GLchar *sources[] = {COCOS2D_VERTEX_SHADER_UNIFORMS, source};
@@ -54,6 +39,7 @@ namespace GameEngine
 
         glShaderSource(m_CompileID, sizeof(sources) / sizeof(*sources), sources,
                        nullptr);
+
         glCompileShader(m_CompileID);
 
         glGetShaderiv(m_CompileID, GL_COMPILE_STATUS, &status);
@@ -200,5 +186,12 @@ namespace GameEngine
         glUniformMatrix4fv(glGetUniformLocation(m_ProgramID, name.c_str()), 1,
                            GL_FALSE, value);
     }
+
+	void ShaderProgram::setMat4(const std::string &name,
+		const glm::mat4 &mat) const
+	{
+		glUniformMatrix4fv(glGetUniformLocation(m_ProgramID, name.c_str()), 1,
+			GL_FALSE, &mat[0][0]);
+	}
 
 }  // namespace GameEngine

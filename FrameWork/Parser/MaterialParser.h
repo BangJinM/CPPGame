@@ -38,11 +38,8 @@ namespace GameEngine
             int i = 0;
             auto frag = cJSON_GetObjectItem(json, "frag");
             auto vert = cJSON_GetObjectItem(json, "vert");
-
-            std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vert->valuestring);
-            std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(frag->valuestring);
-
-            material->shaderID = g_pShaderManager->AddShaderByPath(vertStr, fragStr);
+            
+            material->shaderID = g_pShaderManager->AddShaderByPath(vert->valuestring, frag->valuestring);
 
             auto paramsNode = cJSON_GetObjectItem(json, "params");
             if (paramsNode)

@@ -19,6 +19,7 @@ enum ClassIDType
     DefineClassID(AreaLight, 11),
     DefineClassID(SpotLight, 12),
     DefineClassID(DirectionalLight, 13),
+    DefineClassID(Cube, 13),
 };
 
 //make sure people dont accidentally define classids in other files:

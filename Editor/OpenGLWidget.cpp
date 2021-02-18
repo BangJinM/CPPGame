@@ -1,37 +1,39 @@
 #include "OpenGLWidget.h"
 
-#include "BaseGraphicsManager.h"
-#include "AssetManager.h"
-#include "SceneManager.h"
-#include "MShader.h"
-#include "Scene.h"
-
-#include <QOpenGLWidget>
 #include <QOpenGLExtraFunctions>
 #include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLShader>
+#include <QOpenGLWidget>
+
+#include "AssetManager.h"
+#include "BaseGraphicsManager.h"
+#include "MShader.h"
+#include "Scene.h"
+#include "SceneManager.h"
 
 using namespace GameEngine;
 
-namespace GameEngine {
+namespace GameEngine
+{
     extern BaseGraphicsManager *g_pGraphicsManager;
     extern AssetManager *g_pAssetManager;
-        extern SceneManager *g_pSceneManager;
-}
+    extern SceneManager *g_pSceneManager;
+}  // namespace GameEngine
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
-
 }
 
-void OpenGLWidget::paintGL(){
-    glClearColor(0.3,0.3,0.3,1);
-    Tick(); 
+void OpenGLWidget::paintGL()
+{
+    glClearColor(0.3, 0.3, 0.3, 1);
+    Tick();
 }
 
-void OpenGLWidget::initializeGL(){
+void OpenGLWidget::initializeGL()
+{
     Initialize();
-    glClearColor(0.3,0.3,0.3,1);
+    glClearColor(0.3, 0.3, 0.3, 1);
 }
 
 int OpenGLWidget::Initialize()
@@ -46,8 +48,9 @@ int OpenGLWidget::Initialize()
     return result;
 }
 
-void OpenGLWidget::resizeGL(int width, int height){
-    glViewport(0,0,width,height);
+void OpenGLWidget::resizeGL(int width, int height)
+{
+    glViewport(0, 0, width, height);
 }
 
 void OpenGLWidget::Finalize()
@@ -57,7 +60,7 @@ void OpenGLWidget::Finalize()
 void OpenGLWidget::Tick()
 {
     g_pGraphicsManager->Tick();
-    auto m_RendererCommands=  g_pGraphicsManager->getRendererCommand();
+    auto m_RendererCommands = g_pGraphicsManager->getRendererCommand();
     Draw(m_RendererCommands);
     g_pGraphicsManager->Clear();
 }
@@ -70,7 +73,7 @@ void OpenGLWidget::Draw(std::list<RendererCammand> m_RendererCommands)
 {
     for (auto renderer = m_RendererCommands.begin(); renderer != m_RendererCommands.end(); renderer++)
     {
-//        PrepareMaterial(renderer->material);
+        //        PrepareMaterial(renderer->material);
         PrepareMesh(renderer->mesh, renderer->index);
     }
 }

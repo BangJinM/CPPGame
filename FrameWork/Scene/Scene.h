@@ -9,6 +9,7 @@
 #include "Config.h"
 #include "IBehaviour.h"
 #include "Object.h"
+#include "Cube.h"
 namespace GameEngine
 {
     class Camera;
@@ -53,11 +54,16 @@ namespace GameEngine
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;
 
+        SharedCube GetCube();
+
         std::list<SharePtr<Camera>> m_Cameras;
         std::list<SharePtr<Light>> m_Lights;
         std::list<SharePtr<Renderer>> m_Renderers;
         // SharePtr<CanvasRenderer> m_Canvas;
         SharedGameObject m_Root;
+
+    private:
+        SharedCube cube;
     };
 
 }  // namespace GameEngine

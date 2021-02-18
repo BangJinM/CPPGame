@@ -9,6 +9,7 @@
 #include <string>
 
 #include "AssetManager.h"
+#include "Camera.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "ParserManager.h"
@@ -16,11 +17,11 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "ShaderManager.h"
+#include "easylogging++.h"
 #include "glm/glm.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "easylogging++.h"
 using namespace std;
 
 namespace GameEngine
@@ -43,10 +44,7 @@ namespace GameEngine
             result = 0;
             cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
 
-            glClearDepth(1.0f);
             glEnable(GL_DEPTH_TEST);
-            glEnable(GL_CULL_FACE);
-            glCullFace(GL_BACK);
             result = 0;
         }
         result = BaseGraphicsManager::Initialize();
@@ -60,7 +58,6 @@ namespace GameEngine
     void GraphicsManager::Tick(float deltaTime)
     {
         auto window = glfwGetCurrentContext();
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         BaseGraphicsManager::Tick(deltaTime);
         glfwSwapBuffers(window);
@@ -76,6 +73,7 @@ namespace GameEngine
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
+
         int location = glGetUniformLocation(shader->m_ProgramID, "model");
         if (location >= 0)
         {
@@ -97,7 +95,7 @@ namespace GameEngine
         location = glGetUniformLocation(shader->m_ProgramID, "cameraPos");
         if (location >= 0)
         {
-            shader->setMat4("cameraPos", glm::value_ptr(rC.viewInfos.cameraPos));
+            shader->setVec3("cameraPos", rC.viewInfos.cameraPos);
         }
 
         // 	"Ambient":[0.1, 0.1, 0.1],
@@ -186,8 +184,60 @@ namespace GameEngine
         texture->id = textureID;
     }
 
+    void GraphicsManager::BindCubeTexture(SharedCube cube)
+    {
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+        for (unsigned int i = 0; i < 6; i++)
+        {
+            auto cubeValue = cube->GetValueByDir(i);
+            SharedTexture image = g_pAssetManager->LoadTexture(cubeValue.path);
+            if (!image)
+                image = g_pAssetManager->getWhiteTexture();
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, GL_RGB, image->Width, image->Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+        }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+        cube->SetTextureID(textureID);
+    }
+
+    void GraphicsManager::DrawCubeTexture(SharedCube cube, int shaderID)
+    {
+        if (!cube)
+            return;
+
+        auto shader = g_pShaderManager->GetShaderProgram(shaderID);
+        glDepthFunc(GL_LEQUAL);
+        shader->Use();
+
+        auto scene = g_pSceneManager->GetScene();
+        SharePtr<Camera> camera = *(scene->m_Cameras.begin());
+        auto cameraTs = camera->getParent()->getComponent<Transform>();
+
+        auto view = glm::mat4(glm::mat3(cameraTs->getMatrix())); 
+        shader->setMat4("view", cameraTs->getMatrix());
+
+        shader->setMat4("projection", camera->getProjectionMatrix());
+
+        shader->setInt("skybox", 0);
+        glActiveTexture(GL_TEXTURE0);
+
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cube->GetTextureID());
+
+        PrepareMesh(cube->GetMesh(), 0);
+        glDepthFunc(GL_LESS);
+    }
+
     void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
     {
+        if (!mesh)
+            return;
         if (mesh->isPrepare)
         {
             glBindVertexArray(mesh->m_MeshDatas[index].VAO);

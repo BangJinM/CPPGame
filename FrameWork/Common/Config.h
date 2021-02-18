@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <memory>
+#include <string>
 
 #include "MyMath.h"
 namespace GameEngine
@@ -20,6 +21,7 @@ namespace GameEngine
     class Widget;
     class Renderer;
     class Scene;
+    class Cube;
 
 #define SharePtr std::shared_ptr
 #define SharedObject SharePtr<Object>
@@ -30,6 +32,7 @@ namespace GameEngine
 #define SharedShaderProgramBase SharePtr<ShaderProgramBase>
 #define SharedScene SharePtr<Scene>
 #define SharedComponent SharePtr<Component>
+#define SharedCube SharePtr<Cube>
 
     enum MeshValueType
     {
@@ -81,4 +84,20 @@ namespace GameEngine
         ModelInfos modelInfos;
         int index;
     };
+
+    enum CubeDir
+    {
+        RIGHT = 1,
+        LEFT,
+        TOP,
+        BOTTOM,
+        BACK,
+        FRONT
+    };
+    struct CubeValue
+    {
+        std::string path;
+        CubeDir dir;
+    };
+
 }  // namespace GameEngine

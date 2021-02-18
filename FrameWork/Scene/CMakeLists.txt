@@ -15,6 +15,7 @@ Scene/Scene.h
 Scene/SceneManager.h
 Scene/Texture.h
 Scene/Transform.h
+Scene/Cube.h
 )
 
 SET(FRAMEWORK_SCENE_SRC 
@@ -25,6 +26,7 @@ Scene/Renderer.cpp
 Scene/Scene.cpp
 Scene/SceneManager.cpp
 Scene/Transform.cpp
+Scene/Cube.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_SCENE_HEADER})

@@ -84,6 +84,7 @@ namespace GameEngine
         virtual void setMat3(const std::string &name, const glm::mat3 &mat) const {}
         // ------------------------------------------------------------------------
         virtual void setMat4(const std::string &name, const float *value) const {}
+		virtual void setMat4(const std::string &name, const glm::mat4 &mat) const {}
 
         virtual bool IsLinked() const { return true; }
         void RemoveAllShaders()

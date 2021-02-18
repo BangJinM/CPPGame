@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "../IDrawPass.h"
+#include "../Sub/CubPass.h"
 #include "../Sub/ForwardPass.h"
 #include "../Sub/ImGuiPass.h"
 
@@ -11,7 +12,9 @@ namespace GameEngine
         void Initialize() override
         {
             m_SubPasses.push_back(std::make_shared<ForwardPass>());
+            m_SubPasses.push_back(std::make_shared<CubPass>());
             m_SubPasses.push_back(std::make_shared<ImGuiPass>());
+
             for (auto pass : m_SubPasses)
             {
                 pass->Initialize();

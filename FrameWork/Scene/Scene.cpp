@@ -139,22 +139,38 @@ namespace GameEngine
     void Scene::OnSerialize(cJSON* root)
     {
         auto gameobjects = cJSON_AddArrayToObject(root, "Gameobjects");
+        if (cube)
+        {
+            auto cjconCube = cJSON_AddObjectToObject(root, "Cube");
+            cube->OnSerialize(cjconCube);
+        }
         for (auto child : GetRootGameObject()->getChildren())
         {
             auto item = cJSON_CreateObject();
             child.second->OnSerialize(item);
-            cJSON_AddItemToArray(gameobjects,  item);
+            cJSON_AddItemToArray(gameobjects, item);
         }
     }
     void Scene::OnDeserialize(cJSON* root)
     {
-		auto paramsNode = cJSON_GetObjectItem(root, "Gameobjects");
-		for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
-		{
-			auto childParam = cJSON_GetArrayItem(paramsNode, index);
-			auto childNode = GameObject::createGameObject();
-			childNode->OnDeserialize(childParam);
-			AddGameObject(childNode);
-		}
+        auto paramsNode = cJSON_GetObjectItem(root, "Cube");
+        if (paramsNode)
+        {
+            cube = make_shared<Cube>();
+            cube->OnDeserialize(paramsNode);
+        }
+        paramsNode = cJSON_GetObjectItem(root, "Gameobjects");
+        for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
+        {
+            auto childParam = cJSON_GetArrayItem(paramsNode, index);
+            auto childNode = GameObject::createGameObject();
+            childNode->OnDeserialize(childParam);
+            AddGameObject(childNode);
+        }
+    }
+
+    SharedCube Scene::GetCube()
+    {
+        return cube;
     }
 }  // namespace GameEngine
