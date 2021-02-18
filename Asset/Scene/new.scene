@@ -45,24 +45,24 @@
 				}]
 		}, {
 			"name":	"UI1111",
-			"Children":	[],
+			"Children":	[{
+				"name":	"UI21",
+				"Children":	[],
+				"Components":	[{
+						"type":	5,
+						"rotation":	[50, 50, 50],
+						"position":	[-1, -1, 10],
+						"scale":	[1, 1, 1]
+					}, {
+						"type":	2,
+						"m_Mesh":	"Scene/mayaCube.OBJ",
+						"m_Materials":	["Materials/walllight.gemtl"]
+					}]
+			}],
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
 					"position":	[2, 2, 10],
-					"scale":	[1, 1, 1]
-				}, {
-					"type":	2,
-					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/walllight.gemtl"]
-				}]
-		}, {
-			"name":	"UI21",
-			"Children":	[],
-			"Components":	[{
-					"type":	5,
-					"rotation":	[50, 50, 50],
-					"position":	[-1, -1, 10],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,

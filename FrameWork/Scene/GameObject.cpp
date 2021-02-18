@@ -213,7 +213,7 @@ namespace GameEngine
         {
             auto childParam = cJSON_GetArrayItem(paramsNode, index);
             auto childNode = GameObject::createGameObject();
-            childNode->OnSerialize(childParam);
+            childNode->OnDeserialize(childParam);
             addChild(childNode);
         }
         Object::OnDeserialize(root);
