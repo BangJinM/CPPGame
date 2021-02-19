@@ -1,26 +1,4 @@
 {
-	"Cube":	{
-		"m_Mesh":"Scene/mayaCube.OBJ",
-		"CubeVaules":	[{
-				"dir":	1,
-				"path":	"Textures/cube/right.jpg"
-			}, {
-				"dir":	2,
-				"path":	"Textures/cube/left.jpg"
-			}, {
-				"dir":	3,
-				"path":	"Textures/cube/top.jpg"
-			}, {
-				"dir":	4,
-				"path":	"Textures/cube/bottom.jpg"
-			}, {
-				"dir":	5,
-				"path":	"Textures/cube/back.jpg"
-			}, {
-				"dir":	6,
-				"path":	"Textures/cube/front.jpg"
-			}]
-	},
 	"Gameobjects":	[{
 			"name":	"Canvas",
 			"Children":	[],
@@ -68,19 +46,19 @@
 		}, {
 			"name":	"UI1111",
 			"Children":	[{
-				"name":	"UI21",
-				"Children":	[],
-				"Components":	[{
-						"type":	5,
-						"rotation":	[50, 50, 50],
-						"position":	[-1, -1, 10],
-						"scale":	[1, 1, 1]
-					}, {
-						"type":	2,
-						"m_Mesh":	"Scene/mayaCube.OBJ",
-						"m_Materials":	["Materials/walllight.gemtl"]
-					}]
-			}],
+					"name":	"UI21",
+					"Children":	[],
+					"Components":	[{
+							"type":	5,
+							"rotation":	[50, 50, 50],
+							"position":	[-1, -1, 10],
+							"scale":	[1, 1, 1]
+						}, {
+							"type":	2,
+							"m_Mesh":	"Scene/mayaCube.OBJ",
+							"m_Materials":	["Materials/walllight.gemtl"]
+						}]
+				}],
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
@@ -116,12 +94,12 @@
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	13,
-					"Ambient":[0.1, 0.1, 0.1],
-					"Diffuse":[0.8, 0.8, 0.8],
-					"Specular":[1.0, 1.0, 1.0],
-					"color":[255, 255, 255, 255]
+					"Ambient":	[0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
+					"Diffuse":	[0.800000011920929, 0.800000011920929, 0.800000011920929],
+					"Specular":	[1, 1, 1],
+					"color":	[255, 255, 255, 255]
 				}]
-		},{
+		}, {
 			"name":	"pointLight",
 			"Children":	[],
 			"Components":	[{
@@ -131,10 +109,33 @@
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	10,
-					"constant":[0.1, 0.1, 0.1],
-					"linear":[0.8, 0.8, 0.8],
-					"quadratic":[1.0, 1.0, 1.0],
-					"color":[255, 255, 255, 255]
+					"constant":	1,
+					"linear":	0.090000003576278687,
+					"quadratic":	0.032000001519918442,
+					"Ambient":	[0, 0, 0],
+					"Diffuse":	[0, 0, 0],
+					"Specular":	[0, 0, 0],
+					"color":	[255, 255, 255, 255]
+				}]
+		}, {
+			"name":	"SpotLight",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"rotation":	[50, 50, 50],
+					"position":	[0, 1, 4],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	12,
+					"cutOff":	12.5,
+					"outerCutOff":	17.5,
+					"constant":	1,
+					"linear":	0.090000003576278687,
+					"quadratic":	0.032000001519918442,
+					"Ambient":	[0, 0, 0],
+					"Diffuse":	[0, 0, 0],
+					"Specular":	[0, 0, 0],
+					"color":	[255, 255, 255, 255]
 				}]
 		}, {
 			"name":	"peopleObject",
@@ -149,5 +150,27 @@
 					"m_Mesh":	"Scene/mayaCube.OBJ",
 					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
-		}]
+		}],
+	"Cube":	{
+		"CubeVaules":	[{
+				"dir":	1,
+				"path":	"Textures/cube/right.jpg"
+			}, {
+				"dir":	2,
+				"path":	"Textures/cube/left.jpg"
+			}, {
+				"dir":	3,
+				"path":	"Textures/cube/top.jpg"
+			}, {
+				"dir":	4,
+				"path":	"Textures/cube/bottom.jpg"
+			}, {
+				"dir":	5,
+				"path":	"Textures/cube/back.jpg"
+			}, {
+				"dir":	6,
+				"path":	"Textures/cube/front.jpg"
+			}],
+		"m_Mesh":	"Scene/mayaCube.OBJ"
+	}
 }

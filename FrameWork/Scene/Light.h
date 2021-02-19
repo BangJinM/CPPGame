@@ -48,7 +48,7 @@ namespace GameEngine
             Component::Destory();
         }
 
-        Light() 
+        Light()
         {
             m_Color = ColorRGBA(1, 1, 1, 1);
             m_ClassID = ClassID(Light);
@@ -66,7 +66,13 @@ namespace GameEngine
         }
 
     protected:
+        /////////////////////////////////
+        //光颜色
+        /////////////////////////////////
         ColorRGBA m_Color;
+        /////////////////////////////////
+        // 光类型
+        /////////////////////////////////
         LightType m_LightType;
     };
 
@@ -87,29 +93,14 @@ namespace GameEngine
             m_LightType = LightType::AreaLight;
         }
     };
-
-    class SpotLight : public Light
-    {
-    public:
-        virtual void OnSerialize(cJSON* root) override
-        {
-            Light::OnSerialize(root);
-        }
-        virtual void OnDeserialize(cJSON* root) override
-        {
-            Light::OnDeserialize(root);
-        }
-        SpotLight() 
-        {
-            m_ClassID = ClassID(SpotLight);
-            m_LightType = LightType::SpotLight;
-        }
-    };
-
+    /////////////////////////////////
+    //方向光
+    /////////////////////////////////
     class DirectionalLight : public Light
     {
     public:
-        DirectionalLight()  {
+        DirectionalLight()
+        {
             m_ClassID = ClassID(DirectionalLight);
             m_LightType = LightType::DirectionalLight;
         }
@@ -128,25 +119,25 @@ namespace GameEngine
             m_Specular = SerializableHelper::DeserializeVecterFloat3(root, "Specular");
         }
 
-        //
+        /////////////////////////////////
         //环境(Ambient)
-        //
+        /////////////////////////////////
         VecterFloat3 m_Ambient;
 
-        //
+        /////////////////////////////////
         //漫反射(Diffuse)
-        //
+        /////////////////////////////////
         VecterFloat3 m_Diffuse;
 
-        //
+        /////////////////////////////////
         //镜面(Specular)光照
-        //
+        /////////////////////////////////
         VecterFloat3 m_Specular;
     };
 
-    //
+    /////////////////////////////////
     //点光源  Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
-    //
+    /////////////////////////////////
     class PointLight : public DirectionalLight
     {
     public:
@@ -155,35 +146,69 @@ namespace GameEngine
             SerializableHelper::Seserialize(root, "constant", constant);
             SerializableHelper::Seserialize(root, "linear", linear);
             SerializableHelper::Seserialize(root, "quadratic", quadratic);
-			DirectionalLight::OnSerialize(root);
+            DirectionalLight::OnSerialize(root);
         }
         virtual void OnDeserialize(cJSON* root) override
         {
             constant = SerializableHelper::DeserializeFloat(root, "constant");
             linear = SerializableHelper::DeserializeFloat(root, "linear");
             quadratic = SerializableHelper::DeserializeFloat(root, "quadratic");
-			DirectionalLight::OnDeserialize(root);
+            DirectionalLight::OnDeserialize(root);
         }
-        PointLight() 
+        PointLight()
         {
             m_ClassID = ClassID(PointLight);
             m_LightType = LightType::PointLight;
         }
 
-        //
+        /////////////////////////////////
         // Kc 常数项
-        //
+        /////////////////////////////////
         float constant;
 
-        //
+        /////////////////////////////////
         // d 一次方项
-        //
+        /////////////////////////////////
         float linear;
 
-        //
+        /////////////////////////////////
         // d^2 二次方项
-        //
+        /////////////////////////////////
         float quadratic;
+    };
+    /////////////////////////////////
+    // 聚光灯
+    /////////////////////////////////
+    class SpotLight : public PointLight
+    {
+    public:
+        virtual void OnSerialize(cJSON* root) override
+        {
+            SerializableHelper::Seserialize(root, "cutOff", cutOff);
+            SerializableHelper::Seserialize(root, "outerCutOff", outerCutOff);
+            PointLight::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            cutOff = SerializableHelper::DeserializeFloat(root, "cutOff");
+            outerCutOff = SerializableHelper::DeserializeFloat(root, "outerCutOff");
+            PointLight::OnDeserialize(root);
+        }
+        SpotLight()
+        {
+            m_ClassID = ClassID(SpotLight);
+            m_LightType = LightType::SpotLight;
+        }
+
+    private:
+        /////////////////////////////////
+        //内圆锥
+        /////////////////////////////////
+        float cutOff;
+        /////////////////////////////////
+        // 外圆锥
+        /////////////////////////////////
+        float outerCutOff;
     };
 
 }  // namespace GameEngine

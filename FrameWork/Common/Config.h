@@ -63,21 +63,37 @@ namespace GameEngine
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
-
+    /////////////////////////////////
+    // 摄像机信息
+    /////////////////////////////////
     struct ViewInfos
     {
         static constexpr const char *VIEW_MATRIX = "u_view_matrix";
         static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
         static constexpr const char *CAMERA_POS = "u_camera_pos";
-
+        /////////////////////////////////
+        // 摄像机坐标
+        /////////////////////////////////
         VecterFloat3 u_camera_pos;
+        /////////////////////////////////
+        // 摄像机投影矩阵
+        /////////////////////////////////
         glm::mat4 u_projection_matrix;
+        /////////////////////////////////
+        // 摄像机观察矩阵
+        /////////////////////////////////
         glm::mat4 u_view_matrix;
     };
-
+    /////////////////////////////////
+    // 模型信息
+    /////////////////////////////////
     struct ModelInfos
     {
-        glm::mat4 modelPos;
+        static constexpr const char *MODEL_MATRIX = "u_model_matrix";
+        /////////////////////////////////
+        // 模型坐标,平移矩阵
+        /////////////////////////////////
+        glm::mat4 modelMat4;
     };
 
     struct RendererCammand
@@ -88,7 +104,9 @@ namespace GameEngine
         ModelInfos modelInfos;
         int index;
     };
-    
+    /////////////////////////////////
+    // 立方体贴图方向枚举
+    /////////////////////////////////
     enum CubeDir
     {
         RIGHT = 1,
@@ -98,6 +116,11 @@ namespace GameEngine
         BACK,
         FRONT
     };
+    /////////////////////////////////
+    // 立方体贴图
+    // path 贴图路径
+    // dir 方向
+    /////////////////////////////////
     struct CubeValue
     {
         std::string path;

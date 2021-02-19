@@ -75,10 +75,10 @@ namespace GameEngine
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
 
-        int location = glGetUniformLocation(shader->m_ProgramID, "model");
+        int location = glGetUniformLocation(shader->m_ProgramID, ModelInfos::MODEL_MATRIX);
         if (location >= 0)
         {
-            shader->setMat4("model", glm::value_ptr(rC.modelInfos.modelPos));
+            shader->setMat4(ModelInfos::MODEL_MATRIX, glm::value_ptr(rC.modelInfos.modelMat4));
         }
 
         location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::VIEW_MATRIX);

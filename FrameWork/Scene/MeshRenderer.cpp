@@ -42,7 +42,7 @@ namespace GameEngine
                     rC.mesh = mesh;
                     rC.viewInfos = viewInfos;
 
-                    rC.modelInfos.modelPos = modelMat;
+                    rC.modelInfos.modelMat4 = modelMat;
                     rC.index = mi;
 
                     g_pGraphicsManager->addRendererCommand(rC);
