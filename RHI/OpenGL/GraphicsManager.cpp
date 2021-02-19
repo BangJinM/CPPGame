@@ -212,8 +212,7 @@ namespace GameEngine
         if (!cube)
             return;
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-		glFrontFace(GL_CCW);
+		glFrontFace(GL_CW);
         auto shader = g_pShaderManager->GetShaderProgram(shaderID);
         glDepthFunc(GL_LEQUAL);
         shader->Use();
@@ -236,7 +235,7 @@ namespace GameEngine
         glDepthFunc(GL_LESS);
 
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
     }
 
     void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
