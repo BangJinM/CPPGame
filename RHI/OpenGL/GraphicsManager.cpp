@@ -211,7 +211,9 @@ namespace GameEngine
     {
         if (!cube)
             return;
-
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		glFrontFace(GL_CCW);
         auto shader = g_pShaderManager->GetShaderProgram(shaderID);
         glDepthFunc(GL_LEQUAL);
         shader->Use();
@@ -221,7 +223,7 @@ namespace GameEngine
         auto cameraTs = camera->getParent()->getComponent<Transform>();
 
         auto view = glm::mat4(glm::mat3(cameraTs->getMatrix())); 
-        shader->setMat4("view", cameraTs->getMatrix());
+        shader->setMat4("view", view);
 
         shader->setMat4("projection", camera->getProjectionMatrix());
 
@@ -232,6 +234,9 @@ namespace GameEngine
 
         PrepareMesh(cube->GetMesh(), 0);
         glDepthFunc(GL_LESS);
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
     }
 
     void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
