@@ -49,6 +49,8 @@ namespace GameEngine
         }
     }
 
+    void Scene::OnEnable(){}
+
     void Scene::Update()
     {
         auto children = m_Root->getChildren();

@@ -23,8 +23,9 @@ namespace GameEngine
         // }
     }
 
-    Renderer::Renderer(ClassIDType classID) : Component(classID)
+    Renderer::Renderer()
     {
+        m_ClassID = ClassID(Renderer);
     }
 
     SharedMesh Renderer::getMesh()
@@ -50,7 +51,7 @@ namespace GameEngine
     {
         if (m_Started)
             return;
-        auto renderer = getParent()->getComponent<Renderer>();
+        auto renderer = GetParent()->getComponent<Renderer>();
         if (!renderer)
             return;
         auto scene = g_pSceneManager->GetScene();

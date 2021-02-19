@@ -27,6 +27,7 @@ namespace GameEngine
         ~Scene();
 
         virtual void Start() override;
+        virtual void OnEnable() override;
         virtual void Update() override;
         virtual void Destory() override;
 

@@ -10,6 +10,7 @@
 
 #include "AssetManager.h"
 #include "Camera.h"
+#include "GameObject.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "ParserManager.h"
@@ -80,22 +81,22 @@ namespace GameEngine
             shader->setMat4("model", glm::value_ptr(rC.modelInfos.modelPos));
         }
 
-        location = glGetUniformLocation(shader->m_ProgramID, "view");
+        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::VIEW_MATRIX);
         if (location >= 0)
         {
-            shader->setMat4("view", glm::value_ptr(rC.viewInfos.view));
+            shader->setMat4(ViewInfos::VIEW_MATRIX, glm::value_ptr(rC.viewInfos.u_view_matrix));
         }
 
-        location = glGetUniformLocation(shader->m_ProgramID, "projection");
+        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::PROJECTION_MATRIX);
         if (location >= 0)
         {
-            shader->setMat4("projection", glm::value_ptr(rC.viewInfos.project));
+            shader->setMat4(ViewInfos::PROJECTION_MATRIX, glm::value_ptr(rC.viewInfos.u_projection_matrix));
         }
 
-        location = glGetUniformLocation(shader->m_ProgramID, "cameraPos");
+        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::CAMERA_POS);
         if (location >= 0)
         {
-            shader->setVec3("cameraPos", rC.viewInfos.cameraPos);
+            shader->setVec3(ViewInfos::CAMERA_POS, rC.viewInfos.u_camera_pos);
         }
 
         // 	"Ambient":[0.1, 0.1, 0.1],
@@ -211,20 +212,20 @@ namespace GameEngine
     {
         if (!cube)
             return;
-		glEnable(GL_CULL_FACE);
-		glFrontFace(GL_CW);
+        glEnable(GL_CULL_FACE);
+        glFrontFace(GL_CW);
         auto shader = g_pShaderManager->GetShaderProgram(shaderID);
         glDepthFunc(GL_LEQUAL);
         shader->Use();
 
         auto scene = g_pSceneManager->GetScene();
         SharePtr<Camera> camera = *(scene->m_Cameras.begin());
-        auto cameraTs = camera->getParent()->getComponent<Transform>();
+        auto cameraTs = camera->GetParent()->getComponent<Transform>();
 
-        auto view = glm::mat4(glm::mat3(cameraTs->getMatrix())); 
-        shader->setMat4("view", view);
+        auto view = glm::mat4(glm::mat3(cameraTs->getMatrix()));
+        shader->setMat4(ViewInfos::VIEW_MATRIX, view);
 
-        shader->setMat4("projection", camera->getProjectionMatrix());
+        shader->setMat4(ViewInfos::PROJECTION_MATRIX, camera->getProjectionMatrix());
 
         shader->setInt("skybox", 0);
         glActiveTexture(GL_TEXTURE0);
@@ -234,7 +235,7 @@ namespace GameEngine
         PrepareMesh(cube->GetMesh(), 0);
         glDepthFunc(GL_LESS);
 
-		glEnable(GL_CULL_FACE);
+        glDisable(GL_CULL_FACE);
         glFrontFace(GL_CCW);
     }
 

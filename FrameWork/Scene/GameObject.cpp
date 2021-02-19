@@ -30,7 +30,7 @@ namespace GameEngine
         {
             return;
         }
-        child->setParent(m_GameObject.lock());
+        child->SetParent(m_GameObject.lock());
         m_children.insert(std::pair<int, SharedGameObject>(child->GetID(), child));
     }
 
@@ -80,12 +80,12 @@ namespace GameEngine
         }
     }
 
-    void GameObject::setParent(SharedGameObject parent)
+    void GameObject::SetParent(SharedGameObject parent)
     {
         m_Parent = parent;
     }
 
-    SharedGameObject GameObject::getParent()
+    SharedGameObject GameObject::GetParent()
     {
         return m_Parent;
     }
@@ -110,6 +110,9 @@ namespace GameEngine
         {
             i->second->Start();
         }
+    }
+    void GameObject::OnEnable()
+    {
     }
 
     void GameObject::Update()

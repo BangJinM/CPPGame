@@ -15,7 +15,7 @@ namespace GameEngine
     class Transform : public Component
     {
     public:
-        Transform(ClassIDType classID = ClassID(Transform));
+        Transform();
 
         void SetPosition(VecterFloat3 position);
         void SetScale(VecterFloat3 scale);

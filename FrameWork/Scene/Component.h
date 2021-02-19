@@ -16,57 +16,22 @@ namespace GameEngine
         friend class GameObject;
 
     public:
-        ClassIDType getClassID()
-        {
-            if (m_ClassID > 0)
-                return m_ClassID;
-            return ClassIDType::CLASS_Undefined;
-        }
+        ClassIDType getClassID();
+
+        void SetParent(SharedGameObject host);
+        SharedGameObject GetParent();
+
+        virtual void OnSerialize(cJSON* root) override;
+        virtual void OnDeserialize(cJSON* root) override;
+
+        virtual void Start() override;
+        virtual void OnEnable() override;
+        virtual void Update() override;
+        virtual void Destory() override;
+
+    public:
         ClassIDType m_ClassID = ClassID(Undefined);
 
-        virtual ~Component()
-        {
-        }
-        Component(ClassIDType classID) : m_ClassID(classID) {}
-
-        void setParent(SharedGameObject host)
-        {
-            if (m_Parent.lock() != host)
-            {
-                m_Parent = host;
-            }
-        }
-
-        SharedGameObject getParent()
-        {
-            return m_Parent.lock();
-        }
-
-        virtual void OnSerialize(cJSON* root) override
-        {
-            Object::OnSerialize(root);
-        }
-        virtual void OnDeserialize(cJSON* root) override
-        {
-            Object::OnDeserialize(root);
-        }
-
-    public:
-        virtual void Start() override
-        {
-            if (m_Started)
-                return;
-            m_Started = true;
-        }
-        virtual void Update() override {}
-        virtual void Destory() override {}
-        virtual void OnEnable(bool enable) { m_Enable = enable; }
-        virtual void SetParent(SharedGameObject host)
-        {
-            setParent(host);
-        }
-
-    public:
         std::weak_ptr<GameObject> m_Parent;    //寄主
         std::weak_ptr<Component> m_Component;  //自己
 

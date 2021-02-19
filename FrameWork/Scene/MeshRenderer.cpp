@@ -13,13 +13,14 @@ namespace GameEngine
     extern BaseGraphicsManager* g_pGraphicsManager;
     extern AssetManager* g_pAssetManager;
 
-    MeshRenderer::MeshRenderer(ClassIDType classID) : Renderer(classID)
+    MeshRenderer::MeshRenderer()
     {
+        m_ClassID = ClassID(MeshRenderer);
     }
 
     void MeshRenderer::Render(ViewInfos viewInfos)
     {
-        SharedGameObject parent = getParent();
+        SharedGameObject parent = GetParent();
         auto modelMat = parent->getComponent<Transform>()->getMatrix();
         SharedMesh mesh = getMesh();
         auto materials = getMaterials();

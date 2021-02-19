@@ -16,7 +16,7 @@ uniform sampler2D specular;
 
 uniform DirLight light;
 
-uniform vec3 cameraPos;
+uniform vec3 u_camera_pos;
 
 out vec4 FragColor;
 
@@ -32,7 +32,7 @@ void main() {
   vec3 diffuse = light.diffuse * diff * texture(diffuse, v_texCoord).rgb;
 
   // specular
-  vec3 viewDir = normalize(cameraPos - v_FragPos);
+  vec3 viewDir = normalize(u_camera_pos - v_FragPos);
   vec3 reflectDir = reflect(-lightDir, norm);
   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
   vec3 specular = light.specular * spec * texture(specular, v_texCoord).rgb;

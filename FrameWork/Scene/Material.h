@@ -14,18 +14,6 @@
 
 namespace GameEngine
 {
-    struct ViewUniforms
-    {
-        static constexpr const char *VIEW_MATRIX = "u_view_matrix";
-        static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
-        static constexpr const char *CAMERA_POS = "u_camera_pos";
-        static constexpr const char *TIME = "u_time";
-
-        GlmMat4 view_matrix;
-        GlmMat4 projection_matrix;
-        VecterFloat4 camera_pos;
-        VecterFloat4 time;
-    };
 
     // per renderer uniforms, set by renderer
     struct RendererUniforms

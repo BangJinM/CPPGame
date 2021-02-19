@@ -44,11 +44,11 @@ namespace GameEngine
 
         for (auto camera : scene->m_Cameras)
         {
-            auto cameraTs = camera->getParent()->getComponent<Transform>();
+            auto cameraTs = camera->GetParent()->getComponent<Transform>();
             ViewInfos viewInfos;
-            viewInfos.cameraPos = cameraTs->GetPosition();
-            viewInfos.project = camera->getProjectionMatrix();
-            viewInfos.view = cameraTs->getMatrix();
+            viewInfos.u_camera_pos = cameraTs->GetPosition();
+            viewInfos.u_projection_matrix = camera->getProjectionMatrix();
+            viewInfos.u_view_matrix = cameraTs->getMatrix();
 
             for (auto render : scene->m_Renderers)
             {

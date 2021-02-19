@@ -5,8 +5,9 @@ namespace GameEngine
 {
     extern AssetManager* g_pAssetManager;
 
-    Cube::Cube(ClassIDType classID) : Component(classID)
+    Cube::Cube()
     {
+        m_ClassID = ClassID(Cube);
     }
 
     void Cube::OnSerialize(cJSON* root)

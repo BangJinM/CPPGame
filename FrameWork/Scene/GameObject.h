@@ -21,6 +21,7 @@ namespace GameEngine
 
     public:
         virtual void Start() override;
+        virtual void OnEnable() override;
         virtual void Update() override;
         virtual void Destory() override;
 
@@ -39,8 +40,9 @@ namespace GameEngine
 
         SharedGameObject getChildByName(std::string name);
         SharedGameObject getChildByID(int id);
-        SharedGameObject getParent();
-        void setParent(SharedGameObject parent);
+        
+        SharedGameObject GetParent();
+        void SetParent(SharedGameObject parent);
 
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;

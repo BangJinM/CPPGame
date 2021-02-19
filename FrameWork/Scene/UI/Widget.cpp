@@ -30,7 +30,7 @@ namespace GameEngine
     {
         if (m_Started)
             return;
-        auto widget = getParent()->getComponent<Widget>();
+        auto widget = GetParent()->getComponent<Widget>();
         if (!widget)
             return;
         auto scene = g_pSceneManager->GetScene();

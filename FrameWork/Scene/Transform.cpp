@@ -7,8 +7,9 @@
 
 namespace GameEngine
 {
-    Transform::Transform(ClassIDType classID) : Component(classID)
+    Transform::Transform()
     {
+        m_ClassID = ClassID(Renderer);
         m_Position = VecterFloat3(0, 0, 0);
         m_Scale = VecterFloat3(1, 1, 1);
         m_Rotation = VecterFloat3(0, 0, 0);

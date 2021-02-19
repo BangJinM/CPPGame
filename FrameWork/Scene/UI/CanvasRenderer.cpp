@@ -42,7 +42,7 @@ namespace GameEngine
     {
         if (m_Started)
             return;
-        auto canvasRenderer = getParent()->getComponent<CanvasRenderer>();
+        auto canvasRenderer = GetParent()->getComponent<CanvasRenderer>();
         if (!canvasRenderer)
             return;
         auto scene = g_pSceneManager->GetScene();
@@ -52,14 +52,14 @@ namespace GameEngine
 
     void CanvasRenderer::Render(ViewInfos viewInfos)
     {
-        auto viewMat = camera->getParent()->getComponent<Transform>()->getMatrix();
+        auto viewMat = camera->GetParent()->getComponent<Transform>()->getMatrix();
         auto projectMat = camera->getProjectionMatrixOrthographic();
 
         for (auto widgetPtr = m_Widgets.begin(); widgetPtr != m_Widgets.end(); widgetPtr++)
         {
             auto widget = *widgetPtr;
 
-            SharedGameObject parent = widget->getParent();
+            SharedGameObject parent = widget->GetParent();
             auto modelMat = parent->getComponent<Transform>()->getMatrix();
             SharedMesh mesh = AssetManager::GetUIMesh();
             SharedMaterial material = AssetManager::LoadMaterial("Materials/defaultUI.gemtl");

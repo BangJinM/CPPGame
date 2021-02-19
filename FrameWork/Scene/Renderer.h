@@ -16,11 +16,11 @@ namespace GameEngine
     {
     public:
         void Prepare();
-        Renderer(ClassIDType classID = ClassID(Renderer));
-        SharedMesh getMesh();                          // { return SharedMesh(); }
-        std::vector<SharedMaterial> getMaterials();    // { return m_Materials; }
-        void AddMaterial(SharedMaterial material);     // { m_Materials.push_back(material); }
-        virtual void Render(ViewInfos viewInfos);  // {}
+        Renderer();
+        SharedMesh getMesh();                          
+        std::vector<SharedMaterial> getMaterials();   
+        void AddMaterial(SharedMaterial material);    
+        virtual void Render(ViewInfos viewInfos); 
         virtual void Start();
 
         virtual void OnSerialize(cJSON* root) override;

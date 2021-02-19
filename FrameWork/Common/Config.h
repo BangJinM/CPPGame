@@ -66,9 +66,13 @@ namespace GameEngine
 
     struct ViewInfos
     {
-        VecterFloat3 cameraPos;
-        glm::mat4 project;
-        glm::mat4 view;
+        static constexpr const char *VIEW_MATRIX = "u_view_matrix";
+        static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
+        static constexpr const char *CAMERA_POS = "u_camera_pos";
+
+        VecterFloat3 u_camera_pos;
+        glm::mat4 u_projection_matrix;
+        glm::mat4 u_view_matrix;
     };
 
     struct ModelInfos
@@ -84,7 +88,7 @@ namespace GameEngine
         ModelInfos modelInfos;
         int index;
     };
-
+    
     enum CubeDir
     {
         RIGHT = 1,

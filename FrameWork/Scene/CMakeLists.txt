@@ -27,6 +27,7 @@ Scene/Scene.cpp
 Scene/SceneManager.cpp
 Scene/Transform.cpp
 Scene/Cube.cpp
+Scene/Component.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_SCENE_HEADER})

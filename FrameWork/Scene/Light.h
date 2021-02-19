@@ -32,7 +32,7 @@ namespace GameEngine
         virtual void Start() override
         {
             Component::Start();
-            auto light = getParent()->getComponent<Light>();
+            auto light = GetParent()->getComponent<Light>();
             if (!light)
                 return;
             auto scene = g_pSceneManager->GetScene();
@@ -48,15 +48,12 @@ namespace GameEngine
             Component::Destory();
         }
 
-        Light(LightType lightType, ClassIDType classID = ClassID(Light)) : m_LightType(lightType), Component(classID)
+        Light() 
         {
             m_Color = ColorRGBA(1, 1, 1, 1);
+            m_ClassID = ClassID(Light);
         }
 
-        Light() : m_LightType(LightType::DirectionalLight), Component(ClassID(Light))
-        {
-            m_Color = ColorRGBA(1, 1, 1, 1);
-        }
         virtual void OnSerialize(cJSON* root) override
         {
             SerializableHelper::Seserialize(root, "color", m_Color);
@@ -68,41 +65,9 @@ namespace GameEngine
             Component::OnDeserialize(root);
         }
 
-    private:
+    protected:
         ColorRGBA m_Color;
         LightType m_LightType;
-    };
-
-    //
-    //点光源  Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
-    //
-    class PointLight : public Light
-    {
-    public:
-        virtual void OnSerialize(cJSON* root) override
-        {
-            Light::OnSerialize(root);
-        }
-        virtual void OnDeserialize(cJSON* root) override
-        {
-            Light::OnDeserialize(root);
-        }
-        PointLight(ClassIDType classID = ClassID(PointLight)) : Light(LightType::PointLight, classID) {}
-
-        //
-        // Kc 常数项
-        //
-        float constant;
-
-        //
-        // d 一次方项
-        //
-        float linear;
-
-        //
-        // d^2 二次方项
-        //
-        float quadratic;
     };
 
     class AreaLight : public Light
@@ -116,7 +81,11 @@ namespace GameEngine
         {
             Light::OnDeserialize(root);
         }
-        AreaLight(ClassIDType classID = ClassID(AreaLight)) : Light(LightType::AreaLight, classID) {}
+        AreaLight()
+        {
+            m_ClassID = ClassID(AreaLight);
+            m_LightType = LightType::AreaLight;
+        }
     };
 
     class SpotLight : public Light
@@ -130,13 +99,20 @@ namespace GameEngine
         {
             Light::OnDeserialize(root);
         }
-        SpotLight(ClassIDType classID = ClassID(SpotLight)) : Light(LightType::SpotLight, classID) {}
+        SpotLight() 
+        {
+            m_ClassID = ClassID(SpotLight);
+            m_LightType = LightType::SpotLight;
+        }
     };
 
     class DirectionalLight : public Light
     {
     public:
-        DirectionalLight(ClassIDType classID = ClassID(DirectionalLight)) : Light(LightType::DirectionalLight, classID) {}
+        DirectionalLight()  {
+            m_ClassID = ClassID(DirectionalLight);
+            m_LightType = LightType::DirectionalLight;
+        }
         virtual void OnSerialize(cJSON* root) override
         {
             SerializableHelper::Seserialize(root, "Ambient", m_Ambient);
@@ -166,6 +142,48 @@ namespace GameEngine
         //镜面(Specular)光照
         //
         VecterFloat3 m_Specular;
+    };
+
+    //
+    //点光源  Fatt=1.0/(Kc+Kl∗d+Kq∗d^2)
+    //
+    class PointLight : public DirectionalLight
+    {
+    public:
+        virtual void OnSerialize(cJSON* root) override
+        {
+            SerializableHelper::Seserialize(root, "constant", constant);
+            SerializableHelper::Seserialize(root, "linear", linear);
+            SerializableHelper::Seserialize(root, "quadratic", quadratic);
+			DirectionalLight::OnSerialize(root);
+        }
+        virtual void OnDeserialize(cJSON* root) override
+        {
+            constant = SerializableHelper::DeserializeFloat(root, "constant");
+            linear = SerializableHelper::DeserializeFloat(root, "linear");
+            quadratic = SerializableHelper::DeserializeFloat(root, "quadratic");
+			DirectionalLight::OnDeserialize(root);
+        }
+        PointLight() 
+        {
+            m_ClassID = ClassID(PointLight);
+            m_LightType = LightType::PointLight;
+        }
+
+        //
+        // Kc 常数项
+        //
+        float constant;
+
+        //
+        // d 一次方项
+        //
+        float linear;
+
+        //
+        // d^2 二次方项
+        //
+        float quadratic;
     };
 
 }  // namespace GameEngine
