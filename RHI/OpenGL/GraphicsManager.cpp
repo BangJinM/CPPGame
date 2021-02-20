@@ -1,8 +1,5 @@
 ﻿#include "GraphicsManager.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <algorithm>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -99,32 +96,19 @@ namespace GameEngine
             shader->setVec3(ViewInfos::CAMERA_POS, rC.viewInfos.u_camera_pos);
         }
 
-        // 	"Ambient":[0.1, 0.1, 0.1],
-        // "Diffuse":[0.8, 0.8, 0.8],
-        // "Specular":[1.0, 1.0, 1.0],
-        // "color":[255, 255, 255, 255]
-        location = glGetUniformLocation(shader->m_ProgramID, "light.direction");
-        if (location >= 0)
-        {
-            shader->setVec3("light.direction", VecterFloat3(-0.2f, -1.0f, -0.3f));
-        }
+        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "light");
 
-        location = glGetUniformLocation(shader->m_ProgramID, "light.ambient");
-        if (location >= 0)
+        if (blockIndex != GL_INVALID_INDEX)
         {
-            shader->setVec3("light.ambient", VecterFloat3(0.11, 0.1, 0.1));
-        }
+            int32_t blockSize;
 
-        location = glGetUniformLocation(shader->m_ProgramID, "light.diffuse");
-        if (location >= 0)
-        {
-            shader->setVec3("light.diffuse", VecterFloat3(0.8, 0.8, 0.8));
-        }
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
 
-        location = glGetUniformLocation(shader->m_ProgramID, "light.specular");
-        if (location >= 0)
-        {
-            shader->setVec3("light.specular", VecterFloat3(1.0, 1.0, 1.0));
+            assert(blockSize >= sizeof(120 * 100));
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 12);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 12, m_uboLightInfo);
         }
 
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
@@ -278,6 +262,21 @@ namespace GameEngine
         }
         mesh->isPrepare = true;
         PrepareMesh(mesh, index);
+    }
+
+    void GraphicsManager::SetLightInfo(const LightInfo &lightInfo)
+    {
+        if (!m_uboLightInfo)
+        {
+            glGenBuffers(1, &m_uboLightInfo);
+        }
+
+        glBindBuffer(GL_UNIFORM_BUFFER, m_uboLightInfo);
+
+        glBufferData(GL_UNIFORM_BUFFER, 120 * 100, &lightInfo.lights,
+                     GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
 
 }  // namespace GameEngine

@@ -49,7 +49,7 @@ namespace GameEngine
         }
     }
 
-    void Scene::OnEnable(){}
+    void Scene::OnEnable() {}
 
     void Scene::Update()
     {
@@ -96,6 +96,11 @@ namespace GameEngine
                 m_Lights.erase(i);
         }
     }
+
+	std::list<SharePtr<Light>> Scene::GetLights()
+	{
+		return m_Lights;
+	}
 
     void Scene::AddRenderer(SharePtr<Renderer> reenderer)
     {
@@ -153,6 +158,7 @@ namespace GameEngine
             cJSON_AddItemToArray(gameobjects, item);
         }
     }
+    
     void Scene::OnDeserialize(cJSON* root)
     {
         auto paramsNode = cJSON_GetObjectItem(root, "Cube");

@@ -35,10 +35,15 @@ namespace GameEngine
         virtual void BindCubeTexture(SharedCube cube) = 0;
         virtual void DrawCubeTexture(SharedCube cube, int shaderID) = 0;
         virtual void PrepareMaterial(RendererCammand rC) = 0;
+        virtual void SetLightInfo(const LightInfo& lightInfo) = 0;
+
+		virtual void CalculateLights();
 
     protected:
         std::list<RendererCammand> m_RendererCommands;
         std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
+
+        LightInfo m_LightInfos;
     };
 
     extern BaseGraphicsManager *g_pGraphicsManager;

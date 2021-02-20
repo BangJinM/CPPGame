@@ -42,6 +42,7 @@ namespace GameEngine
 
         void AddLight(SharePtr<Light> light);
         void RemoveLight(SharePtr<Light> light);
+		std::list<SharePtr<Light>> GetLights();
 
         void AddRenderer(SharePtr<Renderer> renderer);
         void RemoveRenderer();

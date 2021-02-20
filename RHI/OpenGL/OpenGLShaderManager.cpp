@@ -20,12 +20,7 @@ namespace GameEngine
     {
         std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vspath.c_str());
         std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(fspath.c_str());
-
-        SharedShaderProgramBase shader = make_shared<ShaderProgram>();
-        shader->AddShaderFromSourceCode(Shader::ShaderType::Vertex, vertStr.c_str());
-        shader->AddShaderFromSourceCode(Shader::ShaderType::Fragment, fragStr.c_str());
-        shader->Link();
-        return AddShader(shader);
+        return AddShaderByString(vertStr, fragStr);
     }
 
     int OpenGLShaderManager::AddShaderByString(std::string vspath, std::string fspath)

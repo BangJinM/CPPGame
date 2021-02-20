@@ -16,18 +16,15 @@
 namespace GameEngine
 {
     extern SceneManager* g_pSceneManager;
-
+    enum LightType
+    {
+        Type_PointLight = 1,
+        Type_AreaLight,
+        Type_SpotLight,
+        Type_DirectionalLight
+    };
     class Light : public Component
     {
-    public:
-        enum LightType
-        {
-            PointLight = 1 << 1,
-            AreaLight = 1 << 2,
-            SpotLight = 1 << 3,
-            DirectionalLight = 1 << 4
-        };
-
     public:
         virtual void Start() override
         {
@@ -65,6 +62,10 @@ namespace GameEngine
             Component::OnDeserialize(root);
         }
 
+        int GetLightType() { return m_LightType; }
+
+        ColorRGBA GetColor() { return m_Color; }
+
     protected:
         /////////////////////////////////
         //光颜色
@@ -90,7 +91,7 @@ namespace GameEngine
         AreaLight()
         {
             m_ClassID = ClassID(AreaLight);
-            m_LightType = LightType::AreaLight;
+            m_LightType = LightType::Type_AreaLight;
         }
     };
     /////////////////////////////////
@@ -102,7 +103,7 @@ namespace GameEngine
         DirectionalLight()
         {
             m_ClassID = ClassID(DirectionalLight);
-            m_LightType = LightType::DirectionalLight;
+            m_LightType = LightType::Type_DirectionalLight;
         }
         virtual void OnSerialize(cJSON* root) override
         {
@@ -118,6 +119,10 @@ namespace GameEngine
             m_Diffuse = SerializableHelper::DeserializeVecterFloat3(root, "Diffuse");
             m_Specular = SerializableHelper::DeserializeVecterFloat3(root, "Specular");
         }
+
+        VecterFloat3 GetAmbient() { return m_Ambient; }
+        VecterFloat3 GetDiffuse() { return m_Diffuse; }
+        VecterFloat3 GetSpecular() { return m_Specular; }
 
         /////////////////////////////////
         //环境(Ambient)
@@ -158,9 +163,14 @@ namespace GameEngine
         PointLight()
         {
             m_ClassID = ClassID(PointLight);
-            m_LightType = LightType::PointLight;
+            m_LightType = LightType::Type_PointLight;
         }
 
+        float GetConstant() { return constant; }
+        float GetLinear() { return linear; }
+        float GetQuadratic() { return quadratic; }
+
+	private:
         /////////////////////////////////
         // Kc 常数项
         /////////////////////////////////
@@ -197,8 +207,11 @@ namespace GameEngine
         SpotLight()
         {
             m_ClassID = ClassID(SpotLight);
-            m_LightType = LightType::SpotLight;
+            m_LightType = LightType::Type_SpotLight;
         }
+
+        float GetCutOff() { return cutOff; }
+        float GetOuterCutOff() { return outerCutOff; }
 
     private:
         /////////////////////////////////

@@ -7,6 +7,8 @@
 #include "MyMath.h"
 namespace GameEngine
 {
+#define MAX_LIGHT_COUNT 100
+
     class Object;
     class GameObject;
     class ShaderProgramBase;
@@ -126,5 +128,35 @@ namespace GameEngine
         std::string path;
         CubeDir dir;
     };
+
+    /////////////////////////////////
+    // 光照 属性参照light类 总长度 = 120
+    /////////////////////////////////
+    struct LightProperty
+    {
+        VecterFloat4 position;
+        VecterFloat4 direction;
+			
+		VecterFloat4 color;
+
+        VecterFloat4 ambient;
+        VecterFloat4 diffuse;
+        VecterFloat4 specular;
+
+        int type;
+
+        float constant;
+        float linear;
+        float quadratic;
+
+        float cutOff;
+        float outerCutOff;
+    };
+
+    struct LightInfo
+    {
+        LightProperty lights[MAX_LIGHT_COUNT];
+        int numsLight;
+	};
 
 }  // namespace GameEngine
