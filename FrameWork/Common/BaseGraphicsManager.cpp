@@ -48,7 +48,7 @@ namespace GameEngine
             ViewInfos viewInfos;
             viewInfos.u_camera_pos = cameraTs->GetPosition();
             viewInfos.u_projection_matrix = camera->getProjectionMatrix();
-            viewInfos.u_view_matrix = cameraTs->getMatrix();
+            viewInfos.u_view_matrix = cameraTs->GetMatrix();
 
             for (auto render : scene->m_Renderers)
             {

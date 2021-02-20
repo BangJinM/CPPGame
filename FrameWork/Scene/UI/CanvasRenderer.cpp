@@ -52,7 +52,7 @@ namespace GameEngine
 
     void CanvasRenderer::Render(ViewInfos viewInfos)
     {
-        auto viewMat = camera->GetParent()->getComponent<Transform>()->getMatrix();
+        auto viewMat = camera->GetParent()->getComponent<Transform>()->GetMatrix();
         auto projectMat = camera->getProjectionMatrixOrthographic();
 
         for (auto widgetPtr = m_Widgets.begin(); widgetPtr != m_Widgets.end(); widgetPtr++)
@@ -60,7 +60,7 @@ namespace GameEngine
             auto widget = *widgetPtr;
 
             SharedGameObject parent = widget->GetParent();
-            auto modelMat = parent->getComponent<Transform>()->getMatrix();
+            auto modelMat = parent->getComponent<Transform>()->GetMatrix();
             SharedMesh mesh = AssetManager::GetUIMesh();
             SharedMaterial material = AssetManager::LoadMaterial("Materials/defaultUI.gemtl");
             SharedMaterial m = make_shared<Material>();

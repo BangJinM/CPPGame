@@ -222,7 +222,7 @@ namespace GameEngine
         SharePtr<Camera> camera = *(scene->m_Cameras.begin());
         auto cameraTs = camera->GetParent()->getComponent<Transform>();
 
-        auto view = glm::mat4(glm::mat3(cameraTs->getMatrix()));
+        auto view = glm::mat4(glm::mat3(cameraTs->GetMatrix()));
         shader->setMat4(ViewInfos::VIEW_MATRIX, view);
 
         shader->setMat4(ViewInfos::PROJECTION_MATRIX, camera->getProjectionMatrix());

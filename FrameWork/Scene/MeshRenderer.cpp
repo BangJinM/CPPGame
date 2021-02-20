@@ -21,7 +21,7 @@ namespace GameEngine
     void MeshRenderer::Render(ViewInfos viewInfos)
     {
         SharedGameObject parent = GetParent();
-        auto modelMat = parent->getComponent<Transform>()->getMatrix();
+        auto modelMat = parent->getComponent<Transform>()->GetMatrix();
         SharedMesh mesh = getMesh();
         auto materials = getMaterials();
         for (size_t mi = 0; mi < mesh->m_MeshDatas.size(); mi++)

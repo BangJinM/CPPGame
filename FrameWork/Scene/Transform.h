@@ -18,14 +18,16 @@ namespace GameEngine
         Transform();
 
         void SetPosition(VecterFloat3 position);
-        void SetScale(VecterFloat3 scale);
-        void SetRotation(VecterFloat3 rotation);
-        void setMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
+        VecterFloat3 GetPosition() { return m_Position; }
 
-        VecterFloat3 GetPosition(){return m_Position;}
-        VecterFloat3 GetScale(){return m_Scale;}
-        VecterFloat3 GetRotation(){return m_Rotation;}
-        GlmMat4 getMatrix() { return m_Matrix; }
+        void SetScale(VecterFloat3 scale);
+        VecterFloat3 GetScale() { return m_Scale; }
+
+        void SetRotation(VecterFloat3 rotation);
+        VecterFloat3 GetRotation() { return m_Rotation; }
+
+        void SetMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
+        GlmMat4 GetMatrix() { return m_Matrix; }
 
         virtual void OnSerialize(cJSON *root) override;
         virtual void OnDeserialize(cJSON *root) override;

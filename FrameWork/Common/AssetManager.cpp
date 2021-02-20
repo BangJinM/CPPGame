@@ -136,7 +136,7 @@ namespace GameEngine
             meshData.vertex.push_back(textcoord[i][0]);
             meshData.vertex.push_back(textcoord[i][1]);
         }
-        mesh->pushMeshData(meshData);
+        mesh->PushMeshData(meshData);
         g_cache[UIMESHDATA] = mesh;
         return mesh;
     }

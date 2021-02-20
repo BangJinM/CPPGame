@@ -32,10 +32,10 @@ namespace GameEngine
         unsigned int VAO, VBO, EBO;
 
     public:
-        /**
-     * Get per vertex size
-     * @return return the sum of each vertex's all attribute size.
-     */
+        //////////////////////////////
+        //  * Get per vertex size
+        //  * @return return the sum of each vertex's all attribute size.
+        //////////////////////////////
         int getPerVertexSize() const
         {
             int vertexsize = 0;
@@ -45,11 +45,10 @@ namespace GameEngine
             }
             return vertexsize;
         }
-
-        /**
-     * Reset the data
-     */
-        void resetData()
+        //////////////////////////////
+        //  * Reset the data
+        ///////////////////////////////
+        void ResetData()
         {
             vertex.clear();
             attribs.clear();
@@ -57,27 +56,34 @@ namespace GameEngine
             numIndex = 0;
             attribCount = 0;
         }
-        MeshData()
-            : vertexSizeInFloat(0), numIndex(0), attribCount(0)
+
+        MeshData() : vertexSizeInFloat(0), numIndex(0), attribCount(0)
         {
-            resetData();
+            ResetData();
         }
+
         ~MeshData()
         {
-            resetData();
+            ResetData();
         }
-        void setupMesh() {}
     };
 
     class Mesh : public Object
     {
     public:
-        void pushMeshData(MeshData& meshData)
+        //////////////////////////////////
+        // * 渲染数据
+        // * @param meshData 数据
+        //////////////////////////////////
+        void PushMeshData(MeshData& meshData)
         {
             m_MeshDatas.push_back(meshData);
         }
+
     public:
-        /*  渲染数据  */
+        //////////////////////////////////
+        // * 渲染数据
+        //////////////////////////////////
         std::vector<MeshData> m_MeshDatas;
         bool isPrepare = false;
     };

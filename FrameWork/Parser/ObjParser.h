@@ -91,7 +91,7 @@ namespace GameEngine
                 }
 
                 meshData.indices = mesh.indices;
-                m_mesh->pushMeshData(meshData);
+                m_mesh->PushMeshData(meshData);
             }
             return m_mesh;
         }
