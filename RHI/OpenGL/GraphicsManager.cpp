@@ -96,7 +96,7 @@ namespace GameEngine
             shader->setVec3(ViewInfos::CAMERA_POS, rC.viewInfos.u_camera_pos);
         }
 
-        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "light");
+        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
 
         if (blockIndex != GL_INVALID_INDEX)
         {
@@ -104,11 +104,11 @@ namespace GameEngine
 
             glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
                                       GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+			int size = sizeof(LightInfo);
+            assert(blockSize >= size);
 
-            assert(blockSize >= sizeof(120 * 100));
-
-            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 12);
-            glBindBufferBase(GL_UNIFORM_BUFFER, 12, m_uboLightInfo);
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 0);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_uboLightInfo);
         }
 
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
@@ -266,14 +266,14 @@ namespace GameEngine
 
     void GraphicsManager::SetLightInfo(const LightInfo &lightInfo)
     {
-        if (!m_uboLightInfo)
+        if (m_uboLightInfo < 0)
         {
-            glGenBuffers(1, &m_uboLightInfo);
+            glGenBuffers(1, &(GLuint)m_uboLightInfo);
         }
 
         glBindBuffer(GL_UNIFORM_BUFFER, m_uboLightInfo);
 
-        glBufferData(GL_UNIFORM_BUFFER, 120 * 100, &lightInfo.lights,
+        glBufferData(GL_UNIFORM_BUFFER, kSizeLightInfo, &lightInfo,
                      GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_UNIFORM_BUFFER, 0);

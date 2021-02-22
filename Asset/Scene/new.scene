@@ -8,22 +8,13 @@
 					"position":	[0, 0, 0],
 					"scale":	[1, 1, 1]
 				}]
-		}, {
-			"name":	"UI",
-			"Children":	[],
-			"Components":	[{
-					"type":	5,
-					"rotation":	[0, 0, 0],
-					"position":	[600, 400, -0.019999999552965164],
-					"scale":	[100, 100, 1]
-				}]
-		}, {
+		},  {
 			"name":	"UI11",
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[0, 0, 10],
+					"position":	[1, 1, -10],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -36,7 +27,7 @@
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[3, 3, 10],
+					"position":	[3, 3, -10],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -51,7 +42,7 @@
 					"Components":	[{
 							"type":	5,
 							"rotation":	[50, 50, 50],
-							"position":	[-1, -1, 10],
+							"position":	[1.5, 1.5, -8],
 							"scale":	[1, 1, 1]
 						}, {
 							"type":	2,
@@ -62,7 +53,7 @@
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[2, 2, 10],
+					"position":	[2, 2, -7],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -75,7 +66,7 @@
 			"Components":	[{
 					"type":	5,
 					"rotation":	[0, 0, 0],
-					"position":	[0, 0, -20],
+					"position":	[0, 0, -15],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	6
@@ -90,52 +81,17 @@
 				}, {
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[0, 1, 5],
-					"scale":	[1, 1, 1]
-				}, {
-					"type":	13,
-					"Ambient":	[0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
-					"Diffuse":	[0.800000011920929, 0.800000011920929, 0.800000011920929],
-					"Specular":	[1, 1, 1],
-					"color":	[255, 255, 255, 255]
-				}]
-		}, {
-			"name":	"pointLight",
-			"Children":	[],
-			"Components":	[{
-					"type":	5,
-					"rotation":	[50, 50, 50],
-					"position":	[0, 1, 4],
+					"position":	[2, 2, 5],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	10,
 					"constant":	1,
-					"linear":	0.090000003576278687,
-					"quadratic":	0.032000001519918442,
-					"Ambient":	[0, 0, 0],
-					"Diffuse":	[0, 0, 0],
-					"Specular":	[0, 0, 0],
-					"color":	[255, 255, 255, 255]
-				}]
-		}, {
-			"name":	"SpotLight",
-			"Children":	[],
-			"Components":	[{
-					"type":	5,
-					"rotation":	[50, 50, 50],
-					"position":	[0, 1, 4],
-					"scale":	[1, 1, 1]
-				}, {
-					"type":	12,
-					"cutOff":	12.5,
-					"outerCutOff":	17.5,
-					"constant":	1,
-					"linear":	0.090000003576278687,
-					"quadratic":	0.032000001519918442,
-					"Ambient":	[0, 0, 0],
-					"Diffuse":	[0, 0, 0],
-					"Specular":	[0, 0, 0],
-					"color":	[255, 255, 255, 255]
+					"linear":0.0014,
+					"quadratic":0.000007,
+					"Ambient":	[0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
+					"Diffuse":	[0.800000011920929, 0.800000011920929, 0.800000011920929],
+					"Specular":	[1, 1, 1],
+					"color":	[0, 0, 255, 255]
 				}]
 		}, {
 			"name":	"peopleObject",
@@ -143,12 +99,12 @@
 			"Components":	[{
 					"type":	5,
 					"rotation":	[50, 50, 50],
-					"position":	[0, 0, 10],
+					"position":	[0.5, 0.5, -6],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/walllight.gemtl"]
+					"m_Materials":	["Materials/light_node.gemtl"]
 				}]
 		}],
 	"Cube":	{

@@ -129,20 +129,12 @@ namespace GameEngine
         CubeDir dir;
     };
 
-    /////////////////////////////////
-    // 光照 属性参照light类 总长度 = 120
-    /////////////////////////////////
-    struct LightProperty
+/////////////////////////////////
+// 光照 属性参照light类 总长度 = 120
+/////////////////////////////////
+// #pragma pack(push, 16)
+    volatile struct LightProperty
     {
-        VecterFloat4 position;
-        VecterFloat4 direction;
-			
-		VecterFloat4 color;
-
-        VecterFloat4 ambient;
-        VecterFloat4 diffuse;
-        VecterFloat4 specular;
-
         int type;
 
         float constant;
@@ -151,12 +143,27 @@ namespace GameEngine
 
         float cutOff;
         float outerCutOff;
+
+        float i[2];// 手动对齐.....我太菜了
+
+        float position[4];
+        float direction[4];
+
+        float color[4];
+
+        float ambient[4];
+        float diffuse[4];
+        float specular[4];
     };
 
-    struct LightInfo
+    volatile struct LightInfo
     {
         LightProperty lights[MAX_LIGHT_COUNT];
         int numsLight;
-	};
-
+    };
+// #pragma pack(pop)
+#ifndef ALIGN
+#define ALIGN(x, a) (((x) + ((a)-1)) & ~((a)-1))
+#endif
+    const size_t kSizeLightInfo = ALIGN(sizeof(LightInfo), 256);  // CB size is required to be 256-byte aligned.
 }  // namespace GameEngine

@@ -1,0 +1,4 @@
+{
+	"vert":	"Shaders/light.vert",
+	"frag":	"Shaders/light.frag"
+}

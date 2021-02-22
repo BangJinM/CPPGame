@@ -4,10 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef ALIGN
-#define ALIGN(x, a) (((x) + ((a)-1)) & ~((a)-1))
-#endif
-
 namespace GameEngine
 {
     Allocator::Allocator()

@@ -29,7 +29,7 @@ namespace GameEngine
         virtual void PrepareMaterial(RendererCammand rC) override;
         virtual void SetLightInfo(const LightInfo& lightInfo) override;
 
-		GLuint m_uboLightInfo;
+		int m_uboLightInfo = -1;
     };
 
 }  // namespace GameEngine
