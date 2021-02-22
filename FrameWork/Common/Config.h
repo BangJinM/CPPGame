@@ -129,10 +129,10 @@ namespace GameEngine
         CubeDir dir;
     };
 
-/////////////////////////////////
-// 光照 属性参照light类 总长度 = 120
-/////////////////////////////////
-// #pragma pack(push, 16)
+    /////////////////////////////////
+    // 光照 属性参照light类 总长度 = 120
+    /////////////////////////////////
+    // #pragma pack(push, 16)
     volatile struct LightProperty
     {
         int type;
@@ -144,7 +144,7 @@ namespace GameEngine
         float cutOff;
         float outerCutOff;
 
-        float i[2];// 手动对齐.....我太菜了
+        float i[2];  // 手动对齐.....我太菜了
 
         float position[4];
         float direction[4];
