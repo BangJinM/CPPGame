@@ -65,44 +65,44 @@ namespace GameEngine
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
+
+    static constexpr const char *VIEW_MATRIX = "u_view_matrix";
+    static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
+    static constexpr const char *CAMERA_POS = "u_camera_pos";
     /////////////////////////////////
     // 摄像机信息
     /////////////////////////////////
-    struct ViewInfos
+    volatile struct ViewInfos
     {
-        static constexpr const char *VIEW_MATRIX = "u_view_matrix";
-        static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
-        static constexpr const char *CAMERA_POS = "u_camera_pos";
         /////////////////////////////////
         // 摄像机坐标
         /////////////////////////////////
-        VecterFloat3 u_camera_pos;
+        float u_camera_pos[4];
         /////////////////////////////////
         // 摄像机投影矩阵
         /////////////////////////////////
-        glm::mat4 u_projection_matrix;
+        float u_projection_matrix[16];
         /////////////////////////////////
         // 摄像机观察矩阵
         /////////////////////////////////
-        glm::mat4 u_view_matrix;
+        float u_view_matrix[16];
     };
+
+    static constexpr const char *MODEL_MATRIX = "u_model_matrix";
     /////////////////////////////////
     // 模型信息
     /////////////////////////////////
-    struct ModelInfos
+    volatile struct ModelInfos
     {
-        static constexpr const char *MODEL_MATRIX = "u_model_matrix";
         /////////////////////////////////
         // 模型坐标,平移矩阵
         /////////////////////////////////
-        glm::mat4 modelMat4;
+        float modelMat4[16];
     };
-
     struct RendererCammand
     {
         SharedMaterial material;
         SharedMesh mesh;
-        ViewInfos viewInfos;
         ModelInfos modelInfos;
         int index;
     };

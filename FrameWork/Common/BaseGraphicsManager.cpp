@@ -49,13 +49,14 @@ namespace GameEngine
         {
             auto cameraTs = camera->GetParent()->getComponent<Transform>();
             ViewInfos viewInfos;
-            viewInfos.u_camera_pos = cameraTs->GetPosition();
-            viewInfos.u_projection_matrix = camera->getProjectionMatrix();
-            viewInfos.u_view_matrix = cameraTs->GetMatrix();
+			memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float)*3);
+			memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->getProjectionMatrix()), sizeof(float)*16);
+			memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetMatrix()), sizeof(float)*16);
 
+            SetViewInfos(viewInfos);
             for (auto render : scene->m_Renderers)
             {
-                render->Render(viewInfos);
+                render->Render();
             }
         }
         Draw();

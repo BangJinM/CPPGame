@@ -72,28 +72,10 @@ namespace GameEngine
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
 
-        int location = glGetUniformLocation(shader->m_ProgramID, ModelInfos::MODEL_MATRIX);
+        int location = glGetUniformLocation(shader->m_ProgramID, MODEL_MATRIX);
         if (location >= 0)
         {
-            shader->setMat4(ModelInfos::MODEL_MATRIX, glm::value_ptr(rC.modelInfos.modelMat4));
-        }
-
-        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::VIEW_MATRIX);
-        if (location >= 0)
-        {
-            shader->setMat4(ViewInfos::VIEW_MATRIX, glm::value_ptr(rC.viewInfos.u_view_matrix));
-        }
-
-        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::PROJECTION_MATRIX);
-        if (location >= 0)
-        {
-            shader->setMat4(ViewInfos::PROJECTION_MATRIX, glm::value_ptr(rC.viewInfos.u_projection_matrix));
-        }
-
-        location = glGetUniformLocation(shader->m_ProgramID, ViewInfos::CAMERA_POS);
-        if (location >= 0)
-        {
-            shader->setVec3(ViewInfos::CAMERA_POS, rC.viewInfos.u_camera_pos);
+            shader->setMat4(MODEL_MATRIX, rC.modelInfos.modelMat4);
         }
 
         int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
@@ -104,11 +86,26 @@ namespace GameEngine
 
             glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
                                       GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
-			int size = sizeof(LightInfo);
+            int size = sizeof(LightInfo);
             assert(blockSize >= size);
 
             glUniformBlockBinding(shader->m_ProgramID, blockIndex, 0);
             glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_uboLightInfo);
+        }
+
+        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ViewInfos");
+
+        if (blockIndex != GL_INVALID_INDEX)
+        {
+            int32_t blockSize;
+
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+            int size = sizeof(ViewInfos);
+            assert(blockSize >= size);
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 1);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_uboCameraInfo);
         }
 
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
@@ -207,9 +204,9 @@ namespace GameEngine
         auto cameraTs = camera->GetParent()->getComponent<Transform>();
 
         auto view = glm::mat4(glm::mat3(cameraTs->GetMatrix()));
-        shader->setMat4(ViewInfos::VIEW_MATRIX, view);
+        shader->setMat4(VIEW_MATRIX, view);
 
-        shader->setMat4(ViewInfos::PROJECTION_MATRIX, camera->getProjectionMatrix());
+        shader->setMat4(PROJECTION_MATRIX, camera->getProjectionMatrix());
 
         shader->setInt("skybox", 0);
         glActiveTexture(GL_TEXTURE0);
@@ -274,6 +271,21 @@ namespace GameEngine
         glBindBuffer(GL_UNIFORM_BUFFER, m_uboLightInfo);
 
         glBufferData(GL_UNIFORM_BUFFER, kSizeLightInfo, &lightInfo,
+                     GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    }
+
+    void GraphicsManager::SetViewInfos(const ViewInfos& infos)
+    {
+        if (m_uboCameraInfo < 0)
+        {
+            glGenBuffers(1, &(GLuint)m_uboCameraInfo);
+        }
+
+        glBindBuffer(GL_UNIFORM_BUFFER, m_uboCameraInfo);
+
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(ViewInfos), &infos,
                      GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_UNIFORM_BUFFER, 0);

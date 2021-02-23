@@ -18,7 +18,7 @@ namespace GameEngine
         m_ClassID = ClassID(MeshRenderer);
     }
 
-    void MeshRenderer::Render(ViewInfos viewInfos)
+    void MeshRenderer::Render()
     {
         SharedGameObject parent = GetParent();
         auto modelMat = parent->getComponent<Transform>()->GetMatrix();
@@ -40,9 +40,8 @@ namespace GameEngine
                     RendererCammand rC;
                     rC.material = material;
                     rC.mesh = mesh;
-                    rC.viewInfos = viewInfos;
 
-                    rC.modelInfos.modelMat4 = modelMat;
+                    memcpy(rC.modelInfos.modelMat4, glm::value_ptr( modelMat),sizeof(float) *16);
                     rC.index = mi;
 
                     g_pGraphicsManager->addRendererCommand(rC);

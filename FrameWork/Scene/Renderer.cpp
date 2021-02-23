@@ -43,7 +43,7 @@ namespace GameEngine
         m_Materials.push_back(material);
     }
 
-    void Renderer::Render(ViewInfos viewInfos)
+    void Renderer::Render()
     {
     }
 

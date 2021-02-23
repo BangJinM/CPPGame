@@ -27,9 +27,12 @@ namespace GameEngine
         virtual void DrawCubeTexture(SharedCube cube, int shaderID) override;
         virtual void PrepareMesh(SharedMesh mesh, int index) override;
         virtual void PrepareMaterial(RendererCammand rC) override;
+
         virtual void SetLightInfo(const LightInfo& lightInfo) override;
+        virtual void SetViewInfos(const ViewInfos& infos) override;
 
 		int m_uboLightInfo = -1;
+        int m_uboCameraInfo = -1;
     };
 
 }  // namespace GameEngine

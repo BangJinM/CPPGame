@@ -12,8 +12,17 @@ namespace GameEngine
         {
             return m_DefaultShaders[index];
         };
-
+        ///////////////////////////////
+        // Add Shader
+        // @param vspath
+        // @param fspath
+        //////////////////////////////
         virtual int AddShaderByPath(std::string vspath, std::string fspath) = 0;
+        ///////////////////////////////
+        // Add Shader
+        // @param vsstring 
+        // @param fsstring
+        //////////////////////////////
         virtual int AddShaderByString(std::string vspath, std::string fspath) = 0;
 
         virtual void RemoveShader(int index)

@@ -1,19 +1,10 @@
 {
 	"Gameobjects":	[{
-			"name":	"Canvas",
-			"Children":	[],
-			"Components":	[{
-					"type":	5,
-					"rotation":	[0, 0, 0],
-					"position":	[0, 0, 0],
-					"scale":	[1, 1, 1]
-				}]
-		},  {
 			"name":	"UI11",
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[1, 1, -10],
+					"position":	[1, 0, -12],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -25,7 +16,7 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[3, 3, -10],
+					"position":	[2, 0, -12],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -39,7 +30,7 @@
 					"Children":	[],
 					"Components":	[{
 							"type":	5,
-							"position":	[1.5, 1.5, -8],
+							"position":	[3, 0, -12],
 							"scale":	[1, 1, 1]
 						}, {
 							"type":	2,
@@ -49,7 +40,7 @@
 				}],
 			"Components":	[{
 					"type":	5,
-					"position":	[2, 2, -7],
+					"position":	[-1, 0, -12],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -68,34 +59,36 @@
 					"type":	6
 				}]
 		}, {
-			"name":	"dirLight",
-			"Children":	[],
-			"Components":	[{
-					"type":	2,
-					"m_Mesh":	"Scene/mayaCube.OBJ",
-					"m_Materials":	["Materials/light_node.gemtl"]
-				}, {
-					"type":	5,
-					"rotation":	[45, 0, 0],
-					"position":	[7, 2, -6],
-					"scale":	[1, 1, 1]
-				}, {
-					"type":	10,
-					"constant":	1,
-					"linear":0.0014,
-					"quadratic":0.000007,
-					"Ambient":	[0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
-					"Diffuse":	[0.800000011920929, 0.800000011920929, 0.800000011920929],
-					"Specular":	[1, 1, 1],
-					"color":	[0, 0, 255, 255]
-				}]
-		}, {
+            "name":    "dirLight",
+            "Children":    [],
+            "Components":    [{
+                    "type":    2,
+                    "m_Mesh":    "Scene/mayaCube.OBJ",
+                    "m_Materials":    ["Materials/light_node.gemtl"]
+                }, {
+                    "type":    5,
+                    "rotation":    [-50, -50, -50],
+                    "position":    [0, 1,-10],
+                    "scale":    [1, 1, 1]
+                }, {
+                    "type":    12,
+                    "constant":    1,
+                    "linear":0.0014,
+                    "quadratic":0.000007,
+                    "Ambient":    [0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
+                    "Diffuse":    [0.800000011920929, 0.800000011920929, 0.800000011920929],
+                    "Specular":    [1, 1, 1],
+                    "color":    [255, 255, 255, 255],
+					"cutOff": 12.5,
+					"outerCutOff": 17.5
+                }]
+        }, {
 			"name":	"peopleObject",
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
 					"rotation":	[90, 45, 0],
-					"position":	[0.5, 0.5, -6],
+					"position":	[-4, 0, -12],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,

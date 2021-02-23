@@ -50,7 +50,7 @@ namespace GameEngine
         Renderer::Start();
     }
 
-    void CanvasRenderer::Render(ViewInfos viewInfos)
+    void CanvasRenderer::Render()
     {
         auto viewMat = camera->GetParent()->getComponent<Transform>()->GetMatrix();
         auto projectMat = camera->getProjectionMatrixOrthographic();

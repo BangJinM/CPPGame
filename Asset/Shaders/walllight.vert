@@ -4,16 +4,35 @@ in vec3 a_normal;
 in vec2 a_texCoord;
 
 uniform mat4 u_model_matrix;
-uniform mat4 u_view_matrix;
-uniform mat4 u_projection_matrix;
 
-out vec2 v_texCoord;
-out vec3 v_normal;
-out vec3 v_FragPos;
+layout(std140) uniform ViewInfos
+{
+    /////////////////////////////////
+    // 摄像机坐标
+    /////////////////////////////////
+    vec3 u_camera_pos;
+    /////////////////////////////////
+    // 摄像机投影矩阵
+    /////////////////////////////////
+    mat4 u_projection_matrix;
+    /////////////////////////////////
+    // 摄像机观察矩阵
+    /////////////////////////////////
+    mat4 u_view_matrix;
+} viewInfos;
+
+out Value  
+{  
+    vec2 v_texCoord;
+    vec3 v_normal;
+    vec3 v_FragPos;
+    vec3 v_camera_pos;
+}outValue; 
 
 void main() {
-  gl_Position = u_projection_matrix * u_view_matrix * u_model_matrix * vec4(a_position, 1);
-  v_FragPos = vec3(u_model_matrix * vec4(a_position, 1));
-  v_texCoord = a_texCoord;
-  v_normal = a_normal;
+  gl_Position = viewInfos.u_projection_matrix * viewInfos.u_view_matrix * u_model_matrix * vec4(a_position, 1);
+  outValue.v_FragPos = vec3(u_model_matrix * vec4(a_position, 1));
+  outValue.v_texCoord = a_texCoord;
+  outValue.v_normal = a_normal;
+  outValue.v_camera_pos = viewInfos.u_camera_pos;
 }

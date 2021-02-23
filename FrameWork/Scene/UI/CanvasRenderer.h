@@ -18,7 +18,7 @@ namespace GameEngine
 
         virtual void Start();
         virtual void Update();
-        virtual void Render(ViewInfos viewInfos);
+        virtual void Render();
         void addWidget(SharePtr<Widget> widget);
         void getWidget();
     };

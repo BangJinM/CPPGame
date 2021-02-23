@@ -44,7 +44,7 @@ namespace GameEngine
 
 	void SerializableHelper::Seserialize(cJSON* root, const std::string& p_name, const std::vector<std::string> values) {
 		auto arrayRoot = cJSON_AddArrayToObject(root, p_name.c_str());
-		for (auto index = 0; index < values.size(); ++index)
+		for (size_t index = 0; index < values.size(); ++index)
 		{
 			cJSON* node = cJSON_CreateString(values[index].c_str());
 			cJSON_AddItemToArray(arrayRoot, node);
@@ -55,7 +55,7 @@ namespace GameEngine
     {
         auto paramsNode = cJSON_GetObjectItem(root, p_name.c_str());
         if (paramsNode)
-            return paramsNode->valuedouble;
+            return (float)paramsNode->valuedouble;
         return 0;
     }
     int SerializableHelper::DeserializeInt(cJSON* root, const std::string& p_name)
