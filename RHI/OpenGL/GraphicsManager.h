@@ -28,11 +28,15 @@ namespace GameEngine
         virtual void PrepareMesh(SharedMesh mesh, int index) override;
         virtual void PrepareMaterial(RendererCammand rC) override;
 
+        virtual void SetUBOData(SharedShaderProgramBase shader) override;
+
         virtual void SetLightInfo(const LightInfo& lightInfo) override;
         virtual void SetViewInfos(const ViewInfos& infos) override;
+        virtual void SetModelInfos(const ModelInfos& infos) override;
 
-		int m_uboLightInfo = -1;
+        int m_uboLightInfo = -1;
         int m_uboCameraInfo = -1;
+        int m_uboModelInfo = -1;
     };
 
 }  // namespace GameEngine

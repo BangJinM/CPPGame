@@ -71,13 +71,6 @@ namespace GameEngine
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         shader->Use();
-
-        int location = glGetUniformLocation(shader->m_ProgramID, MODEL_MATRIX);
-        if (location >= 0)
-        {
-            shader->setMat4(MODEL_MATRIX, rC.modelInfos.modelMat4);
-        }
-
         int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
 
         if (blockIndex != GL_INVALID_INDEX)
@@ -108,6 +101,21 @@ namespace GameEngine
             glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_uboCameraInfo);
         }
 
+        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ModelInfos");
+
+        if (blockIndex != GL_INVALID_INDEX)
+        {
+            SetModelInfos(rC.modelInfos);
+            int32_t blockSize;
+
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+            int size = sizeof(ModelInfos);
+            assert(blockSize >= size);
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 2);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 2, m_uboModelInfo);
+        }
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
             switch (material->m_MaterialDatas[i].m_Type)
@@ -204,9 +212,9 @@ namespace GameEngine
         auto cameraTs = camera->GetParent()->getComponent<Transform>();
 
         auto view = glm::mat4(glm::mat3(cameraTs->GetMatrix()));
-        shader->setMat4(VIEW_MATRIX, view);
+        shader->setMat4("u_view_matrix", view);
 
-        shader->setMat4(PROJECTION_MATRIX, camera->getProjectionMatrix());
+        shader->setMat4("u_projection_matrix", camera->getProjectionMatrix());
 
         shader->setInt("skybox", 0);
         glActiveTexture(GL_TEXTURE0);
@@ -289,6 +297,27 @@ namespace GameEngine
                      GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    }
+
+    void GraphicsManager::SetModelInfos(const ModelInfos &infos)
+    {
+        if (m_uboModelInfo < 0)
+        {
+            glGenBuffers(1, &(GLuint)m_uboModelInfo);
+        }
+
+        glBindBuffer(GL_UNIFORM_BUFFER, m_uboModelInfo);
+
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(ViewInfos), &infos,
+                     GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    }
+
+    void GraphicsManager::SetUBOData(SharedShaderProgramBase shader)
+    {
+        // shader->Use();
+
     }
 
 }  // namespace GameEngine

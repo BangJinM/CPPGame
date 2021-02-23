@@ -66,9 +66,6 @@ namespace GameEngine
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
 
-    static constexpr const char *VIEW_MATRIX = "u_view_matrix";
-    static constexpr const char *PROJECTION_MATRIX = "u_projection_matrix";
-    static constexpr const char *CAMERA_POS = "u_camera_pos";
     /////////////////////////////////
     // 摄像机信息
     /////////////////////////////////
@@ -88,7 +85,6 @@ namespace GameEngine
         float u_view_matrix[16];
     };
 
-    static constexpr const char *MODEL_MATRIX = "u_model_matrix";
     /////////////////////////////////
     // 模型信息
     /////////////////////////////////

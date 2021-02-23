@@ -14,19 +14,6 @@
 
 namespace GameEngine
 {
-
-    // per renderer uniforms, set by renderer
-    struct RendererUniforms
-    {
-        static constexpr const char *MODEL_MATRIX = "u_model_matrix";
-        static constexpr const char *BOUNDS_MATRIX = "u_bounds_matrix";
-        static constexpr const char *BOUNDS_COLOR = "u_bounds_color";
-        static constexpr const char *LIGHTMAP_SCALE_OFFSET = "u_lightmap_scale_offset";
-        static constexpr const char *LIGHTMAP_INDEX = "u_lightmap_index";
-
-        GlmMat4 model_matrix;
-    };
-
     enum MaterialType
     {
         T_Unknown = -1,

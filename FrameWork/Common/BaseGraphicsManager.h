@@ -35,8 +35,12 @@ namespace GameEngine
         virtual void BindCubeTexture(SharedCube cube) = 0;
         virtual void DrawCubeTexture(SharedCube cube, int shaderID) = 0;
         virtual void PrepareMaterial(RendererCammand rC) = 0;
+
+        virtual void SetUBOData(SharedShaderProgramBase shader) = 0;
+
         virtual void SetLightInfo(const LightInfo& lightInfo) = 0;
         virtual void SetViewInfos(const ViewInfos& infos) = 0;
+        virtual void SetModelInfos(const ModelInfos& infos) = 0;
 
         virtual void CalculateLights();
 

@@ -3,7 +3,10 @@ in vec3 a_position;
 in vec3 a_normal;
 in vec2 a_texCoord;
 
-uniform mat4 u_model_matrix;
+layout(std140) uniform ModelInfos{ 
+    mat4 u_model_matrix;
+} modelInfos;
+
 
 layout(std140) uniform ViewInfos
 {
@@ -30,8 +33,8 @@ out Value
 }outValue; 
 
 void main() {
-  gl_Position = viewInfos.u_projection_matrix * viewInfos.u_view_matrix * u_model_matrix * vec4(a_position, 1);
-  outValue.v_FragPos = vec3(u_model_matrix * vec4(a_position, 1));
+  gl_Position = viewInfos.u_projection_matrix * viewInfos.u_view_matrix * modelInfos.u_model_matrix * vec4(a_position, 1);
+  outValue.v_FragPos = vec3(modelInfos.u_model_matrix * vec4(a_position, 1));
   outValue.v_texCoord = a_texCoord;
   outValue.v_normal = a_normal;
   outValue.v_camera_pos = viewInfos.u_camera_pos;
