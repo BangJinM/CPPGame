@@ -53,7 +53,7 @@
 			"Components":	[{
 					"type":	5,
 					"rotation":	[0, 0, 0],
-					"position":	[0, 0, -10],
+					"position":	[0, -5, -10],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	6
@@ -87,9 +87,8 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"rotation":	[90, 45, 0],
-					"position":	[-4, 0, -12],
-					"scale":	[1, 1, 1]
+					"position":	[-4, -1, -12],
+					"scale":	[100, 1, 100]
 				}, {
 					"type":	2,
 					"m_Mesh":	"Scene/mayaCube.OBJ",
