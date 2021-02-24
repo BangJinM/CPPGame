@@ -118,12 +118,12 @@ void main() {
     for(int i = 0; i < lightInfo.numsLight; i++)
     {
       LightProperty l = lightInfo.lights[i];
-    //   if(l.type == 4)
-        //   result += CalcDirLight(l, normal, viewDir);
-    //   else if(l.type == 3)
+      if(l.type == 4)
+          result += CalcDirLight(l, normal, viewDir);
+      else if(l.type == 3)
           result += CalcSpotLight(l, normal, inValue.v_FragPos, viewDir);    
-    //   else if(l.type == 1)
-        //   result += CalcPointLight(l, normal, inValue.v_FragPos, viewDir);    
+      else if(l.type == 1)
+          result += CalcPointLight(l, normal, inValue.v_FragPos, viewDir);    
     }
     FragColor = vec4(result, 1.0);
 }
