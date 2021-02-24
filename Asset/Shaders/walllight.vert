@@ -36,6 +36,6 @@ void main() {
   gl_Position = viewInfos.u_projection_matrix * viewInfos.u_view_matrix * modelInfos.u_model_matrix * vec4(a_position, 1);
   outValue.v_FragPos = vec3(modelInfos.u_model_matrix * vec4(a_position, 1));
   outValue.v_texCoord = a_texCoord;
-  outValue.v_normal = a_normal;
+  outValue.v_normal = mat3(transpose(inverse(modelInfos.u_model_matrix))) * a_normal;
   outValue.v_camera_pos = viewInfos.u_camera_pos;
 }

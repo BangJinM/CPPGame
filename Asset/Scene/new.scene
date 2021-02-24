@@ -67,20 +67,20 @@
                     "m_Materials":    ["Materials/light_node.gemtl"]
                 }, {
                     "type":    5,
-                    "rotation":    [-50, -50, -50],
+                    "rotation":    [0, 0, -90],
                     "position":    [0, 1,-10],
-                    "scale":    [1, 1, 1]
+                    "scale":    [1, 0.2, 0.2]
                 }, {
                     "type":    12,
                     "constant":    1,
-                    "linear":0.0014,
-                    "quadratic":0.000007,
+                    "linear":			0.14,
+                    "quadratic":	0.07,
                     "Ambient":    [0.10000000149011612, 0.10000000149011612, 0.10000000149011612],
                     "Diffuse":    [0.800000011920929, 0.800000011920929, 0.800000011920929],
                     "Specular":    [1, 1, 1],
                     "color":    [255, 255, 255, 255],
-					"cutOff": 12.5,
-					"outerCutOff": 17.5
+					"cutOff": 30,
+					"outerCutOff": 50
                 }]
         }, {
 			"name":	"peopleObject",

@@ -1,6 +1,7 @@
 ﻿#include "BaseGraphicsManager.h"
 
 #include <algorithm>
+#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
 #include "AssetLoader.h"
@@ -49,9 +50,9 @@ namespace GameEngine
         {
             auto cameraTs = camera->GetParent()->getComponent<Transform>();
             ViewInfos viewInfos;
-			memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float)*3);
-			memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->getProjectionMatrix()), sizeof(float)*16);
-			memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetMatrix()), sizeof(float)*16);
+            memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float) * 3);
+            memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->getProjectionMatrix()), sizeof(float) * 16);
+            memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetMatrix()), sizeof(float) * 16);
 
             SetViewInfos(viewInfos);
             for (auto render : scene->m_Renderers)
@@ -87,11 +88,11 @@ namespace GameEngine
 
             auto transfrom = light->GetParent()->getComponent<Transform>();
             auto pos = transfrom->GetPosition();
-            auto rotation = transfrom->GetRotation();
-
+            auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
+            
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);
             memcpy(m_LightInfos.lights[index].position, glm::value_ptr(pos), sizeof(float) * 3);
-            memcpy(m_LightInfos.lights[index].direction, glm::value_ptr(rotation), sizeof(float) * 3);
+            memcpy(m_LightInfos.lights[index].direction, glm::value_ptr(dir), sizeof(float) * 3);
 
             auto directionalLight = std::dynamic_pointer_cast<DirectionalLight>(light);
             memcpy(m_LightInfos.lights[index].ambient, glm::value_ptr(directionalLight->GetAmbient()), sizeof(float) * 3);
@@ -108,8 +109,8 @@ namespace GameEngine
                 continue;
 
             auto spotLight = std::dynamic_pointer_cast<SpotLight>(light);
-            m_LightInfos.lights[index].cutOff = spotLight->GetCutOff();
-            m_LightInfos.lights[index].outerCutOff = spotLight->GetOuterCutOff();
+            m_LightInfos.lights[index].cutOff = glm::cos(glm::radians(spotLight->GetCutOff()));
+            m_LightInfos.lights[index].outerCutOff = glm::cos(glm::radians(spotLight->GetOuterCutOff()));
             if (m_LightInfos.lights[index].type == LightType::Type_SpotLight)
                 continue;
         }
