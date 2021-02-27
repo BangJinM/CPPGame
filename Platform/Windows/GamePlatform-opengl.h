@@ -23,8 +23,6 @@ namespace GameEngine
         virtual void Tick(float deltaTime);
 
     private:
-        void calculateDeltaTime();
-
         GLFWwindow *window;
         float _deltaTime;
         std::chrono::steady_clock::time_point _lastUpdate;

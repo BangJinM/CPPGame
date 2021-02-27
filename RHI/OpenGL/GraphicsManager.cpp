@@ -6,6 +6,7 @@
 #include <string>
 
 #include "AssetManager.h"
+#include "BaseApplication.h"
 #include "Camera.h"
 #include "GameObject.h"
 #include "Material.h"
@@ -27,6 +28,7 @@ namespace GameEngine
     extern AssetManager *g_pAssetManager;
     extern ParserManager *g_pParserManager;
     extern ShaderManager *g_pShaderManager;
+    extern BaseApplication *g_pApp;
 
     int GraphicsManager::Initialize()
     {
@@ -45,7 +47,21 @@ namespace GameEngine
             glEnable(GL_DEPTH_TEST);
             result = 0;
         }
+        // glad: load all OpenGL function pointers
+        // ---------------------------------------
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            printf("Failed to initialize GLAD");
+            return -1;
+        }
         result = BaseGraphicsManager::Initialize();
+
+        auto config = g_pApp->GetGfxConfiguration();
+        glViewport(0, 0, config.screenWidth, config.screenHeight);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_DEPTH_TEST);
         return result;
     }
 
@@ -70,52 +86,9 @@ namespace GameEngine
         auto material = rC.material;
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
+        SetModelInfos(rC.modelInfos);
+        SetUBOData(shader);
         shader->Use();
-        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
-
-        if (blockIndex != GL_INVALID_INDEX)
-        {
-            int32_t blockSize;
-
-            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
-                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
-            int size = sizeof(LightInfo);
-            assert(blockSize >= size);
-
-            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 0);
-            glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_uboLightInfo);
-        }
-
-        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ViewInfos");
-
-        if (blockIndex != GL_INVALID_INDEX)
-        {
-            int32_t blockSize;
-
-            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
-                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
-            int size = sizeof(ViewInfos);
-            assert(blockSize >= size);
-
-            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 1);
-            glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_uboCameraInfo);
-        }
-
-        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ModelInfos");
-
-        if (blockIndex != GL_INVALID_INDEX)
-        {
-            SetModelInfos(rC.modelInfos);
-            int32_t blockSize;
-
-            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
-                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
-            int size = sizeof(ModelInfos);
-            assert(blockSize >= size);
-
-            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 2);
-            glBindBufferBase(GL_UNIFORM_BUFFER, 2, m_uboModelInfo);
-        }
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
             switch (material->m_MaterialDatas[i].m_Type)
@@ -284,7 +257,7 @@ namespace GameEngine
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
 
-    void GraphicsManager::SetViewInfos(const ViewInfos& infos)
+    void GraphicsManager::SetViewInfos(const ViewInfos &infos)
     {
         if (m_uboCameraInfo < 0)
         {
@@ -316,8 +289,51 @@ namespace GameEngine
 
     void GraphicsManager::SetUBOData(SharedShaderProgramBase shader)
     {
-        // shader->Use();
+        shader->Use();
+        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
 
+        if (blockIndex != GL_INVALID_INDEX)
+        {
+            int32_t blockSize;
+
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+            int size = sizeof(LightInfo);
+            assert(blockSize >= size);
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 0);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_uboLightInfo);
+        }
+
+        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ViewInfos");
+
+        if (blockIndex != GL_INVALID_INDEX)
+        {
+            int32_t blockSize;
+
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+            int size = sizeof(ViewInfos);
+            assert(blockSize >= size);
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 1);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_uboCameraInfo);
+        }
+
+        blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ModelInfos");
+
+        if (blockIndex != GL_INVALID_INDEX)
+        {
+            int32_t blockSize;
+
+            glGetActiveUniformBlockiv(shader->m_ProgramID, blockIndex,
+                                      GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+            int size = sizeof(ModelInfos);
+            assert(blockSize >= size);
+
+            glUniformBlockBinding(shader->m_ProgramID, blockIndex, 2);
+            glBindBufferBase(GL_UNIFORM_BUFFER, 2, m_uboModelInfo);
+        }
     }
 
 }  // namespace GameEngine

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "MyMath.h"
 namespace GameEngine
@@ -157,7 +158,15 @@ namespace GameEngine
         LightProperty lights[MAX_LIGHT_COUNT];
         int numsLight;
     };
-// #pragma pack(pop)
+    // #pragma pack(pop)
+
+    struct Frame
+    {
+        unsigned int fbo;
+        LightInfo lightInfo;
+        std::vector<RendererCammand> cammands;
+    };
+
 #ifndef ALIGN
 #define ALIGN(x, a) (((x) + ((a)-1)) & ~((a)-1))
 #endif

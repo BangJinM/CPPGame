@@ -38,11 +38,6 @@ namespace GameEngine
             printf("Failed to initialize GLAD");
             return -1;
         }
-        glViewport(0, 0, m_Config.screenWidth, m_Config.screenHeight);
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_DEPTH_TEST);
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -61,12 +56,6 @@ namespace GameEngine
         ImGui::DestroyContext();
     }
 
-    void OpenGLApplication::calculateDeltaTime()
-    {
-        auto now = std::chrono::steady_clock::now();
-        _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
-        _lastUpdate = now;
-    }
     void OpenGLApplication::Tick(float deltaTime)
     {
         this->m_bQuit = glfwWindowShouldClose(window);
