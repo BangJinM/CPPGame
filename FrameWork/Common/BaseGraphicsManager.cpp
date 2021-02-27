@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "GameObject.h"
 #include "Light.h"
+#include "MeshRenderer.h"
 #include "Render/Draw/ForwardDrawPass.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -51,25 +52,55 @@ namespace GameEngine
             auto cameraTs = camera->GetParent()->getComponent<Transform>();
             ViewInfos viewInfos;
             memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float) * 3);
-            memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->getProjectionMatrix()), sizeof(float) * 16);
+            memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->GetProjectionMatrix()), sizeof(float) * 16);
             memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetMatrix()), sizeof(float) * 16);
 
             SetViewInfos(viewInfos);
             for (auto render : scene->m_Renderers)
             {
-                render->Render();
+                auto modelMat = render->GetParent()->getComponent<Transform>()->GetMatrix();
+                if (render->getClassID() == ClassID(MeshRenderer))
+                {
+                    auto meshRender = std::dynamic_pointer_cast<MeshRenderer>(render);
+                    auto materials = meshRender->getMaterials();
+                    auto mesh = meshRender->getMesh();
+                    int materialID = -1;
+                    for (size_t mi = 0; mi < mesh->m_MeshDatas.size(); mi++)
+                    {
+                        if (mi < materials.size())
+                            materialID = mi;
+
+                        ModelRenderConfig infos;
+                        memcpy(infos.modelInfos.modelMat4, glm::value_ptr(modelMat), sizeof(float) * 16);
+                        infos.mesh = mesh;
+                        infos.index = mi;
+                        if (materialID >= 0)
+                            AddRendererCommand(materials[materialID], infos);
+                        else
+                            AddRendererCommand(make_shared<Material>(), infos);
+                    }
+                }
             }
         }
         Draw();
         m_RendererCommands.clear();
     }
 
-    void BaseGraphicsManager::addRendererCommand(RendererCammand command)
+    void BaseGraphicsManager::AddRendererCommand(SharedMaterial material, ModelRenderConfig config)
     {
-        m_RendererCommands.push_back(command);
+        auto find = m_RendererCommands.find(material->GetID());
+        if (find != m_RendererCommands.end())
+        {
+            find->second.modelConfigs.push_back(config);
+            return;
+        }
+        RendererCammand command;
+        command.material = material;
+        command.modelConfigs.push_back(config);
+        m_RendererCommands[material->GetID()] = command;
     }
 
-    std::list<RendererCammand> BaseGraphicsManager::getRendererCommand()
+    std::map<int, RendererCammand> BaseGraphicsManager::GetRendererCommand()
     {
         return m_RendererCommands;
     }
@@ -89,7 +120,7 @@ namespace GameEngine
             auto transfrom = light->GetParent()->getComponent<Transform>();
             auto pos = transfrom->GetPosition();
             auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
-            
+
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);
             memcpy(m_LightInfos.lights[index].position, glm::value_ptr(pos), sizeof(float) * 3);
             memcpy(m_LightInfos.lights[index].direction, glm::value_ptr(dir), sizeof(float) * 3);

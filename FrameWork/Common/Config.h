@@ -87,6 +87,25 @@ namespace GameEngine
     };
 
     /////////////////////////////////
+    // 摄像机信息
+    /////////////////////////////////
+    volatile struct LightModelInfos
+    {
+        /////////////////////////////////
+        // 摄像机坐标
+        /////////////////////////////////
+        float u_camera_pos[4];
+        /////////////////////////////////
+        // 摄像机投影矩阵
+        /////////////////////////////////
+        float u_projection_matrix[16];
+        /////////////////////////////////
+        // 摄像机观察矩阵
+        /////////////////////////////////
+        float u_view_matrix[16];
+    };
+
+    /////////////////////////////////
     // 模型信息
     /////////////////////////////////
     volatile struct ModelInfos
@@ -96,12 +115,18 @@ namespace GameEngine
         /////////////////////////////////
         float modelMat4[16];
     };
-    struct RendererCammand
+    
+    struct ModelRenderConfig
     {
-        SharedMaterial material;
         SharedMesh mesh;
         ModelInfos modelInfos;
         int index;
+    };
+
+    struct RendererCammand
+    {
+        SharedMaterial material;
+        std::vector<ModelRenderConfig> modelConfigs;
     };
     /////////////////////////////////
     // 立方体贴图方向枚举

@@ -1,4 +1,4 @@
-﻿include(Scene/UI/CMakeLists.txt)
+﻿# include(Scene/UI/CMakeLists.txt)
 
 SET(FRAMEWORK_SCENE_HEADER 
 Scene/Camera.h

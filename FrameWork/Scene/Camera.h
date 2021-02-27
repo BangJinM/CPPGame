@@ -25,11 +25,14 @@ namespace GameEngine
                glm::float32 m_Far = 1000, glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
         Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000,
                glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
-        glm::mat4 getProjectionMatrix();
+
+        glm::mat4 GetProjectionMatrix();
+        void SetProjectionMatrix(glm::mat4 temp);
 
         virtual void Start();
 
-        glm::mat4 getProjectionMatrixOrthographic();
+        glm::mat4 GetProjectionMatrixOrthographic();
+
 
         virtual void OnSerialize(cJSON *root);
         virtual void OnDeserialize(cJSON *root);

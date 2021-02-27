@@ -43,10 +43,6 @@ namespace GameEngine
         m_Materials.push_back(material);
     }
 
-    void Renderer::Render()
-    {
-    }
-
     void Renderer::Start()
     {
         if (m_Started)

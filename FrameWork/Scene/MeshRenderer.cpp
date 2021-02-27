@@ -18,38 +18,6 @@ namespace GameEngine
         m_ClassID = ClassID(MeshRenderer);
     }
 
-    void MeshRenderer::Render()
-    {
-        SharedGameObject parent = GetParent();
-        auto modelMat = parent->getComponent<Transform>()->GetMatrix();
-        SharedMesh mesh = getMesh();
-        auto materials = getMaterials();
-        for (size_t mi = 0; mi < mesh->m_MeshDatas.size(); mi++)
-        {
-            int materialID = 0;
-            if (materials[materialID])
-            {
-                if (mi < materials.size())
-                    materialID = mi;
-                SharedMaterial material = make_shared<Material>();
-                material->shaderID = materials[mi]->shaderID;
-                material->AddPropertys(materials[mi]->m_MaterialDatas);
-
-                if (mesh && mi <= mesh->m_MeshDatas.size())
-                {
-                    RendererCammand rC;
-                    rC.material = material;
-                    rC.mesh = mesh;
-
-                    memcpy(rC.modelInfos.modelMat4, glm::value_ptr( modelMat),sizeof(float) *16);
-                    rC.index = mi;
-
-                    g_pGraphicsManager->addRendererCommand(rC);
-                }
-            }
-        }
-    }
-
     void MeshRenderer::OnSerialize(cJSON* root)
     {
         SerializableHelper::Seserialize(root, "m_Mesh", m_MeshPath);

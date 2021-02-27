@@ -7,7 +7,6 @@
 #include "Material.h"
 #include "MaterialParser.h"
 #include "ParserManager.h"
-#include "UI/Font.h"
 
 namespace GameEngine
 {

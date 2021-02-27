@@ -16,7 +16,6 @@ namespace GameEngine
     public:
         virtual void Initialize() override
         {
-            
         }
 
         virtual void BeginPass() override
@@ -25,13 +24,19 @@ namespace GameEngine
 
         virtual void Draw() override
         {
-            auto m_RendererCommands = g_pGraphicsManager->getRendererCommand();
+            auto m_RendererCommands = g_pGraphicsManager->GetRendererCommand();
             auto scene = g_pSceneManager->GetScene();
             auto m_Lights = scene->m_Lights;
-            for (auto renderer = m_RendererCommands.begin(); renderer != m_RendererCommands.end(); renderer++)
+            for (auto renderer : m_RendererCommands)
             {
-                g_pGraphicsManager->PrepareMaterial(*renderer);
-                g_pGraphicsManager->PrepareMesh(renderer->mesh, renderer->index);
+                g_pGraphicsManager->PrepareMaterial(renderer.second.material);
+                for (auto config : renderer.second.modelConfigs)
+                {
+                    g_pGraphicsManager->SetModelInfos(config.modelInfos);
+                    auto shader = g_pShaderManager->GetShaderProgram(renderer.second.material->shaderID);
+                    g_pGraphicsManager->SetUBOData(shader);
+                    g_pGraphicsManager->PrepareMesh(config);
+                }
             }
         }
 

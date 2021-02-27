@@ -8,7 +8,6 @@
 #include "MyMath.h"
 #include "Renderer.h"
 #include "Transform.h"
-#include "UI/CanvasRenderer.h"
 
 namespace GameEngine
 {
@@ -83,6 +82,12 @@ namespace GameEngine
         m_Cameras.push_back(camera);
     }
 
+	std::vector<SharePtr<Camera>> Scene::GetCamera()
+	{
+		return m_Cameras;
+	}
+
+
     void Scene::AddLight(SharePtr<Light> light)
     {
         m_Lights.push_back(light);
@@ -97,7 +102,7 @@ namespace GameEngine
         }
     }
 
-	std::list<SharePtr<Light>> Scene::GetLights()
+	std::vector<SharePtr<Light>> Scene::GetLights()
 	{
 		return m_Lights;
 	}

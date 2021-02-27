@@ -39,10 +39,11 @@ namespace GameEngine
 
         void AddCamera(SharePtr<Camera> camera);
         void RemoveCamera(SharePtr<Camera> camera);
+        std::vector<SharePtr<Camera>> GetCamera();
 
         void AddLight(SharePtr<Light> light);
         void RemoveLight(SharePtr<Light> light);
-		std::list<SharePtr<Light>> GetLights();
+		std::vector<SharePtr<Light>> GetLights();
 
         void AddRenderer(SharePtr<Renderer> renderer);
         void RemoveRenderer();
@@ -51,16 +52,16 @@ namespace GameEngine
         // void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
 
         SharedGameObject GetGObject(SharedGameObject parent, int sid);
-        std::list<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
+        std::vector<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
 
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;
 
         SharedCube GetCube();
 
-        std::list<SharePtr<Camera>> m_Cameras;
-        std::list<SharePtr<Light>> m_Lights;
-        std::list<SharePtr<Renderer>> m_Renderers;
+        std::vector<SharePtr<Camera>> m_Cameras;
+        std::vector<SharePtr<Light>> m_Lights;
+        std::vector<SharePtr<Renderer>> m_Renderers;
         // SharePtr<CanvasRenderer> m_Canvas;
         SharedGameObject m_Root;
 

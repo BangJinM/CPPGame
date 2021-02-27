@@ -81,13 +81,12 @@ namespace GameEngine
     {
     }
 
-    void GraphicsManager::PrepareMaterial(RendererCammand rC)
+    void GraphicsManager::PrepareMaterial(SharedMaterial material)
     {
-        auto material = rC.material;
         int textureID = 0;
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
-        SetModelInfos(rC.modelInfos);
-        SetUBOData(shader);
+        // SetModelInfos(rC.modelInfos);
+        // SetUBOData(shader);
         shader->Use();
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
@@ -187,22 +186,26 @@ namespace GameEngine
         auto view = glm::mat4(glm::mat3(cameraTs->GetMatrix()));
         shader->setMat4("u_view_matrix", view);
 
-        shader->setMat4("u_projection_matrix", camera->getProjectionMatrix());
+        shader->setMat4("u_projection_matrix", camera->GetProjectionMatrix());
 
         shader->setInt("skybox", 0);
         glActiveTexture(GL_TEXTURE0);
 
         glBindTexture(GL_TEXTURE_CUBE_MAP, cube->GetTextureID());
-
-        PrepareMesh(cube->GetMesh(), 0);
+        ModelRenderConfig config;
+        config.index = 0;
+        config.mesh = cube->GetMesh();
+        PrepareMesh(config);
         glDepthFunc(GL_LESS);
 
         glDisable(GL_CULL_FACE);
         glFrontFace(GL_CCW);
     }
 
-    void GraphicsManager::PrepareMesh(SharedMesh mesh, int index)
+    void GraphicsManager::PrepareMesh(ModelRenderConfig config)
     {
+        auto mesh = config.mesh;
+        auto index = config.index;
         if (!mesh)
             return;
         if (mesh->isPrepare)
@@ -239,7 +242,7 @@ namespace GameEngine
             glBindVertexArray(0);
         }
         mesh->isPrepare = true;
-        PrepareMesh(mesh, index);
+        PrepareMesh(config);
     }
 
     void GraphicsManager::SetLightInfo(const LightInfo &lightInfo)

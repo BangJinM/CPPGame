@@ -38,9 +38,14 @@ namespace GameEngine
         m_ClassID = ClassID(Camera);
     }
 
-    glm::mat4 Camera::getProjectionMatrix()
+    glm::mat4 Camera::GetProjectionMatrix()
     {
         return this->m_ProjectionMatrix4_Perspective;
+    }
+
+    void Camera::SetProjectionMatrix(glm::mat4 temp)
+    {
+        this->m_ProjectionMatrix4_Perspective = temp;
     }
 
     void Camera::Start()
@@ -53,7 +58,7 @@ namespace GameEngine
         scene->AddCamera(std::dynamic_pointer_cast<Camera>(camera));
     }
 
-    glm::mat4 Camera::getProjectionMatrixOrthographic()
+    glm::mat4 Camera::GetProjectionMatrixOrthographic()
     {
         return m_ProjectionMatrix4_Orthographic;
     }

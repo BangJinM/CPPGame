@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <list>
+#include <map>
 #include <memory>
 
 #include "Config.h"
@@ -27,14 +28,14 @@ namespace GameEngine
         virtual void Clear();
         virtual void Draw();
 
-        void addRendererCommand(RendererCammand command);
-        std::list<RendererCammand> getRendererCommand();
+        void AddRendererCommand(SharedMaterial, ModelRenderConfig);
+        std::map<int, RendererCammand> GetRendererCommand();
 
-        virtual void PrepareMesh(SharedMesh mesh, int index) = 0;
+        virtual void PrepareMesh(ModelRenderConfig) = 0;
         virtual void BindTexture(SharedTexture texture) = 0;
         virtual void BindCubeTexture(SharedCube cube) = 0;
         virtual void DrawCubeTexture(SharedCube cube, int shaderID) = 0;
-        virtual void PrepareMaterial(RendererCammand rC) = 0;
+        virtual void PrepareMaterial(SharedMaterial) = 0;
 
         virtual void SetUBOData(SharedShaderProgramBase shader) = 0;
 
@@ -45,7 +46,7 @@ namespace GameEngine
         virtual void CalculateLights();
 
     protected:
-        std::list<RendererCammand> m_RendererCommands;
+        std::map<int, RendererCammand> m_RendererCommands;
         std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
 
         LightInfo m_LightInfos;

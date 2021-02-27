@@ -25,8 +25,8 @@ namespace GameEngine
         virtual void BindTexture(SharedTexture texture) override;
         virtual void BindCubeTexture(SharedCube cube) override;
         virtual void DrawCubeTexture(SharedCube cube, int shaderID) override;
-        virtual void PrepareMesh(SharedMesh mesh, int index) override;
-        virtual void PrepareMaterial(RendererCammand rC) override;
+        virtual void PrepareMesh(ModelRenderConfig) override;
+        virtual void PrepareMaterial(SharedMaterial) override;
 
         virtual void SetUBOData(SharedShaderProgramBase shader) override;
 

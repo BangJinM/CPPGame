@@ -13,7 +13,6 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
-#include "UI/Font.h"
 #include FT_FREETYPE_H
 
 namespace GameEngine

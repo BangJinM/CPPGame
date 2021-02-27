@@ -4,6 +4,8 @@
 #include "ParserManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "Camera.h"
+
 
 namespace GameEngine
 {
@@ -15,7 +17,7 @@ namespace GameEngine
 		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString("Scene/new.scene");
         auto json = cJSON_Parse(sceneStr.c_str());
         SharePtr<Scene> m_Scene = make_shared<Scene>();
-        m_Scene->OnDeserialize(json);
+        m_Scene->OnDeserialize(json);       
         g_pSceneManager->SetNextScene(m_Scene);
         return 0;
     }

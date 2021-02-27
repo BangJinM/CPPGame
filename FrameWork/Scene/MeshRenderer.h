@@ -13,7 +13,6 @@ namespace GameEngine
         MeshRenderer();
         SharedMesh getMesh() { return m_Mesh; }
         void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
-        virtual void Render();
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;
     protected:
