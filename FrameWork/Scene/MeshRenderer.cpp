@@ -1,7 +1,6 @@
 ﻿#include "MeshRenderer.h"
 
 #include "AssetManager.h"
-#include "BaseGraphicsManager.h"
 #include "Camera.h"
 #include "GameObject.h"
 #include "Material.h"
@@ -10,7 +9,6 @@
 
 namespace GameEngine
 {
-    extern BaseGraphicsManager* g_pGraphicsManager;
     extern AssetManager* g_pAssetManager;
 
     MeshRenderer::MeshRenderer()

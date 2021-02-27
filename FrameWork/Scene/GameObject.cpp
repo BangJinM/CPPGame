@@ -2,7 +2,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "BaseGraphicsManager.h"
 #include "Camera.h"
 #include "Component.h"
 #include "Light.h"
