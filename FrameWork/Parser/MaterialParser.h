@@ -14,7 +14,6 @@
 #include "Config.h"
 #include "IParser.h"
 #include "Material.h"
-#include "Shader.h"
 #include "ShaderManager.h"
 #include "cjson/cJSON.h"
 

@@ -1,6 +1,7 @@
 ﻿#include "GameObject.h"
 
 #include <glm/gtc/type_ptr.hpp>
+#include <memory>
 
 #include "Camera.h"
 #include "Component.h"
@@ -165,31 +166,31 @@ namespace GameEngine
         switch (type)
         {
         case ClassID(Transform):
-            object = make_shared<Transform>();
+            object = std::make_shared<Transform>();
             object->OnDeserialize(root);
             break;
         case ClassID(Camera):
-            object = make_shared<Camera>();
+            object = std::make_shared<Camera>();
             object->OnDeserialize(root);
             break;
         case ClassID(MeshRenderer):
-            object = make_shared<MeshRenderer>();
+            object = std::make_shared<MeshRenderer>();
             object->OnDeserialize(root);
             break;
         case ClassID(PointLight):
-            object = make_shared<PointLight>();
+            object = std::make_shared<PointLight>();
             object->OnDeserialize(root);
             break;
         case ClassID(AreaLight):
-            object = make_shared<AreaLight>();
+            object = std::make_shared<AreaLight>();
             object->OnDeserialize(root);
             break;
         case ClassID(SpotLight):
-            object = make_shared<SpotLight>();
+            object = std::make_shared<SpotLight>();
             object->OnDeserialize(root);
             break;
         case ClassID(DirectionalLight):
-            object = make_shared<DirectionalLight>();
+            object = std::make_shared<DirectionalLight>();
             object->OnDeserialize(root);
             break;
         default:

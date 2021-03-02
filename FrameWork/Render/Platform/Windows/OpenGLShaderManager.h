@@ -12,9 +12,6 @@ namespace GameEngine
         virtual void Finalize() override {}
         virtual void Tick(float deltaTime) override {}
 
-        virtual bool InitializeShaders() override;
-        virtual void ClearShaders() override;
-
         virtual int AddShaderByPath(std::string vspath, std::string fspath) override;
         virtual int AddShaderByString(std::string vspath, std::string fspath) override;
     };

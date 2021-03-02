@@ -5,18 +5,7 @@
 
 namespace GameEngine
 {
-
-
     extern AssetLoader *g_pAssetLoader;
-
-    bool OpenGLShaderManager::InitializeShaders()
-    {
-        return false;
-    }
-
-    void OpenGLShaderManager::ClearShaders()
-    {
-    }
 
     int OpenGLShaderManager::AddShaderByPath(std::string vspath, std::string fspath)
     {

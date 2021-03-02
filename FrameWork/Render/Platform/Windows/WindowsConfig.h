@@ -7,6 +7,8 @@
 #include "MemoryManager.h"
 #include "ParserManager.h"
 #include "SceneManager.h"
+#include "GraphicsManager.h"
+#include "OpenGLShaderManager.h"
 #include "Utils/Clock.h"
 
 namespace GameEngine
@@ -18,4 +20,6 @@ namespace GameEngine
     Clock *g_pClock = static_cast<Clock *>(new Clock);
     ParserManager *g_pParserManager = static_cast<ParserManager *>(new ParserManager);
     SceneManager *g_pSceneManager = static_cast<SceneManager *>(new SceneManager);
+    BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
+    ShaderManager *g_pShaderManager = static_cast<ShaderManager *>(new OpenGLShaderManager);
 }  // namespace GameEngine

@@ -9,7 +9,6 @@
 #include "Config.h"
 #include "MyMath.h"
 #include "Object.h"
-#include "Shader.h"
 #include "Texture.h"
 
 namespace GameEngine

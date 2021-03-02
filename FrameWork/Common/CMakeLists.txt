@@ -8,6 +8,11 @@ Common/GfxConfiguration.h
 Common/InputManager.h
 Common/ShaderBase.h
 Common/ShaderManager.h
+Common/IApplication.h
+Common/IRuntimeModule.h
+Common/IShaderManager.h
+Common/IBehaviour.h
+Common/ISerializable.h
 )
 
 SET(FRAMEWORK_COMMON_SRC 
@@ -15,7 +20,6 @@ Common/InputManager.cpp
 Common/BaseApplication.cpp
 Common/BaseGraphicsManager.cpp
 Common/AssetManager.cpp
-Common/main.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_HEADER})

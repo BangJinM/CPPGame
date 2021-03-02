@@ -2,8 +2,8 @@
 #include "../ISubPass.h"
 #include "ShaderManager.h"
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "../Platform/Windows/imgui_impl_glfw.h"
+#include "../Platform/Windows/imgui_impl_opengl3.h"
 
 namespace GameEngine
 {

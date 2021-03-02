@@ -1,11 +1,11 @@
 set(FRAMEWORK_HEADER)
-set(FRAMEWORK_SRC)
+set(FRAMEWORK_SRC
+main.cpp)
 
 include(Common/CMakeLists.txt)
 include(Scene/CMakeLists.txt)
 include(File/CMakeLists.txt)
 include(Parser/CMakeLists.txt)
-include(Interface/CMakeLists.txt)
 include(Math/CMakeLists.txt)
 include(Render/CMakeLists.txt)
 include(Logger/CMakeLists.txt)
@@ -19,4 +19,4 @@ add_library(Framework ${FRAMEWORK_SRC})
 find_package(glm CONFIG REQUIRED)
 find_package(cjson CONFIG REQUIRED)
 
-target_link_libraries(Framework PRIVATE cjson RHI glm)
+target_link_libraries(Framework PRIVATE cjson glm)

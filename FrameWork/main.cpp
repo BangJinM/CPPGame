@@ -28,7 +28,6 @@ namespace GameEngine
     extern GameLogic *g_pGameLogic;
     extern SceneManager *g_pSceneManager;
     extern Clock *g_pClock;
-
 }  // namespace GameEngine
 
 int main(int argc, char *argv[])

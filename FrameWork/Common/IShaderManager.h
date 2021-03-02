@@ -9,9 +9,6 @@ namespace GameEngine
     {
     public:
         virtual ~IShaderManager() = default;
-
-        virtual bool InitializeShaders() = 0;
-        virtual void ClearShaders() = 0;
     };
 
 }  // namespace GameEngine

@@ -17,9 +17,7 @@ find_package(imgui CONFIG REQUIRED)
 
 target_link_libraries(MyGame PRIVATE 
     glfw 
-    RHI 
     glad::glad 
     Framework
-    Windows
     imgui::imgui
 ) 

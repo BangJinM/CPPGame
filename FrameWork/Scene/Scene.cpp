@@ -169,7 +169,7 @@ namespace GameEngine
         auto paramsNode = cJSON_GetObjectItem(root, "Cube");
         if (paramsNode)
         {
-            cube = make_shared<Cube>();
+            cube = std::make_shared<Cube>();
             cube->OnDeserialize(paramsNode);
         }
         paramsNode = cJSON_GetObjectItem(root, "Gameobjects");

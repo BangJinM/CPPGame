@@ -1,6 +1,6 @@
 ﻿include(Render/Draw/CMakeLists.txt)
 include(Render/Sub/CMakeLists.txt)
-
+include(Render/Platform/CMakeLists.txt)
 SET(FRAMEWORK_RENDER_HEADER 
 Render/IDrawPass.h
 Render/IPass.h
