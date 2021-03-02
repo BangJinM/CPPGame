@@ -37,9 +37,10 @@ namespace GameEngine
             int i = 0;
             auto frag = cJSON_GetObjectItem(json, "frag");
             auto vert = cJSON_GetObjectItem(json, "vert");
-            
-            material->shaderID = g_pShaderManager->AddShaderByPath(vert->valuestring, frag->valuestring);
 
+            // material->shaderID = g_pShaderManager->AddShaderByPath(vert->valuestring, frag->valuestring);
+            material->AddShaderPath(ShaderType::Vertex, vert->valuestring);
+            material->AddShaderPath(ShaderType::Fragment, frag->valuestring);
             auto paramsNode = cJSON_GetObjectItem(json, "params");
             if (paramsNode)
             {

@@ -115,7 +115,7 @@ namespace GameEngine
         /////////////////////////////////
         float modelMat4[16];
     };
-    
+
     struct ModelRenderConfig
     {
         SharedMesh mesh;
@@ -190,6 +190,13 @@ namespace GameEngine
         unsigned int fbo;
         LightInfo lightInfo;
         std::vector<RendererCammand> cammands;
+    };
+
+    enum ShaderType
+    {
+        Vertex = 1 << 1,
+        Fragment = 1 << 2,
+        Geometry = 1 << 3,
     };
 
 #ifndef ALIGN

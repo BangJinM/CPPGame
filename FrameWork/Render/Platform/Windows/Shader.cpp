@@ -23,15 +23,15 @@ namespace GameEngine
         GLint status;
         GLenum shaderType = GL_VERTEX_SHADER;
         const GLchar *sources[] = {COCOS2D_VERTEX_SHADER_UNIFORMS, source};
-        if (m_ShaerType == Shader::ShaderType::Vertex)
+        if (m_ShaerType == ShaderType::Vertex)
         {
             shaderType = GL_VERTEX_SHADER;
         }
-        else if (m_ShaerType == Shader::ShaderType::Fragment)
+        else if (m_ShaerType == ShaderType::Fragment)
         {
             shaderType = GL_FRAGMENT_SHADER;
         }
-        else if (m_ShaerType == Shader::ShaderType::Geometry)
+        else if (m_ShaerType == ShaderType::Geometry)
         {
             shaderType = GL_GEOMETRY_SHADER;
         }
@@ -60,7 +60,7 @@ namespace GameEngine
 
     ShaderProgram::ShaderProgram() { RemoveAllShaders(); }
 
-    bool ShaderProgram::AddShaderFromSourceCode(Shader::ShaderType type,
+    bool ShaderProgram::AddShaderFromSourceCode(ShaderType type,
                                                 const char *source)
     {
         Shader *shader = new Shader(type);
@@ -68,7 +68,7 @@ namespace GameEngine
         m_Shaders.push_back(shader);
         return true;
     }
-    bool ShaderProgram::AddShaderFromFilePath(Shader::ShaderType type,
+    bool ShaderProgram::AddShaderFromFilePath(ShaderType type,
                                               const char *path)
     {
         return true;
@@ -187,11 +187,11 @@ namespace GameEngine
                            GL_FALSE, value);
     }
 
-	void ShaderProgram::setMat4(const std::string &name,
-		const glm::mat4 &mat) const
-	{
-		glUniformMatrix4fv(glGetUniformLocation(m_ProgramID, name.c_str()), 1,
-			GL_FALSE, &mat[0][0]);
-	}
+    void ShaderProgram::setMat4(const std::string &name,
+                                const glm::mat4 &mat) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(m_ProgramID, name.c_str()), 1,
+                           GL_FALSE, &mat[0][0]);
+    }
 
 }  // namespace GameEngine

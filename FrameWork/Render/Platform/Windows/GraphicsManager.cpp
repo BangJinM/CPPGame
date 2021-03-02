@@ -82,6 +82,10 @@ namespace GameEngine
     void GraphicsManager::PrepareMaterial(SharedMaterial material)
     {
         int textureID = 0;
+        if (material->shaderID <= 0)
+            material->shaderID = g_pShaderManager->AddShaderByPath(
+                material->GetShaderPath(ShaderType::Vertex),
+                material->GetShaderPath(ShaderType::Fragment));
         auto shader = g_pShaderManager->GetShaderProgram(material->shaderID);
         // SetModelInfos(rC.modelInfos);
         // SetUBOData(shader);

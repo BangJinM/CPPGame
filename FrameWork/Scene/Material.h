@@ -111,6 +111,15 @@ namespace GameEngine
             }
         }
 
+        void AddShaderPath(ShaderType type, std::string path)
+        {
+            m_MapShader[type] = path;
+        }
+
+        std::string GetShaderPath(ShaderType type){
+            return m_MapShader[type];
+        }
+
     public:
         ~Material()
         {
@@ -126,8 +135,8 @@ namespace GameEngine
         void AddProperty(Type value, std::string name, int size, MaterialType type);
 
         std::vector<MaterialData> m_MaterialDatas;
-
-        int shaderID;
+        std::map<ShaderType, std::string> m_MapShader;
+        int shaderID = -1;
     };
 
     template <typename Type>

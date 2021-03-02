@@ -13,13 +13,6 @@ namespace GameEngine
     class ShaderBase : public Object
     {
     public:
-        enum ShaderType
-        {
-            Vertex = 1 << 1,
-            Fragment = 1 << 2,
-            Geometry = 1 << 3,
-        };
-
         ShaderBase(ShaderType type) : m_ShaerType(type) {}
 
         ~ShaderBase()
@@ -42,12 +35,12 @@ namespace GameEngine
     public:
         ShaderProgramBase() {}
 
-        virtual bool AddShaderFromSourceCode(ShaderBase::ShaderType type,
+        virtual bool AddShaderFromSourceCode(ShaderType type,
                                              const char *source)
         {
             return true;
         }
-        virtual bool AddShaderFromFilePath(ShaderBase::ShaderType type,
+        virtual bool AddShaderFromFilePath(ShaderType type,
                                            const char *path)
         {
             return true;

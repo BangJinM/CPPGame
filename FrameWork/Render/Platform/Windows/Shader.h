@@ -22,8 +22,8 @@ namespace GameEngine
     public:
         ShaderProgram();
 
-        virtual bool AddShaderFromSourceCode(ShaderBase::ShaderType type, const char *source) override;
-        virtual bool AddShaderFromFilePath(ShaderBase::ShaderType type, const char *path) override;
+        virtual bool AddShaderFromSourceCode(ShaderType type, const char *source) override;
+        virtual bool AddShaderFromFilePath(ShaderType type, const char *path) override;
 
         virtual bool Link() override;
 
