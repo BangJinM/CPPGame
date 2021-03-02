@@ -6,16 +6,15 @@
 #include "easylogging++.h"
 namespace GameEngine
 {
-    int
-    ParserManager::Initialize()
+    ParserManager* ParserManager::_instance = nullptr;
+    ParserManager::ParserManager()
     {
         AddParser(ParserExtType::MTL, new MaterialParser());
         AddParser(ParserExtType::IMAGE, new TextureParser());
         AddParser(ParserExtType::OBJ, new ObjParser());
-        return 0;
     }
 
-    void ParserManager::Finalize()
+    ParserManager::~ParserManager()
     {
         ParserMap::iterator iter = m_ParserMaps.begin();
 
@@ -23,15 +22,22 @@ namespace GameEngine
         {
             delete iter->second;
             iter->second = nullptr;
-            iter = m_ParserMaps.erase(iter);
+            delete iter->second;
         }
 
         m_ParserMaps.clear();
     }
 
-    void ParserManager::Tick(float deltaTime) {}
+    ParserManager* ParserManager::GetInstance()
+    {
+        if (!_instance)
+        {
+            _instance = new ParserManager();
+        }
+        return _instance;
+    }
 
-    void ParserManager::AddParser(ParserExtType type, IParser *parser)
+    void ParserManager::AddParser(ParserExtType type, IParser* parser)
     {
         m_ParserMaps[type] = parser;
     }
@@ -41,6 +47,7 @@ namespace GameEngine
         auto pf = m_ParserMaps.find(type);
         if (pf != m_ParserMaps.end())
         {
+            delete pf->second;
             m_ParserMaps.erase(type);
             return;
         }

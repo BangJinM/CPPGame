@@ -11,7 +11,6 @@
 #include "GameObject.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "ParserManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Shader.h"
@@ -26,7 +25,6 @@ using namespace std;
 namespace GameEngine
 {
     extern AssetManager *g_pAssetManager;
-    extern ParserManager *g_pParserManager;
     extern ShaderManager *g_pShaderManager;
     extern BaseApplication *g_pApp;
 

@@ -1,7 +1,6 @@
 ﻿#include "MyGameLogic.h"
 
 #include "AssetLoader.h"
-#include "ParserManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Camera.h"
@@ -9,7 +8,6 @@
 
 namespace GameEngine
 {
-    extern ParserManager *g_pParserManager;
     extern SceneManager *g_pSceneManager;
     extern AssetLoader *g_pAssetLoader;
     int MyGameLogic::Initialize()

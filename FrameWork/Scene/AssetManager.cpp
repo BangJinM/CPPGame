@@ -5,13 +5,11 @@
 
 #include "AssetLoader.h"
 #include "Material.h"
-#include "MaterialParser.h"
-#include "ParserManager.h"
+#include "Parser/ParserManager.h"
 
 namespace GameEngine
 {
     extern AssetLoader *g_pAssetLoader;
-    extern ParserManager *g_pParserManager;
     extern AssetManager *g_pAssetManager;
 
     static std::map<std::string, SharedObject> g_cache;
@@ -53,7 +51,7 @@ namespace GameEngine
             return std::dynamic_pointer_cast<Material>(g_cache[path]);
         }
         SharedMaterial obj =
-            std::dynamic_pointer_cast<Material>(g_pParserManager->ExecuteParser(
+            std::dynamic_pointer_cast<Material>(ObjectParser(
                 ParserExtType::MTL, path));
         if (obj)
             g_cache[path] = obj;
@@ -68,7 +66,7 @@ namespace GameEngine
         }
 
         SharedMesh mesh =
-            std::dynamic_pointer_cast<Mesh>(g_pParserManager->ExecuteParser(
+            std::dynamic_pointer_cast<Mesh>(ObjectParser(
                 ParserExtType::OBJ, path));
         if (mesh)
             g_cache[path] = mesh;
@@ -148,7 +146,7 @@ namespace GameEngine
             return std::dynamic_pointer_cast<Texture>(g_cache[path]);
         }
 
-        image = std::dynamic_pointer_cast<Texture>(g_pParserManager->ExecuteParser(
+        image = std::dynamic_pointer_cast<Texture>(ObjectParser(
             ParserExtType::IMAGE, path));
         image->Path = path;
         if (image)

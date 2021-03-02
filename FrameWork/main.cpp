@@ -5,7 +5,6 @@
 #include "GameLogic.h"
 #include "InputManager.h"
 #include "MemoryManager.h"
-#include "ParserManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ShaderManager.h"
@@ -23,7 +22,6 @@ namespace GameEngine
     extern AssetLoader *g_pAssetLoader;
     extern BaseGraphicsManager *g_pGraphicsManager;
     extern AssetManager *g_pAssetManager;
-    extern ParserManager *g_pParserManager;
     extern ShaderManager *g_pShaderManager;
     extern GameLogic *g_pGameLogic;
     extern SceneManager *g_pSceneManager;
@@ -41,7 +39,6 @@ int main(int argc, char *argv[])
     vector<IRuntimeModule *> run_time_modules;
     run_time_modules.push_back(g_pApp);
     run_time_modules.push_back(g_pMemoryManager);
-    run_time_modules.push_back(g_pParserManager);
     run_time_modules.push_back(g_pInputManager);
     run_time_modules.push_back(g_pAssetLoader);
     run_time_modules.push_back(g_pAssetManager);

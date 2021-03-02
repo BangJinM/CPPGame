@@ -1,4 +1,4 @@
-﻿# include(Scene/UI/CMakeLists.txt)
+﻿include(Scene/Parser/CMakeLists.txt)
 
 SET(FRAMEWORK_SCENE_HEADER 
 Scene/Camera.h
@@ -16,6 +16,7 @@ Scene/SceneManager.h
 Scene/Texture.h
 Scene/Transform.h
 Scene/Cube.h
+Scene/AssetManager.h
 )
 
 SET(FRAMEWORK_SCENE_SRC 
@@ -28,6 +29,7 @@ Scene/SceneManager.cpp
 Scene/Transform.cpp
 Scene/Cube.cpp
 Scene/Component.cpp
+Scene/AssetManager.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_SCENE_HEADER})

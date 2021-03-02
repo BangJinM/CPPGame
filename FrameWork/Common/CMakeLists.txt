@@ -1,5 +1,4 @@
 ﻿SET(FRAMEWORK_COMMON_HEADER 
-Common/AssetManager.h
 Common/BaseApplication.h
 Common/BaseGraphicsManager.h
 Common/Config.h
@@ -19,7 +18,6 @@ SET(FRAMEWORK_COMMON_SRC
 Common/InputManager.cpp
 Common/BaseApplication.cpp
 Common/BaseGraphicsManager.cpp
-Common/AssetManager.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_HEADER})

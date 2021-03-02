@@ -5,7 +5,6 @@
 #include "InputManager.h"
 #include "InputManagerWindows.h"
 #include "MemoryManager.h"
-#include "ParserManager.h"
 #include "SceneManager.h"
 #include "GraphicsManager.h"
 #include "OpenGLShaderManager.h"
@@ -18,7 +17,6 @@ namespace GameEngine
     AssetLoader *g_pAssetLoader = static_cast<AssetLoader *>(new AssetLoader);
     AssetManager *g_pAssetManager = static_cast<AssetManager *>(new AssetManager);
     Clock *g_pClock = static_cast<Clock *>(new Clock);
-    ParserManager *g_pParserManager = static_cast<ParserManager *>(new ParserManager);
     SceneManager *g_pSceneManager = static_cast<SceneManager *>(new SceneManager);
     BaseGraphicsManager *g_pGraphicsManager = static_cast<GraphicsManager *>(new GraphicsManager);
     ShaderManager *g_pShaderManager = static_cast<ShaderManager *>(new OpenGLShaderManager);
