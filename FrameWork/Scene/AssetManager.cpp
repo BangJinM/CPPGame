@@ -195,7 +195,6 @@ namespace GameEngine
         }
         g_cache[path] = image;
     }
-    void AssetManager::GetShaderProgram(int ID) {}
     const int size = 4;
     SharedTexture AssetManager::getWhiteTexture()
     {

@@ -2,7 +2,6 @@
 
 #include "BaseApplication.h"
 #include "GameObject.h"
-#include "MeshRenderer.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Utils/SerializableHelper.h"

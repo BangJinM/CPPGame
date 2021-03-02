@@ -14,13 +14,11 @@
 #include "Config.h"
 #include "IParser.h"
 #include "Material.h"
-#include "ShaderManager.h"
 #include "cjson/cJSON.h"
 
 namespace GameEngine
 {
     extern AssetLoader *g_pAssetLoader;
-    extern ShaderManager *g_pShaderManager;
 }  // namespace GameEngine
 
 using namespace GameEngine;
@@ -34,13 +32,12 @@ namespace GameEngine
             SharedMaterial material = std::make_shared<Material>();
             std::string mstr = g_pAssetLoader->SyncOpenAndReadTextFileToString(path.c_str());
             auto json = cJSON_Parse(mstr.c_str());
-            int i = 0;
+
             auto frag = cJSON_GetObjectItem(json, "frag");
             auto vert = cJSON_GetObjectItem(json, "vert");
-
-            // material->shaderID = g_pShaderManager->AddShaderByPath(vert->valuestring, frag->valuestring);
             material->AddShaderPath(ShaderType::Vertex, vert->valuestring);
             material->AddShaderPath(ShaderType::Fragment, frag->valuestring);
+
             auto paramsNode = cJSON_GetObjectItem(json, "params");
             if (paramsNode)
             {
