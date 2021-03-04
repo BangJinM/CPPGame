@@ -53,7 +53,7 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"rotation":	[0, 0, 0],
+					"rotation":	[0, 45, -60],
 					"position":	[0, -5, -10],
 					"scale":	[1, 1, 1]
 				}, {
@@ -67,12 +67,12 @@
                     "m_Mesh":    "Scene/mayaCube.OBJ",
                     "m_Materials":    ["Materials/light_node.gemtl"]
                 }, {
-                    "type":    5,
-                    "rotation":    [0, 45, -60],
-                    "position":    [0, 1,-10],
-                    "scale":    [1, 0.2, 0.2]
+					"type":	5,
+					"rotation":	[0, 45, -60],
+					"position":	[0, -5, -10],
+					"scale":	[1, 1, 1]
                 }, {
-                    "type":    12,
+                    "type":    13,
                     "constant":    1,
                     "linear":			0.14,
                     "quadratic":	0.07,

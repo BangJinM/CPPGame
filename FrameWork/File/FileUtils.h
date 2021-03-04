@@ -3,7 +3,6 @@
 #include <string>
 
 #include "../Common/Config.h"
-using namespace std;
 
 namespace GameEngine
 {

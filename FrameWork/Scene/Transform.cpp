@@ -37,11 +37,9 @@ namespace GameEngine
     void Transform::SetMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation)
     {
         m_Matrix = GlmMat4(1.0f);
-
+        m_Matrix = glm::translate(m_Matrix, position);
         m_Matrix = glm::scale(m_Matrix, scale);
-        glm::qua<float> q = glm::qua<float>(glm::radians(rotation));  //创建一个四元数
-        m_Matrix = glm::mat4_cast(q) * m_Matrix;                      //得到一个旋转的模型矩阵
-        m_Matrix[3] = VecterFloat4(position, 1);
+        m_Matrix = m_Matrix * glm::mat4_cast(glm::qua<float>(glm::radians(rotation)));
     }
 
     void Transform::OnSerialize(cJSON *root)

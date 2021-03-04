@@ -1,6 +1,5 @@
 ﻿SET(FRAMEWORK_COMMON_HEADER 
 Common/BaseApplication.h
-Common/BaseGraphicsManager.h
 Common/Config.h
 Common/GfxConfiguration.h
 Common/GfxConfiguration.h
@@ -17,7 +16,6 @@ Common/ISerializable.h
 SET(FRAMEWORK_COMMON_SRC 
 Common/InputManager.cpp
 Common/BaseApplication.cpp
-Common/BaseGraphicsManager.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_COMMON_HEADER})

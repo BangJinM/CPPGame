@@ -20,7 +20,6 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-using namespace std;
 
 namespace GameEngine
 {
@@ -34,13 +33,13 @@ namespace GameEngine
         result = gladLoadGL();
         if (!result)
         {
-            cerr << "OpenGL load failed!" << endl;
+            std::cerr << "OpenGL load failed!" << std::endl;
             result = -1;
         }
         else
         {
             result = 0;
-            cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << endl;
+            std::cout << "OpenGL Version " << GLVersion.major << "." << GLVersion.minor << " loaded" << std::endl;
 
             glEnable(GL_DEPTH_TEST);
             result = 0;
@@ -102,7 +101,7 @@ namespace GameEngine
             }
             case MaterialType::T_Texture:
             {
-                string property = reinterpret_cast<char *>(material->m_MaterialDatas[i].m_Buffer->GetData());
+                std::string property = reinterpret_cast<char *>(material->m_MaterialDatas[i].m_Buffer->GetData());
                 int location = glGetUniformLocation(shader->m_ProgramID, material->m_MaterialDatas[i].m_Name.c_str());
                 if (location != -1)
                 {
@@ -295,8 +294,8 @@ namespace GameEngine
     void GraphicsManager::SetUBOData(SharedShaderProgramBase shader)
     {
         shader->Use();
-        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
 
+        int blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "LightInfo");
         if (blockIndex != GL_INVALID_INDEX)
         {
             int32_t blockSize;
@@ -311,7 +310,6 @@ namespace GameEngine
         }
 
         blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ViewInfos");
-
         if (blockIndex != GL_INVALID_INDEX)
         {
             int32_t blockSize;
@@ -326,7 +324,6 @@ namespace GameEngine
         }
 
         blockIndex = glGetUniformBlockIndex(shader->m_ProgramID, "ModelInfos");
-
         if (blockIndex != GL_INVALID_INDEX)
         {
             int32_t blockSize;
@@ -339,6 +336,86 @@ namespace GameEngine
             glUniformBlockBinding(shader->m_ProgramID, blockIndex, 2);
             glBindBufferBase(GL_UNIFORM_BUFFER, 2, m_uboModelInfo);
         }
+    }
+
+    void GraphicsManager::BeginShadow(LightInfo info, int layerIndex)
+    {
+        const int32_t kShadowMapWidth = 1024;
+        const int32_t kShadowMapHeight = 1024;
+
+        auto fbo = (GLuint)shadowFBO;
+        glGenFramebuffers(1, &fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, (GLuint)shadowMap, 0, layerIndex);
+
+        // Always check that our framebuffer is ok
+        auto status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        if (status != GL_FRAMEBUFFER_COMPLETE)
+            assert(0);
+
+        glDrawBuffers(0, nullptr);  // No color buffer is drawn to.
+        glDepthMask(GL_TRUE);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, kShadowMapWidth, kShadowMapHeight);
+        shadowFBO = fbo;
+    }
+    void GraphicsManager::EndShadow()
+    {
+        DeleteFrameBufferObject();
+    }
+    int GraphicsManager::GetShadowArray(int count)
+    {
+        if (shadowMap > 0)
+        {
+            DeleteShadowArrsy();
+        }
+        // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+        const int32_t kShadowMapWidth = 1024;
+        const int32_t kShadowMapHeight = 1024;
+
+        auto shadow = (GLuint)shadowMap;
+
+        glGenTextures(1, &shadow);
+        glActiveTexture(GL_TEXTURE0 + shadow);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, shadow);
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_DEPTH_COMPONENT24, kShadowMapWidth, kShadowMapHeight, count);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_DEPTH_COMPONENT24, kShadowMapWidth, kShadowMapHeight, count, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+
+        shadowMap = shadow;
+        // register the shadow map
+        return static_cast<intptr_t>(shadow);
+    }
+    void GraphicsManager::DeleteShadowArrsy()
+    {
+        GLuint id = (GLuint)shadowMap;
+        glDeleteTextures(1, &id);
+        shadowMap = -1;
+    }
+
+    int GraphicsManager::GetFrameBufferObject()
+    {
+        if (shadowFBO <= 0)
+        {
+            glGenFramebuffers(1, &shadowFBO);
+            glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+            glDrawBuffer(GL_NONE);
+            glReadBuffer(GL_NONE);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+        return shadowFBO;
+    }
+
+    void GraphicsManager::DeleteFrameBufferObject()
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDeleteFramebuffers(1, &shadowFBO);
+        shadowFBO = 0;
+        auto config = g_pApp->GetGfxConfiguration();
+        glViewport(0, 0, config.screenWidth, config.screenHeight);
     }
 
 }  // namespace GameEngine

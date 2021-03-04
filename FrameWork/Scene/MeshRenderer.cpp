@@ -1,7 +1,6 @@
 ﻿#include "MeshRenderer.h"
 
 #include "AssetManager.h"
-#include "Camera.h"
 #include "GameObject.h"
 #include "Material.h"
 #include "Transform.h"

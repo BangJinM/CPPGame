@@ -16,7 +16,7 @@ namespace GameEngine
 
     int OpenGLShaderManager::AddShaderByString(std::string vspath, std::string fspath)
     {
-        SharedShaderProgramBase shader = make_shared<ShaderProgram>();	
+        SharedShaderProgramBase shader = std::make_shared<ShaderProgram>();	
         shader->AddShaderFromSourceCode(ShaderType::Vertex, vspath.c_str());	
         shader->AddShaderFromSourceCode(ShaderType::Fragment, fspath.c_str());	
         shader->Link();	

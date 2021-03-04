@@ -15,7 +15,7 @@ namespace GameEngine
 
     void AssetLoader::Tick(float deltaTime) {}
 
-    bool AssetLoader::AddSearchPath(const string path)
+    bool AssetLoader::AddSearchPath(const std::string path)
     {
         std::vector<std::string>::iterator src = m_strSearchPath.begin();
 
@@ -30,7 +30,7 @@ namespace GameEngine
         return true;
     }
 
-    bool AssetLoader::RemoveSearchPath(const string path)
+    bool AssetLoader::RemoveSearchPath(const std::string path)
     {
         std::vector<std::string>::iterator src = m_strSearchPath.begin();
 
@@ -47,9 +47,9 @@ namespace GameEngine
         return true;
     }
 
-    string AssetLoader::GetFileFullPath(const string path) { return ""; }
+    std::string AssetLoader::GetFileFullPath(const std::string path) { return ""; }
 
-    bool AssetLoader::FileExists(const string fullPath)
+    bool AssetLoader::FileExists(const std::string fullPath)
     {
         FilePtr fp = OpenFile(fullPath.c_str(), MY_OPEN_BINARY);
         if (fp != nullptr)
@@ -60,7 +60,7 @@ namespace GameEngine
         return false;
     }
 
-    FilePtr AssetLoader::OpenFile(const string name, FileOpenMode mode)
+    FilePtr AssetLoader::OpenFile(const std::string name, FileOpenMode mode)
     {
         FILE *fp = nullptr;
         // loop N times up the hierarchy, testing at each level
@@ -116,7 +116,7 @@ namespace GameEngine
         return nullptr;
     }
 
-    Buffer AssetLoader::SyncOpenAndReadText(const string filePath)
+    Buffer AssetLoader::SyncOpenAndReadText(const std::string filePath)
     {
         FilePtr fp = OpenFile(filePath, MY_OPEN_TEXT);
         Buffer *pBuff = nullptr;
@@ -144,7 +144,7 @@ namespace GameEngine
         return *pBuff;
     }
 
-    Buffer AssetLoader::SyncOpenAndReadBinary(const string filePath)
+    Buffer AssetLoader::SyncOpenAndReadBinary(const std::string filePath)
     {
         FilePtr fp = OpenFile(filePath, MY_OPEN_BINARY);
         Buffer *pBuff = nullptr;

@@ -3,8 +3,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "BaseGraphicsManager.h"
 #include "Config.h"
+#include "Render/BaseGraphicsManager.h"
 
 namespace GameEngine
 {
@@ -34,9 +34,21 @@ namespace GameEngine
         virtual void SetViewInfos(const ViewInfos& infos) override;
         virtual void SetModelInfos(const ModelInfos& infos) override;
 
+        virtual void BeginShadow(LightInfo info, int layerIndex) override;
+        virtual void EndShadow() override;
+        virtual int GetShadowArray(int count) override;
+        virtual void DeleteShadowArrsy() override;
+
+        virtual int GetFrameBufferObject() override;
+        virtual void DeleteFrameBufferObject() override;
+
         int m_uboLightInfo = -1;
         int m_uboCameraInfo = -1;
         int m_uboModelInfo = -1;
+        int m_uboLightModelInfo = -1;
+
+        unsigned int shadowMap = 0;
+        unsigned int shadowFBO = 0;
     };
 
 }  // namespace GameEngine

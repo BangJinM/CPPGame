@@ -6,7 +6,6 @@
 #include "Object.h"
 #include "glm/glm.hpp"
 
-using namespace std;
 
 namespace GameEngine
 {

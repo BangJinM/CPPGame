@@ -13,7 +13,6 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Transform.h"
-using namespace std;
 
 namespace GameEngine
 {
@@ -77,13 +76,13 @@ namespace GameEngine
                         if (materialID >= 0)
                             AddRendererCommand(materials[materialID], infos);
                         else
-                            AddRendererCommand(make_shared<Material>(), infos);
+                            AddRendererCommand(std::make_shared<Material>(), infos);
                     }
                 }
             }
+            Draw();
+            m_RendererCommands.clear();
         }
-        Draw();
-        m_RendererCommands.clear();
     }
 
     void BaseGraphicsManager::AddRendererCommand(SharedMaterial material, ModelRenderConfig config)
@@ -121,6 +120,11 @@ namespace GameEngine
             auto pos = transfrom->GetPosition();
             auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
 
+            glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
+            
+            memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(lightProjection), sizeof(float) * 4 *4);
+            memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetMatrix()), sizeof(float) * 4 *4);
+
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);
             memcpy(m_LightInfos.lights[index].position, glm::value_ptr(pos), sizeof(float) * 3);
             memcpy(m_LightInfos.lights[index].direction, glm::value_ptr(dir), sizeof(float) * 3);
@@ -145,6 +149,11 @@ namespace GameEngine
             if (m_LightInfos.lights[index].type == LightType::Type_SpotLight)
                 continue;
         }
+    }
+
+    LightInfo BaseGraphicsManager::GetLightInfo()
+    {
+        return m_LightInfos;
     }
 
 }  // namespace GameEngine

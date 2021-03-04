@@ -45,6 +45,16 @@ namespace GameEngine
 
         virtual void CalculateLights();
 
+        virtual void BeginShadow(LightInfo info, int layerIndex) = 0;
+        virtual void EndShadow() = 0;
+        virtual int GetShadowArray(int count) = 0;
+        virtual void DeleteShadowArrsy() = 0;
+
+        virtual int GetFrameBufferObject() = 0;
+        virtual void DeleteFrameBufferObject() = 0;
+
+        LightInfo GetLightInfo();
+
     protected:
         std::map<int, RendererCammand> m_RendererCommands;
         std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;

@@ -87,25 +87,6 @@ namespace GameEngine
     };
 
     /////////////////////////////////
-    // 摄像机信息
-    /////////////////////////////////
-    volatile struct LightModelInfos
-    {
-        /////////////////////////////////
-        // 摄像机坐标
-        /////////////////////////////////
-        float u_camera_pos[4];
-        /////////////////////////////////
-        // 摄像机投影矩阵
-        /////////////////////////////////
-        float u_projection_matrix[16];
-        /////////////////////////////////
-        // 摄像机观察矩阵
-        /////////////////////////////////
-        float u_view_matrix[16];
-    };
-
-    /////////////////////////////////
     // 模型信息
     /////////////////////////////////
     volatile struct ModelInfos
@@ -176,12 +157,16 @@ namespace GameEngine
         float ambient[4];
         float diffuse[4];
         float specular[4];
+
+        float u_projection_matrix[16];
+        float u_view_matrix[16];
     };
 
     volatile struct LightInfo
     {
         LightProperty lights[MAX_LIGHT_COUNT];
         int numsLight;
+        float nums[3];
     };
     // #pragma pack(pop)
 
@@ -202,5 +187,5 @@ namespace GameEngine
 #ifndef ALIGN
 #define ALIGN(x, a) (((x) + ((a)-1)) & ~((a)-1))
 #endif
-    const size_t kSizeLightInfo = ALIGN(sizeof(LightInfo), 256);  // CB size is required to be 256-byte aligned.
+    const size_t kSizeLightInfo = sizeof(LightInfo);  // CB size is required to be 256-byte aligned.
 }  // namespace GameEngine

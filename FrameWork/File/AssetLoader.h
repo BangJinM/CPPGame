@@ -26,22 +26,22 @@ namespace GameEngine
         virtual void Tick(float deltaTime);
 
         //***************************************************IFileSystem
-        virtual bool AddSearchPath(const string path) override;
-        virtual bool RemoveSearchPath(const string path) override;
-        virtual string GetFileFullPath(const string path) override;
+        virtual bool AddSearchPath(const std::string path) override;
+        virtual bool RemoveSearchPath(const std::string path) override;
+        virtual std::string GetFileFullPath(const std::string path) override;
         //***************************************************IFileSystem
 
         //***************************************************IFile
-        virtual FilePtr OpenFile(const string fullPath, FileOpenMode mode) override;
+        virtual FilePtr OpenFile(const std::string fullPath, FileOpenMode mode) override;
         virtual void CloseFile(FilePtr &fp) override;
         virtual size_t GetFileSize(const FilePtr &fp) override;
         virtual size_t SyncRead(const FilePtr &fp, Buffer &buf) override;
         virtual void WriteFile(const std::string &file,
                                const std::string path) override;
-        virtual bool FileExists(const string fullPath) override;
+        virtual bool FileExists(const std::string fullPath) override;
 
-        virtual Buffer SyncOpenAndReadText(const string filePath) override;
-        virtual Buffer SyncOpenAndReadBinary(const string filePath) override;
+        virtual Buffer SyncOpenAndReadText(const std::string filePath) override;
+        virtual Buffer SyncOpenAndReadBinary(const std::string filePath) override;
         //***************************************************IFile
 
         inline std::string SyncOpenAndReadTextFileToString(const char *fileName)

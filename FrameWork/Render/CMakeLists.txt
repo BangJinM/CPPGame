@@ -5,9 +5,12 @@ SET(FRAMEWORK_RENDER_HEADER
 Render/IDrawPass.h
 Render/IPass.h
 Render/ISubPass.h
+Render/BaseGraphicsManager.h
 )
 
 SET(FRAMEWORK_RENDER_SRC 
+Render/BaseGraphicsManager.cpp
+
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_RENDER_HEADER})

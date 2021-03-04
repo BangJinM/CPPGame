@@ -5,7 +5,6 @@
 #include "Buffer.h"
 #include "Object.h"
 
-using namespace std;
 
 using namespace GameEngine;
 namespace GameEngine

@@ -5,7 +5,6 @@
 
 #include "Config.h"
 #include "IParser.h"
-using namespace std;
 namespace GameEngine
 {
     enum ParserExtType
@@ -18,7 +17,7 @@ namespace GameEngine
 
     class ParserManager
     {
-        typedef map<ParserExtType, IParser*> ParserMap;
+        typedef std::map<ParserExtType, IParser*> ParserMap;
 
     private:
         ParserManager();
@@ -41,14 +40,14 @@ namespace GameEngine
         ///////////////////////////////////////////////
         //执行
         ///////////////////////////////////////////////
-        SharedObject ExecuteParser(ParserExtType type, string path);
+        SharedObject ExecuteParser(ParserExtType type, std::string path);
 
     private:
         static ParserManager* _instance;
         ParserMap m_ParserMaps;
     };
 
-    static SharedObject ObjectParser(ParserExtType type, string path)
+    static SharedObject ObjectParser(ParserExtType type, std::string path)
     {
         return ParserManager::GetInstance()->ExecuteParser(type, path);
     }

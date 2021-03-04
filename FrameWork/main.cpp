@@ -1,7 +1,7 @@
 ﻿#include "AssetLoader.h"
 #include "AssetManager.h"
 #include "BaseApplication.h"
-#include "BaseGraphicsManager.h"
+#include "Render/BaseGraphicsManager.h"
 #include "GameLogic.h"
 #include "InputManager.h"
 #include "MemoryManager.h"
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
         el::Loggers::getLogger("logger")->info(argv[i]);
 
     int ret;
-    vector<IRuntimeModule *> run_time_modules;
+    std::vector<IRuntimeModule *> run_time_modules;
     run_time_modules.push_back(g_pApp);
     run_time_modules.push_back(g_pMemoryManager);
     run_time_modules.push_back(g_pInputManager);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         module->Finalize();
     }
     g_pClock->Finalize();
-    for (vector<IRuntimeModule *>::const_iterator itr =
+    for (std::vector<IRuntimeModule *>::const_iterator itr =
              run_time_modules.begin();
          itr != run_time_modules.end(); ++itr)
     {

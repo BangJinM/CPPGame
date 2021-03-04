@@ -29,6 +29,9 @@ struct LightProperty
     vec3 ambient;// 16
     vec3 diffuse;// 16
     vec3 specular;// 16
+    
+    mat4 u_projection_matrix;
+    mat4 u_view_matrix;
 } ;
 
 layout(std140) uniform LightInfo {

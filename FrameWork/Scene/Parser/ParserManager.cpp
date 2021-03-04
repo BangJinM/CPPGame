@@ -54,7 +54,7 @@ namespace GameEngine
         return;
     }
 
-    SharedObject ParserManager::ExecuteParser(ParserExtType type, string path)
+    SharedObject ParserManager::ExecuteParser(ParserExtType type, std::string path)
     {
         LOG(INFO) << "ExecuteParser   type:" << type << "      path:" << path;
         auto pf = m_ParserMaps.find(type);

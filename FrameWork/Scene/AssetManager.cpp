@@ -80,7 +80,7 @@ namespace GameEngine
             return std::dynamic_pointer_cast<Mesh>(g_cache[UIMESHDATA]);
         }
 
-        SharedMesh mesh = make_shared<Mesh>();
+        SharedMesh mesh = std::make_shared<Mesh>();
         VecterFloat3 position[4];
         VecterFloat2 textcoord[4];
         position[0] = VecterFloat3(0.5f, 0.5f, 0.0f);
