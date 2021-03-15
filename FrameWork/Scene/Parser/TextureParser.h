@@ -11,9 +11,7 @@
 namespace GameEngine
 {
     extern AssetLoader *g_pAssetLoader;
-}
-namespace GameEngine
-{
+
     class TextureParser : public IParser
     {
     public:

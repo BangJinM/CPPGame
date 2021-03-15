@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameLogic.h"
+
 namespace GameEngine
 {
     class MyGameLogic : public GameLogic

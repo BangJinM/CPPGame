@@ -8,6 +8,7 @@ in Value
     vec3 v_camera_pos;
 }inValue; 
 
+uniform sampler2D shadowMap;
 uniform sampler2D diffuse;
 uniform sampler2D specular;
 
@@ -39,21 +40,48 @@ layout(std140) uniform LightInfo {
     int numsLight;
  } lightInfo;
 
+
 out vec4 FragColor;
+
+float ShadowCalculation(LightProperty light)
+{
+    // perform perspective divide
+    vec4 fragPosLightSpace = light.u_projection_matrix * light.u_view_matrix * vec4(inValue.v_FragPos,1.0);
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(shadowMap, projCoords.xy).r; 
+    // get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // check whether current frag pos is in shadow
+    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+
+    return shadow;
+}
 
 vec3 CalcDirLight(LightProperty light, vec3 normal, vec3 viewDir)
 {
-    vec3 lightDir = normalize(-light.direction);
-    // 漫反射着色
-    float diff = max(dot(normal, lightDir), 0.0);
-    // 镜面光着色
+    vec3 color = texture(diffuse, inValue.v_texCoord).rgb;
+
+    vec3 lightColor = vec3(0.3);
+    // ambient
+    vec3 ambient = 0.3 * color;
+    // diffuse
+    vec3 lightDir = normalize(light.position - inValue.v_FragPos);
+    float diff = max(dot(lightDir, normal), 0.0);
+    vec3 diffuse = diff * lightColor;
+    // specular
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    // 合并结果
-    vec3 ambient  = light.ambient  * vec3(texture(diffuse, inValue.v_texCoord));
-    vec3 diffuse  = light.diffuse  * diff * vec3(texture(diffuse, inValue.v_texCoord));
-    vec3 specular = light.specular * spec * vec3(texture(specular, inValue.v_texCoord));
-    return (ambient + diffuse + specular);
+    float spec = 0.0;
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    spec = pow(max(dot(normal, halfwayDir), 0.0), 64.0);
+    vec3 specular = spec * lightColor;    
+    // calculate shadow
+    float shadow = ShadowCalculation(light);                      
+    vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;    
+
+    return lighting;
 }
 
 
@@ -116,7 +144,6 @@ void main() {
     // properties
     vec3 normal = normalize(inValue.v_normal);
     vec3 viewDir = normalize(inValue.v_camera_pos - inValue.v_FragPos);
-
     vec3 result;
     for(int i = 0; i < lightInfo.numsLight; i++)
     {

@@ -33,6 +33,7 @@ namespace GameEngine
             auto m_LightInfos = g_pGraphicsManager->GetLightInfo();
             auto shadowMap = g_pGraphicsManager->GetShadowArray(m_LightInfos.numsLight);
             uint32_t index = 0;
+            g_pGraphicsManager->DeleteShadowArrsy();
             for (int i = 0; i < m_LightInfos.numsLight; i++)
             {
                 shader->setInt("layer_index", i);

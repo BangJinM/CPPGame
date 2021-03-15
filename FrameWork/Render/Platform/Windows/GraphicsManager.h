@@ -28,16 +28,19 @@ namespace GameEngine
         virtual void PrepareMesh(ModelRenderConfig) override;
         virtual void PrepareMaterial(SharedMaterial) override;
 
+#pragma region 设置Uniform
         virtual void SetUBOData(SharedShaderProgramBase shader) override;
-
         virtual void SetLightInfo(const LightInfo& lightInfo) override;
         virtual void SetViewInfos(const ViewInfos& infos) override;
         virtual void SetModelInfos(const ModelInfos& infos) override;
+#pragma endregion
 
+#pragma region 阴影
         virtual void BeginShadow(LightInfo info, int layerIndex) override;
         virtual void EndShadow() override;
         virtual int GetShadowArray(int count) override;
         virtual void DeleteShadowArrsy() override;
+#pragma endregion
 
         virtual int GetFrameBufferObject() override;
         virtual void DeleteFrameBufferObject() override;

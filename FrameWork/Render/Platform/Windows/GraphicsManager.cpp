@@ -89,6 +89,10 @@ namespace GameEngine
         // SetModelInfos(rC.modelInfos);
         // SetUBOData(shader);
         shader->Use();
+        shader->setInt("shadowMap", textureID);
+        glActiveTexture(GL_TEXTURE0 + textureID);
+        glBindTexture(GL_TEXTURE_2D, shadowMap);
+        textureID++;
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
             switch (material->m_MaterialDatas[i].m_Type)
@@ -246,6 +250,7 @@ namespace GameEngine
         PrepareMesh(config);
     }
 
+#pragma region 设置Uniform
     void GraphicsManager::SetLightInfo(const LightInfo &lightInfo)
     {
         if (m_uboLightInfo < 0)
@@ -338,6 +343,9 @@ namespace GameEngine
         }
     }
 
+#pragma endregion
+
+#pragma region 阴影
     void GraphicsManager::BeginShadow(LightInfo info, int layerIndex)
     {
         const int32_t kShadowMapWidth = 1024;
@@ -392,9 +400,13 @@ namespace GameEngine
     void GraphicsManager::DeleteShadowArrsy()
     {
         GLuint id = (GLuint)shadowMap;
+        if (shadowMap <= 0)
+            return;
         glDeleteTextures(1, &id);
         shadowMap = -1;
     }
+
+#pragma endregion
 
     int GraphicsManager::GetFrameBufferObject()
     {

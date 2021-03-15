@@ -1,10 +1,9 @@
 ﻿#include "MyGameLogic.h"
 
 #include "AssetLoader.h"
+#include "Camera.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "Camera.h"
-
 
 namespace GameEngine
 {
@@ -12,10 +11,10 @@ namespace GameEngine
     extern AssetLoader *g_pAssetLoader;
     int MyGameLogic::Initialize()
     {
-		std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString("Scene/new.scene");
+        std::string sceneStr = g_pAssetLoader->SyncOpenAndReadTextFileToString("Scene/new.scene");
         auto json = cJSON_Parse(sceneStr.c_str());
         SharePtr<Scene> m_Scene = std::make_shared<Scene>();
-        m_Scene->OnDeserialize(json);       
+        m_Scene->OnDeserialize(json);
         g_pSceneManager->SetNextScene(m_Scene);
         return 0;
     }
