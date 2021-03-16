@@ -4,7 +4,7 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[1, 0, -12],
+					"position":	[0, 0, 1],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -16,7 +16,7 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[2, 0, -12],
+					"position":	[1, 0, 0],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -31,7 +31,7 @@
 					"Components":	[{
 							"type":	5,
 							"rotation":	[0, 45, 0],
-							"position":	[3, 0, -12],
+							"position":	[1, 1, 0],
 							"scale":	[1, 1, 1]
 						}, {
 							"type":	2,
@@ -41,7 +41,7 @@
 				}],
 			"Components":	[{
 					"type":	5,
-					"position":	[-1, 0, -12],
+					"position":	[2, 2, 2],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -53,8 +53,8 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"rotation":	[0, 45, -60],
-					"position":	[0, -5, -10],
+					"rotation":	[0, 30, -60],
+					"position":	[6, 6, 6],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	6
@@ -68,8 +68,8 @@
                     "m_Materials":    ["Materials/light_node.gemtl"]
                 }, {
 					"type":	5,
-					"rotation":	[0, 45, -60],
-					"position":	[0, -5, -10],
+					"rotation":	[0, 0, 0],
+					"position":	[-4, 4, 0],
 					"scale":	[1, 1, 1]
                 }, {
                     "type":    13,
@@ -88,7 +88,7 @@
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[-4, -1, -12],
+					"position":	[-2, -2, -2],
 					"scale":	[100, 1, 100]
 				}, {
 					"type":	2,

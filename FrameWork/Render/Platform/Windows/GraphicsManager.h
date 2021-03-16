@@ -29,6 +29,7 @@ namespace GameEngine
         virtual void PrepareMaterial(SharedMaterial) override;
 
 #pragma region 设置Uniform
+        virtual void SetTexture(SharedShaderProgramBase shader, std::string name, int id) override;
         virtual void SetUBOData(SharedShaderProgramBase shader) override;
         virtual void SetLightInfo(const LightInfo& lightInfo) override;
         virtual void SetViewInfos(const ViewInfos& infos) override;
@@ -52,6 +53,8 @@ namespace GameEngine
 
         unsigned int shadowMap = 0;
         unsigned int shadowFBO = 0;
+
+        int textureIndex = 0;
     };
 
 }  // namespace GameEngine

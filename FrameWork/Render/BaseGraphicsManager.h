@@ -39,6 +39,7 @@ namespace GameEngine
 
         virtual void SetUBOData(SharedShaderProgramBase shader) = 0;
 
+        virtual void SetTexture(SharedShaderProgramBase shader, std::string name, int id) = 0;
         virtual void SetLightInfo(const LightInfo& lightInfo) = 0;
         virtual void SetViewInfos(const ViewInfos& infos) = 0;
         virtual void SetModelInfos(const ModelInfos& infos) = 0;

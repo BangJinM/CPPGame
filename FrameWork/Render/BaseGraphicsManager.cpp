@@ -120,9 +120,7 @@ namespace GameEngine
             auto pos = transfrom->GetPosition();
             auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
 
-            glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-            
-            memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(lightProjection), sizeof(float) * 4 *4);
+            memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 0.10f, 100.f)), sizeof(float) * 4 *4);
             memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetMatrix()), sizeof(float) * 4 *4);
 
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);

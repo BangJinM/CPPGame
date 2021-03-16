@@ -78,9 +78,17 @@ namespace GameEngine
     {
     }
 
+    void GraphicsManager::SetTexture(SharedShaderProgramBase shader, std::string name, int id)
+    {
+        shader->Use();
+        shader->setInt(name, textureIndex);
+        glActiveTexture(GL_TEXTURE0 + textureIndex);
+        glBindTexture(GL_TEXTURE_2D, id);
+        textureIndex++;
+    }
+
     void GraphicsManager::PrepareMaterial(SharedMaterial material)
     {
-        int textureID = 0;
         if (material->shaderID <= 0)
             material->shaderID = g_pShaderManager->AddShaderByPath(
                 material->GetShaderPath(ShaderType::Vertex),
@@ -89,10 +97,7 @@ namespace GameEngine
         // SetModelInfos(rC.modelInfos);
         // SetUBOData(shader);
         shader->Use();
-        shader->setInt("shadowMap", textureID);
-        glActiveTexture(GL_TEXTURE0 + textureID);
-        glBindTexture(GL_TEXTURE_2D, shadowMap);
-        textureID++;
+        SetTexture(shader, "shadowMap", shadowMap);
         for (size_t i = 0; i < material->m_MaterialDatas.size(); i++)
         {
             switch (material->m_MaterialDatas[i].m_Type)
@@ -112,14 +117,11 @@ namespace GameEngine
                     SharedTexture image = g_pAssetManager->LoadTexture(property);
                     if (!image)
                         image = g_pAssetManager->getWhiteTexture();
-                    shader->setInt(material->m_MaterialDatas[i].m_Name, textureID);
                     if (image->id <= 0)
                     {
                         BindTexture(image);
                     }
-                    glActiveTexture(GL_TEXTURE0 + textureID);
-                    glBindTexture(GL_TEXTURE_2D, image->id);
-                    textureID++;
+                    SetTexture(shader, material->m_MaterialDatas[i].m_Name, image->id);
                 }
                 break;
             }
@@ -127,6 +129,7 @@ namespace GameEngine
                 break;
             }
         }
+        textureIndex = 0;
     }
 
     void GraphicsManager::BindTexture(SharedTexture texture)
@@ -351,21 +354,20 @@ namespace GameEngine
         const int32_t kShadowMapWidth = 1024;
         const int32_t kShadowMapHeight = 1024;
 
-        auto fbo = (GLuint)shadowFBO;
-        glGenFramebuffers(1, &fbo);
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-        glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, (GLuint)shadowMap, 0, layerIndex);
-
+        glGenFramebuffers(1, &shadowFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+        // glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, (GLuint)shadowMap, 0, layerIndex);
+        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMap, 0);
         // Always check that our framebuffer is ok
         auto status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (status != GL_FRAMEBUFFER_COMPLETE)
             assert(0);
 
-        glDrawBuffers(0, nullptr);  // No color buffer is drawn to.
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
         glDepthMask(GL_TRUE);
         glClear(GL_DEPTH_BUFFER_BIT);
         glViewport(0, 0, kShadowMapWidth, kShadowMapHeight);
-        shadowFBO = fbo;
     }
     void GraphicsManager::EndShadow()
     {
@@ -376,26 +378,24 @@ namespace GameEngine
         if (shadowMap > 0)
         {
             DeleteShadowArrsy();
+            // return shadowMap;
         }
         // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
         const int32_t kShadowMapWidth = 1024;
         const int32_t kShadowMapHeight = 1024;
 
-        auto shadow = (GLuint)shadowMap;
+        const GLuint SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-        glGenTextures(1, &shadow);
-        glActiveTexture(GL_TEXTURE0 + shadow);
-        glBindTexture(GL_TEXTURE_2D_ARRAY, shadow);
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_DEPTH_COMPONENT24, kShadowMapWidth, kShadowMapHeight, count);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_DEPTH_COMPONENT24, kShadowMapWidth, kShadowMapHeight, count, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-
-        shadowMap = shadow;
+        glGenTextures(1, &shadowMap);
+        glBindTexture(GL_TEXTURE_2D, shadowMap);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+                     SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         // register the shadow map
-        return static_cast<intptr_t>(shadow);
+        return static_cast<intptr_t>(shadowMap);
     }
     void GraphicsManager::DeleteShadowArrsy()
     {

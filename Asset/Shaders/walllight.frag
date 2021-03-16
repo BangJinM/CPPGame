@@ -55,7 +55,7 @@ float ShadowCalculation(LightProperty light)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+    float shadow = currentDepth > closestDepth  ? 1.0 : 0;
 
     return shadow;
 }
@@ -64,7 +64,7 @@ vec3 CalcDirLight(LightProperty light, vec3 normal, vec3 viewDir)
 {
     vec3 color = texture(diffuse, inValue.v_texCoord).rgb;
 
-    vec3 lightColor = vec3(0.3);
+    vec3 lightColor = vec3(1);
     // ambient
     vec3 ambient = 0.3 * color;
     // diffuse

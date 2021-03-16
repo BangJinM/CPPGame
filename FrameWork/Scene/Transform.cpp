@@ -41,7 +41,10 @@ namespace GameEngine
         m_Matrix = glm::scale(m_Matrix, scale);
         m_Matrix = m_Matrix * glm::mat4_cast(glm::qua<float>(glm::radians(rotation)));
     }
-
+    void Transform::SetMatrix(glm::mat4 mat4)
+    {
+        m_Matrix = glm::mat4(mat4);
+    }
     void Transform::OnSerialize(cJSON *root)
     {
         SerializableHelper::Seserialize(root, "rotation", m_Rotation);

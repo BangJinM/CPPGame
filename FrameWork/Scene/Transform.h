@@ -29,6 +29,8 @@ namespace GameEngine
         void SetMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
         GlmMat4 GetMatrix() { return m_Matrix; }
 
+        void SetMatrix(glm::mat4 mat4);
+
         virtual void OnSerialize(cJSON *root) override;
         virtual void OnDeserialize(cJSON *root) override;
 
