@@ -52,7 +52,7 @@ namespace GameEngine
             ViewInfos viewInfos;
             memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float) * 3);
             memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->GetProjectionMatrix()), sizeof(float) * 16);
-            memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetMatrix()), sizeof(float) * 16);
+            memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetViewMatrix()), sizeof(float) * 16);
 
             SetViewInfos(viewInfos);
             for (auto render : scene->m_Renderers)
@@ -121,7 +121,7 @@ namespace GameEngine
             auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
 
             memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 0.10f, 100.f)), sizeof(float) * 4 *4);
-            memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetMatrix()), sizeof(float) * 4 *4);
+            memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetViewMatrix()), sizeof(float) * 4 *4);
 
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);
             memcpy(m_LightInfos.lights[index].position, glm::value_ptr(pos), sizeof(float) * 3);

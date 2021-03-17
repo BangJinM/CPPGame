@@ -1,4 +1,4 @@
-#include "Transform.h"
+﻿#include "Transform.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -40,6 +40,7 @@ namespace GameEngine
         m_Matrix = glm::translate(m_Matrix, position);
         m_Matrix = glm::scale(m_Matrix, scale);
         m_Matrix = m_Matrix * glm::mat4_cast(glm::qua<float>(glm::radians(rotation)));
+		m_InverseMatrix = glm::inverse(m_Matrix);
     }
     void Transform::SetMatrix(glm::mat4 mat4)
     {
