@@ -36,10 +36,38 @@ namespace GameEngine
         m_Scene = std::make_shared<Scene>();
         m_Scene->OnDeserialize(json);
         g_pSceneManager->SetNextScene(m_Scene);
-        EventCallBack callback = [this](const void* event) {
-            const EventSystem::KeyEventData* pEvent = reinterpret_cast<const EventSystem::KeyEventData*>(event);
-            if (pEvent->key == 256)
+        EventCallBack callback = [this](const void *event) {
+            const EventSystem::KeyEventData *pEvent = reinterpret_cast<const EventSystem::KeyEventData *>(event);
+            if (pEvent->key == 256 && pEvent->action == 1)
                 g_pApp->SetQuit(true);
+            else if (pEvent->key == 87 && pEvent->action == 2)
+            {
+                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto pos = trans->GetPosition();
+                pos.z += 0.02f;
+                trans->SetPosition(pos);
+            }
+            else if (pEvent->key == 83 && pEvent->action == 2)
+            {
+                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto pos = trans->GetPosition();
+                pos.z -= 0.02f;
+                trans->SetPosition(pos);
+            }
+            else if (pEvent->key == 65 && pEvent->action == 2)
+            {
+                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto pos = trans->GetPosition();
+                pos.x -= 0.02f;
+                trans->SetPosition(pos);
+            }
+            else if (pEvent->key == 68 && pEvent->action == 2)
+            {
+                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto pos = trans->GetPosition();
+                pos.x += 0.02f;
+                trans->SetPosition(pos);
+            }
         };
         EventSystem::g_pEventDispatcherManager->AddEventListener<EventSystem::KeyEventData>(callback);
         return 0;

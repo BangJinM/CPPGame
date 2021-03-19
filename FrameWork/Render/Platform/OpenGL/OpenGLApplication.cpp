@@ -96,16 +96,12 @@ namespace GameEngine
 
     void OpenGLApplication::KeyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
-        if (action == GLFW_PRESS)
-            if (key == GLFW_KEY_ESCAPE)
-            {
-                KeyEventData* data = new KeyEventData();
-                data->key = key;
-                data->scancode = scancode;
-                data->action = action;
-                data->mods = mods;
-                g_pEventDispatcherManager->SendEvent(data);
-            }
+        KeyEventData *data = new KeyEventData();
+        data->key = key;
+        data->scancode = scancode;
+        data->action = action;
+        data->mods = mods;
+        g_pEventDispatcherManager->SendEvent(data);
     }
 
 }  // namespace GameEngine
