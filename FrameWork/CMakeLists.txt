@@ -1,4 +1,6 @@
-set(FRAMEWORK_HEADER)
+set(FRAMEWORK_HEADER
+ModuleConfig.h
+)
 set(FRAMEWORK_SRC
 main.cpp)
 
@@ -10,6 +12,7 @@ include(Render/CMakeLists.txt)
 include(Logger/CMakeLists.txt)
 include(Memory/CMakeLists.txt)
 include(Utils/CMakeLists.txt)
+include(Event/CMakeLists.txt)
 
 list(APPEND FRAMEWORK_SRC ${FRAMEWORK_HEADER})
 

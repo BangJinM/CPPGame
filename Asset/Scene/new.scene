@@ -68,7 +68,7 @@
                     "m_Materials":    ["Materials/light_node.gemtl"]
                 }, {
 					"type":	5,
-					"rotation":	[-60, -90, 0],
+					"rotation":	[-90, 90, 0],
 					"position":	[-2, 2, 6],
 					"scale":	[1, 1, 1]
                 }, {

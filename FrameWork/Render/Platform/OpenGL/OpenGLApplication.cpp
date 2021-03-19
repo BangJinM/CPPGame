@@ -1,14 +1,29 @@
-﻿#include "GamePlatform-opengl.h"
+﻿#include "OpenGLApplication.h"
 
 #include <stdio.h>
 #include <tchar.h>
 
+#include "Event/EventDispatcherManager.h"
+#include "Event/KeyEventDispatcher.h"
+#include "InputManager.h"
+#include "Render/GraphicsManager.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+namespace EventSystem
+{
+    extern EventDispatcherManager *g_pEventDispatcherManager;
+}
+using namespace EventSystem;
+
 namespace GameEngine
 {
-    OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config) {}
+    extern InputManager *g_pInputManager;
+    extern GraphicsManager *g_pGraphicsManager;
+
+    OpenGLApplication::OpenGLApplication(GfxConfiguration &config) : BaseApplication(config)
+    {
+    }
 
     int OpenGLApplication::Initialize()
     {
@@ -39,11 +54,21 @@ namespace GameEngine
             return -1;
         }
 
+        auto config = GetGfxConfiguration();
+        glViewport(0, 0, config.screenWidth, config.screenHeight);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_DEPTH_TEST);
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 420");
+
+        glfwSetMouseButtonCallback(window, MouseInput);
+        glfwSetKeyCallback(window, KeyInput);
 
         return result;
     }
@@ -59,5 +84,28 @@ namespace GameEngine
     void OpenGLApplication::Tick(float deltaTime)
     {
         this->m_bQuit = glfwWindowShouldClose(window);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        g_pGraphicsManager->Draw(deltaTime);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
+
+    void OpenGLApplication::MouseInput(GLFWwindow *window, int key, int action, int mods)
+    {
+    }
+
+    void OpenGLApplication::KeyInput(GLFWwindow *window, int key, int scancode, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+            if (key == GLFW_KEY_ESCAPE)
+            {
+                KeyEventData* data = new KeyEventData();
+                data->key = key;
+                data->scancode = scancode;
+                data->action = action;
+                data->mods = mods;
+                g_pEventDispatcherManager->SendEvent(data);
+            }
+    }
+
 }  // namespace GameEngine

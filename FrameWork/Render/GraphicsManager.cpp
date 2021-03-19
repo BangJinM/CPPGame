@@ -1,4 +1,4 @@
-﻿#include "BaseGraphicsManager.h"
+﻿#include "GraphicsManager.h"
 
 #include <algorithm>
 #include <glm/gtx/string_cast.hpp>
@@ -13,13 +13,14 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Transform.h"
+#include "GraphicsFunc.h"
 
 namespace GameEngine
 {
     extern SceneManager *g_pSceneManager;
     extern AssetLoader *g_pAssetLoader;
 
-    int BaseGraphicsManager::Initialize()
+    int GraphicsManager::Initialize()
     {
         m_IDrawPass.push_back(std::make_shared<ForwardDrawPass>());
         for (auto pass : m_IDrawPass)
@@ -29,23 +30,15 @@ namespace GameEngine
         return 0;
     }
 
-    void BaseGraphicsManager::Finalize() {}
+    void GraphicsManager::Finalize() {}
 
-    void BaseGraphicsManager::Clear() { m_RendererCommands.clear(); }
+    void GraphicsManager::Clear() { m_RendererCommands.clear(); }
 
-    void BaseGraphicsManager::Draw()
-    {
-        for (auto pass : m_IDrawPass)
-        {
-            pass->Draw();
-        }
-    }
-
-    void BaseGraphicsManager::Tick(float deltaTime)
+    void GraphicsManager::Draw(float deltaTime)
     {
         auto scene = g_pSceneManager->GetScene();
         CalculateLights();
-        SetLightInfo(m_LightInfos);
+        GraphicsFunc::SetLightInfo(m_LightInfos, m_Frame);
         for (auto camera : scene->m_Cameras)
         {
             auto cameraTs = camera->GetParent()->getComponent<Transform>();
@@ -54,7 +47,7 @@ namespace GameEngine
             memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->GetProjectionMatrix()), sizeof(float) * 16);
             memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetViewMatrix()), sizeof(float) * 16);
 
-            SetViewInfos(viewInfos);
+			GraphicsFunc::SetViewInfos(viewInfos, m_Frame);
             for (auto render : scene->m_Renderers)
             {
                 auto modelMat = render->GetParent()->getComponent<Transform>()->GetMatrix();
@@ -80,12 +73,19 @@ namespace GameEngine
                     }
                 }
             }
-            Draw();
+            for (auto pass : m_IDrawPass)
+            {
+                pass->Draw();
+            }
             m_RendererCommands.clear();
         }
     }
 
-    void BaseGraphicsManager::AddRendererCommand(SharedMaterial material, ModelRenderConfig config)
+    void GraphicsManager::Tick(float deltaTime)
+    {
+    }
+
+    void GraphicsManager::AddRendererCommand(SharedMaterial material, ModelRenderConfig config)
     {
         auto find = m_RendererCommands.find(material->GetID());
         if (find != m_RendererCommands.end())
@@ -99,12 +99,12 @@ namespace GameEngine
         m_RendererCommands[material->GetID()] = command;
     }
 
-    std::map<int, RendererCammand> BaseGraphicsManager::GetRendererCommand()
+    std::map<int, RendererCammand> GraphicsManager::GetRendererCommand()
     {
         return m_RendererCommands;
     }
 
-    void BaseGraphicsManager::CalculateLights()
+    void GraphicsManager::CalculateLights()
     {
         auto scene = g_pSceneManager->GetScene();
         auto lights = scene->GetLights();
@@ -120,8 +120,8 @@ namespace GameEngine
             auto pos = transfrom->GetPosition();
             auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
 
-            memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 0.10f, 100.f)), sizeof(float) * 4 *4);
-            memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetViewMatrix()), sizeof(float) * 4 *4);
+            memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 0.10f, 100.f)), sizeof(float) * 4 * 4);
+            memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetViewMatrix()), sizeof(float) * 4 * 4);
 
             memcpy(m_LightInfos.lights[index].color, glm::value_ptr(light->GetColor()), sizeof(float) * 4);
             memcpy(m_LightInfos.lights[index].position, glm::value_ptr(pos), sizeof(float) * 3);
@@ -149,7 +149,7 @@ namespace GameEngine
         }
     }
 
-    LightInfo BaseGraphicsManager::GetLightInfo()
+    LightInfo GraphicsManager::GetLightInfo()
     {
         return m_LightInfos;
     }

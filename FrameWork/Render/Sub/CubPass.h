@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../ISubPass.h"
-#include "BaseGraphicsManager.h"
+#include "GraphicsManager.h"
 #include "Cube.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -10,7 +10,7 @@
 namespace GameEngine
 {
     extern ShaderManager *g_pShaderManager;
-    extern BaseGraphicsManager *g_pGraphicsManager;
+    extern GraphicsManager *g_pGraphicsManager;
     extern SceneManager *g_pSceneManager;
     
     class CubPass : public ISubPass
@@ -21,20 +21,20 @@ namespace GameEngine
             m_ShaderID = g_pShaderManager->AddShaderByPath("Shaders/sampleCube.vert", "Shaders/sampleCube.frag");
         }
 
-        virtual void BeginPass() override
+        virtual void BeginDraw() override
         {
         }
 
         virtual void Draw() override
         {
-            auto scene = g_pSceneManager->GetScene();
-            auto cube = scene->GetCube();
-            if (cube && cube->GetTextureID() <= 0)
-                g_pGraphicsManager->BindCubeTexture(cube);
-            g_pGraphicsManager->DrawCubeTexture(cube, m_ShaderID);
+            // auto scene = g_pSceneManager->GetScene();
+            // auto cube = scene->GetCube();
+            // if (cube && cube->GetTextureID() <= 0)
+            //     g_pGraphicsManager->BindCubeTexture(cube);
+            // g_pGraphicsManager->DrawCubeTexture(cube, m_ShaderID);
         }
 
-        virtual void EndPass() override
+        virtual void EndDraw() override
         {
         }
 

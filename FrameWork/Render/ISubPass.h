@@ -8,8 +8,8 @@ namespace GameEngine
     {
     public:
         virtual void Initialize() override {}
-        virtual void BeginPass() override {}
+        virtual void BeginDraw() override {}
         virtual void Draw() override {}
-        virtual void EndPass() override {}
+        virtual void EndDraw() override {}
     };
 }  // namespace GameEngine

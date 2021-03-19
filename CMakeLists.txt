@@ -18,11 +18,10 @@ include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Logger")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Memory")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Scene")
 include_directories("${PROJECT_SOURCE_DIR}/FrameWork")
-
-
-add_subdirectory(GameLogic)
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Render/Platform/OpenGL")
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Render/Platform")
+include_directories("${PROJECT_SOURCE_DIR}/FrameWork/Render")
 add_subdirectory(FrameWork)
-
-
+add_subdirectory(GameLogic)
 
 

@@ -2,8 +2,8 @@
 #include "../ISubPass.h"
 #include "ShaderManager.h"
 #include "imgui.h"
-#include "../Platform/Windows/imgui_impl_glfw.h"
-#include "../Platform/Windows/imgui_impl_opengl3.h"
+#include "../Platform/OpenGL/imgui_impl_glfw.h"
+#include "../Platform/OpenGL/imgui_impl_opengl3.h"
 
 namespace GameEngine
 {
@@ -15,7 +15,7 @@ namespace GameEngine
         {
         }
 
-        virtual void BeginPass() override
+        virtual void BeginDraw() override
         {
         }
 
@@ -62,7 +62,7 @@ namespace GameEngine
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
 
-        virtual void EndPass() override
+        virtual void EndDraw() override
         {
         }
 

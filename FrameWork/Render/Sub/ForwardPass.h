@@ -1,15 +1,16 @@
 ﻿#pragma once
 
 #include "../ISubPass.h"
-#include "BaseGraphicsManager.h"
+#include "GraphicsManager.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ShaderManager.h"
+#include "GraphicsFunc.h"
 
 namespace GameEngine
 {
     extern ShaderManager *g_pShaderManager;
-    extern BaseGraphicsManager *g_pGraphicsManager;
+    extern GraphicsManager *g_pGraphicsManager;
     extern SceneManager *g_pSceneManager;
     class ForwardPass : public ISubPass
     {
@@ -18,29 +19,30 @@ namespace GameEngine
         {
         }
 
-        virtual void BeginPass() override
+        virtual void BeginDraw() override
         {
         }
 
         virtual void Draw() override
         {
-            auto m_RendererCommands = g_pGraphicsManager->GetRendererCommand();
-            auto scene = g_pSceneManager->GetScene();
-            auto m_Lights = scene->m_Lights;
-            for (auto renderer : m_RendererCommands)
-            {
-                g_pGraphicsManager->PrepareMaterial(renderer.second.material);
-                for (auto config : renderer.second.modelConfigs)
-                {
-                    g_pGraphicsManager->SetModelInfos(config.modelInfos);
-                    auto shader = g_pShaderManager->GetShaderProgram(renderer.second.material->shaderID);
-                    g_pGraphicsManager->SetUBOData(shader);
-                    g_pGraphicsManager->PrepareMesh(config);
-                }
-            }
+             auto m_RendererCommands = g_pGraphicsManager->GetRendererCommand();
+             auto scene = g_pSceneManager->GetScene();
+             auto m_Lights = scene->m_Lights;
+			 Frame& frame = g_pGraphicsManager->GetFrame();
+             for (auto renderer : m_RendererCommands)
+             {
+                 GraphicsFunc::PrepareMaterial(renderer.second.material, frame);
+                 for (auto config : renderer.second.modelConfigs)
+                 {
+                     GraphicsFunc::SetModelInfos(config.modelInfos, frame);
+                     auto shader = g_pShaderManager->GetShaderProgram(renderer.second.material->shaderID);
+                     GraphicsFunc::SetUBOData(shader, frame);
+                     GraphicsFunc::PrepareMesh(config);
+                 }
+             }
         }
 
-        virtual void EndPass() override
+        virtual void EndDraw() override
         {
         }
 

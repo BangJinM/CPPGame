@@ -16,18 +16,12 @@ namespace GameEngine
             m_SubPasses.push_back(std::make_shared<CubPass>());
             m_SubPasses.push_back(std::make_shared<ImGuiPass>());
 
-            for (auto pass : m_SubPasses)
-            {
-                pass->Initialize();
-            }
+            IDrawPass::Initialize();
         }
 
         void Draw() override
         {
-            for (auto pass : m_SubPasses)
-            {
-                pass->Draw();
-            }
+            IDrawPass::Draw();
         }
     };
 }  // namespace GameEngine

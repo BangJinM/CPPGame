@@ -1,1 +1,1 @@
-include(Render/Platform/Windows/CMakeLists.txt)
+include(Render/Platform/OpenGL/CMakeLists.txt)

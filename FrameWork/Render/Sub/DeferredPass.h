@@ -14,11 +14,11 @@ namespace GameEngine
             // m_ShaderID = g_pShaderManager->AddShaderByPath("", "");
         }
 
-        virtual void BeginPass() override {}
+        virtual void BeginDraw() override {}
 
         virtual void Draw() override {}
 
-        virtual void EndPass() override {}
+        virtual void EndDraw() override {}
 
         int m_ShaderID;
     };

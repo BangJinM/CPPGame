@@ -22,6 +22,9 @@ namespace GameEngine
         // One cycle of the main loop
         virtual void Tick(float deltaTime);
 
+        static void MouseInput(GLFWwindow *window, int button, int action, int mods);
+        static void KeyInput(GLFWwindow *window, int key, int scancode, int action, int mods);
+
     private:
         GLFWwindow *window;
         float _deltaTime;

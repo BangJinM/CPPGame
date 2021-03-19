@@ -11,25 +11,13 @@ namespace GameEngine
     class IDrawPass : public IPass
     {
     public:
-        void Initialize() override {}
+        virtual void Initialize() override;
 
-        void BeginPass() override
-        {
-            for (auto pass : m_SubPasses)
-            {
-                pass->BeginPass();
-            }
-        }
+        virtual void BeginDraw() override;
 
-        void Draw() override {}
+        virtual void Draw() override;
 
-        void EndPass() override
-        {
-            for (auto pass : m_SubPasses)
-            {
-                pass->EndPass();
-            }
-        }
+        virtual void EndDraw() override;
 
     protected:
         IDrawPass() = default;

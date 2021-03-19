@@ -26,6 +26,7 @@ namespace GameEngine
 
         GfxConfiguration GetGfxConfiguration() { return m_Config; }
 
+		void SetQuit(bool) { m_bQuit = true; }
     protected:
         virtual void OnDraw(){};
 

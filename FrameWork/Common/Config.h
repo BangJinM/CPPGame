@@ -170,13 +170,6 @@ namespace GameEngine
     };
     // #pragma pack(pop)
 
-    struct Frame
-    {
-        unsigned int fbo;
-        LightInfo lightInfo;
-        std::vector<RendererCammand> cammands;
-    };
-
     enum ShaderType
     {
         Vertex = 1 << 1,
