@@ -13,17 +13,17 @@ namespace GameEngine
 {
     SharedGameObject
 
-    GameObject::createGameObject()
+    GameObject::CreateGameObject()
     {
         auto obj = std::make_shared<GameObject>();
         obj->m_GameObject = obj;
 
-        obj->addComponent<Transform>(std::make_shared<Transform>());
+        obj->AddComponent<Transform>(std::make_shared<Transform>());
 
         return obj;
     }
 
-    void GameObject::addChild(SharedGameObject child)
+    void GameObject::AddChild(SharedGameObject child)
     {
         auto begin = m_children.find(child->GetID());
         if (begin != m_children.end())
@@ -34,7 +34,7 @@ namespace GameEngine
         m_children.insert(std::pair<int, SharedGameObject>(child->GetID(), child));
     }
 
-    SharedGameObject GameObject::getChildByName(std::string name)
+    SharedGameObject GameObject::GetChildByName(std::string name)
     {
         for (auto child = m_children.begin(); child != m_children.end(); child++)
         {
@@ -44,7 +44,7 @@ namespace GameEngine
             }
             else
             {
-                auto res = child->second->getChildByName(name);
+                auto res = child->second->GetChildByName(name);
                 if (res)
                     return res;
             }
@@ -52,7 +52,7 @@ namespace GameEngine
         return nullptr;
     }
 
-    SharedGameObject GameObject::getChildByID(int id)
+    SharedGameObject GameObject::GetChildByID(int id)
     {
         for (auto child = m_children.begin(); child != m_children.end(); child++)
         {
@@ -62,7 +62,7 @@ namespace GameEngine
             }
             else
             {
-                auto res = child->second->getChildByID(id);
+                auto res = child->second->GetChildByID(id);
                 if (res)
                     return res;
             }
@@ -71,7 +71,7 @@ namespace GameEngine
         return nullptr;
     }
 
-    void GameObject::deleteChild(SharedGameObject child)
+    void GameObject::DeleteChild(SharedGameObject child)
     {
         auto begin = m_children.find(child->GetID());
         if (begin != m_children.end())
@@ -144,7 +144,7 @@ namespace GameEngine
         Object::OnSerialize(root);
         SerializableHelper::Seserialize(root, "name", GetName());
         auto gameobjects = cJSON_AddArrayToObject(root, "Children");
-        for (auto child : getChildren())
+        for (auto child : GetChildren())
         {
             auto item = cJSON_CreateObject();
             child.second->OnSerialize(item);
@@ -159,16 +159,22 @@ namespace GameEngine
             cJSON_AddItemToArray(comps, item);
         }
     }
-    static SharedComponent ParserComp(cJSON* root)
+    SharedComponent GameObject::ParserComp(cJSON* root)
     {
         SharedComponent object = nullptr;
         auto type = cJSON_GetObjectItem(root, "type")->valueint;
         switch (type)
         {
         case ClassID(Transform):
-            object = std::make_shared<Transform>();
-            object->OnDeserialize(root);
+        {
+            SharePtr<Transform> trans = GetComponent<Transform>();
+
+            SharePtr<Transform> temp = std::make_shared<Transform>();
+            temp->OnDeserialize(root);
+            temp->SetParentPosition(trans->GetPosition());
+            object = temp;
             break;
+        }
         case ClassID(Camera):
             object = std::make_shared<Camera>();
             object->OnDeserialize(root);
@@ -208,16 +214,16 @@ namespace GameEngine
             auto compParam = cJSON_GetArrayItem(paramsNode, index);
             auto comp = ParserComp(compParam);
             if (comp)
-                addComponent(comp);
+                AddComponent(comp);
         }
 
         paramsNode = cJSON_GetObjectItem(root, "Children");
         for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
         {
             auto childParam = cJSON_GetArrayItem(paramsNode, index);
-            auto childNode = GameObject::createGameObject();
+            auto childNode = GameObject::CreateGameObject();
             childNode->OnDeserialize(childParam);
-            addChild(childNode);
+            AddChild(childNode);
         }
         Object::OnDeserialize(root);
     }
@@ -230,6 +236,25 @@ namespace GameEngine
     std::string GameObject::GetName()
     {
         return m_Name;
+    }
+
+    void GameObject::CalculateAABB()
+    {
+        auto mesh = GetComponent<MeshRenderer>();
+
+        if (mesh)
+        {
+            auto trans = GetComponent<Transform>();
+            // transform OOBB points to world space
+            auto model = trans->GetMatrix();
+            VecterFloat3 vTransformed[8];
+            for (int i = 0; i < 8; i++)
+            {
+                vTransformed[i] = model * VecterFloat4(mesh->GetMesh()->m_OOBB.m_pPoints[i], 1);
+            }
+            // set new AABB
+            m_AABB.Set(vTransformed, 8, sizeof(VecterFloat3));
+        }
     }
 
 }  // namespace GameEngine

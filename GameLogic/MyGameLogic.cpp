@@ -42,28 +42,28 @@ namespace GameEngine
                 g_pApp->SetQuit(true);
             else if (pEvent->key == 87 && pEvent->action == 2)
             {
-                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto trans = this->m_Scene->GetChildByName("cameraObject")->GetComponent<Transform>();
                 auto pos = trans->GetPosition();
                 pos.z += 0.02f;
                 trans->SetPosition(pos);
             }
             else if (pEvent->key == 83 && pEvent->action == 2)
             {
-                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto trans = this->m_Scene->GetChildByName("cameraObject")->GetComponent<Transform>();
                 auto pos = trans->GetPosition();
                 pos.z -= 0.02f;
                 trans->SetPosition(pos);
             }
             else if (pEvent->key == 65 && pEvent->action == 2)
             {
-                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto trans = this->m_Scene->GetChildByName("cameraObject")->GetComponent<Transform>();
                 auto pos = trans->GetPosition();
                 pos.x -= 0.02f;
                 trans->SetPosition(pos);
             }
             else if (pEvent->key == 68 && pEvent->action == 2)
             {
-                auto trans = this->m_Scene->GetRootGameObject()->getChildByName("cameraObject")->getComponent<Transform>();
+                auto trans = this->m_Scene->GetChildByName("cameraObject")->GetComponent<Transform>();
                 auto pos = trans->GetPosition();
                 pos.x += 0.02f;
                 trans->SetPosition(pos);
@@ -75,12 +75,12 @@ namespace GameEngine
     void MyGameLogic::Finalize() {}
     void MyGameLogic::Tick(float deltaTime)
     {
-        auto trans = m_Scene->GetRootGameObject()->getChildByName("dirLight")->getComponent<Transform>();
+        auto trans = m_Scene->GetChildByName("dirLight")->GetComponent<Transform>();
         rotation.x += (deltaTime * 100 / 10);
         rotation.y += (deltaTime * 125 / 10);
         rotation.z += (deltaTime * 150 / 10);
 
-        trans->SetRotation(rotation);
+        // trans->SetRotation(rotation);
     }
 
 }  // namespace GameEngine

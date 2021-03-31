@@ -18,11 +18,11 @@ namespace GameEngine
         }
     }
 
-    void IDrawPass::Draw()
+    void IDrawPass::Draw(SharedCamera camera)
     {
         for (auto pass : m_SubPasses)
         {
-            pass->Draw();
+            pass->Draw(camera);
         }
     }
 

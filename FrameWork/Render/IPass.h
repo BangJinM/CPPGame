@@ -1,5 +1,6 @@
 ﻿#pragma once
-
+#include "Config.h"
+#include "Camera.h"
 namespace GameEngine
 {
     class IPass
@@ -16,7 +17,7 @@ namespace GameEngine
         //////////////////////////////////////////
         // 渲染
         //////////////////////////////////////////
-        virtual void Draw() = 0;
+        virtual void Draw(SharedCamera) = 0;
         //////////////////////////////////////////
         // 结束渲染
         //////////////////////////////////////////

@@ -7,13 +7,15 @@
 #include "AssetLoader.h"
 #include "Camera.h"
 #include "GameObject.h"
+#include "GraphicsFunc.h"
+#include "IntersectionTests.h"
 #include "Light.h"
 #include "MeshRenderer.h"
 #include "Render/Draw/ForwardDrawPass.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Transform.h"
-#include "GraphicsFunc.h"
+#include "easylogging++.h"
 
 namespace GameEngine
 {
@@ -32,76 +34,42 @@ namespace GameEngine
 
     void GraphicsManager::Finalize() {}
 
-    void GraphicsManager::Clear() { m_RendererCommands.clear(); }
+    void GraphicsManager::Clear() {}
 
     void GraphicsManager::Draw(float deltaTime)
     {
         auto scene = g_pSceneManager->GetScene();
         CalculateLights();
         GraphicsFunc::SetLightInfo(m_LightInfos, m_Frame);
+
         for (auto camera : scene->m_Cameras)
         {
-            auto cameraTs = camera->GetParent()->getComponent<Transform>();
+            auto cameraTs = camera->GetParent()->GetComponent<Transform>();
+            cameraTs->SetPosition(cameraTs->GetPosition());
+            Frustum frustum = camera->CalculateFrustum(camera->GetNear(), camera->GetFar());
             ViewInfos viewInfos;
             memcpy(viewInfos.u_camera_pos, glm::value_ptr(cameraTs->GetPosition()), sizeof(float) * 3);
             memcpy(viewInfos.u_projection_matrix, glm::value_ptr(camera->GetProjectionMatrix()), sizeof(float) * 16);
             memcpy(viewInfos.u_view_matrix, glm::value_ptr(cameraTs->GetViewMatrix()), sizeof(float) * 16);
+            GraphicsFunc::SetViewInfos(viewInfos, m_Frame);
 
-			GraphicsFunc::SetViewInfos(viewInfos, m_Frame);
-            for (auto render : scene->m_Renderers)
+            std::vector<SharedGameObject> receivers;
+            for (auto child : scene->GetChildren())
             {
-                auto modelMat = render->GetParent()->getComponent<Transform>()->GetMatrix();
-                if (render->getClassID() == ClassID(MeshRenderer))
-                {
-                    auto meshRender = std::dynamic_pointer_cast<MeshRenderer>(render);
-                    auto materials = meshRender->getMaterials();
-                    auto mesh = meshRender->getMesh();
-                    int materialID = -1;
-                    for (size_t mi = 0; mi < mesh->m_MeshDatas.size(); mi++)
-                    {
-                        if (mi < materials.size())
-                            materialID = mi;
-
-                        ModelRenderConfig infos;
-                        memcpy(infos.modelInfos.modelMat4, glm::value_ptr(modelMat), sizeof(float) * 16);
-                        infos.mesh = mesh;
-                        infos.index = mi;
-                        if (materialID >= 0)
-                            AddRendererCommand(materials[materialID], infos);
-                        else
-                            AddRendererCommand(std::make_shared<Material>(), infos);
-                    }
-                }
+                child.second->CalculateAABB();
+                if (IntersectionTest(child.second->GetAABB(), frustum))
+                    receivers.push_back(child.second);
             }
+
             for (auto pass : m_IDrawPass)
             {
-                pass->Draw();
+                pass->Draw(camera);
             }
-            m_RendererCommands.clear();
         }
     }
 
     void GraphicsManager::Tick(float deltaTime)
     {
-    }
-
-    void GraphicsManager::AddRendererCommand(SharedMaterial material, ModelRenderConfig config)
-    {
-        auto find = m_RendererCommands.find(material->GetID());
-        if (find != m_RendererCommands.end())
-        {
-            find->second.modelConfigs.push_back(config);
-            return;
-        }
-        RendererCammand command;
-        command.material = material;
-        command.modelConfigs.push_back(config);
-        m_RendererCommands[material->GetID()] = command;
-    }
-
-    std::map<int, RendererCammand> GraphicsManager::GetRendererCommand()
-    {
-        return m_RendererCommands;
     }
 
     void GraphicsManager::CalculateLights()
@@ -116,9 +84,9 @@ namespace GameEngine
             auto light = *iter;
             m_LightInfos.lights[index].type = light->GetLightType();
 
-            auto transfrom = light->GetParent()->getComponent<Transform>();
+            auto transfrom = light->GetParent()->GetComponent<Transform>();
             auto pos = transfrom->GetPosition();
-            auto dir = transfrom->GetMatrix() * VecterFloat4(1, 0, 0, 0);
+            auto dir = -transfrom->GetForward();
 
             memcpy(m_LightInfos.lights[index].u_projection_matrix, glm::value_ptr(glm::ortho(-30.0f, 30.0f, -30.0f, 30.0f, 0.10f, 100.f)), sizeof(float) * 4 * 4);
             memcpy(m_LightInfos.lights[index].u_view_matrix, glm::value_ptr(transfrom->GetViewMatrix()), sizeof(float) * 4 * 4);

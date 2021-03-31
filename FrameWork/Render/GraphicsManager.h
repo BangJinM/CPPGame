@@ -27,16 +27,12 @@ namespace GameEngine
         virtual void Clear();
         virtual void Draw(float deltaTime);
 
-        void AddRendererCommand(SharedMaterial, ModelRenderConfig);
-        std::map<int, RendererCammand> GetRendererCommand();
-
         virtual void CalculateLights();
 
         LightInfo GetLightInfo();
 
         Frame& GetFrame(){return m_Frame;}
     protected:
-        std::map<int, RendererCammand> m_RendererCommands;
         std::list<std::shared_ptr<IDrawPass>> m_IDrawPass;
 
         LightInfo m_LightInfos;

@@ -28,12 +28,12 @@ namespace GameEngine
         m_ClassID = ClassID(Renderer);
     }
 
-    SharedMesh Renderer::getMesh()
+    SharedMesh Renderer::GetMesh()
     {
         return SharedMesh();
     }
 
-    std::vector<SharedMaterial> Renderer::getMaterials()
+    std::vector<SharedMaterial> Renderer::GetMaterials()
     {
         return m_Materials;
     }
@@ -41,18 +41,6 @@ namespace GameEngine
     void Renderer::AddMaterial(SharedMaterial material)
     {
         m_Materials.push_back(material);
-    }
-
-    void Renderer::Start()
-    {
-        if (m_Started)
-            return;
-        auto renderer = GetParent()->getComponent<Renderer>();
-        if (!renderer)
-            return;
-        auto scene = g_pSceneManager->GetScene();
-        scene->AddRenderer(std::dynamic_pointer_cast<Renderer>(renderer));
-        Component::Start();
     }
 
     void Renderer::OnSerialize(cJSON* root)

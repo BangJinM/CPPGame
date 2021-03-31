@@ -17,6 +17,9 @@ Scene/Texture.h
 Scene/Transform.h
 Scene/Cube.h
 Scene/AssetManager.h
+Scene/BoundingBox.h
+Scene/Frustum.h
+Scene/IntersectionTests.h
 )
 
 SET(FRAMEWORK_SCENE_SRC 
@@ -30,6 +33,7 @@ Scene/Transform.cpp
 Scene/Cube.cpp
 Scene/Component.cpp
 Scene/AssetManager.cpp
+Scene/BoundingBox.cpp
 )
 
 list(APPEND FRAMEWORK_HEADER ${FRAMEWORK_SCENE_HEADER})

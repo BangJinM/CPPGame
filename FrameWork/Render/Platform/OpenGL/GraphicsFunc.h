@@ -29,9 +29,9 @@ namespace GameEngine
 #pragma endregion
 
 #pragma region 阴影
-        static void BeginShadow(LightInfo info, int layerIndex, Frame& frame);
-        static void EndShadow(Frame& frame);
-        static int GetShadowArray(int count, Frame& frame);
+        static void BeginShadow(int layerIndex, unsigned int& shadow, unsigned int& shadowFBO);
+        static void EndShadow( unsigned int& shadowFBO);
+        static int GetShadowArray(unsigned int& shadow);
         static void DeleteShadowArrsy(Frame& frame);
 #pragma endregion
 

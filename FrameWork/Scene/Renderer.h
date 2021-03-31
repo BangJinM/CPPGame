@@ -17,10 +17,9 @@ namespace GameEngine
     public:
         void Prepare();
         Renderer();
-        SharedMesh getMesh();                          
-        std::vector<SharedMaterial> getMaterials();   
+        SharedMesh GetMesh();                          
+        std::vector<SharedMaterial> GetMaterials();   
         void AddMaterial(SharedMaterial material);    
-        virtual void Start();
 
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;

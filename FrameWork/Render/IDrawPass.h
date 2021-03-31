@@ -15,7 +15,7 @@ namespace GameEngine
 
         virtual void BeginDraw() override;
 
-        virtual void Draw() override;
+        virtual void Draw(SharedCamera) override;
 
         virtual void EndDraw() override;
 

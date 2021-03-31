@@ -36,7 +36,7 @@ namespace GameEngine
         textureIndex++;
     }
 
-    void GraphicsFunc::PrepareMaterial(SharedMaterial material, Frame& frame)
+    void GraphicsFunc::PrepareMaterial(SharedMaterial material, Frame &frame)
     {
         if (material->shaderID <= 0)
             material->shaderID = g_pShaderManager->AddShaderByPath(
@@ -136,7 +136,7 @@ namespace GameEngine
 
         auto scene = g_pSceneManager->GetScene();
         SharePtr<Camera> camera = *(scene->m_Cameras.begin());
-        auto cameraTs = camera->GetParent()->getComponent<Transform>();
+        auto cameraTs = camera->GetParent()->GetComponent<Transform>();
 
         auto view = glm::mat4(glm::mat3(cameraTs->GetMatrix()));
         shader->setMat4("u_view_matrix", view);
@@ -240,7 +240,7 @@ namespace GameEngine
 
         glBindBuffer(GL_UNIFORM_BUFFER, frame.m_uboModelInfo);
 
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(ViewInfos), &infos,
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(ModelInfos), &infos,
                      GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -296,15 +296,15 @@ namespace GameEngine
 #pragma endregion
 
 #pragma region 阴影
-    void GraphicsFunc::BeginShadow(LightInfo info, int layerIndex, Frame &frame)
+    void GraphicsFunc::BeginShadow(int layerIndex, unsigned int &shadow, unsigned int &shadowFBO)
     {
         const int32_t kShadowMapWidth = 1024;
         const int32_t kShadowMapHeight = 1024;
 
-        glGenFramebuffers(1, &frame.shadowFBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, frame.shadowFBO);
+        glGenFramebuffers(1, &shadowFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
         // glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, (GLuint)shadowMap, 0, layerIndex);
-        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, frame.shadowMap, 0);
+        glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadow, 0);
         // Always check that our framebuffer is ok
         auto status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (status != GL_FRAMEBUFFER_COMPLETE)
@@ -316,15 +316,21 @@ namespace GameEngine
         glClear(GL_DEPTH_BUFFER_BIT);
         glViewport(0, 0, kShadowMapWidth, kShadowMapHeight);
     }
-    void GraphicsFunc::EndShadow(Frame& frame)
+    void GraphicsFunc::EndShadow(unsigned int &shadowFBO)
     {
-        DeleteFrameBufferObject(frame);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDeleteFramebuffers(1, &shadowFBO);
+        shadowFBO = 0;
+        auto config = g_pApp->GetGfxConfiguration();
+        glViewport(0, 0, config.screenWidth, config.screenHeight);
     }
-    int GraphicsFunc::GetShadowArray(int count, Frame &frame)
+    int GraphicsFunc::GetShadowArray(unsigned int &shadow)
     {
-        if (frame.shadowMap > 0)
+        if (shadow > 0)
         {
-            DeleteShadowArrsy(frame);
+            glDeleteTextures(1, &shadow);
+            shadow = 0;
+
             // return shadowMap;
         }
         // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
@@ -333,8 +339,8 @@ namespace GameEngine
 
         const GLuint SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-        glGenTextures(1, &frame.shadowMap);
-        glBindTexture(GL_TEXTURE_2D, frame.shadowMap);
+        glGenTextures(1, &shadow);
+        glBindTexture(GL_TEXTURE_2D, shadow);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
                      SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -342,7 +348,7 @@ namespace GameEngine
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         // register the shadow map
-        return static_cast<intptr_t>(frame.shadowMap);
+        return static_cast<intptr_t>(shadow);
     }
     void GraphicsFunc::DeleteShadowArrsy(Frame &frame)
     {

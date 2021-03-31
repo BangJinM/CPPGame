@@ -1,7 +1,9 @@
-﻿#pragma once
+﻿
+#pragma once
 
 #include <vector>
 
+#include "BoundingBox.h"
 #include "Config.h"
 #include "Object.h"
 
@@ -80,11 +82,17 @@ namespace GameEngine
             m_MeshDatas.push_back(meshData);
         }
 
+        void SetBoundingBox(BoundingBox oobb)
+        {
+            m_OOBB = oobb;
+        }
+
     public:
         //////////////////////////////////
         // * 渲染数据
         //////////////////////////////////
         std::vector<MeshData> m_MeshDatas;
+        BoundingBox m_OOBB;
         bool isPrepare = false;
     };
 

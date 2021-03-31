@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "Config.h"
 #include "IBehaviour.h"
@@ -33,7 +34,6 @@ namespace GameEngine
 
         void AddGameObject(SharedGameObject gameobject);
         void AddGameObject(SharedGameObject gameobject, SharedGameObject parent);
-        SharedGameObject GetRootGameObject();
 
         std::string m_Name;
 
@@ -45,24 +45,19 @@ namespace GameEngine
         void RemoveLight(SharePtr<Light> light);
 		std::vector<SharePtr<Light>> GetLights();
 
-        void AddRenderer(SharePtr<Renderer> renderer);
-        void RemoveRenderer();
+        SharedGameObject GetChildByName(std::string name);
 
-        // SharePtr<CanvasRenderer> GetCanvasRenderer();
-        // void SetCanvasRenderer(SharePtr<CanvasRenderer> canvas);
-
-        SharedGameObject GetGObject(SharedGameObject parent, int sid);
-        std::vector<SharePtr<Renderer>> GetRenderer() { return m_Renderers; }
+        std::map<int, SharedGameObject> GetChildren();
 
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;
 
         SharedCube GetCube();
 
+        std::vector<SharedGameObject> m_GameObjects;
         std::vector<SharePtr<Camera>> m_Cameras;
         std::vector<SharePtr<Light>> m_Lights;
-        std::vector<SharePtr<Renderer>> m_Renderers;
-        // SharePtr<CanvasRenderer> m_Canvas;
+
         SharedGameObject m_Root;
 
     private:

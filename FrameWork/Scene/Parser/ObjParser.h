@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "BoundingBox.h"
 #include "Config.h"
 #include "GameObject.h"
 #include "IParser.h"
@@ -33,6 +34,7 @@ namespace GameEngine
         static SharedMesh parserMesh(std::vector<tinyobj::shape_t> shapes, std::vector<tinyobj::material_t> materials)
         {
             SharedMesh m_mesh;
+            BoundingBox boundingBox;
             for (auto &shape : shapes)
             {
                 if (!m_mesh)
@@ -89,8 +91,9 @@ namespace GameEngine
                         meshData.vertex.push_back(mesh.texcoords[k * 2 + 1]);
                     }
                 }
-
+                boundingBox.Set(mesh.positions.data(), vertexNum, sizeof(float) * 3);
                 meshData.indices = mesh.indices;
+                m_mesh->SetBoundingBox(boundingBox);
                 m_mesh->PushMeshData(meshData);
             }
             return m_mesh;

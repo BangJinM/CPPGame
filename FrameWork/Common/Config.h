@@ -36,6 +36,7 @@ namespace GameEngine
 #define SharedScene SharePtr<Scene>
 #define SharedComponent SharePtr<Component>
 #define SharedCube SharePtr<Cube>
+#define SharedCamera SharePtr<Camera>
 
     enum MeshValueType
     {

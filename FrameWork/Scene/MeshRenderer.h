@@ -11,7 +11,7 @@ namespace GameEngine
     {
     public:
         MeshRenderer();
-        SharedMesh getMesh() { return m_Mesh; }
+        SharedMesh GetMesh() { return m_Mesh; }
         void SetMesh(SharedMesh mesh) { m_Mesh = mesh; }
         virtual void OnSerialize(cJSON* root) override;
         virtual void OnDeserialize(cJSON* root) override;

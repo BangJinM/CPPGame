@@ -12,10 +12,12 @@ namespace GameEngine
     Transform::Transform()
     {
         m_ClassID = ClassID(Transform);
+        m_V3ParentPosition = VecterFloat3(0);
         m_Position = VecterFloat3(0, 0, 0);
         m_Scale = VecterFloat3(1, 1, 1);
         m_Rotation = VecterFloat3(0, 0, 0);
         m_Matrix = GlmMat4(1.0f);
+        m_Front = VecterFloat3(0, 0, -1);
         SetMatrix(m_Position, m_Scale, m_Rotation);
     }
 
@@ -37,14 +39,17 @@ namespace GameEngine
     void Transform::SetMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation)
     {
         m_Matrix = GlmMat4(1.0f);
-        m_Matrix = glm::translate(m_Matrix, position);
-        m_Matrix = glm::scale(m_Matrix, scale);
-        m_Matrix = m_Matrix * glm::mat4_cast(glm::qua<float>(glm::radians(rotation)));
-		m_InverseMatrix = glm::inverse(m_Matrix);
+        MatrixCompose(m_Matrix, position, scale, rotation);
+        m_InverseMatrix = glm::inverse(m_Matrix);
+
+        m_Right = glm::normalize(m_Matrix * VecterFloat4(1, 0, 0, 0));
+        m_Up = glm::normalize(m_Matrix * VecterFloat4(0, 1, 0, 0));
+        m_Front = glm::normalize(m_Matrix * VecterFloat4(0, 0, -1, 0));
     }
-    void Transform::SetMatrix(glm::mat4 mat4)
+    void Transform::SetParentPosition(VecterFloat3 pos)
     {
-        m_Matrix = glm::mat4(mat4);
+        m_V3ParentPosition = std::move(pos);
+        SetMatrix(m_Position, m_Scale, m_Rotation);
     }
     void Transform::OnSerialize(cJSON *root)
     {

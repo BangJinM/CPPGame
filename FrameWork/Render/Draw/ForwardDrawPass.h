@@ -19,9 +19,9 @@ namespace GameEngine
             IDrawPass::Initialize();
         }
 
-        void Draw() override
+        void Draw(SharedCamera camera) override
         {
-            IDrawPass::Draw();
+            IDrawPass::Draw(camera);
         }
     };
 }  // namespace GameEngine

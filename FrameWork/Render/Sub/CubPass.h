@@ -6,11 +6,11 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "ShaderManager.h"
+#include "GraphicsFunc.h"
 
 namespace GameEngine
 {
     extern ShaderManager *g_pShaderManager;
-    extern GraphicsManager *g_pGraphicsManager;
     extern SceneManager *g_pSceneManager;
     
     class CubPass : public ISubPass
@@ -25,13 +25,13 @@ namespace GameEngine
         {
         }
 
-        virtual void Draw() override
+        virtual void Draw(SharedCamera camera) override
         {
-            // auto scene = g_pSceneManager->GetScene();
-            // auto cube = scene->GetCube();
-            // if (cube && cube->GetTextureID() <= 0)
-            //     g_pGraphicsManager->BindCubeTexture(cube);
-            // g_pGraphicsManager->DrawCubeTexture(cube, m_ShaderID);
+            auto scene = g_pSceneManager->GetScene();
+            auto cube = scene->GetCube();
+            if (cube && cube->GetTextureID() <= 0)
+                GraphicsFunc::BindCubeTexture(cube);
+            GraphicsFunc::DrawCubeTexture(cube, m_ShaderID);
         }
 
         virtual void EndDraw() override

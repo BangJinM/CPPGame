@@ -29,19 +29,29 @@ namespace GameEngine
         void SetMatrix(VecterFloat3 position, VecterFloat3 scale, VecterFloat3 rotation);
         GlmMat4 GetMatrix() { return m_Matrix; }
 
-		GlmMat4 GetViewMatrix() { return m_InverseMatrix; }
+        GlmMat4 GetViewMatrix() { return m_InverseMatrix; }
 
-        void SetMatrix(glm::mat4 mat4);
+        void SetParentPosition(VecterFloat3 pos);
 
         virtual void OnSerialize(cJSON *root) override;
         virtual void OnDeserialize(cJSON *root) override;
 
+        VecterFloat3 GetForward() { return m_Front; }
+        VecterFloat3 GetUp() { return m_Up; }
+        VecterFloat3 GetRight() { return m_Right; }
+
     private:
         GlmMat4 m_Matrix;
-		GlmMat4 m_InverseMatrix;
+        GlmMat4 m_InverseMatrix;
+
+        VecterFloat3 m_V3ParentPosition;
 
         VecterFloat3 m_Position;
         VecterFloat3 m_Scale;
         VecterFloat3 m_Rotation;
+
+        VecterFloat3 m_Front;
+        VecterFloat3 m_Right;
+        VecterFloat3 m_Up;
     };
 }  // namespace GameEngine

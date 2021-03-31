@@ -50,7 +50,7 @@ namespace GameEngine
     void Camera::Start()
     {
         Component::Start();
-        auto camera = GetParent()->getComponent<Camera>();
+        auto camera = GetParent()->GetComponent<Camera>();
         if (!camera)
             return;
         auto scene = g_pSceneManager->GetScene();
@@ -60,6 +60,58 @@ namespace GameEngine
     glm::mat4 Camera::GetProjectionMatrixOrthographic()
     {
         return m_ProjectionMatrix4_Orthographic;
+    }
+
+    Frustum Camera::CalculateFrustum(float fNear, float fFar)
+    {
+        auto trans = GetParent()->GetComponent<Transform>();
+        glm::vec3 center = trans->GetPosition();
+        glm::vec3 view_dir = trans->GetForward();
+
+        glm::vec3 rightT = trans->GetRight();
+        glm::vec3 upT = trans->GetUp();
+
+        glm::vec3 vFarPlaneCenter = center + view_dir * fFar;
+        glm::vec3 vNearPlaneCenter = center + view_dir * fNear;
+
+        float ratio = m_ScreenWidth / m_ScreenHeight;
+        float fov = m_FieldofView / 180 * glm::pi<float>();
+
+        float fNearPlaneHalfHeight = tan(fov / 2.0f) * fNear;
+        float fNearPlaneHalfWidth = fNearPlaneHalfHeight * ratio;
+
+        float fFarPlaneHalfHeight = tan(fov / 2.0f) * fFar;
+        float fFarPlaneHalfWidth = fFarPlaneHalfHeight * ratio;
+
+        Frustum frustum;
+
+        frustum.m_pPoints[0] = vNearPlaneCenter - rightT * fNearPlaneHalfHeight - upT * fNearPlaneHalfWidth;
+        frustum.m_pPoints[1] = vNearPlaneCenter + rightT * fNearPlaneHalfHeight - upT * fNearPlaneHalfWidth;
+        frustum.m_pPoints[2] = vNearPlaneCenter + rightT * fNearPlaneHalfHeight + upT * fNearPlaneHalfWidth;
+        frustum.m_pPoints[3] = vNearPlaneCenter - rightT * fNearPlaneHalfHeight + upT * fNearPlaneHalfWidth;
+
+        frustum.m_pPoints[4] = vFarPlaneCenter - rightT * fFarPlaneHalfHeight - upT * fFarPlaneHalfWidth;
+        frustum.m_pPoints[5] = vFarPlaneCenter + rightT * fFarPlaneHalfHeight - upT * fFarPlaneHalfWidth;
+        frustum.m_pPoints[6] = vFarPlaneCenter + rightT * fFarPlaneHalfHeight + upT * fFarPlaneHalfWidth;
+        frustum.m_pPoints[7] = vFarPlaneCenter - rightT * fFarPlaneHalfHeight + upT * fFarPlaneHalfWidth;
+
+        frustum.CalculateAABB();
+        return frustum;
+    }
+
+    void Camera::CalculateSplitPositions(float *pDistances, int numSplits)
+    {
+        float lambda = 0.75;
+        float ratio = m_Far / m_Near;
+        pDistances[0] = m_Near;
+
+        for (int i = 1; i < numSplits; i++)
+        {
+            float si = i / (float)numSplits;
+            float t_near = lambda * (m_Near * powf(ratio, si)) + (1 - lambda) * (m_Near + (m_Far - m_Near) * si);
+            pDistances[i] = t_near;
+        }
+        pDistances[numSplits] = m_Far;
     }
 
     void Camera::OnSerialize(cJSON *root)

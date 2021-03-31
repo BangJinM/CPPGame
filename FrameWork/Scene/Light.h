@@ -5,8 +5,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <memory>
 
+#include "Camera.h"
 #include "Component.h"
 #include "Config.h"
+#include "Frustum.h"
 #include "GameObject.h"
 #include "MyMath.h"
 #include "Scene.h"
@@ -29,7 +31,7 @@ namespace GameEngine
         virtual void Start() override
         {
             Component::Start();
-            auto light = GetParent()->getComponent<Light>();
+            auto light = GetParent()->GetComponent<Light>();
             if (!light)
                 return;
             auto scene = g_pSceneManager->GetScene();
@@ -65,6 +67,75 @@ namespace GameEngine
         int GetLightType() { return m_LightType; }
 
         ColorRGBA GetColor() { return m_Color; }
+
+        std::map<int, RendererCammand> FindCasters(std::map<int, RendererCammand> origins, Frustum frustum)
+        {
+        }
+
+        // helper function for computing AABB in clip space
+        inline BoundingBox CreateClipSpaceAABB(const BoundingBox& bb, const glm::mat4& mViewProj)
+        {
+            glm::vec3 vTransformed[8];
+            for (int i = 0; i < 8; i++)
+            {
+                // transform to projection space
+                glm::vec4 temp = mViewProj * glm::vec4(bb.m_pPoints[i], 1);
+                // compute clip-space coordinates
+
+                temp.x /= temp.w;
+                temp.y /= temp.w;
+                temp.z /= temp.w;
+                vTransformed[i] = temp;
+            }
+
+            // find boundaries in light�s clip space
+            return BoundingBox(vTransformed, 8, sizeof(glm::vec3));
+        }
+
+        // crops the light volume on given frustum (scene-independent projection)
+        glm::mat4 CalculateCropMatrix(const Frustum& frustum)
+        {
+            glm::mat4 m_mProj = glm::ortho(0.0f, 640.0f, 640.0f, 0.0f, 0.0f, 500.0f);
+            glm::mat4 m_mView = GetParent()->GetComponent<Transform>()->GetViewMatrix();
+            glm::mat4 mViewProj = m_mProj* m_mView;
+
+            BoundingBox cropBB;
+
+            // find boundaries in light�s clip space
+            cropBB = CreateClipSpaceAABB(frustum.m_AABB, mViewProj);
+
+            // use default near plane
+            cropBB.m_vMin.z = 0.0f;
+
+            // finally, create matrix
+            return BuildCropMatrix(cropBB.m_vMin, cropBB.m_vMax) * m_mProj;
+        }
+
+        glm::mat4 BuildCropMatrix(const glm::vec3& vMin, const glm::vec3& vMax)
+        {
+            float fScaleX, fScaleY, fScaleZ;
+            float fOffsetX, fOffsetY, fOffsetZ;
+
+            fScaleX = 2.0f / (vMax.x - vMin.x);
+            fScaleY = 2.0f / (vMax.y - vMin.y);
+
+            fOffsetX = -0.5f * (vMax.x + vMin.x) * fScaleX;
+            fOffsetY = -0.5f * (vMax.y + vMin.y) * fScaleY;
+
+            fScaleZ = 1.0f / (vMax.z - vMin.z);
+            fOffsetZ = -vMin.z * fScaleZ;
+
+            glm::mat4 m(1);
+            m[0][0] = fScaleX;
+            m[1][1] = fScaleY;
+            m[2][2] = fScaleZ;
+
+            m[3][0] = fOffsetX;
+            m[3][1] = fOffsetY;
+            m[3][2] = fOffsetZ;
+
+            return m;
+        }
 
     protected:
         /////////////////////////////////
@@ -170,7 +241,7 @@ namespace GameEngine
         float GetLinear() { return linear; }
         float GetQuadratic() { return quadratic; }
 
-	private:
+    private:
         /////////////////////////////////
         // Kc 常数项
         /////////////////////////////////

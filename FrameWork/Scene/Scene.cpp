@@ -13,35 +13,32 @@ namespace GameEngine
 {
     Scene::Scene()
     {
-        m_Root = GameObject::createGameObject();
+        m_Root = GameObject::CreateGameObject();
         m_Root->SetName("root");
 
-        // auto canvas = GameObject::createGameObject();
+        // auto canvas = GameObject::CreateGameObject();
         // canvas->SetName("Canvas");
-        // m_Root->addChild(canvas);
-        // canvas->addComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
+        // m_Root->AddChild(canvas);
+        // canvas->AddComponent<CanvasRenderer>(std::make_shared<CanvasRenderer>());
     }
 
     void Scene::AddGameObject(SharedGameObject gameobject)
     {
-        GetRootGameObject()->addChild(gameobject);
+        m_Root->AddChild(gameobject);
     }
 
     void Scene::AddGameObject(SharedGameObject gameobject, SharedGameObject parent)
     {
     }
 
-    SharedGameObject Scene::GetRootGameObject() { return m_Root; }
-
     Scene::~Scene()
     {
         m_Cameras.clear();
-        m_Renderers.clear();
     }
 
     void Scene::Start()
     {
-        auto children = m_Root->getChildren();
+        auto children = m_Root->GetChildren();
         for (auto i = children.begin(); i != children.end(); i++)
         {
             i->second->Start();
@@ -52,7 +49,7 @@ namespace GameEngine
 
     void Scene::Update()
     {
-        auto children = m_Root->getChildren();
+        auto children = m_Root->GetChildren();
         for (auto i = children.begin(); i != children.end(); i++)
         {
             i->second->Update();
@@ -61,7 +58,7 @@ namespace GameEngine
 
     void Scene::Destory()
     {
-        auto children = m_Root->getChildren();
+        auto children = m_Root->GetChildren();
         for (auto i = children.begin(); i != children.end(); i++)
         {
             i->second->Destory();
@@ -82,11 +79,10 @@ namespace GameEngine
         m_Cameras.push_back(camera);
     }
 
-	std::vector<SharePtr<Camera>> Scene::GetCamera()
-	{
-		return m_Cameras;
-	}
-
+    std::vector<SharePtr<Camera>> Scene::GetCamera()
+    {
+        return m_Cameras;
+    }
 
     void Scene::AddLight(SharePtr<Light> light)
     {
@@ -102,50 +98,34 @@ namespace GameEngine
         }
     }
 
-	std::vector<SharePtr<Light>> Scene::GetLights()
-	{
-		return m_Lights;
-	}
-
-    void Scene::AddRenderer(SharePtr<Renderer> reenderer)
+    std::vector<SharePtr<Light>> Scene::GetLights()
     {
-        m_Renderers.push_back(reenderer);
+        return m_Lights;
     }
 
-    void Scene::RemoveRenderer()
+    SharedGameObject Scene::GetChildByName(std::string name)
     {
-    }
-
-    // SharePtr<CanvasRenderer> Scene::GetCanvasRenderer()
-    // {
-    //     return m_Canvas;
-    // }
-
-    // void Scene::SetCanvasRenderer(SharePtr<CanvasRenderer> canvas)
-    // {
-    //     m_Canvas = canvas;
-    // }
-
-    SharedGameObject Scene::GetGObject(SharedGameObject parent, int sid)
-    {
-        std::map<int, SharedGameObject> children;
-        if (parent)
-            children = parent->getChildren();
-        else
-            children = GetRootGameObject()->getChildren();
+        std::map<int, SharedGameObject> children = m_Root->GetChildren();
         SharedGameObject result;
-        for (auto i = children.begin(); i != children.end(); i++)
+        for (auto kv : children)
         {
-            auto child = i->second;
-            if (child->GetID() == sid)
-                result = child;
-            if (result)
-                return result;
-            auto result = GetGObject(child, sid);
-            if (result)
-                return result;
+            if (kv.second->GetName() == name)
+            {
+                return kv.second;
+            }
+            else
+            {
+                auto res = kv.second->GetChildByName(name);
+                if (res)
+                    return res;
+            }
         }
         return SharedGameObject();
+    }
+
+    std::map<int, SharedGameObject> Scene::GetChildren()
+    {
+        return m_Root->GetChildren();
     }
 
     void Scene::OnSerialize(cJSON* root)
@@ -156,14 +136,14 @@ namespace GameEngine
             auto cjconCube = cJSON_AddObjectToObject(root, "Cube");
             cube->OnSerialize(cjconCube);
         }
-        for (auto child : GetRootGameObject()->getChildren())
+        for (auto child : m_Root->GetChildren())
         {
             auto item = cJSON_CreateObject();
             child.second->OnSerialize(item);
             cJSON_AddItemToArray(gameobjects, item);
         }
     }
-    
+
     void Scene::OnDeserialize(cJSON* root)
     {
         auto paramsNode = cJSON_GetObjectItem(root, "Cube");
@@ -176,7 +156,7 @@ namespace GameEngine
         for (auto index = 0; index < cJSON_GetArraySize(paramsNode); ++index)
         {
             auto childParam = cJSON_GetArrayItem(paramsNode, index);
-            auto childNode = GameObject::createGameObject();
+            auto childNode = GameObject::CreateGameObject();
             childNode->OnDeserialize(childParam);
             AddGameObject(childNode);
         }

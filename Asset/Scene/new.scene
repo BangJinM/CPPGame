@@ -12,11 +12,11 @@
 					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
-			"name":	"UI111",
+			"name":	"1",
 			"Children":	[],
 			"Components":	[{
 					"type":	5,
-					"position":	[1, 0, 0],
+					"position":	[-1, 0, 0],
 					"scale":	[1, 1, 1]
 				}, {
 					"type":	2,
@@ -24,7 +24,211 @@
 					"m_Materials":	["Materials/walllight.gemtl"]
 				}]
 		}, {
-			"name":	"UI1111",
+			"name":	"2",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-2, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"3",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-3, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"4",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-4, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"5",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-5, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"6",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-6, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"7",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-7, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"8",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[-8, 0, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"9",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[1, 1, 0],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"00",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -1],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"11",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -2],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"22",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -3],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"33",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -4],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"44",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -5],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"55",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -6],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"66",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -7],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"77",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -8],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"88",
+			"Children":	[],
+			"Components":	[{
+					"type":	5,
+					"position":	[0, 0, -9],
+					"scale":	[1, 1, 1]
+				}, {
+					"type":	2,
+					"m_Mesh":	"Scene/mayaCube.OBJ",
+					"m_Materials":	["Materials/walllight.gemtl"]
+				}]
+		},{
+			"name":	"99",
 			"Children":	[{
 					"name":	"UI21",
 					"Children":	[],

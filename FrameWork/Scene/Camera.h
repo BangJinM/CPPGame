@@ -6,6 +6,7 @@
 
 #include "Component.h"
 #include "Config.h"
+#include "Frustum.h"
 #include "ISerializable.h"
 #include "Renderer.h"
 #include "Transform.h"
@@ -22,8 +23,8 @@ namespace GameEngine
 
     public:
         Camera(glm::float32 width, glm::float32 height, glm::float32 m_Near = 0.1,
-               glm::float32 m_Far = 1000, glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
-        Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 1000,
+               glm::float32 m_Far = 20, glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
+        Camera(glm::float32 m_Near = 0.1, glm::float32 m_Far = 20,
                glm::float32 fieldofView = 45, ClassIDType classID = ClassID(Camera));
 
         glm::mat4 GetProjectionMatrix();
@@ -33,9 +34,18 @@ namespace GameEngine
 
         glm::mat4 GetProjectionMatrixOrthographic();
 
+        //给定近远平面,构建视椎体
+        Frustum CalculateFrustum(float fNear, float fFar);
+        void CalculateSplitPositions(float *pDistances, int numSplits);
 
         virtual void OnSerialize(cJSON *root);
         virtual void OnDeserialize(cJSON *root);
+
+        glm::float32 GetFieldofView() { return m_FieldofView; }
+        glm::float32 GetWidth() { return m_ScreenWidth; }
+        glm::float32 GetHeigth() { return m_ScreenHeight; }
+        glm::float32 GetNear() { return m_Near; }
+        glm::float32 GetFar() { return m_Far; }
 
     private:
         //			y
