@@ -66,14 +66,14 @@ namespace GameEngine
 
         struct GPUInput final
         {
-            uint binding = 0;
+            // void glVertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride,const GLvoid * pointer);
+            //https://baike.baidu.com/item/glVertexAttribPointer/6483823?fr=aladdin
             std::string name;
-            Type type = Type::UNKNOWN;
-            uint stride = 0;
-            uint count = 0;
+            GLint index = -1;
             uint size = 0;
             GLenum glType = 0;
-            GLint glLoc = -1;
+            GLboolean isNormalized;
+            uint stride = 0;
         };
         typedef std::vector<GPUInput> GPUInputList;
 
@@ -93,11 +93,10 @@ namespace GameEngine
 
         struct GPUInputAssembler
         {
-            VertexAttributeList attributes;
+            GLuint glVAO;
+            AttributeList attributes;
             GPUBuffer *gpuVertexBuffer = nullptr;
             GPUBuffer *gpuIndexBuffer = nullptr;
-            uint size;
-            GLuint glVAO;
         };
     }
 }

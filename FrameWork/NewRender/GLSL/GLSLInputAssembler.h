@@ -19,8 +19,8 @@ namespace GameEngine
             GPUInputAssembler *GetGPUInputAssembler() { return p_GPUInputAssembler; }
 
         private:
-            GPUInputAssembler *p_GPUInputAssembler;
             InputAssemblerInfo inputAssemblerInfo;
+            GPUInputAssembler *p_GPUInputAssembler;
         };
     }
 }

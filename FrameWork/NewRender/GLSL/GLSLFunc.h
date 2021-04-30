@@ -28,6 +28,7 @@ namespace GameEngine
 
         void GLSLFuncCreateInputAssembler(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler);
         void GLSLFuncDestroyInputAssembler(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler);
-        void GLSLFuncBindVAO(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler, GPUShader* shader);
+        void GLSLFuncBindVAO(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler, GPUShader *shader);
+        void GLSLFuncDraw(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler);
     }
 }

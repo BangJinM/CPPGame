@@ -1,5 +1,6 @@
 ﻿#include "Renderer.h"
 
+#include "AssetLoader.h"
 #include "AssetManager.h"
 #include "GameObject.h"
 #include "Scene.h"
@@ -14,6 +15,7 @@ namespace GameEngine
 {
     extern SceneManager *g_pSceneManager;
     extern AssetManager *g_pAssetManager;
+    extern AssetLoader *g_pAssetLoader;
 
     void Renderer::Prepare()
     {
@@ -26,7 +28,6 @@ namespace GameEngine
 
     Renderer::~Renderer()
     {
-
     }
 
     SharedMesh Renderer::GetMesh()
@@ -68,19 +69,27 @@ namespace GameEngine
             inputInfo.indexBuffer = bufferIndex;
             inputInfo.vertexBuffers = bufferVertex;
 
-            ger::VertexAttributeList attrs;
+            ger::AttributeList attrs;
             for (auto attr : m_Mesh->m_MeshDatas[iMesh].attribs)
             {
-                ger::VertexAttribute vAttr;
-                vAttr.attrSizeBytes = attr.attribSizeBytes;
+                ger::Attribute vAttr;
+                vAttr.stride = attr.attribSizeBytes;
                 vAttr.type = ger::Type::FLOAT4;
-                vAttr.location = attr.vertexAttrib;
                 vAttr.size = attr.size;
                 attrs.push_back(vAttr);
             }
             inputInfo.attributes = attrs;
             ger::InputAssembler *input = device->CreateInputAssembler(inputInfo);
             inputs.push_back(input);
+
+            ger::ShaderInfo shaderInfo;
+            ger::ShaderStage stage;
+            stage.type = ger::ShaderStageFlagBit::VERTEX;
+            // std::string vertStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(vspath.c_str());
+            // std::string fragStr = g_pAssetLoader->SyncOpenAndReadTextFileToString(fspath.c_str());
+            stage.type = ger::ShaderStageFlagBit::FRAGMENT;
+
+            // device->CreateShader();
         }
 
         Object::OnDeserialize(root);

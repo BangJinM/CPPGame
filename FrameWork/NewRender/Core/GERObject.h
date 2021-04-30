@@ -137,6 +137,10 @@ namespace GameEngine
 
         struct Attribute
         {
+            Type type = Type::UNKNOWN; //类型
+            std::string name;          //名字
+            uint stride;               //步长 = size * sizeof(Type)
+            uint size;                 //元素数量
         };
         typedef std::vector<Attribute> AttributeList;
 
@@ -187,23 +191,13 @@ namespace GameEngine
         };
 #pragma endregion
 
-        struct VertexAttribute
-        {
-			std::string name;
-            Type type;
-            uint size;
-            uint location;
-            uint attrSizeBytes;
-        };
-
         class GERBuffer;
 
-        typedef std::vector<VertexAttribute> VertexAttributeList;
         typedef std::vector<GERBuffer *> GERBufferList;
 
         struct InputAssemblerInfo
         {
-            VertexAttributeList attributes;
+            AttributeList attributes;
             GERBuffer *vertexBuffers;
             GERBuffer *indexBuffer = nullptr;
         };

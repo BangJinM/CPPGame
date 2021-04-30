@@ -16,7 +16,7 @@
 #include "ShaderManager.h"
 #include "easylogging++.h"
 #include "glm/glm.hpp"
-#include "../NewRender/Core/GERDevice.h"
+
 namespace GameEngine
 {
     extern AssetManager *g_pAssetManager;
@@ -163,13 +163,10 @@ namespace GameEngine
 
     void GraphicsFunc::PrepareMesh(ModelRenderConfig config)
     {
-
         auto mesh = config.mesh;
         auto index = config.index;
         if (!mesh)
             return;
-        ger::Device *device = ger::Device::getInstance();
-        //device->p_GERCommandBuffer->
     }
 
 #pragma region 设置Uniform

@@ -6,7 +6,7 @@ namespace GameEngine
     {
         class Device;
         class GERBuffer;
-		class Shader;
+        class Shader;
         class InputAssembler;
         class GERCommandBuffer
         {
@@ -17,7 +17,8 @@ namespace GameEngine
             virtual void Initialize() = 0;
             virtual void Destroy() = 0;
 
-            virtual void BindVAO(Shader* shader, InputAssembler *ia) = 0;
+            virtual void BindVAO(Shader *shader, InputAssembler *ia) = 0;
+            virtual void Draw(InputAssembler *ia, Shader *shader) = 0;
             virtual void UpdateBuffer(GERBuffer *buffer, const void *data) = 0;
 
         protected:

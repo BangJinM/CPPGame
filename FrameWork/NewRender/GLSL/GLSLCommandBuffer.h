@@ -15,7 +15,8 @@ namespace GameEngine
             virtual void Initialize() override;
             virtual void Destroy() override;
 
-			virtual void BindVAO(Shader* shader, InputAssembler *ia) override;
+            virtual void BindVAO(Shader *shader, InputAssembler *ia) override;
+            virtual void Draw(InputAssembler *ia, Shader *shader) override;
             virtual void UpdateBuffer(GERBuffer *buffer, const void *data) override;
         };
 

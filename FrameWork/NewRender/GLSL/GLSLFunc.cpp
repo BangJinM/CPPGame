@@ -4,8 +4,8 @@
 #include <string>
 
 #include "GLSLDevice.h"
+#include "GLSLObject.h"
 #include "GLSLShader.h"
-#include "GPUObject.h"
 
 namespace GameEngine
 {
@@ -342,14 +342,11 @@ namespace GameEngine
                 memset(glName, 0, sizeof(glName));
                 glGetActiveAttrib(gpuShader->glProgram, i, attrMaxLength, &glLength, &glSize, &glType, glName);
 
-                gpuInput.glLoc = glGetAttribLocation(gpuShader->glProgram, glName);
-                gpuInput.binding = gpuInput.glLoc;
                 gpuInput.name = glName;
-                gpuInput.type = MapType(glType);
-                gpuInput.stride = GLTypeSize(glType);
-                gpuInput.count = glSize;
-                gpuInput.size = gpuInput.stride * gpuInput.count;
+                gpuInput.index = glGetAttribLocation(gpuShader->glProgram, glName);
                 gpuInput.glType = glType;
+                gpuInput.stride = glSize * GLTypeSize(glType);
+                gpuInput.size = glSize;
             }
         }
 
@@ -527,29 +524,40 @@ namespace GameEngine
 
         void GLSLFuncDestroyInputAssembler(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler)
         {
-            glDeleteVertexArrays(1, &gpuInputAssembler->glVAO);
+            if (gpuInputAssembler->glVAO)
+                glDeleteVertexArrays(1, &gpuInputAssembler->glVAO);
         }
 
         void GLSLFuncBindVAO(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler, GPUShader *shader)
         {
             glGenVertexArrays(1, &gpuInputAssembler->glVAO);
-            for (size_t i = 0; i < shader->glInputs.size(); i++)
+            glBindBuffer(GL_ARRAY_BUFFER, gpuInputAssembler->gpuIndexBuffer->glBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gpuInputAssembler->gpuVertexBuffer->glBuffer);
+            int offset = 0;
+            for (size_t iaIndex = 0; iaIndex < gpuInputAssembler->attributes.size(); iaIndex++)
             {
-                auto input = shader->glInputs[i];
-                for (size_t iaIndex = 0; iaIndex < gpuInputAssembler->attributes.size(); iaIndex++)
+                Attribute iaInput = gpuInputAssembler->attributes[iaIndex];
+                for (size_t i = 0; i < shader->glInputs.size(); i++)
                 {
-					VertexAttribute iaInput = gpuInputAssembler->attributes[iaIndex];
+                    auto input = shader->glInputs[i];
                     if (input.name == iaInput.name)
                     {
-                        glBindBuffer(GL_ARRAY_BUFFER, gpuInputAssembler->gpuIndexBuffer->glBuffer);
 
-                        GLint glLoc = input.glLoc;
-                        // GL_CHECK(glEnableVertexAttribArray(glLoc));
-                        // GL_CHECK(glVertexAttribPointer(glLoc, input.count, gpuAttribute.glType, gpuAttribute.isNormalized, gpuAttribute.stride, BUFFER_OFFSET(attribOffset)));
+                        glEnableVertexAttribArray(input.index);
+                        glVertexAttribPointer(input.index, input.size, input.glType, GL_FALSE, input.stride, (void *)offset);
+                        offset += input.stride;
                     }
                 }
             }
         }
-
+        void GLSLFuncDraw(GLSLDevice *device, GPUInputAssembler *gpuInputAssembler)
+        {
+            if (gpuInputAssembler->glVAO)
+            {
+                glBindVertexArray(gpuInputAssembler->glVAO);
+                glDrawElements(GL_TRIANGLES, gpuInputAssembler->gpuIndexBuffer->size, GL_UNSIGNED_INT, 0);
+                glBindVertexArray(0);
+            }
+        }
     }
 }

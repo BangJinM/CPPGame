@@ -2,7 +2,7 @@
 
 #include "GLSLBuffer.h"
 #include "GLSLFunc.h"
-#include "GPUObject.h"
+#include "GLSLObject.h"
 
 namespace GameEngine
 {
@@ -17,21 +17,21 @@ namespace GameEngine
             inputAssemblerInfo.attributes = info.attributes;
             inputAssemblerInfo.vertexBuffers = info.vertexBuffers;
             inputAssemblerInfo.indexBuffer = info.indexBuffer;
-            p_GPUInputAssembler = new GPUInputAssembler();
 
+            p_GPUInputAssembler = new GPUInputAssembler();
             p_GPUInputAssembler->attributes = info.attributes;
             p_GPUInputAssembler->gpuIndexBuffer = ((GLSLBuffer *)info.indexBuffer)->GetGPUBuffer();
-			p_GPUInputAssembler->gpuVertexBuffer = ((GLSLBuffer *)info.vertexBuffers)->GetGPUBuffer();
+            p_GPUInputAssembler->gpuVertexBuffer = ((GLSLBuffer *)info.vertexBuffers)->GetGPUBuffer();
 
-            GLSLFuncCreateInputAssembler((GLSLDevice*)p_Device, p_GPUInputAssembler);
-			return true;
+            GLSLFuncCreateInputAssembler((GLSLDevice *)p_Device, p_GPUInputAssembler);
+            return true;
         }
 
         void GLSLInputAssembler::Destroy()
         {
             if (p_GPUInputAssembler)
             {
-                GLSLFuncDestroyInputAssembler((GLSLDevice*)p_Device, p_GPUInputAssembler);
+                GLSLFuncDestroyInputAssembler((GLSLDevice *)p_Device, p_GPUInputAssembler);
                 delete p_GPUInputAssembler;
                 p_GPUInputAssembler = nullptr;
             }

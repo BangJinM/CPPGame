@@ -1,6 +1,6 @@
 #include "GLSLTexture.h"
 #include "GLSLFunc.h"
-#include "GPUObject.h"
+#include "GLSLObject.h"
 namespace GameEngine
 {
     namespace ger
