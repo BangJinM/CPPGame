@@ -1,31 +1,44 @@
 #pragma once
 
 #include <list>
+#include <string>
 #include <vector>
 
 #include "Component.h"
 #include "Config.h"
 #include "MyMath.h"
 
+namespace GameEngine::ger
+{
+    class InputAssembler;
+    class GERBuffer;
+    class Shader;
+}
+
 namespace GameEngine
 {
     class Camera;
-    class Material;
     class Mesh;
     class Renderer : public Component
     {
     public:
-        void Prepare();
         Renderer();
-        SharedMesh GetMesh();                          
-        std::vector<SharedMaterial> GetMaterials();   
-        void AddMaterial(SharedMaterial material);    
+        ~Renderer();
+        void Prepare();
 
-        virtual void OnSerialize(cJSON* root) override;
-        virtual void OnDeserialize(cJSON* root) override;
+        SharedMesh GetMesh();
+        std::vector<std::string> GetMaterialPaths();
 
+        virtual void OnSerialize(cJSON *root) override;
+        virtual void OnDeserialize(cJSON *root) override;
+
+
+        std::vector<ger::InputAssembler *> inputs;
+        std::vector<ger::Shader *> shaders;
     protected:
         std::vector<std::string> m_MaterialPaths;
-        std::vector<SharedMaterial> m_Materials;
+        std::vector<ger::InputAssembler *> inputAssemblers;
+        std::string m_MeshPath;
+        SharedMesh m_Mesh;
     };
-}  // namespace GameEngine
+} // namespace GameEngine

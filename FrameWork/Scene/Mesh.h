@@ -7,6 +7,11 @@
 #include "Config.h"
 #include "Object.h"
 
+#include "../NewRender/Core/GERBuffer.h"
+#include "../NewRender/Core/GERDevice.h"
+#include "../NewRender/Core/GERInputAssembler.h"
+#include "../NewRender/Core/GERObject.h"
+
 namespace GameEngine
 {
     struct MeshVertexAttrib
@@ -41,7 +46,7 @@ namespace GameEngine
         int getPerVertexSize() const
         {
             int vertexsize = 0;
-            for (const auto& attrib : attribs)
+            for (const auto &attrib : attribs)
             {
                 vertexsize += attrib.attribSizeBytes;
             }
@@ -70,6 +75,15 @@ namespace GameEngine
         }
     };
 
+    struct MeshNewData
+    {
+        ger::AttributeList attributeList;
+        ger::GERBuffer *bufferIndex;
+        ger::GERBuffer *bufferVertex;
+        ger::InputAssembler *input;
+    };
+    typedef std::vector<MeshNewData> MeshNewDataList;
+
     class Mesh : public Object
     {
     public:
@@ -77,7 +91,7 @@ namespace GameEngine
         // * 渲染数据
         // * @param meshData 数据
         //////////////////////////////////
-        void PushMeshData(MeshData& meshData)
+        void PushMeshData(MeshData &meshData)
         {
             m_MeshDatas.push_back(meshData);
         }
@@ -87,6 +101,17 @@ namespace GameEngine
             m_OOBB = oobb;
         }
 
+        void SetData(ger::GERBuffer *bufferIndex, ger::GERBuffer *bufferVertex, ger::AttributeList attrs, int index)
+        {
+            ger::Device *device = ger::Device::getInstance();
+            ger::InputAssemblerInfo inputInfo;
+            inputInfo.indexBuffer = bufferIndex;
+            inputInfo.vertexBuffers = bufferVertex;
+            inputInfo.attributes = attrs;
+            ger::InputAssembler *input = device->CreateInputAssembler(inputInfo);
+            meshNewDataList.push_back({attrs, bufferIndex, bufferVertex, input});
+        }
+
     public:
         //////////////////////////////////
         // * 渲染数据
@@ -94,6 +119,8 @@ namespace GameEngine
         std::vector<MeshData> m_MeshDatas;
         BoundingBox m_OOBB;
         bool isPrepare = false;
+
+        MeshNewDataList meshNewDataList;
     };
 
-}  // namespace GameEngine
+} // namespace GameEngine

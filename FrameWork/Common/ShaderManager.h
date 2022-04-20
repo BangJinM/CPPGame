@@ -20,7 +20,7 @@ namespace GameEngine
         virtual int AddShaderByPath(std::string vspath, std::string fspath) = 0;
         ///////////////////////////////
         // Add Shader
-        // @param vsstring 
+        // @param vsstring
         // @param fsstring
         //////////////////////////////
         virtual int AddShaderByString(std::string vspath, std::string fspath) = 0;
@@ -44,4 +44,4 @@ namespace GameEngine
         int index = 1;
     };
 
-}  // namespace GameEngine
+} // namespace GameEngine
